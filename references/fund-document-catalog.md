@@ -15,3 +15,7 @@
 归档入口可直接选择amendmentClues中的公告ID，catalogItemKind明确为amendment-clue。修订公告不执行全文通用费率提取，须按基金全名核对名单；同ID跨候选类型重复时拒绝，不静默选择。
 
 档案证据补充：`python scripts/fund_legal_evidence.py INPUT.json --out NEW.json`，输入dossier、amendmentArchive及fundFullName。重新核对双方截止日、报告代码及PDF摘要、报告标题全名和调整表全名；输出独立JSON/自然语言Markdown/HTML，原档案不改，currentEffectiveFees保持null。
+
+目录提供TotalCount、PageIndex或PageSize时，按声明检查总数、页码和每页条数；跨页总数变化、重复公告编号及短页不视为完成。catalogCoverage=provider-declared-count-matched仅表示第三方声明与实际取得条数一致，不证明官方全量或合同现行有效；缺总数或触及页数上限则为bounded-or-page-length-only，reportedTotalCount可为空。原始响应保留，错误时不生成成功结果。
+
+“完整合同/招募候选”排除对照表、对比表、补充协议及修订/变更说明；这些材料可登记为法律条款辅助线索，保留关联关系与生效日未确认，不把辅助材料丢弃或冒充完整法律文件。目录发布日与条款生效日分别从实际原文核对。

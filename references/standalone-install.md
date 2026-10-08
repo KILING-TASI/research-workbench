@@ -66,3 +66,7 @@ Excel相关组件单独检查：xlrd用于申万股票行业历史XLS原表，op
 
 
 工作台登记检查仅用于已有项目：`python scripts/audit_workbench.py --workspace PROJECT --run-checks`。Node默认从PATH定位，也可由调用者以`--node NODE_PATH`指定；支持.js、.cjs和.mjs。缺Node时保留失败原因，不使用Python执行JavaScript。此入口检查缓存与登记脚本，不替代独立安装、原文、内容或视觉验收。
+
+## 运行版本验证范围
+
+当前Windows环境已实际运行Python3.12主包检查；另以Python3.14.7、禁用第三方site-packages运行环境检查、教学消息研究、教学基金比较及留存真实组合历史报告，四入口成功，组合收益、最大回撤、收益贡献与期末距高点结果和原运行时一致。461份Python源码通过3.11语法模式检查，但没有实际3.11运行时验收；不将语法检查当作3.11依赖或全功能运行证明。可选PDF、Excel、字体、网络来源及其他平台另按实际环境核验。

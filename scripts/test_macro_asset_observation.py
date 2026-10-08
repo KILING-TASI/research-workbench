@@ -244,4 +244,23 @@ class PrimarySourceBindingTests(unittest.TestCase):
    p=Path(d);archive=self.archive(p);data=json.loads(archive.read_text(encoding='utf-8'));data['series'][1]['sourceUrl']=data['series'][1]['sourceUrl'].replace('2026-01-01','2025-01-01');archive.write_text(json.dumps(data),encoding='utf-8')
    with self.assertRaisesRegex(ValueError,'请求窗口不一致'):build(dict(archive=str(archive)),p/'report')
 
+class StrictArchiveTests(unittest.TestCase):
+ def test_ambiguous_json_archive_rejected_without_output(self):
+  for raw in ['{"asOf":"2026-10-01","asOf":"2026-10-05","start":"2026-01-01","series":[]}', '{"asOf":"2026-10-05","start":"2026-01-01","series":[],"value":1e999}', '{"asOf":"2026-10-05","start":"2026-01-01","series":[],"value":NaN}']:
+   with tempfile.TemporaryDirectory() as d:
+    p=Path(d);a=p/'archive.json';a.write_text(raw,encoding='utf-8');out=p/'out'
+    with self.assertRaises(ValueError):build(dict(archive=str(a)),out)
+    self.assertFalse(out.exists());self.assertEqual(a.read_text('utf-8'),raw)
+ def test_noncanonical_collect_date_rejected_before_network(self):
+  for bad in ['20260101','2026-W01-1','2026-02-30']:
+   with tempfile.TemporaryDirectory() as d:
+    out=Path(d)/'out'
+    def forbidden(*args):raise AssertionError('invalid request must not reach network')
+    with self.assertRaises(ValueError):collect(dict(start=bad,asOf='2026-10-05'),out,fetch_fn=forbidden,asset_fn=forbidden)
+    self.assertFalse(out.exists())
+ def test_noncanonical_csv_observation_rejected(self):
+  from macro_asset_observation import parse_csv
+  for date in ['20260101','2026-W01-1','2026-02-30']:
+   with self.assertRaises(ValueError):parse_csv(('observation_date,DGS10\n'+date+',4\n').encode(),'DGS10','2026-01-01','2026-10-05')
+
 if __name__=='__main__':unittest.main()

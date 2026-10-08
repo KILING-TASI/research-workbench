@@ -12,6 +12,7 @@ def compare(archives,asof):
   seen.add(a['code']);available=set()
   for r in a['rows']:
    day(r['period']);day(r['publishedAt'])
+   if r['publishedAt']<r['period']:raise ValueError('财务披露日期早于报告期，不能纳入比较')
    if r['raw'].get('SECURITY_CODE')!=a['code']:raise ValueError('财务证券身份不一致')
    if r['period']<=r['publishedAt']<=asof:available.add(r['period'])
   periods.append(available)
@@ -23,7 +24,10 @@ def compare(archives,asof):
    values=[]
    for r in records:
     value=r['raw'].get(key)
-    if value is not None and (isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value)):raise ValueError('财务数值非法')
+    if value is not None:
+     try:valid=not isinstance(value,bool) and isinstance(value,(int,float)) and math.isfinite(value)
+     except OverflowError:valid=False
+     if not valid:raise ValueError('财务数值非法')
     values.append(dict(value=value,publishedAt=r['publishedAt'],currency=r['raw'].get('CURRENCY'),reportType=r['raw'].get('REPORT_TYPE')))
    fields[key]=dict(label=label,observations=values,conflict=len({x['value'] for x in values if x['value'] is not None})>1)
   companies.append(dict(code=a['code'],name=records[0]['raw'].get('SECURITY_NAME_ABBR') if records else None,fields=fields,sources=a['sources']))

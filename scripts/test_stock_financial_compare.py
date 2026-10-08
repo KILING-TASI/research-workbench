@@ -8,4 +8,10 @@ class Tests(unittest.TestCase):
  def test_missing_not_zero_and_versions_preserved(self):
   a=self.archive('600036','2026-06-30',1);a['rows']+=self.archive('600036','2026-06-30',2)['rows'];b=self.archive('601166','2026-06-30',None)
   r=compare([a,b],'2026-10-05');self.assertTrue(r['companies'][0]['fields']['PARENTNETPROFIT']['conflict']);self.assertIsNone(r['companies'][1]['fields']['PARENTNETPROFIT']['observations'][0]['value'])
+ def test_invalid_same_period_version_cannot_join_valid_record(self):
+  a=self.archive('600036','2026-06-30',1);a['rows']+=self.archive('600036','2026-06-30',999,published='2026-06-29')['rows'];b=self.archive('601166','2026-06-30',3)
+  with self.assertRaisesRegex(ValueError,'早于报告期'):compare([a,b],'2026-10-05')
+ def test_oversized_integer_is_explicit_invalid_financial_value(self):
+  a=self.archive('600036','2026-06-30',10**400);b=self.archive('601166','2026-06-30',3)
+  with self.assertRaisesRegex(ValueError,'财务数值非法'):compare([a,b],'2026-10-05')
 if __name__=='__main__':unittest.main()

@@ -86,6 +86,11 @@ class Tests(unittest.TestCase):
  def test_missing_and_conflict(self):
   a=archive();a['tables']['income']['rows']=[r for r in a['tables']['income']['rows'] if r['period']!='2026-03-31'];self.assertIsNone(value(a,'revenue','2026-06-30')['value'])
   a=archive();r=dict(a['tables']['income']['rows'][-1]);r['raw']=dict(r['raw'],OPERATE_INCOME=50);a['tables']['income']['rows'].append(r);self.assertIsNone(value(a,'revenue','2026-06-30')['value'])
+ def test_negative_to_zero_described_by_metric_not_generic_loss(self):
+  self.assertEqual(change(0,-10,'operatingCash'),dict(value=None,reason='净流出归零'))
+  self.assertEqual(change(0,-10,'parentProfit'),dict(value=None,reason='亏损归零'))
+  self.assertEqual(change(0,-10,'financeExpense'),dict(value=None,reason='负值归零'))
+  self.assertEqual(change(10,0,'parentProfit'),dict(value=None,reason='基数为零'))
  def test_negative_base(self):
   self.assertIsNone(change(5,-5)['value']);self.assertEqual(change(5,-5)['reason'],'转盈');self.assertEqual(change(-5,-10)['reason'],'亏损收窄');self.assertEqual(change(-5,5)['value'],-2)
  def test_income_basis_warning_requires_available_distinct_values(self):

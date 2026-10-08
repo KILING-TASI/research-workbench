@@ -70,4 +70,19 @@ class Tests(unittest.TestCase):
  def test_arbitrary_quote_not_audit_evidence(self):
   quote='本公司营业收入同比增长。';report=dict(fileSha256='x',pages=[dict(page=2,text=quote)])
   with self.assertRaises(ValueError):validate(dict(auditStatus='audited',evidence=[dict(page=2,quote=quote)]),report)
+ def test_same_path_contributions_use_linking_for_fixed_weights(self):
+  d=self.doc(4);d['minimumObservations']=3;d.pop('rollingWindowObservations')
+  for row,values in zip(d['holdings'],[[100,200,100,100,100],[100,100,200,200,200]]):
+   for point,value in zip(row['history'],values):point['value']=value
+  for mode,expected in [('buy-and-hold',[0,50]),('fixed-observation-weights',[12.5,75])]:
+   d['historicalPortfolioMode']=mode;p=analyze(d)['historical']['portfolioPath']
+   self.assertEqual([x['contributionPp'] for x in p['returnContributions']],expected)
+   self.assertAlmostEqual(sum(expected),p['totalReturnPct'])
+ def test_positive_return_can_remain_below_old_peak(self):
+  d=self.doc(4);d['minimumObservations']=3;d.pop('rollingWindowObservations');d['historicalPortfolioMode']='buy-and-hold'
+  for row,values in zip(d['holdings'],[[100,200,100,150,160],[100,100,100,100,100]]):
+   for point,value in zip(row['history'],values):point['value']=value
+  result=analyze(d);p=result['historical']['portfolioPath'];self.assertAlmostEqual(p['totalReturnPct'],30)
+  self.assertAlmostEqual(p['endDrawdownPct'],-100*2/15);self.assertEqual(p['highestWealthDate'],'2025-01-02')
+  body=markdown(result,d);self.assertIn('13.33%',body);self.assertIn('不是单品收益率',body);self.assertIn('尚未恢复',body)
 if __name__=='__main__':unittest.main()
