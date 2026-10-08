@@ -1,10 +1,19 @@
 """Deterministic common follow-up phrases; not a general natural-language planner."""
-import argparse,calendar,hashlib,json,re,tempfile
+import argparse,calendar,hashlib,json,re,tempfile,uuid
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
 from start import execute,CONTINUABLE
 from collection_validation import unique_pairs,reject_constant,finite_json_float
+
+
+def automatic_output(previous=None,folder=None):
+    """Choose a new sibling result path without creating it or guessing a report."""
+    if (previous is None)==(folder is None):raise ValueError('自动另存需明确旧报告或留存目录')
+    base=Path(folder).resolve() if folder is not None else Path(previous).resolve().parent
+    if not base.is_dir():raise ValueError('留存目录不存在，不能自动另存')
+    from datetime import datetime,timezone
+    return base/('追问-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:12])
 
 
 def plan(previous,question):
@@ -133,15 +142,21 @@ def run(previous,question,out):
     return result
 
 
-def run_from_search(folder,query,question,out):
+def run_from_search(folder,query,question,out,selected_name=None):
     """Only a single matching saved record is selected; never choose the first hit."""
     if not isinstance(query,str) or not query.strip():raise ValueError('请给出查找旧报告的名称、代码或关键词')
     from research_results import publish
     with tempfile.TemporaryDirectory(prefix='research-search-') as temporary:
         rows=publish(Path(folder),Path(temporary)/'查找.md',query=query)
+    if selected_name is not None:
+        if not isinstance(selected_name,str) or not selected_name.strip():raise ValueError('请明确候选记录的完整名称')
+        rows=[row for row in rows if row['name']==selected_name]
+        if not rows:return {'status':'needs-clarification','message':'选定名称不在本次匹配候选中，请按候选的完整名称确认；尚未续算。','matches':[]}
     if len(rows)!=1:
         return {'status':'needs-clarification','message':('找到多份匹配报告，请明确要沿用哪份；尚未开始续算。' if rows else '没有找到匹配报告，请确认目录或关键词；尚未开始续算。'),
-                'matches':[{'name':r['name'],'period':r.get('period'),'status':r['status']} for r in rows]}
+                'matches':[{'name':r['name'],'period':r.get('period'),'status':r['status'],
+                            'entry':str(r['entry']) if r.get('entry') else None,
+                            'previousDirectory':str(Path(r['entry']).parent) if r.get('entry') else None} for r in rows]}
     row=rows[0];entry=row.get('entry')
     if entry is None:
         return {'status':'needs-clarification','message':'匹配记录没有有效阅读入口，请先处理旧报告的资料或输入问题；尚未续算。'}
@@ -156,13 +171,19 @@ if __name__=='__main__':
     configure()
     p=argparse.ArgumentParser(description='沿用明确旧报告处理常用追问，不是任意问题自动规划')
     source=p.add_mutually_exclusive_group(required=True)
-    source.add_argument('--previous');source.add_argument('--folder');p.add_argument('--query')
-    p.add_argument('--question',required=True);p.add_argument('--out-dir',required=True);a=p.parse_args()
+    source.add_argument('--previous');source.add_argument('--folder');p.add_argument('--query');p.add_argument('--select',help='有多份候选时填写选定记录的完整目录名称，避免复制长路径')
+    p.add_argument('--question',required=True);p.add_argument('--out-dir',help='可省略：在留存目录内另存唯一的新结果，不覆盖旧报告');a=p.parse_args()
     if a.folder and not a.query:p.error('--folder需要--query，避免默认选择最新或第一份')
+    if a.select and not a.folder:p.error('--select只用于--folder查找')
     if a.previous and a.query:p.error('--query只用于--folder查找')
     try:
-        result=run_from_search(a.folder,a.query,a.question,a.out_dir) if a.folder else run(a.previous,a.question,a.out_dir)
+        output=Path(a.out_dir) if a.out_dir else automatic_output(a.previous,a.folder)
+        result=run_from_search(a.folder,a.query,a.question,output,a.select) if a.folder else run(a.previous,a.question,output)
+        if result.get('failureKind')!='output-exists' and (output/'打开这里.html').is_file():print('新报告入口：'+str((output/'打开这里.html').resolve()))
         print(result.get('followupInterpretation') or result.get('message','请查看结果状态'))
-        for candidate in result.get('matches',[]):print(candidate['name']+' · '+str(candidate.get('period') or '区间未登记'))
+        for candidate in result.get('matches',[]):
+            print(candidate['name']+' · '+str(candidate.get('period') or '区间未登记'))
+            if candidate.get('entry'):print('阅读入口：'+candidate['entry'])
+            if candidate.get('previousDirectory'):print('选定后沿用目录：'+candidate['previousDirectory'])
         if result['status'] in ('needs-clarification','blocked'):raise SystemExit(2)
     except (ValueError,OSError,KeyError,TypeError) as error:p.exit(2,str(error)+'\n')

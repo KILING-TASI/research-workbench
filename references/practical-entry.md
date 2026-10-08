@@ -1,6 +1,6 @@
 # 日常使用：从问题到报告
 
-说明版本：1.80 · 更新日期：2026-10-09。用户说问题、提供已有资料；AI准备参数和输入文件。以下为AI调用模板，均从Skill根目录运行，新结果目录必须不存在。
+说明版本：1.88 · 更新日期：2026-10-09。用户说问题、提供已有资料；AI准备参数和输入文件。以下为AI调用模板，均从Skill根目录运行，指定的新结果目录必须不存在；追问入口可省略输出目录，自动另存。
 
 ## 1. 第一次研究，先确认哪些资料？
 
@@ -45,6 +45,14 @@ python scripts/resume_research.py --folder local-data --query "510050" --questio
 
 只有唯一匹配、具有接续请求记录时才执行；多份结果列出候选，AI让用户选定，不默认最新或第一份。也可用`--previous 已选定目录`直接指定。没有旧请求时明确准备原参数，不从正文猜输入。
 
+如果找到多份，先打开候选报告，再说“用其中的某某报告继续”。选定后可按完整记录名称接续，AI不需要再向用户索取原参数或长路径：
+
+```bash
+python scripts/resume_research.py --folder local-data --query "消费" --select "my-funds" --question "哪只更稳？" --out-dir local-data/selected-answer
+```
+
+`my-funds`是候选显示的目录名称，须在本次关键词匹配结果内完全一致；名称不匹配则不执行。阅读入口供确认原报告，留存时间不代表资料最新。
+
 ## 3. 已选定报告，常用追问怎么处理？
 
 |已有研究|可以直接说|处理方式|
@@ -61,6 +69,8 @@ python scripts/resume_research.py --folder local-data --query "510050" --questio
 ```bash
 python scripts/resume_research.py --previous local-data/my-funds --question "哪只更稳？" --out-dir local-data/risk-answer
 ```
+
+追问命令可省略`--out-dir`，在明确的留存目录中自动另存唯一结果，并返回新报告入口；有多份候选仍先确认，不会因自动另存而默认挑选。
 
 这是常用短句的确定规则，不是任意问题解析器。不同模块各有支持范围；混入换标的、费用、调仓或刷新要求时不忽略额外条件，由AI明确后使用原入口。基金区间对照重新计算，不能将区间差别说成产品改善；同一截止日的两段收益按复利连接，不直接相减。
 

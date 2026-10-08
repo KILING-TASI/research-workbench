@@ -6,6 +6,17 @@ from result_entry import write_entry
 
 
 class ResultEntryTests(unittest.TestCase):
+    def test_conclusion_precedes_parameter_explanations(self):
+        import json
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            (root/'research-request.json').write_text(json.dumps({'start':'2025-01-02','asOf':'2025-12-31'}),'utf-8')
+            write_entry(root,{'status':'partial','message':'详细完成范围','headline':'两项风险指向不同，不能统一排名。','followupInterpretation':'保留原参数。','nextSteps':[]})
+            body=(root/'打开这里.md').read_text('utf-8')
+            for detail in ('详细完成范围','本次追问的处理','研究请求记录的区间','## 先读这里'):
+                self.assertLess(body.index('两项风险指向不同'),body.index(detail))
+            self.assertIn('> 两项风险指向不同',body)
+
     def test_bjx_dates_are_declared_scenario_not_today(self):
         import json
         with tempfile.TemporaryDirectory() as tmp:

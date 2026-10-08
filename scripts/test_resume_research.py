@@ -1,7 +1,7 @@
 import json,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
-from resume_research import plan,run,run_from_search
+from resume_research import plan,run,run_from_search,automatic_output
 
 class Tests(unittest.TestCase):
     def test_monthly_rebalance_changes_only_rule(self):
@@ -86,7 +86,48 @@ class Tests(unittest.TestCase):
             with patch('resume_research.run') as execute:
                 result=run_from_search(root,'基金','重算',root/'new')
                 self.assertEqual(len(result['matches']),2);execute.assert_not_called()
+                self.assertEqual({Path(r['previousDirectory']) for r in result['matches']},{(root/'one').resolve(),(root/'two').resolve()})
+                self.assertTrue(all(Path(r['entry']).is_file() for r in result['matches']))
                 self.assertFalse((root/'new').exists())
+    def test_cli_existing_output_does_not_label_old_entry_as_new(self):
+        import subprocess,sys
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);old=self.previous(root);out=root/'existing';out.mkdir()
+            report=out/'打开这里.html';report.write_text('旧报告不可改','utf-8')
+            result=subprocess.run([sys.executable,str(Path(__file__).with_name('resume_research.py')),'--previous',str(old),'--question','重算','--out-dir',str(out)],capture_output=True)
+            self.assertEqual(result.returncode,2)
+            self.assertNotIn('新报告入口',result.stdout.decode('utf-8'))
+            self.assertEqual(report.read_text('utf-8'),'旧报告不可改')
+
+    def test_automatic_output_is_unique_and_does_not_create_or_touch_old(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);old=self.previous(root)
+            before=(old/'research-request.json').read_bytes()
+            first=automatic_output(previous=old);second=automatic_output(folder=root)
+            self.assertNotEqual(first,second)
+            self.assertEqual(first.parent,root.resolve())
+            self.assertFalse(first.exists());self.assertFalse(second.exists())
+            self.assertEqual(before,(old/'research-request.json').read_bytes())
+            with self.assertRaises(ValueError):automatic_output()
+            with self.assertRaises(ValueError):automatic_output(previous=old,folder=root)
+
+    def test_search_explicit_name_selects_without_guessing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for name in ['基金甲','基金乙']:
+                d=root/name;d.mkdir()
+                (d/'start-result.json').write_text(json.dumps({'status':'partial','message':'基金教学'}),'utf-8')
+                (d/'打开这里.html').write_text('报告','utf-8')
+                (d/'research-request.json').write_text(json.dumps({'command':'funds'}),'utf-8')
+            with patch('resume_research.run',return_value={'status':'partial'}) as execute:
+                result=run_from_search(root,'基金','重算',root/'new','基金乙')
+                self.assertEqual(result['status'],'partial')
+                execute.assert_called_once_with((root/'基金乙').resolve(),'重算',root/'new')
+            with patch('resume_research.run') as execute:
+                for name in ['基金','../基金乙','没有这份']:
+                    self.assertEqual(run_from_search(root,'基金','重算',root/'new',name)['status'],'needs-clarification')
+                execute.assert_not_called()
+
     def test_search_unique_selects_declared_record(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);old=self.previous(root)
