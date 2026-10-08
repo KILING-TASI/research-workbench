@@ -30,9 +30,27 @@ def verify_saved(directory,manifest):
     return issues
 
 def answer(document,kind):
-    if kind not in ('stability','volatility','drawdown','return'):raise ValueError('不支持的比较追问')
-    result=report(document)[0];rows=result['rows']
+    if kind not in ('stability','volatility','drawdown','return','return-risk'):raise ValueError('不支持的比较追问')
+    return answer_from_result(document,kind,report(document)[0])
+
+
+def answer_from_result(document,kind,result):
+    rows=result['rows']
     names={r['code']:str(r.get('name') or r['code']).replace('\n',' ').replace('|','／') for r in document['rows']}
+    if kind=='return-risk':
+        performance,performance_body=answer_from_result(document,'return',result)
+        risk,risk_body=answer_from_result(document,'stability',result)
+        overlap=set(performance['highestReturnCodes']) & set(risk['smallestDrawdownCodes']) & set(risk['lowestVolatilityCodes'])
+        if risk['missingVolatilityCodes']:judgment='资料还不足以完整比较“收益更好又更稳”：存在波动率缺值，不能排除这些标的后选赢家。'
+        elif overlap:judgment='在本段历史的区间收益、最大回撤与年化波动三项中，'+ '、'.join(names[c] for c in performance['highestReturnCodes'] if c in overlap)+'同时处在最优位置；这仍不是完整产品评价。'
+        else:judgment='这段历史没有一只在收益、回撤和波动三项上同时领先，需要分开看收益与风险的取舍。'
+        return_names='、'.join(names[c] for c in performance['highestReturnCodes'])
+        calm_names='、'.join(names[c] for c in risk['lowestVolatilityCodes']) if not risk['missingVolatilityCodes'] else '资料不足，暂不完整排名'
+        drawdown_names='、'.join(names[c] for c in risk['smallestDrawdownCodes'])
+        conclusion=judgment+'收益较高：'+return_names+'；波动较小：'+calm_names+'；回撤较小：'+drawdown_names+'。这里只比较三项历史指标，不代表未来或个人适合程度。'
+        data={'questionType':kind,'conclusion':conclusion,'start':result['start'],'end':result['end'],'jointLeaderCodes':sorted(overlap),'returnAnswer':performance,'riskAnswer':risk,'scope':'three historical metrics; not full suitability or future ranking'}
+        body='# 收益和风险一起看'+chr(10)*2+'> '+conclusion+chr(10)*2+'## 收益怎么看'+chr(10)*2+performance_body.split(chr(10)*2,1)[1]+chr(10)*2+'## 风险怎么看'+chr(10)*2+risk_body.split(chr(10)*2,1)[1]
+        return data,body
     if kind=='return':
         maximum=max(r['totalReturnPct'] for r in rows)
         winners=[r['code'] for r in rows if r['totalReturnPct']==maximum]
