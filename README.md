@@ -84,4 +84,3 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 ## 主动数据源体检
 
 需要检查当前接口、返回结构和样本日期时，使用[数据源体检](references/source-health.md)，区分请求失败、空样本、结构异常、日期超限和观测不足。仅主动调用，不后台轮询。
-
