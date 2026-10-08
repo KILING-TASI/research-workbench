@@ -18,7 +18,7 @@
         "项目量价和结算的完整原因",
         "当前估值吸引力"
       ],
-      "reportSha256": "e513ba1e234e90189c28aad5a0e7d8ae2d5d6593a05cd40bcdf4aa3ef58e45bf",
+      "reportSha256": "e5245c036cee595a3f7c0fd28261622379e87f818bb1f8499a3ad0c554639c85",
       "reportFileName": "公司点评阅读改写.md"
     },
     {
@@ -39,7 +39,7 @@
         "共同下跌时的完整组合分散效果",
         "个人适配"
       ],
-      "reportSha256": "7928132a4f44295dc24f998b2e952927a4931920279cc8572555d5de1b4af79f",
+      "reportSha256": "3b17e1b725b472c5cf89bfe249eaa4d2dab7069a626be83fa57ff80088b08abb",
       "reportFileName": "基金点评阅读改写.md"
     },
     {
@@ -61,7 +61,7 @@
         "完整有效条款",
         "个人组合适配"
       ],
-      "reportSha256": "b4af2e691ce6c7c4ce5598f4e4c8f8e9986b587f204357d8ffc20f5bdf31cf72",
+      "reportSha256": "fee4a735aef126787f7e31341b746657ad9dc546153effb82070c6a97dfb37d4",
       "reportFileName": "ETF点评阅读改写.md"
     },
     {
@@ -84,7 +84,7 @@
         "其他同名证券关系及完整发行人排名",
         "全部持仓公司主体与细分行业重复暴露"
       ],
-      "reportSha256": "8acf44b7bfa0017f95f75884c5d1041a80e17169a239506ee78e29b08e80b097",
+      "reportSha256": "b04f5e4707e8eef99204a5db292100e0ac068517fb326a409b23221043c6be14",
       "reportFileName": "组合点评阅读改写.md"
     },
     {
@@ -122,7 +122,7 @@
         "完整价值与年化",
         "首次公开与真实账户"
       ],
-      "reportSha256": "20c0c972e47c4e008b87e9c141976a70db92bd530db547cf27d155186cfe33de",
+      "reportSha256": "61c2e88a1d3ad38a8af682cb2a09a217a728e4bdd6d8b4e5af74ae3fec86855d",
       "reportFileName": "北交点评阅读改写.md"
     }
   ]

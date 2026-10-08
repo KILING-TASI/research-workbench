@@ -4,12 +4,15 @@ from pathlib import Path
 from export_runtime import component_environment
 
 def inspect(node=None,artifact_node_modules=None):
- export_env=component_environment(artifact_node_modules)
+ config_error=None
+ try:export_env=component_environment(artifact_node_modules)
+ except ValueError as exc:export_env=None;config_error=str(exc)
  rows=[]
  for name,label,features in [('pdfplumber','PDF文字与表格提取',['报告持仓','原文身份核对','经理任职表','文件费率','存货单元格坐标核验','基金资产负债表提取']),('numpy','矩阵与随机模拟',['有效前沿','最小方差组合','蒙特卡洛']),('xlrd','历史Excel原表解析',['申万股票行业记录XLS']),('openpyxl','Excel工作簿解析与指定导出入口',['申万新版行业代码表XLSX','明确使用openpyxl的导出；不替代财务底稿专用组件']),('pypdf','PDF文档读取',['研究资料库','北交原文提取','存货原文文字核验','报告证据PDF物理页引句验收','FOF关联原件结构检查','基金资产负债表来源结构检查','披露利率情景原页核对','资产池桥接份额与来源核对']),('pypdfium2','PDF页面渲染',['PDF视觉验收']),('docx','Word文档导出',['公司行业DOCX报告']),('pandas','专题数据处理',['ETF项目刷新'])]:
   try:present=importlib.util.find_spec(name) is not None
   except (ValueError,ImportError):present=False
-  rows.append(dict(component=name,label=label,available=present,features=features,status='依赖可找到，尚未证明实际计算通过' if present else '依赖缺失，相关功能暂不可运行'))
+  install_name='python-docx' if name=='docx' else name
+  rows.append(dict(component=name,label=label,available=present,features=features,status='依赖可找到，尚未证明实际计算通过' if present else '依赖缺失，相关功能暂不可运行',nextStep=None if present else '仅当本次任务需要时安装；安装后重新检查并实跑对应入口',installCommand=None if present else 'python -m pip install '+install_name))
  node=node or shutil.which('node');version=None;reason=None
  if node:
   try:version=subprocess.run([node,'--version'],capture_output=True,text=True,timeout=5,check=True).stdout.strip()
@@ -21,8 +24,8 @@ def inspect(node=None,artifact_node_modules=None):
  elif node and not reason:
   reason='Node.js未返回版本，运行时尚未确认'
  rows.append(dict(component='node',label='JavaScript计算入口',available=bool(node) and not reason,version=version,features=['基金比较','费用与组合JavaScript工具'],status=reason or ('运行时可调用' if node else '运行时缺失')))
- artifact=False;artifact_reason='Node运行时不可调用，未检查财务Excel导出组件'
- if node and not reason:
+ artifact=False;artifact_reason='财务Excel组件配置无效：'+config_error if config_error else 'Node运行时不可调用，未检查财务Excel导出组件'
+ if node and not reason and export_env is not None:
   try:
    probe="const {createRequire}=require('node:module');const r=createRequire(process.cwd()+'/__dependency_probe__.js');try{r.resolve('@oai/artifact-tool',{paths:process.env.ARTIFACT_NODE_MODULES?[process.env.ARTIFACT_NODE_MODULES]:[process.cwd()]});process.stdout.write(JSON.stringify({found:true}));}catch{process.stdout.write(JSON.stringify({found:false}));}"
    checked=subprocess.run([node,'-e',probe],capture_output=True,text=True,timeout=5,check=True,env=export_env)
@@ -37,7 +40,9 @@ def inspect(node=None,artifact_node_modules=None):
 
 def markdown(r):
  lines=['# 独立运行环境检查','', 'Python '+r['pythonVersion'],'基础取数、目录与历史筛选使用Python标准库；网络可用性尚未检查。','']
- for row in r['dependencies']:lines.append('- '+row['label']+'：'+row['status']+'。涉及：'+'、'.join(row['features'])+'。')
+ for row in r['dependencies']:
+  lines.append('- '+row['label']+'：'+row['status']+'。涉及：'+'、'.join(row['features'])+'。')
+  if row.get('installCommand'):lines.append('  按需安装：`'+row['installCommand']+'`。'+row['nextStep']+'。')
  lines+=['']+r['limitations'];return '\n'.join(lines)
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--node');p.add_argument('--artifact-node-modules');a=p.parse_args()

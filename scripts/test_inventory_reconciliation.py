@@ -36,7 +36,7 @@ class Tests(unittest.TestCase):
  def test_source_relative_to_input_not_invocation_directory(self):
   with tempfile.TemporaryDirectory() as d:
    base=Path(d);folder=base/'输入';folder.mkdir();p=folder/'spec.json';p.write_text(json.dumps({'source':'../资料/report.pdf'}),encoding='utf-8')
-   self.assertEqual(Path(load_spec(p)['source']),base/'资料/report.pdf')
+   self.assertEqual(Path(load_spec(p)['source']),(base/'资料/report.pdf').resolve())
  def test_boxes_reject_overlap_reordering_nonfinite_and_different_rows(self):
   boxes=[[i*10,10,(i+1)*10,20] for i in range(6)];validate_boxes(boxes,100,100)
   for bad in ('overlap','reorder','nan','row','outside'):

@@ -103,8 +103,8 @@ def fund_info(code,today):
   feeBasis='管理费＋托管费；不含其他运作费用及交易佣金',inceptionDate=date(inception),
   trackingErrorPct=None,trackingErrorBasis='缺少同口径实际年化跟踪误差，未纳入优选',benchmark=tracking,
   sourceUrl=url,source='天天基金（第三方）')
-def refresh():
- dest=ROOT/'assets';dest.mkdir(parents=True,exist_ok=True)
+def refresh(data_dir=None):
+ dest=Path(data_dir) if data_dir is not None else ROOT/'assets';dest.mkdir(parents=True,exist_ok=True)
  previous=json.loads((dest/'data.json').read_text(encoding='utf-8')) if (dest/'data.json').exists() else {}
  now=dt.datetime.now(TZ);today=now.date();errors=[]
  try:report_date,financials=financial(today)
@@ -215,7 +215,11 @@ def refresh():
  history=dest/'snapshots';history.mkdir(exist_ok=True)
  (history/(str(today)+'.json')).write_text(content,encoding='utf-8')
  return snapshot
-if __name__=='__main__':
+def main(argv=None):
+ p=argparse.ArgumentParser(description='项目模式ETF行业刷新；主动联网，需显式用户数据目录。独立查询使用standalone.py。')
+ p.add_argument('--data-dir',type=Path,required=True,help='存放data.json及snapshots的用户目录')
+ args=p.parse_args(argv)
  try:
-  s=refresh();print(json.dumps(dict(date=s['date'],sectors=len(s['sectors']),errors=[(x['name'],x.get('error')) for x in s['sectors'] if x.get('error')]),ensure_ascii=False))
+  s=refresh(args.data_dir);print(json.dumps(dict(date=s['date'],sectors=len(s['sectors']),errors=[(x['name'],x.get('error')) for x in s['sectors'] if x.get('error')]),ensure_ascii=False))
  except Exception as e:raise SystemExit('未更新，保留最近快照：'+str(e))
+if __name__=='__main__':main()

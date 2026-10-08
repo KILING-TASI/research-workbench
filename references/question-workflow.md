@@ -2,6 +2,14 @@
 
 research_pipeline.py research-question 输入.json；沿用 --workspace 和 --out。
 
+无需手工JSON的快速入口：
+
+```bash
+python scripts/start.py ask --question "分析招商银行最近三个月有什么重要公告变化" --as-of 2026-10-08 --online --out-dir local-data/cmb-notices
+```
+
+主动联网才加 --online；没有作者目录时查询第三方身份候选，不把同名或多个A股候选静默选成唯一。报告先说明公告类别与阅读重点，再列来源和缺口。此入口明确按A股市场解析，不代表跨市场统一深研。输出partial说明元数据报告完成、正文研究未完成；下一步区分缺目录、身份来源失败及参数待澄清。程序生成的档案路径在发布后仍指向最终输出目录。
+
 ```json
 {"question":"分析招商银行最近三个月有什么重要公告变化","asOf":"2026-10-03","refresh":true}
 ```

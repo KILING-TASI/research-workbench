@@ -14,4 +14,16 @@ class Tests(unittest.TestCase):
  def test_found_module_does_not_claim_acceptance(self):
   with patch('environment_check.importlib.util.find_spec',return_value=object()),patch('environment_check.shutil.which',return_value=None):
    r=inspect();self.assertIn('尚未证明实际计算通过',r['dependencies'][0]['status'])
+ def test_optional_repair_uses_distribution_name_not_import_name(self):
+  with patch('environment_check.importlib.util.find_spec',return_value=None),patch('environment_check.shutil.which',return_value=None):
+   rows={x['component']:x for x in inspect()['dependencies']}
+   self.assertEqual(rows['docx']['installCommand'],'python -m pip install python-docx')
+   self.assertEqual(rows['numpy']['installCommand'],'python -m pip install numpy')
+   self.assertNotIn('installCommand',rows['@oai/artifact-tool'])
+ def test_invalid_optional_component_path_does_not_block_basic_checks(self):
+  with patch('environment_check.component_environment',side_effect=ValueError('目录不存在')),patch('environment_check.shutil.which',return_value=None):
+   rows={x['component']:x for x in inspect()['dependencies']}
+   self.assertTrue(rows['python-runtime']['available'])
+   self.assertFalse(rows['@oai/artifact-tool']['available'])
+   self.assertIn('配置无效',rows['@oai/artifact-tool']['status'])
 if __name__=='__main__':unittest.main()

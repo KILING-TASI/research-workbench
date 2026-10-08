@@ -26,17 +26,27 @@ def portfolio_path(mode, common, intervals, histories, weights, minimum):
     if len(intervals)!=len(common)-1 or any(a[1]!=b[0] for a,b in zip(intervals,intervals[1:])):
         return {'status':'disconnected-observations','mode':mode,'limitation':'共同收益区间不连续，不能拼接遗漏区间计算组合回撤'}
     values=[1.0]
+    contributions={k:0.0 for k in weights}
     for a,b in intervals:
         value=(sum(w*histories[k][b]/histories[k][common[0]] for k,w in weights.items()) if mode=='buy-and-hold' else
                values[-1]*(1+sum(w*(histories[k][b]/histories[k][a]-1) for k,w in weights.items())))
         if not math.isfinite(value) or value<=0:raise ValueError('历史组合路径溢出或无效')
+        if mode=='fixed-observation-weights':
+            for k,w in weights.items():contributions[k]+=values[-1]*w*(histories[k][b]/histories[k][a]-1)
         values.append(value)
     peak=values[0];peak_date=common[0];drawdown=0;worst_peak=worst_trough=None
     for date,value in zip(common,values):
         if value>peak:peak=value;peak_date=date
         loss=value/peak-1
         if loss<drawdown:drawdown=loss;worst_peak=peak_date;worst_trough=date
-    return {'status':'calculated-observed-path','mode':mode,'totalReturnPct':(values[-1]-1)*100,
+    if mode=='buy-and-hold':
+        contributions={k:w*(histories[k][common[-1]]/histories[k][common[0]]-1) for k,w in weights.items()}
+    if any(not math.isfinite(v) for v in contributions.values()) or not math.isclose(sum(contributions.values()),values[-1]-1,rel_tol=1e-10,abs_tol=1e-10):
+        raise ValueError('历史组合收益贡献未与同一路径合计一致')
+    return {'status':'calculated-observed-path' ,'mode':mode,'totalReturnPct':(values[-1]-1)*100,
+            'returnContributions':[{'code':k,'contributionPp':v*100} for k,v in contributions.items()],
+            'returnContributionBasis':'初始权重乘完整区间资产收益' if mode=='buy-and-hold' else '逐期资产收益乘目标权重及当期期初组合财富，链式加总为全期收益',
+            'highestWealthDate':peak_date,'endDrawdownPct':(values[-1]/peak-1)*100,
             'maximumDrawdownPct':drawdown*100,'peakDate':worst_peak,'troughDate':worst_trough,
             'path':[{'date':date,'wealth':value} for date,value in zip(common,values)],
             'basis':'期初权重买入持有，权重随收益漂移' if mode=='buy-and-hold' else '每个观察区间保持输入权重，隐含再平衡',

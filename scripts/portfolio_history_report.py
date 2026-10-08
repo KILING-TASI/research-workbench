@@ -31,6 +31,13 @@ def markdown(result,document):
   lines[2]='> 本段组合历史收益为'+format(path['totalReturnPct'],'.2f')+'%，观察最大回撤为'+format(abs(path['maximumDrawdownPct']),'.2f')+'%；分散效果需要看组合共同路径，不能平均单只资产的最大回撤。'
   lines+=['','## 组合收益与回撤','本次路径采用：'+path['basis']+'。累计收益'+format(path['totalReturnPct'],'.2f')+'%，观察最大回撤幅度'+format(abs(path['maximumDrawdownPct']),'.2f')+'%。']
   if path['peakDate']:lines.append('最大回撤对应的高点日：'+path['peakDate']+'；低点日：'+path['troughDate']+'。')
+  if 'returnContributions' in path:
+   lines+=['','### 收益主要来自哪里','|资产|全期组合收益贡献（百分点）|','|---|---:|']
+   for row in path['returnContributions']:lines.append('|'+names[row['code']]+'|'+format(row['contributionPp'],'.2f')+'|')
+   lines+=['贡献按同一路径计算：'+path['returnContributionBasis']+'。它是组合收益的百分点，不是单品收益率，也不是经理或行业的因果归因。']
+  if 'endDrawdownPct' in path:
+   lines.append('区间末相对本段历史高点（'+path['highestWealthDate']+'）仍低'+format(abs(path['endDrawdownPct']),'.2f')+'%。' if path['endDrawdownPct']<0 else '区间末处于本段观测高点；这不代表未来没有回撤。')
+   lines.append('从研究起点看正收益，与从历史高点看尚未恢复可以同时成立；这里不预测恢复所需时间。')
   lines+=['这描述已发生的路径，不代表未来最大亏损，也不等同用户持有收益。相关性低或股票重叠低，本身不能证明组合风险低。']
  elif path['status']!='not-requested':lines+=['','## 组合收益与回撤','未计算：'+('共同收益区间存在断点，不能把遗漏时段拼接为完整路径。' if path['status']=='disconnected-observations' else '有效历史不足。')]
  lines+=['','## 口径与缺口',h['frequencyBasis'],'当前权重用于相关性及尾部观察；组合路径按上述指定方式计算。不含费用、真实动态交易和无法成交情形。','来源、复权与分红完整性来自输入声明，尚未独立确认完整交易日和现金分红；未补齐缺失价格。']

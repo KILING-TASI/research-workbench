@@ -11,7 +11,8 @@ from event_research import run as events
 def run(spec,workspace,searcher=search,event_runner=events):
     question=spec.get('question')
     if not isinstance(question,str) or not question.strip() or len(question)>3000:raise ValueError('question须为1至3000字符')
-    as_of=spec.get('asOf');dt.date.fromisoformat(as_of)
+    from collection_validation import day
+    as_of=spec.get('asOf');day(as_of)
     refresh=spec.get('refresh',True)
     if type(refresh) is not bool or type(spec.get('onlineSearch',False)) is not bool:raise ValueError('refresh及onlineSearch须为布尔值')
     months=spec.get('months')
@@ -63,10 +64,41 @@ def run(spec,workspace,searcher=search,event_runner=events):
                     result['gaps']+=['尚未核验公告正文，不能判断哪些事件实质改变盈利或信用假设','财务与行情对照、估值及机构预期复盘尚未接入此链路','新闻信息流未接入；不代表全部信息已覆盖']
                     if timeline.get('error'):result['gaps'].append(timeline['error'])
     name=(result['resolvedSecurity'] or {}).get('name','未确认标的')
+    result['nextSteps']=[]
     if 'eventResult' in result:
-        e=result['eventResult'];lines=[result['riskNotice'],f"{name}：{e['start']}至{as_of}取得{len(e['timeline'])}条公告元数据。"]
-        for row in e['timeline']:lines.append(f"- {row['publishedAt']}｜{row['title']}｜{'、'.join(row['eventTypes'])}；{row['priority']}，影响待原文核查")
-    else:lines=[result['riskNotice'],'当前问题尚不能直接执行研究。']
+        e=result['eventResult'];counts={}
+        for row in e['timeline']:
+            for category in row['eventTypes']:counts[category]=counts.get(category,0)+1
+        result['categoryCounts']=counts
+        result['priorityEvents']=[row['id'] for row in e['timeline'] if row['priority']=='需核查']
+        if e['timeline']:
+            focus='、'.join(k+'（'+str(v)+'条）' for k,v in sorted(counts.items(),key=lambda item:(-item[1],item[0]))[:4])
+            lead=f"本次公告线索主要涉及{focus}。应优先阅读业绩、监管、诉讼或债务类原文，再判断是否改变经营假设；仅凭标题不能判定实际影响。"
+            result['nextSteps']=['先阅读标为“需核查”的公告原文；类别数量可重复计数，不代表影响大小。','将公告中的金额、实施进度与前期披露对照，区分计划与完成；正文未取得的结论留空。']
+        else:
+            lead='本次没有取得可用公告，不能解释为该公司没有公告或没有风险。'
+            result['nextSteps']=['在交易所或巨潮核对相同代码与日期区间，或提供已有公告。','若来源请求失败，保留原因后检查数据源；不反复重试相同失败请求。']
+        lines=['# '+name+'公告变化研究','',lead,'',f"研究市场：A股。{e['start']}至{as_of}取得{len(e['timeline'])}条公告元数据；不是公告正文核验。",'','## 公告与待核查事项','']
+        for row in sorted(e['timeline'],key=lambda row:(row['priority']!='需核查',row['publishedAt'],row['id'])):
+            source='｜[来源]('+row['sourceUrl']+')' if row.get('sourceUrl') else '｜附件链接未取得'
+            lines.append(f"- {row['publishedAt']}｜{row['title']}｜{'、'.join(row['eventTypes'])}；{row['priority']}，影响待原文核查"+source)
+    else:
+        lines=['# 公告研究尚待准备','','当前问题尚不能直接执行研究。']
+        identity=result.get('identitySearch',{})
+        if identity.get('coverage') and not spec.get('onlineSearch',False) and any(row.get('status')=='missing-local-catalog' for row in identity['coverage']):
+            result['failureKind']='missing-local-catalog'
+            result['nextSteps']=['启用 onlineSearch=true（快速入口使用 --online），查询第三方身份候选；无需作者本地目录。','若不便联网，提供有来源的本地证券目录；代码本身不代替身份核验。']
+        elif identity.get('errors'):
+            result['failureKind']='identity-source-unavailable'
+            result['nextSteps']=['身份查询来源未成功，查看保留的错误，或提供有来源的证券目录。']
+        elif identity:
+            result['failureKind']='identity-unresolved'
+            result['nextSteps']=['核对候选名称和市场，明确单一A股代码；不要自动选择同名或相似名称。']
+        else:
+            result['failureKind']='request-needs-clarification'
+            result['nextSteps']=['明确单家A股公司及近一或三个月的公告问题；其他场景使用对应研究入口。']
+    lines+=['','## 下一步','']+['- '+step for step in result['nextSteps']]
+    lines+=['','## 资料限制','',result['riskNotice']]
     lines+=['待补：'+'；'.join(result['gaps'])];result['answer']='\n'.join(lines)
     hashes={name:hashlib.sha256((Path(__file__).parent/name).read_bytes()).hexdigest() for name in ['research_question.py','event_research.py','security_search.py','market_collect.py']}
     result['codeHashes']=hashes;result['inputSha256']=hashlib.sha256(json.dumps(spec,sort_keys=True,ensure_ascii=False).encode()).hexdigest()

@@ -5,6 +5,7 @@ from urllib.parse import urlencode, urlsplit, parse_qs
 from urllib.request import Request,urlopen
 from cross_market_history import collect as price_collect
 from research_brief_html import render
+from collection_validation import day as validated_day,unique_pairs,reject_constant,finite_json_float
 FX_CONVENTIONS={'DEXUSEU':dict(baseCurrency='EUR',quoteCurrency='USD'),'DEXCHUS':dict(baseCurrency='USD',quoteCurrency='CNY')}
 SERIES={
  'DEXUSEU':dict(name='欧元兑美元（每欧元美元数）',unit='USD-per-EUR',frequency='daily-business',role='macro'),
@@ -46,7 +47,7 @@ def parse_csv(raw,id,start,end):
  if rows.fieldnames!=['observation_date',id]:raise ValueError('FRED表头或序列标识不匹配')
  points=[];missing=[];seen=[]
  for row in rows:
-  day=dt.date.fromisoformat(row['observation_date']).isoformat();seen.append(day)
+  day=validated_day(row['observation_date']).isoformat();seen.append(day)
   if not start<=day<=end:continue
   if row[id] in ['', '.']:missing.append(day);continue
   value=float(row[id])
@@ -57,7 +58,7 @@ def parse_csv(raw,id,start,end):
 
 def parse_chart(raw,id,start,end):
  from zoneinfo import ZoneInfo
- payload=json.loads(raw);chart=payload.get('chart',{})
+ payload=json.loads(raw,object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float);chart=payload.get('chart',{})
  if chart.get('error') or not isinstance(chart.get('result'),list) or len(chart['result'])!=1 or not isinstance(chart['result'][0],dict):raise ValueError('备用价格来源须返回唯一证券结果')
  node=chart['result'][0];meta=node.get('meta',{})
  if meta.get('symbol')!=id or meta.get('currency')!='USD' or meta.get('instrumentType')!='ETF':raise ValueError('备用来源证券身份不匹配')
@@ -77,7 +78,7 @@ def parse_chart(raw,id,start,end):
  return points,missing,timezone
 
 def collect(spec,out,fetch_fn=fetch,asset_fn=price_collect):
- start=dt.date.fromisoformat(spec['start']);end=dt.date.fromisoformat(spec['asOf'])
+ start=validated_day(spec['start']);end=validated_day(spec['asOf'])
  if start>=end:raise ValueError('请求窗口无效')
  selected=spec.get('seriesIds',['CPIAUCSL','DGS10','DFF','CBBTCUSD'])
  if not isinstance(selected,list) or not selected or len(selected)!=len(set(selected)) or any(i not in SERIES for i in selected):raise ValueError('指标列表为空、重复或不在支持范围')
@@ -270,7 +271,7 @@ def applicable_limitations(limitations,series):
  return result
 
 def build(spec,out):
- archive=Path(spec['archive']);raw=archive.read_bytes();data=json.loads(raw);asof=dt.date.fromisoformat(data['asOf']);assets=[s for s in data['series'] if s['role']=='asset'];ids=[s['id'] for s in data['series']]
+ archive=Path(spec['archive']);raw=archive.read_bytes();data=json.loads(raw,object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float);asof=validated_day(data['asOf']);validated_day(data['start']);assets=[s for s in data['series'] if s['role']=='asset'];ids=[s['id'] for s in data['series']]
  if len(ids)!=len(set(ids)):raise ValueError('序列ID重复')
  contracts=validate_series_contract(data['series'],check_frequency=True)
  bindings=[]
@@ -298,7 +299,7 @@ def build(spec,out):
     if url.hostname!='web.ifzq.gtimg.cn' or url.path!='/appstock/app/fqkline/get' or len(params)!=1:raise ValueError('主要行情请求来源或参数未确认')
     fields=params[0].split(',')
     if len(fields)<4 or fields[1]!='day' or fields[2:4]!=[data['start'],data['asOf']]:raise ValueError('主要行情请求窗口不一致')
-    primary=parse_primary(json.loads(source_raw),'US',s['id'],data['start'],data['asOf'],fields[0])
+    primary=parse_primary(json.loads(source_raw,object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float),'US',s['id'],data['start'],data['asOf'],fields[0])
     parsed=[dict(date=p['date'],value=p['close']) for p in primary['history']]
    else:parsed=None
    if parsed is not None and [(p['date'],p['value']) for p in parsed]!=[(p['date'],p['value']) for p in s['points']]:raise ValueError('观测档案数值与原始响应不一致：'+s['id'])
@@ -308,7 +309,7 @@ def build(spec,out):
  for s in data['series']:
   dates=[p['date'] for p in s['points']]
   if dates!=sorted(set(dates)):raise ValueError('序列日期乱序或重复')
-  if any(not dt.date.fromisoformat(data['start'])<=dt.date.fromisoformat(p['date'])<=asof or not isinstance(p['value'],(int,float)) or isinstance(p['value'],bool) or not math.isfinite(p['value']) for p in s['points']):raise ValueError('序列日期或值无效')
+  if any(not dt.date.fromisoformat(data['start'])<=validated_day(p['date'])<=asof or not isinstance(p['value'],(int,float)) or isinstance(p['value'],bool) or not math.isfinite(p['value']) for p in s['points']):raise ValueError('序列日期或值无效')
   if (s['role']=='asset' or s['id'] in ['CPIAUCSL','INDPRO','PCOPPUSDM',*FX_CONVENTIONS]) and any(p['value']<=0 for p in s['points']):raise ValueError('价格或指数必须为正')
  if len({s['unit'] for s in assets if s['points']})>1:raise ValueError('资产价格币种不一致，需另行汇兑')
  snapshots=[changes(s) for s in data['series'] if s['role']=='macro'];common=set.intersection(*[set(p['date'] for p in s['points']) for s in assets]) if assets else set();dates=sorted(common);windows=[]
@@ -386,5 +387,5 @@ def build(spec,out):
  lines+=['','## 本次资料缺口',('未取得序列：'+','.join(result['missingSeries'])) if result['missingSeries'] else '各序列已取得观测，但发布日期、复权和同步时刻仍未核验。','','## 口径与局限',*result['limitations'],'','## 数据来源',*[s.get('sourceUrl') or (s['id']+'：来源链接未登记') for s in result['sources']]];md='\n'.join(lines)
  (out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8');(out/'宏观与跨资产观察.md').write_text(md,encoding='utf8');(out/'宏观与跨资产观察.html').write_text(render(md,title='宏观与跨资产观察'),encoding='utf8');return result
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('command',choices=['collect','build']);p.add_argument('input',type=Path);p.add_argument('--out-dir',type=Path,required=True);a=p.parse_args();globals()[a.command](json.loads(a.input.read_text(encoding='utf8')),a.out_dir)
+ p=argparse.ArgumentParser();p.add_argument('command',choices=['collect','build']);p.add_argument('input',type=Path);p.add_argument('--out-dir',type=Path,required=True);a=p.parse_args();globals()[a.command](json.loads(a.input.read_text(encoding='utf-8-sig'),object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float),a.out_dir)
 

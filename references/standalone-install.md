@@ -66,3 +66,13 @@ Excel相关组件单独检查：xlrd用于申万股票行业历史XLS原表，op
 
 
 工作台登记检查仅用于已有项目：`python scripts/audit_workbench.py --workspace PROJECT --run-checks`。Node默认从PATH定位，也可由调用者以`--node NODE_PATH`指定；支持.js、.cjs和.mjs。缺Node时保留失败原因，不使用Python执行JavaScript。此入口检查缓存与登记脚本，不替代独立安装、原文、内容或视觉验收。
+
+## 运行版本验证范围
+
+当前Windows环境已实际运行Python3.12主包检查；另以Python3.14.7、禁用第三方site-packages运行环境检查、教学消息研究、教学基金比较及留存真实组合历史报告，四入口成功，组合收益、最大回撤、收益贡献与期末距高点结果和原运行时一致。461份Python源码通过3.11语法模式检查，本机没有3.11运行时，语法检查本身不证明运行；后续GitHub独立环境已实际运行3.11，范围见下节。可选PDF、Excel、字体、网络来源及其他平台另按实际环境核验。
+
+## GitHub独立矩阵实际结果
+
+2026-10-08，[独立运行37785852969](https://github.com/KILING-TASI/research-workbench/actions/runs/37785852969)在Ubuntu/Windows和Python3.11/3.12四组均成功，每组实际2053项主包测试通过，另有三个禁用site-packages的教学入口成功。声明依赖按已测试约束安装；不携带专有导出组件或作者数据。首次Windows运行的3项路径断言失败已保留，修正短路径/规范路径比较后复验通过。
+
+该结果对应提交658395355b2b46c1f683f086ce38b691af00c61c。流程仅拉取请求及手动事件触发，无定时设置；后续代码变化须重新运行，不能沿用此状态。上述检查不代表联网数据稳定、全部专题资源、视觉或经济判断全部通过。

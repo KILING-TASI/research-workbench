@@ -128,8 +128,9 @@ def announcements(code,start,end):
             ident=item.get('art_code')
             if not ident or ident in seen:raise ValueError('公告分页重复或缺少标识')
             seen.add(ident)
+            detail_url='https://data.eastmoney.com/notices/detail/'+code+'/'+ident+'.html' if isinstance(ident,str) and re.fullmatch(r'AN[0-9]+',ident) else None
             if start<=day<=end:rows.append({'id':ident,'date':day,'title':item.get('title'),
-                'url':item.get('attach_url') or None,'raw':item,'originalVerified':False})
+                'url':item.get('attach_url') or detail_url,'raw':item,'originalVerified':False})
         if page*100>=int(result.get('total_hits',len(result['list']))):break
     else:raise ValueError('公告分页超过上限，结果未提交')
     if not rows:raise ValueError('公告接口返回空；无法区分无公告与该品种未覆盖，须另查官方来源')

@@ -60,6 +60,8 @@ def change(now,old,metric=None):
    label='由净流出转净流入' if old<0 and now>0 else '净流出收窄' if old<0 and now<0 and now>old else '净流出扩大' if old<0 and now<0 and now<old else '净流出持平' if old<0 and now==old else label
   elif metric is not None and metric not in ['profit','parentProfit']:
    label='由负转正' if old<0 and now>0 else '负值绝对值减少' if old<0 and now<0 and now>old else '负值绝对值增加' if old<0 and now<0 and now<old else '负值持平' if old<0 and now==old else label
+  if old<0 and now==0:
+   label='净流出归零' if metric=='operatingCash' else '负值归零' if metric is not None and metric not in ['profit','parentProfit'] else '亏损归零'
   return dict(value=None,reason=label)
  v=now/old-1
  transition='由净流入转净流出' if metric=='operatingCash' else '由正转负' if metric is not None and metric not in ['profit','parentProfit'] else '转亏'
