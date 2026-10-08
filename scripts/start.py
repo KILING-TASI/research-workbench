@@ -47,7 +47,7 @@ def execute(command, destination, input_path=None, example='compare', question=N
                 spec = {'question': question, 'asOf': as_of, 'market': 'CN', 'onlineSearch': online, 'refresh': online}
                 result = run(spec, stage)
                 archive_file = Path(result['archivePath'])
-                result['archivePath'] = str((destination.resolve() / archive_file.relative_to(stage)).resolve())
+                result['archivePath'] = str((destination.resolve() / archive_file.resolve().relative_to(stage.resolve())).resolve())
                 archive_file.write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False), 'utf-8')
                 (stage / '研究结果.json').write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False), 'utf-8')
                 (stage / '研究结果.md').write_text(result['answer'], 'utf-8')
