@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "packageSha256": "2476647b21507e60e2deafea6cbe7d15c96c40637f73e57aa65e0850fac2feb1",
+  "steps": [
+    {
+      "step": "首次组合研究",
+      "returncode": 0,
+      "expectedReturncode": 0
+    },
+    {
+      "step": "名称找回贡献追问",
+      "returncode": 0,
+      "expectedReturncode": 0
+    },
+    {
+      "step": "修改输入续问停止",
+      "returncode": 2,
+      "expectedReturncode": 2
+    },
+    {
+      "step": "按名称找回改动提示",
+      "returncode": 0,
+      "expectedReturncode": 0
+    }
+  ],
+  "scope": "current-Windows-Python-site-packages-disabled; ascii-output-environment",
+  "dataScope": "declared-recorded-history; not actual-account-performance",
+  "originalInputUnchanged": true,
+  "modifiedCopyStopped": true,
+  "oldHeadlineHiddenInSearch": true,
+  "visualVerified": false
+}

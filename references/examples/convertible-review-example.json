@@ -1,0 +1,16 @@
+{
+  "currency": "CNY",
+  "exampleType": "teaching-only",
+  "source": "教学现金流与假设价格，非真实可转债、非实时行情",
+  "fullPrice": 118.5,
+  "faceValue": 100,
+  "stockPrice": 10.52,
+  "conversionPrice": 10,
+  "discountYield": 0.045,
+  "cashFlows": [
+    {"year": 1, "amount": 0.3},
+    {"year": 2, "amount": 0.5},
+    {"year": 3, "amount": 1},
+    {"year": 4, "amount": 111.5}
+  ]
+}

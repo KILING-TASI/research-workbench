@@ -7,6 +7,83 @@ from start import execute
 
 
 class FirstUseTests(unittest.TestCase):
+    def test_cashflow_gap_has_relevant_next_steps(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);source=root/'input.json';source.write_text(json.dumps({'cashFlowCoverage':'unknown'}),'utf-8')
+            result=execute('cashflow',root/'blocked',input_path=source)
+            self.assertEqual(result['status'],'blocked');self.assertIn('全部外部转入',result['nextSteps'][0])
+            self.assertNotIn('净值',' '.join(result['nextSteps']));self.assertIn('不能仅修改完整性声明',' '.join(result['nextSteps']))
+    def test_help_renders_percent_without_formatting_error(self):
+        import subprocess,sys,os
+        from start import ROOT
+        env=os.environ.copy();env['PYTHONIOENCODING']='ascii'
+        p=subprocess.run([sys.executable,str(ROOT/'scripts/start.py'),'--help'],env=env,capture_output=True,text=True,encoding='utf-8',timeout=20)
+        self.assertEqual(p.returncode,0,p.stderr);self.assertIn('0.03表示0.03%',p.stdout)
+    def test_changed_saved_snapshot_requires_explicit_new_input(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);csv=root/'holding.csv'
+            header='code,name,market_value,currency,asset_class\n'
+            csv.write_text(header+'a,现金,10,CNY,cash\n','utf-8')
+            execute('snapshot',root/'old',input_path=csv,as_of='2026-10-09')
+            changed=root/'old/input.csv';changed.write_text(header+'a,现金,20,CNY,cash\n','utf-8')
+            blocked=execute('snapshot',root/'blocked',continue_from=root/'old')
+            self.assertEqual(blocked['status'],'blocked');self.assertIn('已保存输入发生变化',blocked['message'])
+            updated=execute('snapshot',root/'updated',continue_from=root/'old',input_path=changed)
+            self.assertEqual(updated['status'],'partial');self.assertEqual(updated['inputReuseVerification'],'explicit-new-input')
+            self.assertEqual(json.loads((root/'updated/result.json').read_text('utf-8'))['totalMarketValue'],'20')
+    def test_news_can_continue_but_is_not_complete_event_evaluation(self):
+        from start import ROOT
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            first=execute('news',root/'old',input_path=ROOT/'references/examples/news-example.json')
+            second=execute('news',root/'new',continue_from=root/'old')
+            self.assertEqual(first['status'],'partial');self.assertEqual(second['status'],'partial')
+            self.assertEqual((root/'old'/'input.json').read_bytes(),(root/'new'/'input.json').read_bytes())
+            self.assertIn('不是预计损失',second['headline'])
+    def test_snapshot_continuation_preserves_amounts_and_date(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);source=root/'mine.csv'
+            source.write_text('code,name,market_value,currency,asset_class\nA,资产A,100,CNY,fund\n','utf-8')
+            execute('snapshot',root/'old',input_path=source,as_of='2026-09-30')
+            result=execute('snapshot',root/'new',continue_from=root/'old')
+            self.assertEqual(result['status'],'partial')
+            self.assertEqual((root/'new'/'input.csv').read_bytes(),source.read_bytes())
+            self.assertEqual(json.loads((root/'new'/'result.json').read_text('utf-8'))['asOf'],'2026-09-30')
+            self.assertEqual(execute('funds',root/'wrong',continue_from=root/'old')['status'],'blocked')
+    def test_continue_fund_request_reuses_parameters_but_not_online_permission(self):
+        def collect(codes,start,as_of,group,out,**kwargs):
+            self.assertEqual(codes,['000001','000002'])
+            self.assertEqual(start,'2025-01-01');self.assertEqual(as_of,'2026-09-30')
+            self.assertFalse(kwargs['allow_online']);out.mkdir()
+            return {'status':'partial','message':'历史比较','nextSteps':[]}
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);previous=root/'old';previous.mkdir()
+            (previous/'research-request.json').write_text(json.dumps({'command':'funds','codes':['000001','000002'],'start':'2025-01-01','asOf':'2026-09-30'}),'utf-8')
+            with patch('quick_research.fund_codes',side_effect=collect):
+                result=execute('funds',root/'new',continue_from=previous)
+            self.assertEqual(result['status'],'partial')
+            self.assertTrue((root/'new'/'research-request.json').exists())
+    def test_continuation_links_to_selected_source_without_changing_it(self):
+        from urllib.parse import unquote
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);source=root/'mine.csv';source.write_text('code,name,market_value,currency,asset_class\nA,资产A,100,CNY,fund\n','utf-8')
+            execute('snapshot',root/'old',input_path=source,as_of='2026-09-30')
+            original=(root/'old/打开这里.html').read_bytes()
+            result=execute('snapshot',root/'nested/new',continue_from=root/'old')
+            relative=result['previousStudy']['entry']
+            self.assertEqual((root/'nested/new'/relative).resolve(),root/'old/打开这里.html')
+            self.assertIn('返回上次报告',(root/'nested/new/打开这里.md').read_text('utf-8'))
+            self.assertEqual(original,(root/'old/打开这里.html').read_bytes())
+
+    def test_fund_group_can_be_omitted_without_claiming_same_category(self):
+        def collect(codes,start,as_of,group,out,**kwargs):
+            self.assertEqual(group,'用户指定比较池（未核验同类）')
+            out.mkdir()
+            return {'status':'partial','message':'历史比较','nextSteps':[]}
+        with tempfile.TemporaryDirectory() as folder, patch('quick_research.fund_codes',side_effect=collect):
+            result=execute('funds',Path(folder)/'result',online=True,codes=['000001','000002'],start='2025-01-01',as_of='2026-09-30')
+            self.assertEqual(result['status'],'partial')
+
     def test_offline_demo_has_judgment_and_evidence(self):
         with tempfile.TemporaryDirectory() as directory:
             out = Path(directory) / 'demo'

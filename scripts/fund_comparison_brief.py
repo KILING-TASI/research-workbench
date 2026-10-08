@@ -1,23 +1,63 @@
 """Human-readable comparison built from the existing common-date calculation."""
 import argparse,json,tempfile,os,hashlib
 from pathlib import Path
-from research_pipeline import compare,read
+from research_pipeline import compare,read,series
+from datetime import date
 from research_brief_html import render
 
 def method_files():
  return [Path(__file__).with_name(name) for name in ['fund_comparison_brief.py','research_pipeline.py','research_brief_html.py','collection_validation.py','observation_calendar.py']]
+
+def recovery_observation(dates,values):
+ peak=0;worst=0.0;peak_at=None;trough_at=None
+ for index,value in enumerate(values):
+  if value>=values[peak]:peak=index
+  decline=value/values[peak]-1
+  if decline<worst:worst=decline;peak_at=peak;trough_at=index
+ if trough_at is None:return {'status':'no-observed-drawdown','drawdownPct':0.0}
+ recovered=next((i for i in range(trough_at+1,len(values)) if values[i]>=values[peak_at]),None)
+ end=recovered if recovered is not None else len(values)-1
+ return {'status':'recovered' if recovered is not None else 'not-recovered-by-window-end','drawdownPct':worst*100,
+         'peakDate':dates[peak_at],'troughDate':dates[trough_at],'recoveryDate':dates[recovered] if recovered is not None else None,
+         'underwaterCalendarDays':(date.fromisoformat(dates[end])-date.fromisoformat(dates[peak_at])).days,
+         'windowEnd':dates[-1]}
+
+def monthly_observation(dates,values):
+ ends={}
+ for index,day in enumerate(dates):ends[day[:7]]=index
+ output=[];previous=0;previous_month=None
+ for month,end in ends.items():
+  current=date.fromisoformat(month+'-01')
+  contiguous=previous_month is None or current.year*12+current.month-previous_month==1
+  output.append({'month':month,'fromDate':dates[previous],'toDate':dates[end],
+                 'returnPct':(values[end]/values[previous]-1)*100 if contiguous and end>previous else None,
+                 'scope':'first-month-partial' if previous_month is None else 'observed-month-endpoints' if contiguous else 'missing-previous-month'})
+  previous=end;previous_month=current.year*12+current.month
+ return output
 
 def explain(document,result):
  rows=result['rows'];names={r['code']:str(r.get('name') or r['code']).replace('\n',' ') for r in document['rows']}
  facts=[]
  if len(rows)==2:
   first,second=rows;return_gap=first['totalReturnPct']-second['totalReturnPct'];drawdown_gap=abs(first['drawdownPct'])-abs(second['drawdownPct'])
-  if return_gap>0 and drawdown_gap>0:judgment='前者历史收益更高，但回撤也更深，收益优势伴随更大的下跌体验。'
+  if return_gap>0 and drawdown_gap>0:judgment='前者这段时间赚得更多，但从高点跌下来也更深。收益优势伴随更大的下跌，不能只看赚了多少。'
   elif return_gap>0 and drawdown_gap<0:judgment='前者在本区间收益与最大回撤两项指标上占优；这还不能证明经理能力或未来优势。'
-  elif return_gap<0 and drawdown_gap<0:judgment='前者历史收益较低，但回撤较小，体现的是收益与下跌风险的取舍。'
+  elif return_gap<0 and drawdown_gap<0:judgment='前者这段时间赚得少一些，但从高点跌下来也没那么深。这是收益与下跌风险的取舍，还不能只凭一项数字定优劣。'
   elif return_gap<0 and drawdown_gap>0:judgment='后者在本区间收益与最大回撤两项指标上占优；仍需核查基准、风格和持仓后解释原因。'
-  else:judgment='收益或回撤指标接近，不能据这两项指标直接判断产品优劣。'
+  elif return_gap==0 and drawdown_gap!=0:
+   judgment='两只在这段时间的累计收益相同，但前者从高点跌下来的幅度'+('更深' if drawdown_gap>0 else '更小')+'。收益一样不代表持有过程一样；原因还要看基准、持仓和费用。'
+  elif drawdown_gap==0 and return_gap!=0:
+   judgment='两只在这段时间的最大回撤幅度相同，但前者累计收益'+('更高' if return_gap>0 else '更低')+'。这两项只能描述已经发生的表现，还不能说明未来或经理能力。'
+  else:judgment='这段时间的累计收益和最大回撤两项都相同，单看它们还说不清哪只更好；还要结合基准、持仓和费用。'
+  if first['totalReturnPct']<0 or second['totalReturnPct']<0:
+   def outcome(row):
+    value=row['totalReturnPct']
+    return ('亏损'+format(abs(value),'.2f')+'%' if value<0 else '盈利'+format(value,'.2f')+'%' if value>0 else '持平')
+   judgment='前者这段区间'+outcome(first)+'，后者'+outcome(second)+'。'+judgment.replace('赚得更多','累计收益更高').replace('赚得少一些','累计收益更低').replace('只看赚了多少','只看期末收益')
   judgment=judgment.replace('前者',names[first['code']]).replace('后者',names[second['code']])
+  leader,other=(first,second) if return_gap>0 and drawdown_gap<0 else (second,first) if return_gap<0 and drawdown_gap>0 else (None,None)
+  if leader and leader.get('annualizedVolPct') is not None and other.get('annualizedVolPct') is not None and leader['annualizedVolPct']>other['annualizedVolPct']:
+   judgment+='但'+names[leader['code']]+'的日常波动更大，年化波动为'+f"{leader['annualizedVolPct']:.2f}%"+'，另一只为'+f"{other['annualizedVolPct']:.2f}%"+'；最大回撤略小不等于持有过程更平稳。'
   label='高于' if return_gap>0 else '低于' if return_gap<0 else '相同于'
   risk='大于' if drawdown_gap>0 else '小于' if drawdown_gap<0 else '等于'
   text=f"在{result['start']}至{result['end']}的共同区间，{names[first['code']]}累计收益为{first['totalReturnPct']:.2f}%，{names[second['code']]}为{second['totalReturnPct']:.2f}%；前者{label}后者{abs(return_gap):.2f}个百分点。前者历史最大回撤幅度{risk}后者{abs(drawdown_gap):.2f}个百分点。"
@@ -40,6 +80,13 @@ def explain(document,result):
 
 def report(document):
  result=compare(document)
+ observed=[]
+ for row in document['rows']:
+  history=[point for point in row['history'] if not document.get('start') or point['date']>=document['start']]
+  observed.append(series(history,document['asOf'],row['basis']))
+ common=sorted(set.intersection(*(set(item) for item in observed)))
+ result['recoveryObservations']=[{'code':row['code'],**recovery_observation(common,[item[d] for d in common])} for row,item in zip(document['rows'],observed)]
+ result['monthlyObservations']=[{'code':row['code'],'months':monthly_observation(common,[item[d] for d in common])} for row,item in zip(document['rows'],observed)]
  result['findings']=explain(document,result)
  result['researchLevel']='historical-comparison'
  result['gapImpacts']=[
@@ -57,6 +104,24 @@ def report(document):
  for row in result['rows']:
   vol=f"{row['annualizedVolPct']:.2f}%" if row['annualizedVolPct'] is not None else '未计算'
   lines.append(f"|{names[row['code']]}（{row['code']}）|{row['totalReturnPct']:.2f}%|{row['drawdownPct']:.2f}%|{vol}|{row['observationCount']}|")
+ lines+=['','## 跌下去以后，多久回到原来的位置？']
+ for item in result['recoveryObservations']:
+  name=names[item['code']]
+  if item['status']=='no-observed-drawdown':lines.append(name+'在共同观测中没有出现下跌回撤，不代表未来不会下跌。')
+  elif item['status']=='recovered':lines.append(name+'的区间最大回撤从'+item['peakDate']+'的高点跌至'+item['troughDate']+'的低点；直到'+item['recoveryDate']+'才重新达到该高点，从高点到修复相隔'+str(item['underwaterCalendarDays'])+'个日历日。')
+  else:lines.append(name+'的区间最大回撤从'+item['peakDate']+'的高点跌至'+item['troughDate']+'的低点；截至'+item['windowEnd']+'仍未回到该高点，已相隔'+str(item['underwaterCalendarDays'])+'个日历日。未来何时修复不能由此推算。')
+ lines+=['这里的“回到高点”基于共同日期的收益序列，不是个人买入成本；缺日可能漏掉更深低点或更早修复日。只描述本区间最深的一段回撤，不代表所有亏损等待时间。']
+ lines+=['','## 最近几个月，表现是否一直相同？','下表展示最近六个有共同观测的月份，按上个有观测月份末值到本月末值计算；首月从区间首个观测起算，不能当完整月收益。日历完整性未认证，跨缺月不计算单月收益。','','|月份|实际观察区间|'+ '|'.join(names[item['code']] for item in result['monthlyObservations'])+'|','|---|---|'+ '|'.join('---:' for item in result['monthlyObservations'])+'|']
+ for index in range(max(0,len(result['monthlyObservations'][0]['months'])-6),len(result['monthlyObservations'][0]['months'])):
+  month=result['monthlyObservations'][0]['months'][index]
+  values=[item['months'][index]['returnPct'] for item in result['monthlyObservations']]
+  label=month['month']+('（区间首月）' if month['scope']=='first-month-partial' else '')
+  lines.append('|'+label+'|'+month['fromDate']+'至'+month['toDate']+'|'+'|'.join('未计算' if value is None else f'{value:+.2f}%' for value in values)+'|')
+ for item in result['monthlyObservations']:
+  eligible=[month for month in item['months'] if month['scope']=='observed-month-endpoints' and month['returnPct'] is not None]
+  if eligible:
+   strongest=max(eligible,key=lambda month:month['returnPct']);weakest=min(eligible,key=lambda month:month['returnPct'])
+   lines.append(names[item['code']]+'在可计算的月末区间中，'+strongest['month']+'表现最高（'+f"{strongest['returnPct']:+.2f}%"+'），'+weakest['month']+'最低（'+f"{weakest['returnPct']:+.2f}%"+'）。这是阶段变化，不证明季节规律或未来持续性。')
  lines+=['','## 如何理解结果','累计收益反映共同区间内的变化；最大回撤只包括对齐后的观测，不代表完整持有路径。年化波动按252个交易日假设计算，资料频率或共同日期不满足条件时留空。','','## 口径与资料缺口',result['basis'],'比较组由输入声明，未独立核验为同类；本报告不提供同类排名。']
  for row in document['rows']:
   basis=row['basis'];lines.append('- '+row['code']+'：'+('单位净值加已取得现金分红，按红利再投处理。分红记录完整性未独立核验。' if basis=='nav-with-distributions' else '输入口径为'+str(basis)+'，需单独核验复权与事件记录。'))

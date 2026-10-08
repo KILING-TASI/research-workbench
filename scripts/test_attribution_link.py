@@ -20,7 +20,7 @@ class LinkTests(unittest.TestCase):
   s=fixtures.Tests().spec();r=link(dict(asOf=s['asOf'],periods=[s]))
   html=render(render_summary(r))
   self.assertEqual(html.count('<table>'),1)
-  self.assertIn('<th>行业配置贡献</th>',html)
+  self.assertRegex(html,r'<th scope="col"(?: class="align-right")?>行业配置贡献</th>')
   self.assertNotIn('<p>|',html)
  def test_reconciliation_and_gap(self):
   s=fixtures.Tests().spec();t=copy.deepcopy(s);t.update(start=s['end'],end='2026-06-30',asOf='2026-07-31',weightDate='2026-03-31');s['asOf']='2026-07-31';r=link({'asOf':'2026-07-31','periods':[s,t]});self.assertAlmostEqual(sum(r['effectsPp'].values()),r['activeReturnPp']);self.assertNotAlmostEqual(r['activeReturnPp'],12.4);t['start']='2026-04-01'

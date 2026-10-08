@@ -10,6 +10,7 @@
 
 | 请求 | 规范与入口 |
 |---|---|
+| 已取得节点的有效持仓、根持仓冗余及证券别名关系 | [递归穿透](research-extensions.md)：start.py lookthrough --input INPUT.json --out-dir NEW_DIR；证券与公司层次分开，未知不填零 |
 | 基金投资明细与当期会计余额、净资产比例核对 | [基金投资核对](fund-investment-reconcile.md)：fund_investment_reconcile.py REPORT_RESULT.json --out NEW.json；不等于完整组合穿透 |
 | 已有港美元日线与同日汇率的人民币换算 | [跨币种价格](currency-price-bridge.md)：currency_price_bridge.py INPUT.json --out NEW.json；美元、港币汇率支持按请求获取；换算价格不是总收益 |
 | 已核验同日行业表按静态基金权重汇总 | [组合行业敞口](portfolio-industry-exposure.md)：portfolio_industry_exposure.py INPUT.json --out NEW.json；分类与版本分组保留，未知资产不当现金 |
@@ -99,3 +100,7 @@ ETF中报/年报的行业合计可分别披露指数投资和积极投资。解�
 九列表最小示例见[513100中报输入](examples/qdii-us-holdings-513100.json)。将输入复制到新研究目录，旁边放与示例哈希一致的管理人中报 `fund-report.pdf`；不附带或重新分发原件。调用 `python scripts/qdii_us_holdings.py RESEARCH_DIR/input.json --out RESEARCH_DIR/new-result.json`。本例应返回102证券、101报告序号组、权益合计17,686,928,778.66元及前十报告组约43.47%，同时保留碎片与范围限制。更换文件或基金必须重新核原页和参数，不只换代码沿用金额；失败检查退出状态，不继续引用旧结果。
 
 披露利率情景入口可选parentWeightEvidence，含reportDate（与子报告同日）、holdingAmountCNY、parentNetAssetsCNY、path、sha256及locators[{page,quote,field}]；field分别为holdingAmountCNY和parentNetAssetsCNY。程序重新定位两项金额并复算权重，缺证据时仅标输入声明；报告身份、币种单位适用范围仍须独立核对。冲击参数只有在同一金额引句明确利率方向及百分比/基点时标原句定位与单位换算，不认证经济模型或整体FOF压力。
+
+## 配置候选与现金流复盘
+
+方法、上下限、类别约束、收缩及接续方式统一见[配置候选研究](portfolio-allocation.md)；账户出入金与TWR/XIRR见[现金流收益观察](portfolio-cashflow-review.md)。不把配置候选与完整交易回测混为一体。

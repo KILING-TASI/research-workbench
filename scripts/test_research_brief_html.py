@@ -1,6 +1,14 @@
 import unittest
 from research_brief_html import render
 class Tests(unittest.TestCase):
+ def test_table_alignment_and_keyboard_region_preserve_values(self):
+  result=render('|产品|收益|状态|\n|---|---:|:---:|\n|基金A|-2.50%|缺资料|')
+  self.assertIn('<th scope="col" class="align-right">收益</th>',result)
+  self.assertIn('<td class="align-right">-2.50%</td>',result)
+  self.assertIn('<td class="align-center">缺资料</td>',result)
+  self.assertIn('tabindex="0" role="region"',result)
+  self.assertIn('aria-describedby="table-hint-1"',result)
+  self.assertIn('@media print{.table-hint{display:none}',result)
  def test_parentheses_in_original_file_and_url_are_not_truncated(self):
   text='[修订原文](reports/基金合同(2026修订).pdf#page=5)及[网页](https://example.org/a(b(c)).pdf)'
   result=render(text)

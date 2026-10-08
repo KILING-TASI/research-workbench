@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "packageSha256": "fc837ed1374988d3d48303f6723775b271dd19e9bcdd2c8d66eaf837c8c7c121",
+  "steps": [
+    {
+      "step": "百万单位首次复盘",
+      "returncode": 0
+    },
+    {
+      "step": "名称找回损益追问",
+      "returncode": 0
+    },
+    {
+      "step": "未知现金流停止",
+      "returncode": 2,
+      "expectedReturncode": 2
+    }
+  ],
+  "scope": "explicit-teaching-cashflow; Windows-Python-site-packages-disabled-ascii-output",
+  "millionUnitDisplayCorrect": true,
+  "jsonInputUnitsPreserved": true,
+  "unknownCoverageBlocked": true,
+  "originalInputUnchanged": true,
+  "failureGuidanceImprovedInCurrentSource": true,
+  "actualAccountVerified": false,
+  "visualVerified": false
+}

@@ -69,7 +69,23 @@ def issuer_exposure(spec,locator_paths=None):
   state=rel['locationCheck']['status']
   evidence_values[state]+=nonnegative(holdings[key]['marketValue'])
  evidence_coverage=[{'status':state,'marketValue':str(value),'portfolioWeightPct':str(value/total*100)} for state,value in evidence_values.items()]
- return {'status':status,'groups':rows,'unknown':unknown,'unknownValue':str(unknown_value),'knownCoveragePct':str((total-unknown_value)/total*100),'evidenceCoverage':evidence_coverage,'directBounds':direct_bounds,'excludedRelations':excluded,'maximumIssuerWeightPct':cap,'exceededIssuers':failures,'limitation':'仅直接证券发行人合并；无关系不填零；基金穿透、实控人、担保链和现金银行信用尚未覆盖。日期与关系来自输入声明，不认证原文真实性；覆盖比例不是准确率'}
+ equity={};equity_entries=0
+ direct_equity=sum((nonnegative(h['marketValue']) for h in holdings.values() if h['assetClass']=='stock'),Decimal(0))
+ for key,rel in mapped.items():
+  if holdings[key]['assetClass']!='stock' or nonnegative(holdings[key]['marketValue'])==0:continue
+  equity_entries+=1
+  group=equity.setdefault(rel['issuerId'],{'value':Decimal(0),'assets':[]})
+  group['value']+=nonnegative(holdings[key]['marketValue']);group['assets'].append(key)
+ known_equity=sum((group['value'] for group in equity.values()),Decimal(0))
+ hhi=sum(((group['value']/known_equity)**2 for group in equity.values()),Decimal(0)) if known_equity else None
+ concentration={'scope':'known-direct-equity-issuer-only','securityEntries':equity_entries,'issuerCount':len(equity),
+                'knownEquityValue':str(known_equity),'unknownDirectEquityValue':str(direct_equity-known_equity),
+                'portfolioCoveragePct':str(known_equity/total*100),'directEquityCoveragePct':str(known_equity/direct_equity*100) if direct_equity else None,
+                'hhi':str(hhi) if hhi is not None else None,'effectiveIssuerCount':str(1/hhi) if hhi else None,
+                'topTenKnownEquityPct':str(sum(sorted((group['value'] for group in equity.values()),reverse=True)[:10],Decimal(0))/known_equity*100) if known_equity else None,
+                'heldThroughMultipleDirectPositionsPct':str(sum((group['value'] for group in equity.values() if len(group['assets'])>=2),Decimal(0))/known_equity*100) if known_equity else None,
+                'limitations':['只在已关联直接股票内部归一化；基金底层、债券和其他资产不计入','等效主体数是集中度，不是独立风险来源数量','关系仍按上述证据层次核查；未知股票和基金穿透可能改变结果']}
+ return {'status':status,'groups':rows,'equityConcentration':concentration,'unknown':unknown,'unknownValue':str(unknown_value),'knownCoveragePct':str((total-unknown_value)/total*100),'evidenceCoverage':evidence_coverage,'directBounds':direct_bounds,'excludedRelations':excluded,'maximumIssuerWeightPct':cap,'exceededIssuers':failures,'limitation':'仅直接证券发行人合并；无关系不填零；基金穿透、实控人、担保链和现金银行信用尚未覆盖。日期与关系来自输入声明，不认证原文真实性；覆盖比例不是准确率'}
 
 def link_portfolio(spec,portfolio,locator_paths=None):
  """Recompute from the original portfolio input; never trust an old result alone."""
@@ -218,6 +234,10 @@ def export(result,out):
   for item in issuer.get('evidenceCoverage',[]):
    md+=[evidence_labels[item['status']]+'：市值'+item['marketValue']+'，占全组合'+format(number(item['portfolioWeightPct']),'.2f')+'%。']
   md+=['上述定位层次与关联市值覆盖分开；引句存在不证明关系语义或披露日期真实。','']
+  concentration=issuer.get('equityConcentration')
+  if concentration and concentration['effectiveIssuerCount'] is not None:
+   md+=['### 已关联直接股票：数量多不等于均匀分散','已关联'+str(concentration['securityEntries'])+'个直接股票项目，合并为'+str(concentration['issuerCount'])+'个发行人；按已知股票内部权重计算，集中度相当于'+format(number(concentration['effectiveIssuerCount']),'.2f')+'个等权主体。这里只覆盖全组合市值'+format(number(concentration['portfolioCoveragePct']),'.2f')+'%，不是完整穿透后的有效持仓数。','通过两个以上直接股票项目重复持有的发行人，占已知直接股票金额'+format(number(concentration['heldThroughMultipleDirectPositionsPct']),'.2f')+'%。']
+   md+=concentration['limitations']+['']
   for g in issuer['groups']:md+=[g['issuerId']+'：合计'+g['marketValue']+'，占组合'+format(number(g['weightPct']),'.2f')+'%；关联证券：'+'、'.join(a['assetId'] for a in g['assets'])+'。']
   bounds=issuer.get('directBounds')
   if bounds:

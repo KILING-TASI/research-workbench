@@ -25,3 +25,7 @@ single必填：code、price、budget、maxShares、ratesPct（P75/P50/P25百分�
 collision输入totalFunds及issues（1至50项single输入，不可重复代码）。逐档建立现金账：申购扣全额，退款释放未获配本金，卖出结算计入净现金。默认同日先申购后释放；有明确到账可用依据才设置sameDayReleasedFundsUsable=true。输出是否可行、最低现金、所需额外初始资金及逐日账。允许假设盈利参与后续周转，应与实测区分。仅检验输入方案，不自动寻找资金分配或提供申购指令。
 
 能力名称调整不改变single/collision命令、输入字段或旧档案。关键数值按evidence-chain.md区分事实、假设和派生结果。
+
+新增transferFeePct（过户费百分数）与saleCostBreakdown逐项费用。未给费用字段按零假设，不代表免税；未按券商分项舍入或结算账单核验。多组联合假设见[情景研究](scenario-engine.md)，使用现有精确整手与资金日计算，不默认为概率或忽略未知余股。
+
+additionalSharesAssumptions按P75/P50/P25可声明0或100股额外余股。有比例零头且总假设获配不超过申购股数才接受；不是实际获配证据。wholeLotShares继续为比例整手，allocatedSharesAssumption为含声明余股的合计；费用/资金日/退款依合计重算，下一比例整手档位仍依比例部分。联合情景入口自动把余股作为独立分支，不混入基线。

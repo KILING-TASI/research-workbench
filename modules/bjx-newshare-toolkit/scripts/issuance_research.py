@@ -3,7 +3,7 @@ import argparse, copy, datetime as dt, json, re
 from decimal import Decimal
 from pathlib import Path
 from allocation_cash import calculate, collision, LABELS, number
-from research_evidence import export, validate, conflicts, package, sha, canonical, load, timestamp, now
+from bjx_research_evidence import export, validate, conflicts, package, sha, canonical, load, timestamp, now
 
 NUMERIC_VERIFIED={'original-text-matched','exact-table-cell-with-header'}
 DEFAULT_FIELDS=['price','maxShares','onlineFinalShares','refundDate','ratePct','strategicShares','greenshoeShares',
@@ -251,7 +251,7 @@ def counterfactual(spec,nodes):
 
 def matched_review(spec):
     from prediction_review import read,compare
-    from research_evidence import verify
+    from bjx_research_evidence import verify
     groups=[];excluded=[]
     for group in ['before','after']:
         keep={}
@@ -331,7 +331,7 @@ def run(spec):
 def snapshot(spec,result,input_path,result_path,workspace):
     evidence=result['evidence'];created=now().isoformat();deps=[{'path':str(input_path.resolve()),'role':'research-input'}, {'path':str(result_path.resolve()),'role':'calculation-result','availableAt':created}]
     # Archive code and configuration without depending on the author's installation paths.
-    for name in ['issuance_research.py','research_evidence.py','issuance_facts.py','allocation_cash.py','company_research.py']:
+    for name in ['issuance_research.py','research_evidence.py','bjx_research_evidence.py','issuance_facts.py','allocation_cash.py','company_research.py']:
         deps.append({'path':str(Path(__file__).with_name(name)),'role':'calculation-code','availableAt':created})
     if spec.get('allocationResearch',{}).get('allocation',{}).get('factsStore'):
         store=Path(spec['allocationResearch']['allocation']['factsStore'])

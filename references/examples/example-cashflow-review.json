@@ -1,0 +1,27 @@
+{
+  "exampleType": "teaching-only",
+  "currency": "CNY",
+  "amountUnit": "base",
+  "cashFlowCoverage": "declared-complete",
+  "basis": "虚构教学出入金与估值，非账户",
+  "observations": [
+    {
+      "date": "2023-01-01",
+      "beforeFlowValue": 100,
+      "externalFlow": 0,
+      "afterFlowValue": 100
+    },
+    {
+      "date": "2023-07-01",
+      "beforeFlowValue": 110,
+      "externalFlow": 100,
+      "afterFlowValue": 210
+    },
+    {
+      "date": "2024-01-01",
+      "beforeFlowValue": 231,
+      "externalFlow": 0,
+      "afterFlowValue": 231
+    }
+  ]
+}

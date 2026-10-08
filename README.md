@@ -1,10 +1,8 @@
 # 投研研究助手
 
-**公开测试版 · 原创部分 MIT**
+说明版本：1.86 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
 
-最新版本与安装包见[Releases](https://github.com/KILING-TASI/research-workbench/releases)。下载完整research-workbench目录，先读[快速开始](references/quickstart.md)与[已知限制](KNOWN_ISSUES.md)。说明版本与发行版本分别记录，旧发行包保持冻结。
-
-说明版本：1.49 · 更新日期：2026-10-08。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
+持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill仅按需衔接，不强制安装或自动下载，详见[接口与范围](references/independent-engines.md)。
 
 面向个人与买方研究的多资产投研助手，提供可追溯的资料、分析与研究报告。
 
@@ -24,7 +22,7 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 
 试用看[快速开始](references/quickstart.md)；了解能做什么看[功能说明](references/current-capabilities.md)；修改代码时看[方法与参数索引](references/capability-reference-index.md)。
 
-基金代码比较、持仓CSV整理和组合历史报告可通过[日常简明入口](references/practical-entry.md)调用；仅有持仓金额时先给结构快照，不冒充完整风险诊断。
+基金代码或完整名称比较、持仓CSV整理、组合历史及报告找回可通过[日常简明入口](references/practical-entry.md)调用。常用研究支持沿用保存请求、补失败资料并另存新结果；仅有持仓金额时先给结构快照，不冒充完整风险诊断。报告首页先给判断，再展开论据。
 
 ## 主要功能
 

@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "packageSha256": "2a150092e53008ddc77225a115e591ad1a90ba825f603497ce5ba323dffda413",
+  "steps": [
+    {
+      "step": "首次生成",
+      "returncode": 0,
+      "noSitePackages": true
+    },
+    {
+      "step": "名称找回并追问",
+      "returncode": 0,
+      "noSitePackages": true
+    },
+    {
+      "step": "整理结果",
+      "returncode": 0,
+      "noSitePackages": true
+    }
+  ],
+  "scope": "current-Windows-Python-with-site-packages-disabled; not fresh-OS certification",
+  "inputScope": "explicit historical screenshot transcription; not current account",
+  "inputUnchanged": true,
+  "visualVerified": false,
+  "verifiedLocalLinks": 6
+}

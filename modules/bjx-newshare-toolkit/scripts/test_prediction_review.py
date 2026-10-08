@@ -37,4 +37,18 @@ class Prediction(unittest.TestCase):
             with self.clock(1):capture(self.spec(f),f)
             p=Path(f)/'research-data/bjx-predictions/frozen/old/920022/first.json';archive=next((p.parent/'inputs').glob('*.bin'));archive.write_bytes(b'changed')
             with self.clock(6),self.assertRaises(ValueError):review({'predictionPath':str(p),'actual':{}},f)
+    def test_actual_rate_target_does_not_inherit_forecast_fragment(self):
+        with tempfile.TemporaryDirectory() as f:
+            spec=self.spec(f);spec['allocation']['ratesPct']={k:'.15' for k in ('P75','P50','P25')}
+            spec['allocation']['additionalSharesAssumptions']={'P50':100}
+            with self.clock(1):capture(spec,f)
+            actual=Path(f)/'actual.json';actual.write_text('{}')
+            path=Path(f)/'research-data/bjx-predictions/frozen/old/920022/first.json'
+            with self.clock(6):
+                result=review({'predictionPath':str(path),'actual':{'code':'920022','publishedAt':'2026-07-05T00:00:00Z','ratePct':'.1','sourcePath':str(actual),'allocatedShares':100}},f)
+            from decimal import Decimal
+            self.assertEqual(Decimal(result['metrics']['P50']['actualConditionalThresholdFunds']),Decimal(1000000))
+            self.assertEqual(result['realizedAllocation']['actualVsWholeLotScenario'][1]['sharesDifference'],'0')
+            self.assertEqual(result['realizedAllocation']['actualVsDeclaredAllocationAssumption'][1]['sharesDifference'],'-100')
+
 if __name__=='__main__':unittest.main()

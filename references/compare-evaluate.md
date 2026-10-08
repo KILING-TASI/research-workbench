@@ -14,6 +14,7 @@
 
 | 请求 | 规范与入口 |
 |---|---|
+| 用净值和明确基准观察收益风格变化 | [RBSA](returns-style.md)：start.py style --input INPUT.json --out-dir NEW_DIR；拟合收益暴露，不认证真实持仓或违规 |
 | 已核验基金档案汇总经理—产品任职关系 | [原文任职联动](report-manager-products.md)：report_manager_products.py INPUT.json --out NEW.json；指定池，旧报告不是当前完整名单 |
 | ETF两期份额变化与资金流估值代理 | [份额变化研究](etf-share-flow.md)：etf_share_flow.py INPUT.json --out NEW.json；期末净值估值代理，非真实申赎现金流 |
 | 已有估值序列的历史分位及筛选字段生成 | [估值分位](valuation-percentile.md)：valuation_percentile.py INPUT.json --out NEW.json；真实序列须提供，不将ETF净值当估值 |

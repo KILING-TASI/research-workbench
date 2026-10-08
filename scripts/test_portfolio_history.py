@@ -3,6 +3,28 @@ from portfolio_stress import analyze
 from portfolio_history_report import markdown
 from accounting_basis import validate
 class Tests(unittest.TestCase):
+ def test_direct_report_is_discoverable_without_start_gateway(self):
+  import tempfile,json
+  from pathlib import Path
+  from portfolio_history_report import publish
+  from research_results import publish as find
+  with tempfile.TemporaryDirectory() as folder:
+   root=Path(folder);out=root/'portfolio';publish(self.doc(),out)
+   manifest=json.loads((out/'report-manifest.json').read_text('utf-8'))
+   self.assertEqual(manifest['primaryReport'],'组合历史风险观察.html')
+   rows=find(root,root/'found.md','组合历史风险观察')
+   self.assertEqual(len(rows),1);self.assertIsNotNone(rows[0]['savedAt']);self.assertEqual(rows[0]['entry'],out/'组合历史风险观察.html')
+   from start import execute
+   source=(out/'input.json').read_bytes();continued=root/'continued'
+   summary=execute('portfolio',continued,continue_from=out)
+   self.assertEqual(summary['status'],'partial');self.assertEqual((out/'input.json').read_bytes(),source)
+   self.assertEqual(json.loads((continued/'input.json').read_text('utf-8')),json.loads(source))
+   import hashlib
+   saved=json.loads((continued/'report-manifest.json').read_text('utf-8'))
+   self.assertEqual(saved['files']['research-request.json'],hashlib.sha256((continued/'research-request.json').read_bytes()).hexdigest())
+   (out/'input.json').write_bytes(source+b' ')
+   changed=execute('portfolio',root/'changed',continue_from=out)
+   self.assertEqual(changed['status'],'blocked');self.assertIn('已保存输入发生变化',changed['message'])
  def test_display_names_do_not_split_table_columns(self):
   d=self.doc();d['holdings'][0]['name']='A|B\n份额';body=markdown(analyze(d),d)
   self.assertIn('A／B 份额',body);self.assertNotIn('A|B',body)

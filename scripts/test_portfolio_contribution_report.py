@@ -22,7 +22,7 @@ class Tests(unittest.TestCase):
   from research_brief_html import render
   html=render(markdown(self.fixture()))
   self.assertEqual(html.count('<table>'),1)
-  self.assertIn('<td>100.00%</td>',html)
+  self.assertIn('<td class="align-right">100.00%</td>',html)
   self.assertNotIn('<p>|',html)
  def test_zero_volatility_has_no_invented_share(self):
   text=markdown(self.fixture());self.assertIn('资料不足',text);self.assertIn('分红资料未核验',text);self.assertNotIn('nan',text)

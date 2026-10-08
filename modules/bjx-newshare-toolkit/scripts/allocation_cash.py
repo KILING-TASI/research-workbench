@@ -40,25 +40,37 @@ def calculate(spec):
     if set(gains)!=set(LABELS):raise ValueError('每个情景需明确假设卖出涨跌幅')
     fees=spec.get('fees',{});commission=number(fees.get('commissionPct',0),'commissionPct',maximum=Decimal(100))/100
     tax=number(fees.get('taxPct',0),'taxPct',maximum=Decimal(100))/100
+    transfer=number(fees.get('transferFeePct',0),'transferFeePct',maximum=Decimal(100))/100
     slip=number(fees.get('slippagePct',0),'slippagePct',maximum=Decimal(100))/100
-    if commission+tax+slip>1:raise ValueError('费用率合计不能超过100%')
+    if commission+tax+slip+transfer>1:raise ValueError('费用率合计不能超过100%')
     min_fee=number(fees.get('minimumCommission',0),'minimumCommission')
     opportunity=number(spec.get('opportunityRatePct',0),'opportunityRatePct',maximum=Decimal(100))/100
     financing=number(spec.get('financingRatePct',0),'financingRatePct',maximum=Decimal(100))/100
     borrowed=number(spec.get('borrowedFraction',0),'borrowedFraction',maximum=Decimal(1))
+    additions=spec.get('additionalSharesAssumptions',{})
+    if not isinstance(additions,dict) or set(additions)-set(LABELS):raise ValueError('余股假设须按已有情景标签提供')
     scenarios={}
     for k in LABELS:
         rate=r[k]/100;gain=number(gains[k],'gainPct',Decimal(-100))/100
         allocated=(q*rate/100).to_integral_value(rounding=ROUND_FLOOR)*100
+        proportional=allocated;residual=q*rate-proportional
+        additional=number(additions.get(k,0),'additionalSharesAssumption',maximum=Decimal(100))
+        if additional%100 or (additional and (residual<=0 or proportional+additional>q)):
+            raise ValueError('余股仅支持有比例零头且不超过申购股数的额外100股条件假设')
+        allocated+=additional
         retained=allocated*price;d1=Decimal((refund-apply).days);d2=Decimal((release-refund).days)
         capital_days=funds*d1+retained*d2;opp=capital_days*opportunity/365;finance=capital_days*borrowed*financing/365
-        gross=retained*(1+gain);cost=(max(gross*commission,min_fee)+gross*(tax+slip)) if allocated else Decimal(0)
+        gross=retained*(1+gain)
+        parts={'commission':max(gross*commission,min_fee) if allocated else Decimal(0),
+               'stampTax':gross*tax if allocated else Decimal(0),'transferFee':gross*transfer if allocated else Decimal(0),
+               'slippage':gross*slip if allocated else Decimal(0)}
+        cost=sum(parts.values(),Decimal(0))
         net=gross-cost-finance;profit=net-retained
         threshold=(Decimal(100)/r[k]).to_integral_value(rounding=ROUND_CEILING)*100 if rate else None
-        next_lot=( (allocated+100)/(100*rate)).to_integral_value(rounding=ROUND_CEILING)*100 if rate else None
+        next_lot=( (proportional+100)/(100*rate)).to_integral_value(rounding=ROUND_CEILING)*100 if rate else None
         gap=max(Decimal(0),threshold*price-budget) if threshold else None
-        residual=q*rate-allocated
-        scenarios[k]={'ratePct':str(r[k]),'gainPctAssumption':str(gain*100),'wholeLotShares':int(allocated),
+        scenarios[k]={'ratePct':str(r[k]),'gainPctAssumption':str(gain*100),'wholeLotShares':int(proportional),
+            'additionalSharesAssumption':int(additional),'allocatedSharesAssumption':int(allocated),
             'oddLotOutcome':'unknown-not-probability' if residual>0 else 'no-fractional-remainder',
             'possibleAdditionalSharesUpperBound':int(min(Decimal(100),q-allocated)) if residual>0 else 0,
             'hundredShareThreshold':int(threshold) if threshold else None,'thresholdFunds':str(threshold*price) if threshold else None,
@@ -76,15 +88,18 @@ def calculate(spec):
             'segments':[{'start':str(apply),'endExclusive':str(refund),'capital':str(funds),'days':int(d1)},
                         {'start':str(refund),'endExclusive':str(release),'capital':str(retained),'days':int(d2)}],
             'grossSaleProceeds':str(gross),'saleCosts':str(cost),'financingCost':str(finance),
+            'saleCostBreakdown':{name:str(value) for name,value in parts.items()},
+            'costBasis':'explicit-input-assumptions; omitted fee fields are zero assumptions, not verified fee exemptions',
             'netSettlementCash':str(net),'netProfit':str(profit),'opportunityCost':str(opp),'profitAfterOpportunityCost':str(profit-opp),
             'subscriptionFundsReturnPct':str(profit/funds*100) if funds else None,
             'capitalDaySimpleAnnualizedPct':str(profit/capital_days*365*100) if capital_days else None}
-    return {'type':'bjx-allocation-cash-scenarios','code':spec['code'],'subscriptionShares':int(q),'subscriptionFunds':str(funds),
-        'costInputCoverage':{'assumedZeroFields':['fees.'+k for k in ['commissionPct','minimumCommission','taxPct','slippagePct'] if k not in fees]+[k for k in ['opportunityRatePct','financingRatePct','borrowedFraction'] if k not in spec], 'scope':'缺省零值仅为计算假设，不表示券商实际免收费用、无滑点或资金没有机会成本；已填值也未认证账单。'},
+    return {'type':'bjx-allocation-cash-scenarios','code':spec['code'],'price':str(price),'maxShares':int(limit),
+        'subscriptionShares':int(q),'subscriptionFunds':str(funds),
+        'costInputCoverage':{'assumedZeroFields':['fees.'+k for k in ['commissionPct','minimumCommission','taxPct','transferFeePct','slippagePct'] if k not in fees]+[k for k in ['opportunityRatePct','financingRatePct','borrowedFraction'] if k not in spec], 'scope':'缺省零值仅为计算假设，不表示券商实际免收费用、无滑点或资金没有机会成本；已填值也未认证账单。'},
         'factEvidence':evidence,'currency':'CNY','unusedBudget':str(budget-funds),'atLimit':q==limit,'rateBasis':spec['rateBasis'],'scenarios':scenarios,
         'dates':{'applyDate':str(apply),'refundDate':str(refund),'saleSettlementDate':str(release)},
         'riskNotice':'仅为给定假设的计算，不保证获配或收益，不构成申购指令',
-        'limitations':['排除未知零股，获配为整手比例情景而非实际结果','涨跌幅为输入假设，不预测上市表现',
+        'limitations':['比例整手与显式余股假设分列，不认证实际获配；未声明余股时仍保留未知','涨跌幅为输入假设，不预测上市表现',
           '自然日分段占用；退款与卖出结算日期由输入提供，未自动核对交易日历',
           '费用未按券商账单核验；机会成本与融资成本分列，可能存在经济口径重叠，需按资金来源解释',
           '资金日简单年化不是可持续复利收益；短占用期可能放大年化数字']}

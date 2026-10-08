@@ -49,6 +49,7 @@ function correlationStudy(d){let {dates,returns}=aligned(d),count=returns[0].len
  let windows=(d.windows||[]).map(w=>{date(w.start);date(w.end);if(!w.name||w.start>w.end||w.end>d.asOf)throw Error('状态窗口无效');let idx=returns[0].map((_,i)=>i).filter(i=>dates[i]>=w.start&&dates[i+1]<=w.end);return {name:w.name,start:w.start,end:w.end,observations:idx.length,status:idx.length>=min?'历史计算':'样本不足',correlations:idx.length>=min?matrix(idx):null};});
  return {type:'correlationStudy',codes:d.assets.map(x=>x.code),rolling,windows,note:'预先定义窗口的历史相关性，不是危机预测；滚动估计仍可能滞后，零方差留空。窗口收益要求起止均在窗口内。'};}
 function rebalance(d){let {dates,returns,weights}=aligned(d),capital=finite(d.capital);if(capital<=0)throw Error('初始资金须为正');let every=d.everyObservations??12;if(!Number.isInteger(every)||every<1)throw Error('定期频率须为正整数观察期');let thresholds=d.thresholdsPct??[3,5];if(!Array.isArray(thresholds)||!thresholds.length||new Set(thresholds).size!==thresholds.length||thresholds.some(x=>finite(x)<=0||x>100))throw Error('阈值为不重复的权重偏离百分点');let cost=d.costs;if(!cost)throw Error('需明确成本，零成本也必须填写');for(let k of ['commissionPct','minimumCommission','spreadBps','slippageBps'])if(finite(cost[k])<0)throw Error('成本不得为负');if(cost.commissionPct>=100||(cost.spreadBps/2+cost.slippageBps)>=10000)throw Error('成本假设超出支持范围');
+ const periodicRule=d.periodicRule??'every-observations';if(!['every-observations','month-change'].includes(periodicRule))throw Error('定期规则不支持');if(periodicRule==='month-change'&&d.frequency!=='daily')throw Error('月初信号规则需要日频观察；月频净值不能代替日内执行');
  const overrides=d.costsByCode??{};if(typeof overrides!=='object'||Array.isArray(overrides)||overrides===null||Object.keys(overrides).some(k=>!d.assets.some(a=>a.code===k)))throw Error('逐资产成本须为本次代码对应的对象');
  const allowedCostKeys=['commissionPct','minimumCommission','spreadBps','slippageBps','buyTaxPct','sellTaxPct'];
  const costProfiles=d.assets.map(a=>{let extra=overrides[a.code]??{};if(typeof extra!=='object'||Array.isArray(extra)||extra===null||Object.keys(extra).some(k=>!allowedCostKeys.includes(k)))throw Error('逐资产成本字段无效');let p={...cost,buyTaxPct:cost.buyTaxPct??0,sellTaxPct:cost.sellTaxPct??0,...extra};for(let k of allowedCostKeys)if(finite(p[k])<0)throw Error('逐资产成本不得为负');if(p.commissionPct+Math.max(p.buyTaxPct,p.sellTaxPct)+(p.spreadBps/2+p.slippageBps)/100>=100)throw Error('逐资产综合成本超出支持范围');return {code:a.code,...p};});
@@ -70,11 +71,16 @@ function rebalance(d){let {dates,returns,weights}=aligned(d),capital=finite(d.ca
    pending=null;
   }
   let value=holdings.reduce((a,b)=>a+b,0);path.push({date:now,value});let deviation=Math.max(...holdings.map((v,j)=>Math.abs(v/value-weights[j])*100));
-  if(i<returns[0].length-1&&((threshold!==null&&deviation>=threshold)||(periodic&&(i+1)%every===0)))pending=now;
+  const periodicSignal=periodicRule==='month-change'?now.slice(0,7)!==dates[i].slice(0,7):(i+1)%every===0;
+  if(i<returns[0].length-1&&((threshold!==null&&deviation>=threshold)||(periodic&&periodicSignal)))pending=now;
  }
  let peak=capital,dd=0;for(let x of path){peak=Math.max(peak,x.value);dd=Math.max(dd,1-x.value/peak);}let end=path.at(-1).value,years=(Date.parse(dates.at(-1))-Date.parse(dates[0]))/86400000/365.25;
- return {name,endingValue:end,totalReturnPct:(end/capital-1)*100,CAGRPct:(Math.pow(end/capital,1/years)-1)*100,maximumDrawdownPct:dd*100,totalCost,tradeCount:trades.length,trades,missed,path};}
- return {type:'rebalance',start:dates[0],end:dates.at(-1),capital,costProfiles,costBasis:'输入研究假设，未自动认证当前或历史有效券商费率与税率；未填写方向税费时按零假设',results:[simulate('买入持有基线',null,false),simulate('定期再平衡',null,true),...thresholds.map(x=>simulate('偏离'+x+'个百分点',x,false))],note:'同样本历史回测。收盘信号在下一观察日收盘执行，先承担该期收益，不使用当期收盘信号立即交易。初始建仓成本未计；允许份额拆分，方向税费仅按显式输入假设计算，不含整手限制及基金申赎持有期费率。任一资产不可成交时整笔跳过；成本从组合扣除。最优阈值不能由样本内排名认定。'};
+ const costBreakdown={commission:0,spreadCost:0,slippageCost:0,tax:0};let grossTraded=0;
+ for(const trade of trades)for(const leg of trade.costLegs){grossTraded+=leg.grossAmount;for(const key of Object.keys(costBreakdown))costBreakdown[key]+=leg[key];}
+ const costPaidPctOfInitialCapital=totalCost/capital*100;
+ const explanation=trades.length?`本区间执行${trades.length}次再平衡，累计扣除成本${totalCost.toFixed(2)}，相当于初始资金的${costPaidPctOfInitialCapital.toFixed(3)}%。这些是路径中的实际模型扣费，不等于相对零成本路径的期末收益损失。`:'本区间没有执行再平衡，因此本模型未扣再平衡费用；初始建仓费用仍未计入。';
+ return {name,endingValue:end,totalReturnPct:(end/capital-1)*100,CAGRPct:(Math.pow(end/capital,1/years)-1)*100,maximumDrawdownPct:dd*100,totalCost,costBreakdown,costPaidPctOfInitialCapital,grossTraded,twoWayTurnoverOfInitialCapital:grossTraded/capital,explanation,tradeCount:trades.length,trades,missed,path};}
+ return {type:'rebalance',currency:d.currency,assets:d.assets.map(a=>({code:a.code,sourceUrl:a.sourceUrl,basis:a.basis})),start:dates[0],end:dates.at(-1),capital,periodicRule,periodicRuleExplanation:periodicRule==='month-change'?'新月份首个有数据观察日收盘形成信号，下一观察日收盘执行；未核验完整交易日历，不称月末成交':'每指定观察期收盘形成信号，下一观察日执行；不是日历月',costProfiles,costBasis:'输入研究假设，未自动认证当前或历史有效券商费率与税率；未填写方向税费时按零假设',results:[simulate('买入持有基线',null,false),simulate(periodicRule==='month-change'?'月初信号再平衡':'定期再平衡',null,true),...thresholds.map(x=>simulate('偏离'+x+'个百分点',x,false))],note:'同样本历史回测。收盘信号在下一观察日收盘执行，先承担该期收益，不使用当期收盘信号立即交易。初始建仓成本未计；允许份额拆分，方向税费仅按显式输入假设计算，不含整手限制及基金申赎持有期费率。任一资产不可成交时整笔跳过；成本从组合扣除。最优阈值不能由样本内排名认定。'};
 }
 
 
