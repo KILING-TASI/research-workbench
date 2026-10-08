@@ -1,6 +1,6 @@
 {
   "reportSha256": "61dea2a4d1b08266df1a7956c20f57e63c408d9e5f02815a45dbdc35126924a1",
-  "reportPath": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-01\\skill-x20-bjx-newshare-toolkit-x20\\outputs\\judgment-report-20261006\\report\\公司与行业点评.md",
+  "reportPath": "judgment-report-20261006/report/公司与行业点评.md",
   "reviewer": "AI-content-review",
   "checks": [
     {
@@ -60,5 +60,7 @@
   ],
   "status": "partial-or-failed",
   "semanticCertification": false,
-  "scope": "绑定正文与逐项复查声明，不自动证明判断正确、原文真实或独立专家认可"
+  "scope": "绑定正文与逐项复查声明，不自动证明判断正确、原文真实或独立专家认可",
+  "reportFileIncluded": false,
+  "recordScope": "历史内容复查摘要；报告原件未随包分发，本记录不能直接重新执行或替代当前验收"
 }

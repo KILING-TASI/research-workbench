@@ -24,4 +24,18 @@ class Router(unittest.TestCase):
         r=self.execute({'question':'分析600036公告','code':'000001'});self.assertNotIn('eventResult',r)
     def test_unsupported_days(self):
         r=self.execute({'question':'分析600036最近90天公告'});self.assertNotIn('eventResult',r)
+    def test_missing_catalog_has_recovery_and_no_collection(self):
+        def search(*a):return {'rows':[],'coverage':[{'kind':'stock','status':'missing-local-catalog'}]}
+        r=self.execute({'question':'分析招商银行最近三个月公告'},search)
+        self.assertEqual(r['failureKind'],'missing-local-catalog')
+        self.assertTrue(r['nextSteps']);self.assertNotIn('eventResult',r)
+    def test_online_identity_does_not_require_author_catalog(self):
+        calls=[]
+        def search(*a):
+            calls.append(a)
+            return {'rows':[{'kind':'stock','code':'600036','name':'招商银行','identityVerification':'third-party-candidate'}],'truncated':False}
+        r=self.execute({'question':'分析招商银行最近三个月公告','onlineSearch':True,'items':[{'date':'2026-09-01','title':'行长任职资格核准公告'}]},search)
+        self.assertTrue(calls[0][3]);self.assertEqual(r['resolvedSecurity']['code'],'600036')
+        self.assertEqual(r['categoryCounts']['治理人事'],1)
+        self.assertEqual(r['status'],'partial');self.assertEqual(r['facts'][0]['verification'],'metadata-not-original-verified')
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,4 @@
+code,name,market_value,currency,asset_class,valuation_date
+teaching-fund-A,教学基金A,80000,CNY,fund,2026-09-30
+teaching-etf-B,教学ETF B,20000,CNY,etf,2026-09-30
+teaching-cash,教学现金,10000,CNY,cash,2026-09-30

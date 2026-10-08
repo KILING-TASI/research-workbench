@@ -2,13 +2,29 @@
 
 **公开测试版 · 原创部分 MIT**
 
-首发安装包为 v0.1.0-beta.1；本分支包含首发后的待审阅更新，尚未发布新安装包。下载仓库完整目录并命名为 `research-workbench`，请先阅读 [已知限制](KNOWN_ISSUES.md)。说明版本与软件发行版本分别记录。
+最新版本与安装包见[Releases](https://github.com/KILING-TASI/research-workbench/releases)。下载完整research-workbench目录，先读[快速开始](references/quickstart.md)与[已知限制](KNOWN_ISSUES.md)。说明版本与发行版本分别记录，旧发行包保持冻结。
 
-说明版本：1.48 · 更新日期：2026-10-08。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
+说明版本：1.49 · 更新日期：2026-10-08。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
 
 面向个人与买方研究的多资产投研助手，提供可追溯的资料、分析与研究报告。
 
 将本目录复制到AI工具支持的Skill目录，读取SKILL.md。工作台可选，不需要作者项目路径或数据库。
+
+## 第一次使用
+
+先读[五分钟快速开始](references/quickstart.md)：Python 3.11+ 即可离线生成一份有结论、有论据的教学报告，无须配置账户或安装可选组件。
+
+```bash
+python scripts/start.py demo --out-dir local-data/first-comparison
+```
+
+打开输出目录中的 `基金比较说明.html`。这是教学示例，不能当作真实基金评价。失败时入口说明原因与下一步，不覆盖旧文件。
+
+真实公司公告可直接按名称查询：`python scripts/start.py ask --question "分析招商银行最近三个月有什么重要公告变化" --as-of 2026-10-08 --online --out-dir local-data/cmb-notices`。换成你的公司名称与实际截止日；此入口仅支持单家A股公告，主动联网，报告区分目录线索与原文核验。
+
+试用看[快速开始](references/quickstart.md)；了解能做什么看[功能说明](references/current-capabilities.md)；修改代码时看[方法与参数索引](references/capability-reference-index.md)。
+
+基金代码比较、持仓CSV整理和组合历史报告可通过[日常简明入口](references/practical-entry.md)调用；仅有持仓金额时先给结构快照，不冒充完整风险诊断。
 
 ## 主要功能
 
@@ -69,7 +85,3 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 
 需要检查当前接口、返回结构和样本日期时，使用[数据源体检](references/source-health.md)，区分请求失败、空样本、结构异常、日期超限和观测不足。仅主动调用，不后台轮询。
 
-
-## 独立环境验证
-
-[验证流程](.github/workflows/validate.yml)在拉取请求或手动触发时运行，无定时配置。矩阵覆盖Ubuntu/Windows和Python3.11/3.12，执行声明依赖安装、主包回归及禁用site-packages的三个教学入口。实际运行结果以对应Actions记录为准；流程文件存在不代表通过，也不认证联网、视觉或完整研究质量。

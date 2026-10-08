@@ -48,6 +48,8 @@ def report(document):
 
  names={row['code']:str(row.get('name') or '名称未确认').replace('|','\\|').replace('\n',' ') for row in document['rows']}
  lines=['# 基金同区间表现比较','']
+ if document.get('exampleType')=='teaching-only-not-real-funds':
+  lines+=['**教学演示：以下净值为虚构样本，不是真实基金、实时数据或投资评价。**','']
  for finding in result['findings']:
   if finding.get('conclusion'):lines+=['> '+finding['conclusion'],'','论据（共同区间计算）：'+finding['text']]
   else:lines.append(finding['text'])

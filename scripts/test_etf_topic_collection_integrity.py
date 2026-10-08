@@ -7,6 +7,13 @@ def module(name):
  spec=importlib.util.spec_from_file_location('topic_'+path.stem,path);result=importlib.util.module_from_spec(spec);spec.loader.exec_module(result);return result
 
 class TopicCollectionIntegrity(unittest.TestCase):
+ def test_refresh_help_and_missing_output_do_not_collect(self):
+  refresh=module('refresh.py')
+  with patch.object(refresh,'refresh') as collector:
+   for args,exit_code in [(['--help'],0),([],2)]:
+    with self.assertRaises(SystemExit) as exit:refresh.main(args)
+    self.assertEqual(exit.exception.code,exit_code)
+   collector.assert_not_called()
  def test_refresh_old_observations_do_not_enable_scores(self):
   refresh=module('refresh.py')
   class Clock(datetime.datetime):

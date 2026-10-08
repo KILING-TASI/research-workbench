@@ -37,8 +37,12 @@ jobs:
         run: python -m pip install --disable-pip-version-check -r references/requirements-optional.txt -c references/constraints-tested.txt
       - name: Run main package regression
         run: python -B -m unittest discover -s scripts -p "test*.py"
+      - name: Run JavaScript regression
+        run: python -B .github/scripts/validate_js.py
       - name: Check standard-library examples
         run: |
           python -B -S scripts/environment_check.py --out "${{ runner.temp }}/research-workbench-smoke/environment.json"
           python -B -S scripts/retail_research.py references/examples/news-example.json --out-dir "${{ runner.temp }}/research-workbench-smoke/news"
           python -B -S scripts/fund_comparison_brief.py references/examples/comparison-example.json --out-dir "${{ runner.temp }}/research-workbench-smoke/comparison"
+          python -B -S scripts/start.py demo --out-dir "${{ runner.temp }}/research-workbench-smoke/quick-comparison"
+          python -B -S scripts/start.py snapshot --input references/examples/holdings-example.csv --as-of 2026-10-08 --out-dir "${{ runner.temp }}/research-workbench-smoke/holdings-snapshot"
