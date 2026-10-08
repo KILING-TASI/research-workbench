@@ -35,3 +35,6 @@ FRED按系列来源、版权注记及用途核查，不能将其全部系列视�
 ## 发行检查
 
 保留本说明与ETF包的两份上游许可证。分发工具代码时不附带作者账户资料、市场缓存、研报原文或专有运行组件。当前来源扫描和声明检查不能证明所有代码均为原创，也不是律师出具的知识产权意见。
+
+## Ledoit–Wolf常相关收缩适配
+脚本scripts/covariance_shrinkage.py参考并适配作者公开covCor方法：https://github.com/oledoit/covShrinkage/blob/main/covCor.m 。原版权(c)2014–2021 Olivier Ledoit and Michael Wolf，BSD-2-Clause。完整原版权、条件和免责保留在该脚本头部；此部分不改为主包MIT。数值测试为项目自有。2026-10-09核对公开源文件；方法接入不表示市场效果已认证。

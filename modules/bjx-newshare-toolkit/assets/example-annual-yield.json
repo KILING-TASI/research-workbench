@@ -1,0 +1,22 @@
+{
+  "exampleType":"teaching-only", "asOf":"2026-10-09", "s_capital":"10000000", "s_in_transit":"0", "c_annual":"0.02",
+  "cash_alternative":"repo_timing", "repoDailyReuseDeclared":true,
+  "representativeApplyDate":"2026-10-12", "representativeRefundDate":"2026-10-14", "representativeSaleAvailableDate":"2026-10-19",
+  "eligibility":{"bsePermission":true,"starPermission":false,"averageAssets20TradingDays":"10000000","experienceMonths":36,"riskLevel":4,"knowledgeScore":85,"basis":"教学权限声明，不是真实账户"},
+  "accounts":[{"identityKey":"teaching-investor-one"}],
+  "fees":{"stamp":"0.0005","comm_rate":"0.00025","comm_min":"5","transfer":"0.00001","slippage":"0"},
+  "scenarios":{
+    "pessimistic":{"p0":"18","a_star":"6500000","r":"1.2","a_max":"12500000","sigma_pct":"0.15","n_per_year":70,"basis":"用户设计悲观示例，未核实市场中枢"},
+    "neutral":{"p0":"18","a_star":"5500000","r":"2","a_max":"12500000","sigma_pct":"0.15","n_per_year":70,"basis":"用户设计中性示例，未核实市场中枢"},
+    "optimistic":{"p0":"18","a_star":"4500000","r":"2.8","a_max":"12500000","sigma_pct":"0.15","n_per_year":70,"basis":"用户设计乐观示例，未核实市场中枢"}
+  },
+  "sensitivityReturns":["-0.2","0","0.5","1"],
+  "alternatives":[
+    {"name":"通用回购（逆回购方向）","annualRate":"0.018","basis":"方案示例年收益假设，不是实时成交收益","riskNote":"不保证成交报价、滚动收益或零风险","liquidityNote":"资金可用与可取不同，须核结算"},
+    {"name":"可转债申购","annualRate":null,"basis":"未提供可比年度样本","riskNote":"存在破发、信用与可交易性风险","liquidityNote":"依发行和上市安排"},
+    {"name":"沪深网上申购","annualRate":null,"basis":"缺市值底仓及获配样本","riskNote":"底仓市场波动与获配收益须一起评价","liquidityNote":"底仓和获配股份分开"},
+    {"name":"宽基指数","annualRate":null,"basis":"缺同期历史样本，不填固定收益或波动","riskNote":"权益价格风险，不是等价现金用途","liquidityNote":"依产品成交与赎回规则"}
+  ],
+  "cashBenchmark":{"annualRate":"0.018","basis":"用户方案示例，不是实时无风险收益"},
+  "recentListings":[]
+}

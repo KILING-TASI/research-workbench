@@ -1,6 +1,6 @@
 import datetime as dt, tempfile, unittest
 from pathlib import Path
-from research_evidence import export, conflicts, package, verify, validate
+from bjx_research_evidence import export, conflicts, package, verify, validate
 
 class Tests(unittest.TestCase):
     def test_deep_dependency_chain_and_malformed_lists(self):

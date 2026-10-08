@@ -26,6 +26,7 @@
 
 - [比较与费用](fund-research.md)
 - [序列与多基准](fund-series-tools.md)
+- [收益风格观察（RBSA）](returns-style.md)
 - [基金详细说明](fund-user-guide.md)
 - [经理任职表](report-manager-tenure.md)
 - [经理产品关系](manager-products.md)

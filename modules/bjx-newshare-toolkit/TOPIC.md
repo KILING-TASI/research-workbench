@@ -31,6 +31,8 @@ AI 根据用户问题选择任务、准备输入文件、执行脚本并解释�
 | 查字段、来源、冲突和缺项 | `python modules/bjx-newshare-toolkit/scripts/issuance_research.py panel INPUT.json --out OUTPUT.json` | [证据接口](references/research-evidence-interface.md) |
 | 给定预算与配售率，算整手及边际档位 | `python modules/bjx-newshare-toolkit/scripts/issuance_research.py rates INPUT.json --out OUTPUT.json` | [获配与现金流](references/allocation-cash.md)、[等级输入](references/integrated-issuance-research.md) |
 | 多新股现金冻结冲突 | `python modules/bjx-newshare-toolkit/scripts/issuance_research.py cash INPUT.json --out OUTPUT.json` | [完整研究流程](references/integrated-issuance-research.md) |
+| 资金、配售与卖出价格联合情景及费用 | `python scripts/research_topics.py bjx scenarios -- INPUT.json --out-dir NEW_DIRECTORY` | [情景研究与设计纠正](references/scenario-engine.md) |
+| 客户资金规模对应年度累计收益区间与替代用途 | `python scripts/research_topics.py bjx annual -- INPUT.json --capital AMOUNT --out-dir NEW_DIRECTORY` | [年度收益情景](references/annual-yield.md) |
 | 核验并登记公告 / 查询事实库 | `python modules/bjx-newshare-toolkit/scripts/issuance_facts.py register INPUT.json --workspace WORKSPACE --out OUTPUT.json`；查询改为 `view` | [发行事实](references/issuance-facts.md) |
 | 财务、招股书与同行研究 | `python modules/bjx-newshare-toolkit/scripts/company_research.py INPUT.json --out OUTPUT.json`；关键词候选另加 `--discover` | [公司研究](references/company-research.md) |
 | 股本口径 / 事件日期 / 规则版本 | `python modules/bjx-newshare-toolkit/scripts/issuance_research.py structure INPUT.json --out OUTPUT.json`；子命令可替换为 `timeline` 或 `rules` | [完整研究流程](references/integrated-issuance-research.md) |
@@ -38,6 +40,8 @@ AI 根据用户问题选择任务、准备输入文件、执行脚本并解释�
 | 首次冻结及复盘 | `python modules/bjx-newshare-toolkit/scripts/prediction_review.py freeze INPUT.json --workspace WORKSPACE --out OUTPUT.json`；可替换为 `replay`、`review`、`compare` | [冻结与复盘](references/prediction-review.md) |
 
 ## 最小调用示例
+
+新增联合情景仍为用户声明下的计算，不把情景权重称已验证概率；来源记分卡使用现有首次冻结复盘，不训练或自动融合。相关方法与拒绝条件见[情景研究](references/scenario-engine.md)。
 
 两个示例均随包提供，可离线运行。代码920022只用作格式演示，没有伪造该公司的原文数值。
 

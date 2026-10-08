@@ -235,3 +235,7 @@ industryStudy允许同基金不同报告日，基金/报告期唯一、最多100
 每笔成交输出`costLegs`，列明代码、买卖方向、交易金额、佣金、价差、滑点、税费与总成本。逐腿成本之和必须等于交易扣费，扣费前后资产差等于扣费；不足以证明真实成交或账户结算。最低佣金导致目标不可可靠求解时显式报错。
 
 该增强复用已有的下一观察日执行和不可成交跳过机制；不涵盖场外基金持有期费率、整手交易、初始建仓与真实券商账单。
+
+再平衡结果增加costBreakdown（佣金、价差、滑点、税费合计）、costPaidPctOfInitialCapital（累计扣费/初始资金，百分点）、grossTraded及twoWayTurnoverOfInitialCapital（双边成交额/初始资金，倍数），附explanation自然语言说明。累计扣费不是零成本反事实路径的期末财富差；买入持有基线没有再平衡扣费，不表示初始建仓免费。
+
+阅读再平衡保存结果：python scripts/rebalance_brief.py 已保存结果.json --out-dir 新报告目录。输出HTML/Markdown与原结果副本，先回答相对买入持有的收益和回撤取舍，再解释费用与不可成交记录；旧结果缺分类不补造。本目录登记report-manifest.json，可通过research_results.py在用户指定父目录找回；登记不等于重新验收。

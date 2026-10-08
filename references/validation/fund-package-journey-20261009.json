@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "packageSha256": "2361920ec202ee42097eb3dbddefd30b6f6e03303054f9f670c08d0948b1e913",
+  "steps": [
+    {
+      "step": "离线比较",
+      "returncode": 0,
+      "expectedReturncode": 0,
+      "noSitePackages": true
+    },
+    {
+      "step": "名称找回风险追问",
+      "returncode": 0,
+      "expectedReturncode": 0,
+      "noSitePackages": true
+    },
+    {
+      "step": "多结果不默认选择",
+      "returncode": 2,
+      "expectedReturncode": 2,
+      "noSitePackages": true
+    },
+    {
+      "step": "明确结果再缩短区间",
+      "returncode": 0,
+      "expectedReturncode": 0,
+      "noSitePackages": true
+    }
+  ],
+  "scope": "current-Windows-Python-site-packages-disabled; explicit-saved-net-values-only",
+  "dataScope": "third-party recorded distributions; source/dividend completeness not verified",
+  "allCollectionReused": true,
+  "ambiguousOutputNotCreated": true,
+  "visualVerified": false,
+  "verifiedLocalLinks": 10
+}

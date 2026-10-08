@@ -1,0 +1,13 @@
+{
+  "exampleType": "teaching-only",
+  "allocation": {
+    "code": "920022", "price": "25", "budget": "6000000", "maxShares": 800000,
+    "applyDate": "2026-10-12", "refundDate": "2026-10-14", "saleSettlementDate": "2026-10-20",
+    "opportunityRatePct": "3",
+    "fees": {"commissionPct": "0.03", "minimumCommission": "5", "taxPct": "0.05", "transferFeePct": "0.001", "slippagePct": "0.1"}
+  },
+  "scenarios": [
+    {"id": "高配售与上涨假设", "ratePct": "0.05", "gainPct": "100", "rateBasis": "教学假设，不是预测或公告结果", "gainBasis": "教学假设，不是首日价格预测"},
+    {"id": "低配售与破发假设", "ratePct": "0.03", "gainPct": "-30", "rateBasis": "教学假设，不是预测或公告结果", "gainBasis": "教学假设，不是破发概率"}
+  ]
+}

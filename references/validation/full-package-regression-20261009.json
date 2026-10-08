@@ -1,0 +1,11 @@
+{
+  "returncode": 0,
+  "packageSha256": "08205f53e5ff7bab5cdec5a53afb9e3ee6ed2d3a52e4b030318e4f2939414f37",
+  "scope": "current-Windows-installed-dependencies; separate-package-directory",
+  "authorDataEnvironmentRemoved": true,
+  "visualVerified": false,
+  "status": "passed",
+  "testsRun": 2241,
+  "skipped": 1,
+  "testScope": "main scripts/ unittest-discover; separate bundled-topic suites not claimed complete"
+}

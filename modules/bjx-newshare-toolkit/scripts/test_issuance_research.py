@@ -1,7 +1,7 @@
 import copy, datetime as dt, tempfile, unittest
 from pathlib import Path
 from issuance_research import panel,rate,graded_allocation,structure,timeline,rules,cash,counterfactual,run,snapshot,matched_review
-from research_evidence import canonical,verify,package,sha
+from bjx_research_evidence import canonical,verify,package,sha
 from unittest.mock import patch
 
 def node(id='a',metric='ratePct',value='1',unit='%',**kw):
@@ -131,7 +131,7 @@ class Tests(unittest.TestCase):
                 'inputs':[{'path':str(inp),'availableAt':time.isoformat(),'retrievedAt':time.isoformat()}]}
             with patch('prediction_review.now',return_value=time):capture(spec,p)
             pred=p/'research-data/bjx-predictions/frozen/fixture/920022/first.json'
-            with patch('research_evidence.now',return_value=time):
+            with patch('bjx_research_evidence.now',return_value=time):
                 snap=package({'mode':'predecision','decisionCutoff':cutoff,'evidence':{'nodes':[n]},'dependencies':[
                     {'path':str(inp),'role':'research-input','availableAt':time.isoformat()},
                     {'path':str(rule),'role':'rule','availableAt':time.isoformat()},
@@ -142,7 +142,7 @@ class Tests(unittest.TestCase):
             rev=next((p/'research-data/bjx-reviews').glob('*.json'));item={'predictionPath':str(pred),'reviewPath':str(rev),'packagePath':snap['packagePath']}
             self.assertEqual(matched_review({'before':[item],'after':[item]})['commonCount'],1)
             research['comparisonScope']='different-scope';inp.write_bytes(canonical(research))
-            with patch('research_evidence.now',return_value=time):
+            with patch('bjx_research_evidence.now',return_value=time):
                 changed=package({'mode':'predecision','decisionCutoff':cutoff,'evidence':{'nodes':[n]},'dependencies':[
                     {'path':str(inp),'role':'research-input','availableAt':time.isoformat()},
                     {'path':str(rule),'role':'rule','availableAt':time.isoformat()},

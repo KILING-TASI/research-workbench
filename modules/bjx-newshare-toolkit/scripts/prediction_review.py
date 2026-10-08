@@ -80,6 +80,8 @@ def review(spec,workspace):
         for key in ['price','maxShares','refundDate']:allocation[key]=evidence[key]['value']
         allocation.pop('factsStore')
     allocation={**allocation,'ratesPct':{k:str(rate) for k in LABELS},'rateBasis':'actual-rate-for-review-only'}
+    # Actual-rate target is the proportional threshold, not a carried forecast fragment assumption.
+    allocation.pop('additionalSharesAssumptions',None)
     actual_grade='caller-supplied-actual-not-automatically-original-verified'
     if actual.get('factsStore'):
         from issuance_facts import view
@@ -100,6 +102,7 @@ def review(spec,workspace):
         a=Decimal(str(actual['allocatedShares']))
         if not a.is_finite() or a<0 or a%100 or a>Decimal(prediction['prediction']['subscriptionShares']):raise ValueError('实际获配股数无效')
         realized={'allocatedShares':str(a),'actualVsWholeLotScenario':[{'scenario':k,'sharesDifference':str(a-Decimal(prediction['prediction']['scenarios'][k]['wholeLotShares']))} for k in LABELS]}
+        realized['actualVsDeclaredAllocationAssumption']=[{'scenario':k,'sharesDifference':str(a-Decimal(prediction['prediction']['scenarios'][k]['allocatedSharesAssumption'])) if 'allocatedSharesAssumption' in prediction['prediction']['scenarios'][k] else None} for k in LABELS]
     if 'cashflowsComplete' in actual and type(actual['cashflowsComplete']) is not bool:raise ValueError('cashflowsComplete须布尔值')
     cashflows=actual.get('cashflows');cash_review=None
     if cashflows is not None:
@@ -153,11 +156,50 @@ def compare(spec):
         'unmatchedCounts':{'before':len(set(groups[0])-common),'after':len(set(groups[1])-common)},'automaticReplacement':False,
         'limitations':['本地首次捕获与调用者实际结果，未自动证明已完成原文核验或外部时间戳认证','不含历史回放，不用不同覆盖样本宣称改善','小样本与尾部误差需单独评估，均值改善不自动通过替换']}
 
+def scorecard(spec):
+    files=spec.get('reviews')
+    if not isinstance(files,list) or not 1<=len(files)<=500:raise ValueError('需1至500份已保存复盘档案')
+    grouped={};excluded=[];seen=set()
+    for filename in files:
+        if not isinstance(filename,str) or Path(filename).stat().st_size>4*1024*1024:raise ValueError('复盘档案路径或大小异常')
+        row=read(filename)
+        if row.get('mode')!='first-live-capture' or row.get('eligibleForFrozenComparison') is not True:
+            excluded.append({'path':filename,'reason':'不是可采用的首次冻结复盘'});continue
+        if row.get('evidenceGrade')!='original-rate-text-matched-publication-time-declared':
+            excluded.append({'path':filename,'reason':'实际配售率尚无原文数值匹配记录'});continue
+        key=(row['modelVersion'],row['code'],row['decisionCutoff'])
+        if key in seen:raise ValueError('同一来源版本与截止时点的标的重复，不能重复计分')
+        seen.add(key);grouped.setdefault(row['modelVersion'],[]).append(row)
+    summary={}
+    for model,records in grouped.items():
+        summary[model]={}
+        for label in LABELS:
+            errors=[]
+            for row in records:
+                metric=row['metrics'][label];predicted=metric.get('predictedThresholdFunds');actual=metric.get('actualConditionalThresholdFunds')
+                if predicted is None:continue
+                p=Decimal(predicted);a=Decimal(actual)
+                if not p.is_finite() or not a.is_finite() or p<=0 or a<=0:raise ValueError('评分金额须正且有限')
+                errors.append((p/a-1)*100)
+            count=len(errors);mean=sum(errors,Decimal(0))/count if count else None
+            summary[model][label]={'count':count,'meanSignedErrorPct':str(mean) if mean is not None else None,
+                'meanAbsoluteErrorPct':str(sum(map(abs,errors),Decimal(0))/count) if count else None,
+                'RMSEPct':str((sum((x*x for x in errors),Decimal(0))/count).sqrt()) if count else None,
+                'sampleErrorStdPct':str((sum(((x-mean)**2 for x in errors),Decimal(0))/(count-1)).sqrt()) if count>1 else None,
+                'sampleStatus':'descriptive-small-sample-no-fusion' if count<5 else 'descriptive-only-not-calibrated-distribution'}
+    return {'type':'bjx-frozen-source-scorecard','target':'proportional-hundred-share-funds-not-fragment-threshold',
+            'summary':summary,'excluded':excluded,'automaticFusion':False,
+            'limitations':['按首次冻结档案与原文数值匹配记录筛选，不认证外部首次发布时间或语义准确',
+                           'P75/P50/P25沿用原情景标签，不当作已校准概率分位',
+                           '来源相关性与共同信息尚未核验，不用逆方差权重伪造独立融合',
+                           '小样本标准差不是未来预测误差保证；不恢复模型优化或推荐申购额']}
+
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','replay','review','compare']);p.add_argument('input',type=Path);p.add_argument('--workspace',type=Path,default=Path.cwd());p.add_argument('--out',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','replay','review','compare','scorecard']);p.add_argument('input',type=Path);p.add_argument('--workspace',type=Path,default=Path.cwd());p.add_argument('--out',type=Path,required=True);a=p.parse_args()
     if a.out.exists():raise ValueError('输出已存在')
     spec=json.loads(a.input.read_text(encoding='utf-8-sig'))
-    result=capture(spec,a.workspace,a.command=='replay') if a.command in ['freeze','replay'] else review(spec,a.workspace) if a.command=='review' else compare(spec)
+    result=capture(spec,a.workspace,a.command=='replay') if a.command in ['freeze','replay'] else review(spec,a.workspace) if a.command=='review' else scorecard(spec) if a.command=='scorecard' else compare(spec)
     a.out.parent.mkdir(parents=True,exist_ok=True)
     with a.out.open('x',encoding='utf-8') as f:json.dump(result,f,ensure_ascii=False,indent=2,allow_nan=False)
 if __name__=='__main__':main()

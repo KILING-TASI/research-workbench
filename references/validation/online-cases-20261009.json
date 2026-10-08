@@ -1,0 +1,14 @@
+{
+  "checkedOn": "2026-10-09",
+  "scope": "指定原文数据勾稽与条件历史序列计算，不是完整投资评价",
+  "cases": [
+    {"name": "康美特", "code": "920189", "source": "https://static.cninfo.com.cn/finalpage/2026-07-01/1225402766.PDF", "textPages": [2, 4], "visualPages": [2], "verified": ["网上数量与金额", "配售比例精度", "比例百股资金"], "notVerified": ["余股分配", "实际个人获配", "卖出收益"]},
+    {"name": "再22转债", "source": "https://static.cninfo.com.cn/finalpage/2026-01-22/1224943928.PDF", "textPages": [2], "visualPages": [2], "verified": ["计息天数", "赎回价"], "notVerified": ["买入成本", "税后收益", "完整定价"]},
+    {"name": "春23转债", "source": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225538340.PDF", "textPages": [3, 4], "visualPages": [3, 4], "verified": ["价格触发线", "公告执行决定", "计息天数与赎回价"], "notVerified": ["30日逐日滚动序列", "买入成本", "完整定价"]},
+    {"name": "科华转债", "source": "https://static.cninfo.com.cn/finalpage/2026-07-29/1225444555.PDF", "textPages": [2], "visualPages": [2], "verified": ["到期兑付张数与总额", "最终金额包含末期利息"], "notVerified": ["实际账户收益", "税后到账"]},
+    {"name": "上证50ETF与中证500ETF", "codes": ["510050", "510500"], "sources": ["https://fund.eastmoney.com/pingzhongdata/510050.js", "https://fund.eastmoney.com/pingzhongdata/510500.js"], "start": "2025-01-02", "end": "2026-09-30", "observationsPerAsset": 424, "verified": ["新联网取数", "共同区间比较", "条件再投配置计算", "风险贡献勾稽", "多块长模拟"], "notVerified": ["官方分红拆分完整性", "实际账户成本", "未来回撤上限", "实时市价"]}
+  ],
+  "failedSources": [{"name": "中科仪官网附件", "reason": "循环跳转"}, {"name": "凯达目录", "reason": "空结果，不能解释为无公告"}],
+  "htmlVisualReview": "not-performed",
+  "artifactsIncluded": false
+}

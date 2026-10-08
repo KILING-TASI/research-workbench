@@ -1,5 +1,19 @@
 # 跨资产、危机场景、行情时效与递归穿透
 
+递归穿透结果可接收issuerRelations：assetId对应底层证券id，issuerId、source、publishedAt、acquiredAt及可选locator沿用直接发行人关系规范。股票、债券、现金仍保留原证券身份和类型；基金持有关系不作为身份等价合并。
+
+可选securityAliases接收records和links。records逐项明确id、market、currency（证券计价币种）、assetClass、shareClass；links提供left、right、relation=same-security、source、publishedAt、acquiredAt及可选原文locator。以输入依据构建union-find等价组，市场/币种/类型/份额冲突拒绝，时点不适用或未明确身份保留排除。不同市场同公司、不同股份类别、基金投资边不通过此入口合成同证券。
+
+合并后leaves按canonicalId汇总，paths保留原标识及canonicalSecurityId。issuerRelations应指向合并后的canonicalId；未给映射的证券不猜发行人。证券别名归一是输入关系核查与汇总，不是已建全市场主数据。
+
+新增equityConcentration列已映射股票条目、发行人数、HHI倒数、前十集中度和经多个根持仓触达的比例。已知股票内部归一化，同时列全组合覆盖、未归属直接股票及未披露组合权重。关系缺失时有效发行人数留空，不根据名称猜公司；合并股债证券不能混入权益分母。不同报告期列reportDates，不称实时或同日完整穿透；独立风险数和RBSA不由此计算。
+
+securityConcentration另按输入证券标识计算已知股票的等效集中度，不假设证券与公司一一对应。真实512880与007119中报保存解析，按声明50/50模型回放得到132个标识、约30.09个等权证券集中度及前十约50.55%；已知股票权重约94.82%。未重新核验全部原文，证券市场身份与发行人主数据未齐备，公司有效数量留空。该一次回放不证明全市场主数据归一已完成。
+
+positionDiagnostics分列各根持仓与其余已知股票的权重重叠、独有公司比例及移除后剩余已知股票的集中度。仅该项目持有的公司比例为零，不等于权重作用或风险贡献为零；该移除场景只重新归一化已知股票，不模拟账户收益、费用或现金。RBSA未接入此入口。
+
+fof命令可加`--brief 新说明.md`同时生成可读Markdown/HTML，解释有效主体、覆盖缺口与冗余取舍。教学输入须在实际交付正文显式标为教学，不把计算输出当真实组合。
+
 独立入口：scripts/research_extensions.py fof|crisis|quotes 输入.json --out 新结果.json。quotes另用--workspace指定缓存目录。需要numpy及已有portable_collect、portfolio_models。
 
 fof：asOf、currency、root、nodes对象、maxDepth（1至20）。节点currency、sourceUrl、reportDate、publishedAt、holdings；持仓kind=fund及node，或kind=stock/bond/cash/other及市场唯一id；weight为占本节点净资产比例0至1。循环、缺子基金、深度限制和未披露部分保留unknown，路径累计相乘，同底层合并，权重守恒。日期在截止前、币种一致。未公开MOM子账户不能自动还原。输入节点需要使用者取得真实报告，现有真实006859报告及两只子ETF部分穿透验收；全子基金覆盖未完成。

@@ -1,6 +1,11 @@
 import unittest
 from theme_candidates import parse,discover
 class Tests(unittest.TestCase):
+ def test_missing_type_does_not_invalidate_known_code_and_name(self):
+  rows=parse('\ufeffvar r = [["000001","X","红利A",""]];')
+  self.assertIsNone(rows[0]['fundType'])
+  self.assertEqual(discover(rows,['红利'])['codes'],['000001'])
+  self.assertEqual(discover(rows,['红利'],fund_type='股票')['codes'],[])
  def test_string_query_does_not_split_into_characters(self):
   rows=[dict(code='000001',name='红利A',fundType='股票')]
   for terms,exclude in [('红利',None),(['红利'],'A'),(['红利'],[None])]:

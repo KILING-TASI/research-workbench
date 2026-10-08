@@ -18,6 +18,10 @@ scenarios为name及returnShocksPct对象，键为assetId。缺冲击不能算完
 
 ## 接入已有组合压力输入
 
+直接发行人结果新增equityConcentration：只对已关联的直接股票按发行人汇总，列证券项目数、发行人数、HHI及其倒数、前十集中度、经多个直接项目重复持有的比例。股票之外的债券、转债、基金和现金不进入此权益分母。
+
+结果同时列已关联股票占全组合的比例、未归属直接股票金额及股票关系覆盖。只有部分股票已关联时，HHI描述该已知部分，不能叫全组合有效持仓数；未穿透基金不填成零。1/HHI是集中度相当的等权主体数量，不是独立风险来源数量。关系的原文定位层次继续分别披露，不因计算集中度而升级为真实身份认证。
+
 `python scripts/investment_intent.py INTENT.json --portfolio-input PORTFOLIO.json --out-dir NEW_DIR`
 
 PORTFOLIO.json采用portfolio_stress.py原始输入（asOf、baseCurrency、holdings、scenarios），不是旧结果文件。意图输入提供stressCodeMap，将每个组合code明确对应一个assetId，完整一对一；截止日、币种和逐项市值必须一致。已有意图scenarios不允许静默覆盖，需分别运行比较。

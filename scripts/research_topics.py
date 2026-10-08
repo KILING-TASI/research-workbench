@@ -3,7 +3,7 @@ import argparse,json,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 ROUTES={
- 'bjx':('bjx-newshare-toolkit',{'research':'issuance_research.py','facts':'issuance_facts.py','evidence':'research_evidence.py','company':'company_research.py','review':'prediction_review.py','cash-ledger':'cash_repo_ledger.py','standalone':'standalone.py'}),
+ 'bjx':('bjx-newshare-toolkit',{'research':'issuance_research.py','facts':'issuance_facts.py','evidence':'research_evidence.py','company':'company_research.py','review':'prediction_review.py','scenarios':'subscription_scenarios.py','annual':'annual_yield.py','cash-ledger':'cash_repo_ledger.py','standalone':'standalone.py'}),
  'macro':('macro-indicator',{'standalone':'standalone.py'}),
  'etf':('etf-sector-rotation',{'standalone':'standalone.py','replacement':'replacement_research.py','stress':'portfolio_stress.py'})}
 def resolve(topic,action):
