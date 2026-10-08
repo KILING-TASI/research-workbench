@@ -78,7 +78,7 @@ class Results(unittest.TestCase):
                 (report/name).write_text(text,'utf-8')
             record=report/'report-manifest.json'
             record.write_text(json.dumps({'files':{name:None for name in ('a-note.html','z-main.html','z-main.md')},'primaryReport':'z-main.html'}),'utf-8')
-            rows=publish(root,root/'found.md');self.assertEqual(rows[0]['entry'],report/'z-main.html');self.assertEqual(rows[0]['headline'],'主报告判断')
+            rows=publish(root,root/'found.md');self.assertEqual(rows[0]['entry'],(report/'z-main.html').resolve());self.assertEqual(rows[0]['headline'],'主报告判断')
             record.write_text(json.dumps({'files':{'z-main.html':None},'primaryReport':'../secret.html'}),'utf-8')
             rows=publish(root,root/'invalid.md');self.assertIsNone(rows[0]['entry']);self.assertEqual(rows[0]['status'],'记录不可读取')
     def test_manifest_headline_matches_primary_html_not_adjustment_note(self):
@@ -121,7 +121,7 @@ class Results(unittest.TestCase):
             (report/'report.html').write_text('report','utf-8')
             (report/'report-manifest.json').write_text(json.dumps({'files':{'report.md':'x','report.html':'x','../secret.html':'x'}}),'utf-8')
             rows=publish(root,root/'found.md','现金兑现')
-            self.assertEqual(len(rows),1);self.assertEqual(rows[0]['entry'],report/'report.html')
+            self.assertEqual(len(rows),1);self.assertEqual(rows[0]['entry'],(report/'report.html').resolve())
             self.assertIn('未重新验收',rows[0]['status'])
     def test_find_by_conclusion_and_display_saved_period(self):
         with tempfile.TemporaryDirectory() as folder:

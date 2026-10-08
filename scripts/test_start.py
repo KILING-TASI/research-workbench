@@ -71,7 +71,7 @@ class FirstUseTests(unittest.TestCase):
             original=(root/'old/打开这里.html').read_bytes()
             result=execute('snapshot',root/'nested/new',continue_from=root/'old')
             relative=result['previousStudy']['entry']
-            self.assertEqual((root/'nested/new'/relative).resolve(),root/'old/打开这里.html')
+            self.assertEqual((root/'nested/new'/relative).resolve(),(root/'old/打开这里.html').resolve())
             self.assertIn('返回上次报告',(root/'nested/new/打开这里.md').read_text('utf-8'))
             self.assertEqual(original,(root/'old/打开这里.html').read_bytes())
 

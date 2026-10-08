@@ -13,7 +13,7 @@ class Tests(unittest.TestCase):
    manifest=json.loads((out/'report-manifest.json').read_text('utf-8'))
    self.assertEqual(manifest['primaryReport'],'组合历史风险观察.html')
    rows=find(root,root/'found.md','组合历史风险观察')
-   self.assertEqual(len(rows),1);self.assertIsNotNone(rows[0]['savedAt']);self.assertEqual(rows[0]['entry'],out/'组合历史风险观察.html')
+   self.assertEqual(len(rows),1);self.assertIsNotNone(rows[0]['savedAt']);self.assertEqual(rows[0]['entry'],(out/'组合历史风险观察.html').resolve())
    from start import execute
    source=(out/'input.json').read_bytes();continued=root/'continued'
    summary=execute('portfolio',continued,continue_from=out)

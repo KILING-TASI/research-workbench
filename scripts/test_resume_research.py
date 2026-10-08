@@ -94,6 +94,6 @@ class Tests(unittest.TestCase):
             (old/'打开这里.html').write_text('报告','utf-8')
             with patch('resume_research.run',return_value={'status':'partial'}) as execute:
                 self.assertEqual(run_from_search(root,'目标基金','重算',root/'new')['status'],'partial')
-                execute.assert_called_once_with(old,'重算',root/'new')
+                execute.assert_called_once_with(old.resolve(),'重算',root/'new')
 
 if __name__=='__main__':unittest.main()
