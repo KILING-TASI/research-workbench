@@ -97,6 +97,30 @@ class Tests(unittest.TestCase):
             data,text=answer(self.document(),'return')
         self.assertNotIn('年化波动为',data['conclusion'])
 
+    def test_return_risk_question_keeps_tradeoffs_and_missing_data(self):
+        result=self.calculated()
+        for row,value in zip(result['rows'],[5,20]):row['totalReturnPct']=value
+        with patch('fund_comparison_question.report',return_value=(result,'')):
+            data,text=answer(self.document(),'return-risk')
+        self.assertEqual(data['jointLeaderCodes'],[])
+        self.assertIn('没有一只',data['conclusion'])
+        self.assertIn('收益怎么看',text);self.assertIn('风险怎么看',text)
+        result['rows'][0]['annualizedVolPct']=None
+        with patch('fund_comparison_question.report',return_value=(result,'')):
+            data,text=answer(self.document(),'return-risk')
+        self.assertIn('波动率缺值',data['conclusion'])
+
+    def test_joint_question_calculates_once_and_keeps_headline_concise(self):
+        result=self.calculated()
+        for row,value in zip(result['rows'],[5,20]):row['totalReturnPct']=value
+        with patch('fund_comparison_question.report',return_value=(result,'')) as calculate:
+            data,text=answer(self.document(),'return-risk')
+        calculate.assert_called_once_with(self.document())
+        self.assertIn('收益较高：起伏基金',data['conclusion'])
+        self.assertIn('波动较小：平缓基金',data['conclusion'])
+        self.assertNotIn('收益最高不等于风险最低',data['conclusion'])
+        self.assertIn('收益最高不等于风险最低',text)
+
     def test_equal_values_keep_ties(self):
         result=self.calculated();result['rows'][1].update(drawdownPct=-20,annualizedVolPct=10)
         with patch('fund_comparison_question.report',return_value=(result,'')):

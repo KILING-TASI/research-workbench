@@ -68,10 +68,18 @@ def plan(previous,question):
             return result
     if request['command']!='funds':
         result.update(status='needs-clarification',message='这项研究的参数改动需按原入口明确处理，尚未执行；保留旧资料。');return result
-    questions={'哪只收益更好':'return','哪只收益最高':'return','哪只赚得更多':'return','哪只更稳':'stability','哪个更稳':'stability','哪只风险更低':'stability','哪只波动更小':'volatility','哪只回撤更小':'drawdown'}
+    questions={'哪只收益更好又更稳':'return-risk','收益和风险一起看':'return-risk','哪只收益更好':'return','哪只收益最高':'return','哪只赚得更多':'return','哪只更稳':'stability','哪个更稳':'stability','哪只风险更低':'stability','哪只波动更小':'volatility','哪只回撤更小':'drawdown'}
+    combined=re.fullmatch(r'((?:(?:近|最近|过去)(?:一年|半年|三个月|\d{1,2}个月))|\d{4}年|\d{4}-\d{2}-\d{2}(?:到|至|~)\d{4}-\d{2}-\d{2})('+ '|'.join(sorted(map(re.escape,questions),key=len,reverse=True))+')',reduced)
+    if combined:
+        narrowed=plan(previous,combined[1])
+        if narrowed['status']=='ready':
+            narrowed['question']=question
+            narrowed['questionType']=questions[combined[2]]
+            narrowed['message']+='在该区间内直接回答本次收益或风险问题；不是完整产品评价。'
+        return narrowed
     if reduced in questions:
         result['questionType']=questions[reduced]
-        result['message']=('沿用原区间与保存资料比较历史收益，不视为个人损益或完整产品评价；不更新资料。' if questions[reduced]=='return' else '沿用原区间与保存资料回答历史风险问题，日常波动和最大回撤分开解释；不更新资料。')
+        result['message']=('沿用原区间与保存资料比较历史收益，不视为个人损益或完整产品评价；不更新资料。' if questions[reduced] in ('return','return-risk') else '沿用原区间与保存资料回答历史风险问题，日常波动和最大回撤分开解释；不更新资料。')
         return result
     if not isinstance(end,str) or date.fromisoformat(end).isoformat()!=end:raise ValueError('上次截止日缺失或无效，不能猜“最近”的基准日')
     anchor=date.fromisoformat(end)
@@ -124,13 +132,13 @@ def run(previous,question,out):
             from fund_comparison_question import answer
             document=json.loads((directory/'comparison/input.json').read_text('utf-8'))
             data,body=answer(document,prepared['questionType'])
-            answer_name='收益追问' if prepared['questionType']=='return' else '风险追问'
+            answer_name='收益追问' if prepared['questionType'] in ('return','return-risk') else '风险追问'
             (directory/(answer_name+'.json')).write_text(json.dumps(data,ensure_ascii=False,indent=2,allow_nan=False),'utf-8')
             (directory/(answer_name+'.md')).write_text(body,'utf-8');(directory/(answer_name+'.html')).write_text(render(body,'基金'+answer_name),'utf-8')
             result['headline']=data['conclusion']
             result['nextSteps'].insert(0,'先打开'+answer_name+'.html，它直接回答本次问题；完整资料范围见比较报告。')
             from fund_comparison_question import register
-            register(directory,result.get('savedAt'),performance=prepared['questionType']=='return')
+            register(directory,result.get('savedAt'),performance=prepared['questionType'] in ('return','return-risk'))
         elif prepared.get('questionType') in ('portfolio-drag','portfolio-gain') and (directory/'result.json').is_file():
             from portfolio_history_report import contribution_question
             data,body=contribution_question(json.loads((directory/'result.json').read_text('utf-8')),json.loads((directory/'input.json').read_text('utf-8')),prepared['questionType'].split('-')[1])
@@ -162,15 +170,16 @@ def run_from_search(folder,query,question,out,selected_name=None):
     from research_results import publish
     with tempfile.TemporaryDirectory(prefix='research-search-') as temporary:
         rows=publish(Path(folder),Path(temporary)/'查找.md',query=query)
+    candidates=[{'name':r['name'],'period':r.get('period'),'status':r['status'],
+                 'entry':str(r['entry']) if r.get('entry') else None,
+                 'previousDirectory':str(Path(r['entry']).parent) if r.get('entry') else None} for r in rows]
     if selected_name is not None:
         if not isinstance(selected_name,str) or not selected_name.strip():raise ValueError('请明确候选记录的完整名称')
         rows=[row for row in rows if row['name']==selected_name]
-        if not rows:return {'status':'needs-clarification','message':'选定名称不在本次匹配候选中，请按候选的完整名称确认；尚未续算。','matches':[]}
+        if not rows:return {'status':'needs-clarification','message':'选定名称不在本次匹配候选中，请按候选的完整名称确认；尚未续算。','matches':candidates}
     if len(rows)!=1:
         return {'status':'needs-clarification','message':('找到多份匹配报告，请明确要沿用哪份；尚未开始续算。' if rows else '没有找到匹配报告，请确认目录或关键词；尚未开始续算。'),
-                'matches':[{'name':r['name'],'period':r.get('period'),'status':r['status'],
-                            'entry':str(r['entry']) if r.get('entry') else None,
-                            'previousDirectory':str(Path(r['entry']).parent) if r.get('entry') else None} for r in rows]}
+                'matches':candidates}
     row=rows[0];entry=row.get('entry')
     if entry is None:
         return {'status':'needs-clarification','message':'匹配记录没有有效阅读入口，请先处理旧报告的资料或输入问题；尚未续算。'}

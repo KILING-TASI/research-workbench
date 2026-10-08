@@ -107,6 +107,19 @@ class Tests(unittest.TestCase):
             self.assertEqual(plan(old,'我的组合收益主要靠谁呢？')['questionType'],'portfolio-gain')
             self.assertEqual(plan(old,'我的组合收益主要靠谁并改权重')['status'],'needs-clarification')
 
+    def test_interval_and_question_can_be_combined_without_extra_steps(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            old=self.previous(Path(tmp))
+            result=plan(old,'这几只基金只看近一年，哪只更稳？')
+            self.assertEqual(result['changes'],{'start':'2023-02-28'})
+            self.assertEqual(result['questionType'],'stability')
+            self.assertFalse(result['online'])
+            result=plan(old,'2023-01-01至2023-12-31哪只收益更好')
+            self.assertEqual(result['changes'],{'start':'2023-01-01','as_of':'2023-12-31'})
+            self.assertEqual(result['questionType'],'return')
+            self.assertEqual(plan(old,'近一年哪只更稳并更新行情')['status'],'needs-clarification')
+            with self.assertRaises(ValueError):plan(old,'近0个月哪只更稳')
+
     def test_cli_existing_output_does_not_label_old_entry_as_new(self):
         import subprocess,sys
         with tempfile.TemporaryDirectory() as tmp:
@@ -143,7 +156,10 @@ class Tests(unittest.TestCase):
                 execute.assert_called_once_with((root/'基金乙').resolve(),'重算',root/'new')
             with patch('resume_research.run') as execute:
                 for name in ['基金','../基金乙','没有这份']:
-                    self.assertEqual(run_from_search(root,'基金','重算',root/'new',name)['status'],'needs-clarification')
+                    result=run_from_search(root,'基金','重算',root/'new',name)
+                    self.assertEqual(result['status'],'needs-clarification')
+                    self.assertEqual({r['name'] for r in result['matches']},{'基金甲','基金乙'})
+                    self.assertTrue(all(Path(r['entry']).is_file() for r in result['matches']))
                 execute.assert_not_called()
 
     def test_search_unique_selects_declared_record(self):
