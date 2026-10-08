@@ -19,7 +19,7 @@ class Tests(unittest.TestCase):
    self.assertEqual(run.call_args.args[0]['comparisons'],rows)
    modules={c['module'] for c in result['lineage']['calculations'][0]['code']}
    self.assertIn('company_report_batch.py',modules)
-   self.assertTrue(any(n['role']=='research-comparisons' and n['path']==str(p/'comparisons.json') for n in result['lineage']['files']))
+   self.assertTrue(any(n['role']=='research-comparisons' and Path(n['path'])==(p/'comparisons.json').resolve() for n in result['lineage']['files']))
    s['quarterReviewResults']=['same.json','same.json']
    with patch('financial_source_binding.bound_archives',return_value=({},{})),patch('company_financial_report.run') as run:
     with self.assertRaises(ValueError):run_company_financial_review(s)

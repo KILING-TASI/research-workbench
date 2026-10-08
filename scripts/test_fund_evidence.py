@@ -35,8 +35,8 @@ class Tests(unittest.TestCase):
         from fund_evidence import read_input
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/'input.json';s=sample();s['evidence'][0]['pdf']='documents/report.pdf';p.write_text(json.dumps(s),encoding='utf-8')
-            self.assertEqual(read_input(p)['evidence'][0]['pdf'],str(Path(d)/'documents/report.pdf'))
-            p.write_text(json.dumps({'before':s,'after':s}),encoding='utf-8');self.assertEqual(read_input(p)['after']['evidence'][0]['pdf'],str(Path(d)/'documents/report.pdf'))
+            self.assertEqual(read_input(p)['evidence'][0]['pdf'],str((Path(d)/'documents/report.pdf').resolve()))
+            p.write_text(json.dumps({'before':s,'after':s}),encoding='utf-8');self.assertEqual(read_input(p)['after']['evidence'][0]['pdf'],str((Path(d)/'documents/report.pdf').resolve()))
     def test_empty_observation_date_is_not_silently_ignored(self):
         s=sample();s['evidence'][0]['observedAt']=''
         with self.assertRaises(ValueError):build(s)
