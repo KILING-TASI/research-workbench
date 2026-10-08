@@ -1,24 +1,27 @@
-"""Answer bounded historical risk questions using the same comparison calculation."""
+"""Answer bounded historical return and risk questions using the same comparison calculation."""
 from fund_comparison_brief import report
 import hashlib,json
 from pathlib import Path
 
 ANSWER_FILES=('风险追问.json','风险追问.md','风险追问.html')
+PERFORMANCE_FILES=('收益追问.json','收益追问.md','收益追问.html')
 
-def register(directory,saved_at):
+def register(directory,saved_at,performance=False):
     root=Path(directory)
+    files=PERFORMANCE_FILES if performance else ANSWER_FILES
     methods=json.loads((root/'comparison/report-manifest.json').read_text('utf-8'))['methodFiles']
     methods[Path(__file__).name]=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-    manifest={'artifactType':'fund-risk-question','primaryReport':'风险追问.html','savedAt':saved_at,
+    manifest={'artifactType':'fund-performance-question' if performance else 'fund-risk-question','primaryReport':files[2],'savedAt':saved_at,
               'inputSha256':hashlib.sha256((root/'comparison/input.json').read_bytes()).hexdigest(),
-              'files':{name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in ANSWER_FILES},
+              'files':{name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in files},
               'methodFiles':methods,'sourceVerification':'not-verified','visualReview':'not-performed'}
     (root/'report-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),'utf-8')
 
 def verify_saved(directory,manifest):
     root=Path(directory).resolve();issues=[]
-    if not isinstance(manifest.get('files'),dict) or set(manifest['files'])!=set(ANSWER_FILES):return ['追问文件登记不完整']
-    for name in ANSWER_FILES+('comparison/input.json',):
+    files=PERFORMANCE_FILES if manifest.get('artifactType')=='fund-performance-question' else ANSWER_FILES
+    if not isinstance(manifest.get('files'),dict) or set(manifest['files'])!=set(files):return ['追问文件登记不完整']
+    for name in files+('comparison/input.json',):
         path=root/name
         if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(root) or path.stat().st_size>16*1024*1024:
             issues.append('追问文件缺失或路径异常：'+name);continue
@@ -27,9 +30,33 @@ def verify_saved(directory,manifest):
     return issues
 
 def answer(document,kind):
-    if kind not in ('stability','volatility','drawdown'):raise ValueError('不支持的比较追问')
+    if kind not in ('stability','volatility','drawdown','return'):raise ValueError('不支持的比较追问')
     result=report(document)[0];rows=result['rows']
     names={r['code']:str(r.get('name') or r['code']).replace('\n',' ').replace('|','／') for r in document['rows']}
+    if kind=='return':
+        maximum=max(r['totalReturnPct'] for r in rows)
+        winners=[r['code'] for r in rows if r['totalReturnPct']==maximum]
+        label='、'.join(names[c] for c in winners)
+        if maximum<0:conclusion=label+'在这段历史里亏得较少，收益率为'+f'{maximum:.2f}%'+'；比较池全部亏损，不能说它“赚得最多”。'
+        elif maximum==0:conclusion=label+'的区间收益最高，为0.00%；它没有盈利，其余标的收益不高于零。'
+        else:conclusion=label+'的区间收益'+('并列最高' if len(winners)>1 else '最高')+'，为'+f'{maximum:+.2f}%'+'。'
+        if len(winners)==1:
+            leader=next(row for row in rows if row['code']==winners[0])
+            shallowest=min(abs(row['drawdownPct']) for row in rows)
+            if abs(leader['drawdownPct'])>shallowest:
+                conclusion+='但它的最大回撤幅度为'+f"{abs(leader['drawdownPct']):.2f}%"+'，比比较池中最小的'+f'{shallowest:.2f}%'+'更深。'
+            if all(row.get('annualizedVolPct') is not None for row in rows):
+                calmest=min(row['annualizedVolPct'] for row in rows)
+                if leader['annualizedVolPct']>calmest:
+                    conclusion+='它的年化波动为'+f"{leader['annualizedVolPct']:.2f}%"+'，高于比较池中最小的'+f'{calmest:.2f}%'+'。'
+        conclusion+='收益最高不等于风险最低，也不说明未来会继续领先。'
+        data={'questionType':kind,'conclusion':conclusion,'start':result['start'],'end':result['end'],'highestReturnCodes':winners,'rows':rows,'scope':'saved-common-history; not account profit or complete evaluation'}
+        body='# 哪只收益更好\n\n> '+conclusion+'\n\n本次比较'+result['start']+'至'+result['end']+'共同历史区间，沿用保存资料，不更新行情。\n\n|标的|区间收益|最大回撤|\n|---|---:|---:|\n'
+        for row in rows:body+='|'+names[row['code']]+'|'+f"{row['totalReturnPct']:+.2f}%"+'|'+f"{row['drawdownPct']:.2f}%"+'|\n'
+        if result.get('requestedStart') and result['requestedStart']!=result['start']:
+            body+='原请求起点为'+str(result['requestedStart'])+'，可比较数据实际从'+result['start']+'开始；不据此猜测日期差异的原因。'+chr(10)+chr(10)
+        body+='\n这些是原净值序列及其分红口径下的历史结果，不是你的个人持有收益；费用、币种、分红完整性与资料缺口沿用完整比较报告说明。没有基准与归因资料，不能据此判断经理能力。本回答不构成买卖建议。\n'
+        return data,body
     dd=min(abs(r['drawdownPct']) for r in rows)
     defensive=[r['code'] for r in rows if abs(r['drawdownPct'])==dd]
     missing=[r['code'] for r in rows if r.get('annualizedVolPct') is None]
@@ -48,8 +75,11 @@ def answer(document,kind):
     data={'questionType':kind,'conclusion':conclusion,'start':result['start'],'end':result['end'],'smallestDrawdownCodes':defensive,'lowestVolatilityCodes':calm,'missingVolatilityCodes':missing,
           'rows':[{k:r.get(k) for k in ('code','drawdownPct','annualizedVolPct','observationCount')} for r in rows],
           'scope':'saved-common-history; not future risk or personal suitability'}
-    body='# 哪只更稳，要分开看\n\n> '+conclusion+'\n\n'
+    title={'stability':'哪只更稳，要分开看','volatility':'哪只日常波动更小','drawdown':'哪只历史回撤更小'}[kind]
+    body='# '+title+'\n\n> '+conclusion+'\n\n'
     body+='本次仅回答'+result['start']+'至'+result['end']+'共同历史区间的问题，保留上次标的与参数，不更新资料。\n\n'
+    if result.get('requestedStart') and result['requestedStart']!=result['start']:
+        body+='原请求起点为'+str(result['requestedStart'])+'，可比较数据实际从'+result['start']+'开始；不据此猜测日期差异的原因。'+chr(10)+chr(10)
     body+='|标的|日常波动（年化）|最深下跌（最大回撤）|\n|---|---:|---:|\n'
     for r in rows:
         value='未计算' if r.get('annualizedVolPct') is None else f"{r['annualizedVolPct']:.2f}%"

@@ -71,13 +71,13 @@ def publish(folder, output, query=None, limit=None):
             answer_manifest=directory/'report-manifest.json'
             if answer_manifest.is_file() and not answer_manifest.is_symlink() and answer_manifest.stat().st_size<=1024*1024:
                 declared=json.loads(answer_manifest.read_text('utf-8'),object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float)
-                if isinstance(declared,dict) and declared.get('artifactType')=='fund-risk-question':
+                if isinstance(declared,dict) and declared.get('artifactType') in ('fund-risk-question','fund-performance-question'):
                     from fund_comparison_question import verify_saved
                     issues=verify_saved(directory,declared)
                     if issues:
                         data=dict(data,status='记录需要复查',message='；'.join(issues)+'。未把旧结论继续展示为当前回答。',headline=None)
                     else:
-                        answer_data=json.loads((directory/'风险追问.json').read_text('utf-8'),object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float)
+                        answer_data=json.loads((directory/('收益追问.json' if declared.get('artifactType')=='fund-performance-question' else '风险追问.json')).read_text('utf-8'),object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float)
                         if not isinstance(answer_data,dict) or not isinstance(answer_data.get('conclusion'),str):raise ValueError('追问记录缺少文字结论')
                         data=dict(data,headline=answer_data.get('conclusion'))
             entry=direct_entry or directory/'打开这里.html'
