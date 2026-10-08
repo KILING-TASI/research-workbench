@@ -27,12 +27,25 @@ def plan(previous,question):
             'question':question,'online':False,'changes':{},'status':'ready','message':'沿用原参数与保存资料重算，不更新行情或公告。'}
     if normalized in ('继续','继续研究','重算','重新核对','沿用原资料重算','用原参数重算'):return result
     # Full matching prevents an extra request (budget, fees, different products) being silently dropped.
-    reduced=re.sub(r'^(?:(?:请|帮我|沿用(?:上一份|上次|这份|旧报告|原报告)(?:资料|报告)?|把(?:区间|时间)(?:改成|改为)|只看|改看|看|比较))*','',normalized)
+    reduced=re.sub(r'^(?:(?:请问|请|帮我|沿用(?:上一份|上次|这份|旧报告|原报告)(?:资料|报告)?|把(?:区间|时间)(?:改成|改为)|只看|改看|看|比较))*','',normalized)
+    subjects={'funds':('这些基金','这组基金','这几只基金','这些ETF','这组ETF'),
+              'portfolio':('我的组合','这个组合','这份组合'),
+              'snapshot':('我的持仓','这份持仓','这些持仓'),
+              'cashflow':('这个账户','我的账户','这份账户记录')}
+    prefixes=list(subjects.get(request['command'],()))
+    declared=request.get('codes') or request.get('names')
+    if request['command']=='funds' and isinstance(declared,list) and len(declared)==2:
+        prefixes+=['这两只基金','这两个基金','这两只ETF']
+    for prefix in prefixes:
+        if reduced.startswith(prefix):
+            reduced=reduced[len(prefix):];break
+    reduced=re.sub(r'^(?:只看|改看|比较|看)','',reduced)
+    if reduced.endswith('呢'):reduced=reduced[:-1]
     end=request.get('asOf')
     if request['command']=='rebalance' and reduced in ('改成按月再平衡','按月再平衡','每月再平衡'):
         result.update(changes={'rebalance_options':{'periodicRule':'month-change'}},message='本次采用月初有数据观察日收盘形成信号、下一观察日收盘执行，沿用原历史与费用；不是每月末即时成交，不更新行情。')
         return result
-    if request['command']=='cashflow' and reduced in ('我到底赚了多少','赚了多少','剔除本金后赚了多少','账户增长是不是收益'):
+    if request['command']=='cashflow' and reduced in ('我到底赚了多少','到底赚了多少','赚了多少','剔除本金后赚了多少','账户增长是不是收益'):
         result.update(questionType='cashflow-profit',message='沿用已声明的估值和完整出入金记录，分开解释账户变动、本金进出与损益；不认证真实账单，不更新资料。')
         return result
     if request['command']=='portfolio' and reduced in ('谁在拖累组合','谁拖累了组合','哪项拖累最大','收益主要靠谁','谁在拉动收益'):
@@ -55,10 +68,10 @@ def plan(previous,question):
             return result
     if request['command']!='funds':
         result.update(status='needs-clarification',message='这项研究的参数改动需按原入口明确处理，尚未执行；保留旧资料。');return result
-    questions={'哪只更稳':'stability','哪个更稳':'stability','哪只风险更低':'stability','哪只波动更小':'volatility','哪只回撤更小':'drawdown'}
+    questions={'哪只收益更好':'return','哪只收益最高':'return','哪只赚得更多':'return','哪只更稳':'stability','哪个更稳':'stability','哪只风险更低':'stability','哪只波动更小':'volatility','哪只回撤更小':'drawdown'}
     if reduced in questions:
         result['questionType']=questions[reduced]
-        result['message']='沿用原区间与保存资料回答历史风险问题，日常波动和最大回撤分开解释；不更新资料。'
+        result['message']=('沿用原区间与保存资料比较历史收益，不视为个人损益或完整产品评价；不更新资料。' if questions[reduced]=='return' else '沿用原区间与保存资料回答历史风险问题，日常波动和最大回撤分开解释；不更新资料。')
         return result
     if not isinstance(end,str) or date.fromisoformat(end).isoformat()!=end:raise ValueError('上次截止日缺失或无效，不能猜“最近”的基准日')
     anchor=date.fromisoformat(end)
@@ -111,12 +124,13 @@ def run(previous,question,out):
             from fund_comparison_question import answer
             document=json.loads((directory/'comparison/input.json').read_text('utf-8'))
             data,body=answer(document,prepared['questionType'])
-            (directory/'风险追问.json').write_text(json.dumps(data,ensure_ascii=False,indent=2,allow_nan=False),'utf-8')
-            (directory/'风险追问.md').write_text(body,'utf-8');(directory/'风险追问.html').write_text(render(body,'基金风险追问'),'utf-8')
+            answer_name='收益追问' if prepared['questionType']=='return' else '风险追问'
+            (directory/(answer_name+'.json')).write_text(json.dumps(data,ensure_ascii=False,indent=2,allow_nan=False),'utf-8')
+            (directory/(answer_name+'.md')).write_text(body,'utf-8');(directory/(answer_name+'.html')).write_text(render(body,'基金'+answer_name),'utf-8')
             result['headline']=data['conclusion']
-            result['nextSteps'].insert(0,'先打开风险追问.html，它直接回答本次问题；完整资料范围见比较报告。')
+            result['nextSteps'].insert(0,'先打开'+answer_name+'.html，它直接回答本次问题；完整资料范围见比较报告。')
             from fund_comparison_question import register
-            register(directory,result.get('savedAt'))
+            register(directory,result.get('savedAt'),performance=prepared['questionType']=='return')
         elif prepared.get('questionType') in ('portfolio-drag','portfolio-gain') and (directory/'result.json').is_file():
             from portfolio_history_report import contribution_question
             data,body=contribution_question(json.loads((directory/'result.json').read_text('utf-8')),json.loads((directory/'input.json').read_text('utf-8')),prepared['questionType'].split('-')[1])

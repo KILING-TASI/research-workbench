@@ -19,6 +19,8 @@ class Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             old=self.previous(Path(tmp),command='cashflow')
             self.assertEqual(plan(old,'我到底赚了多少？')['questionType'],'cashflow-profit')
+            self.assertEqual(plan(old,'这个账户到底赚了多少？')['questionType'],'cashflow-profit')
+            self.assertEqual(plan(old,'这个账户到底赚了多少并新增转账')['status'],'needs-clarification')
             self.assertEqual(plan(old,'我到底赚了多少并补上昨天的转入')['status'],'needs-clarification')
     def test_portfolio_question_does_not_swallow_rebalance(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -89,6 +91,22 @@ class Tests(unittest.TestCase):
                 self.assertEqual({Path(r['previousDirectory']) for r in result['matches']},{(root/'one').resolve(),(root/'two').resolve()})
                 self.assertTrue(all(Path(r['entry']).is_file() for r in result['matches']))
                 self.assertFalse((root/'new').exists())
+    def test_contextual_phrases_keep_scope_and_extra_requirements(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            old=self.previous(Path(tmp))
+            self.assertEqual(plan(old,'请问这组基金哪只更稳？')['questionType'],'stability')
+            self.assertEqual(plan(old,'这几只基金哪只更稳呢？')['questionType'],'stability')
+            self.assertEqual(plan(old,'这几只基金哪只收益更好呢？')['questionType'],'return')
+            self.assertEqual(plan(old,'哪只收益最高并更新行情')['status'],'needs-clarification')
+            self.assertEqual(plan(old,'这些基金只看近一年')['changes'],{'start':'2023-02-28'})
+            self.assertEqual(plan(old,'这几只基金哪只更稳并换掉000001')['status'],'needs-clarification')
+            self.assertEqual(plan(old,'这两只基金哪只更稳')['status'],'needs-clarification')
+            (old/'research-request.json').write_text(json.dumps({'command':'funds','codes':['000001','110022'],'asOf':'2024-02-29'}),'utf-8')
+            self.assertEqual(plan(old,'这两只基金哪只更稳')['questionType'],'stability')
+            (old/'research-request.json').write_text(json.dumps({'command':'portfolio'}),'utf-8')
+            self.assertEqual(plan(old,'我的组合收益主要靠谁呢？')['questionType'],'portfolio-gain')
+            self.assertEqual(plan(old,'我的组合收益主要靠谁并改权重')['status'],'needs-clarification')
+
     def test_cli_existing_output_does_not_label_old_entry_as_new(self):
         import subprocess,sys
         with tempfile.TemporaryDirectory() as tmp:
