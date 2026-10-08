@@ -69,3 +69,7 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 
 需要检查当前接口、返回结构和样本日期时，使用[数据源体检](references/source-health.md)，区分请求失败、空样本、结构异常、日期超限和观测不足。仅主动调用，不后台轮询。
 
+
+## 独立环境验证
+
+[验证流程](.github/workflows/validate.yml)在拉取请求或手动触发时运行，无定时配置。矩阵覆盖Ubuntu/Windows和Python3.11/3.12，执行声明依赖安装、主包回归及禁用site-packages的三个教学入口。实际运行结果以对应Actions记录为准；流程文件存在不代表通过，也不认证联网、视觉或完整研究质量。
