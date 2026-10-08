@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-05",
+  "engineering": {
+    "selectedTests": 142,
+    "passed": 142,
+    "scope": "source health, comparison, original report parsing, original bindings, financial pipeline; not real investment questions"
+  },
+  "coldStart": {
+    "cacheInitiallyAbsent": true,
+    "codes": [
+      "161005",
+      "001938",
+      "510500",
+      "601012"
+    ],
+    "collectionSucceeded": 4,
+    "historyObservationsEach": 424
+  },
+  "financialOriginal": {
+    "codes": [
+      "601012",
+      "603259"
+    ],
+    "period": "2026-06-30",
+    "selectedCurrentAndComparativeFields": 28,
+    "matched": 28,
+    "scope": "selected seven cumulative or balance-sheet fields per company per column; not complete statements or quarterly input verification",
+    "fixedDefect": "numeric parenthesized note was treated as amount; confirmed note-column context now removes it, unexpected numeric columns remain ambiguous"
+  },
+  "health": {
+    "status": "partial",
+    "counts": {
+      "network-error": 1,
+      "observed": 7
+    },
+    "scope": "eight active sample checks, not uptime or full coverage"
+  },
+  "limitations": [
+    "Excel component absent in this environment",
+    "US MSFT returned only one daily observation",
+    "ETF primary disconnected; backup yielded daily sample",
+    "PDF originals and raw responses not distributed with installation package"
+  ],
+  "artifactHashes": {
+    "live-health-final/result.json": "591ecd908ba5845de8e981ec4c6284d9fb1ac530730fa3918d9dff19683f0d3b",
+    "cold-start-result.json": "9988dbfc6804d44895cf8dbbe519a97d1e6cb7b8a051c17a21520d687fdcf890",
+    "company-original-rechecked/result.json": "3144c7098154ac743584176fa7e36f191acff8f16f4a3f87054adb0081f84bec",
+    "cold-fund-comparison/report-manifest.json": "8f476641a18b5fcce31c401883b3e57b486b5928f0057ea0046bd5c20bf757c5"
+  }
+}

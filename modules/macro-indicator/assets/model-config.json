@@ -1,0 +1,287 @@
+{
+  "version": "3.1.1",
+  "windowMonths": 60,
+  "clip": 2,
+  "alpha": 0.5,
+  "beta": 0.5,
+  "confirmPeriods": 2,
+  "periodUnit": "month",
+  "weightLabels": [
+    "经济",
+    "政策",
+    "海外",
+    "估值"
+  ],
+  "stageWeights": {
+    "复苏": [
+      35,
+      25,
+      25,
+      15
+    ],
+    "过热": [
+      25,
+      30,
+      30,
+      15
+    ],
+    "滞胀": [
+      30,
+      25,
+      25,
+      20
+    ],
+    "衰退": [
+      40,
+      20,
+      20,
+      20
+    ]
+  },
+  "confidenceBands": [
+    {
+      "minimum": 0.75,
+      "factor": 1
+    },
+    {
+      "minimum": 0.5,
+      "factor": 0.7
+    },
+    {
+      "minimum": 0,
+      "factor": 0
+    }
+  ],
+  "frequencyDays": {
+    "日": 1,
+    "日/周": 7,
+    "月": 30,
+    "季度": 90,
+    "周/月": 30,
+    "不定期": null,
+    "议息会议": null
+  },
+  "stopMonths": 6,
+  "policyCrossStage": false,
+  "pools": [
+    {
+      "name": "增长",
+      "role": "growth",
+      "ids": [
+        "gdp",
+        "industrial",
+        "retail",
+        "investment",
+        "pmi"
+      ],
+      "trends": [
+        "gdp",
+        "industrial",
+        "retail",
+        "investment"
+      ],
+      "orientations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "signs": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "通胀",
+      "role": "inflation",
+      "ids": [
+        "cpi",
+        "cpi_food",
+        "cpi_nonfood",
+        "core_cpi",
+        "ppi"
+      ],
+      "trends": [
+        "cpi",
+        "cpi_food",
+        "cpi_nonfood",
+        "core_cpi",
+        "ppi"
+      ],
+      "orientations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "signs": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "信用",
+      "role": "reference",
+      "ids": [
+        "social_increment",
+        "m2",
+        "loans"
+      ],
+      "trends": [
+        "social_increment",
+        "m2",
+        "loans"
+      ],
+      "orientations": [
+        1,
+        1,
+        1
+      ],
+      "signs": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "外部",
+      "role": "reference",
+      "ids": [
+        "exports_cny",
+        "exports_usd",
+        "dxy",
+        "ust10",
+        "oil",
+        "gold",
+        "cny",
+        "cnh"
+      ],
+      "trends": [
+        "exports_cny",
+        "exports_usd",
+        "cny",
+        "cnh"
+      ],
+      "orientations": [
+        1,
+        1,
+        -1,
+        -1,
+        -1,
+        1,
+        -1,
+        -1
+      ],
+      "signs": [
+        1,
+        1,
+        -1,
+        -1,
+        -1,
+        1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "name": "政策",
+      "role": "policy",
+      "ids": [
+        "repo",
+        "lpr1",
+        "lpr5"
+      ],
+      "trends": [],
+      "orientations": [
+        -1,
+        -1,
+        -1
+      ],
+      "signs": [
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "name": "地产财政",
+      "role": "reference",
+      "ids": [
+        "property_sales_area",
+        "property_sales",
+        "land_revenue",
+        "fiscal_income",
+        "fiscal_expenditure"
+      ],
+      "trends": [
+        "property_sales_area",
+        "property_sales",
+        "land_revenue",
+        "fiscal_income",
+        "fiscal_expenditure"
+      ],
+      "orientations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "signs": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "资金情绪",
+      "role": "reference",
+      "ids": [
+        "margin",
+        "new_funds",
+        "etf_flow",
+        "equity_bond"
+      ],
+      "trends": [
+        "margin",
+        "new_funds",
+        "etf_flow",
+        "equity_bond"
+      ],
+      "orientations": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "signs": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "education": {
+    "neutralZ": 0.5,
+    "warningZ": 1.5
+  },
+  "sourceAvailability": {
+    "primary": 1,
+    "backup": 0.85,
+    "failed": 0,
+    "backupPoolCap": 0.7
+  },
+  "auxiliaryIndicators": [],
+  "researchAssumptions": "七维度配置按用户清单；新增池敏感性沿用既有方向、未经统计验证。社融增量未季调，比较上期存在季节性。"
+}

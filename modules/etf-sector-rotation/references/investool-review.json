@@ -1,0 +1,15 @@
+{
+  "reference": "https://github.com/axiaoxin-com/investool",
+  "verifiedAt": "2026-10-02",
+  "probes": {
+    "fundCode": "000001",
+    "fundDetail": "returned exact FCODE and JDZF rank/sc fields",
+    "managerList": "returned 3 records with ErrCode=0; partial sample only"
+  },
+  "assessment": {
+    "ETF标的择优": "仅折溢价参考不足；需同指数比较跟踪差异/误差、费率、成交额与价差、规模、成立日期；NAV与市价时点须匹配，QDII另标时差",
+    "基金择优": "可移植4433规则与rank/sc；7个期限排名都须完整，同类型比较，份额类别去重；缺失不得按0默认通过；收益为0不代表缺失",
+    "经理评价": "可用经理ID、姓名、公司、领域、管理规模等资料；第三方评分不得当成本地评价；需任职区间、共同管理、基准超额、回撤和风险调整指标；不把全基金历史收益归给现任经理"
+  },
+  "implementation": "本次接入ETF市场全景；其余三页仍待开发，不伪造筛选或评价结果。"
+}

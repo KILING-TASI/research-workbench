@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-06",
+  "version": "1.9",
+  "scope": "existing rebalance per-asset cost enhancement",
+  "syntheticCasesPassed": 8,
+  "existingFundRegressionPassed": true,
+  "realSeriesReused": [
+    "001714",
+    "003095"
+  ],
+  "freshCollection": false,
+  "feeAuthenticityVerified": false,
+  "accountSettlementVerified": false,
+  "visualAcceptance": false,
+  "limitations": [
+    "initial purchase excluded",
+    "fractional units",
+    "fund holding period redemption fees excluded",
+    "dividend calendar incomplete"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "exampleType": "teaching-only-not-real-funds",
+  "asOf": "2026-09-30",
+  "start": "2026-09-01",
+  "rows": [
+    {
+      "code": "teaching-A",
+      "name": "教学基金A",
+      "comparisonGroup": "教学比较组",
+      "basis": "nav-with-distributions",
+      "frequency": "trading_day",
+      "history": [
+        {
+          "date": "2026-09-01",
+          "nav": 1
+        },
+        {
+          "date": "2026-09-02",
+          "nav": 1.1
+        }
+      ]
+    },
+    {
+      "code": "teaching-B",
+      "name": "教学基金B",
+      "comparisonGroup": "教学比较组",
+      "basis": "nav-with-distributions",
+      "frequency": "trading_day",
+      "history": [
+        {
+          "date": "2026-09-01",
+          "nav": 1
+        },
+        {
+          "date": "2026-09-02",
+          "nav": 0.9
+        }
+      ]
+    }
+  ]
+}

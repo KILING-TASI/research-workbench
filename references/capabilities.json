@@ -1,0 +1,433 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "id": "etf_market",
+      "name": "ETF·市场全景",
+      "dataPath": "outputs/etf-sector-rotation/assets/market-official.json",
+      "recordsKey": "rows",
+      "entrypoints": [
+        "outputs/etf-sector-rotation/scripts/refresh_market.py"
+      ],
+      "checks": [
+        "work/test_etf_market_audit.cjs"
+      ],
+      "inputs": [
+        "时段",
+        "分类",
+        "证券代码"
+      ],
+      "output": "价格及份额排名与覆盖",
+      "gaps": [
+        "深交所份额日期与历史",
+        "完整分红总收益",
+        "连续份额与同日净值"
+      ]
+    },
+    {
+      "id": "etf_selection",
+      "name": "ETF·标的择优",
+      "dataPath": "outputs/etf-sector-rotation/assets/selection-data.json",
+      "recordsKey": "rows",
+      "entrypoints": [
+        "outputs/etf-sector-rotation/scripts/refresh_selection.py",
+        "outputs/etf-sector-rotation/scripts/refresh_selection_history.py",
+        "outputs/etf-sector-rotation/scripts/replacement_research.py"
+      ],
+      "checks": [
+        "work/test_etf_selection_audit.cjs",
+        "work/test_priority_pipeline.py",
+        "work/test_etf_replacement.py"
+      ],
+      "inputs": [
+        "指数",
+        "用途",
+        "比较维度"
+      ],
+      "output": "同类产品比较、候选与缺口",
+      "gaps": [
+        "官网费率覆盖不完整",
+        "净资产及跟踪效果缺失",
+        "折溢价与申赎状态未核验"
+      ]
+    },
+    {
+      "id": "etf_rotation",
+      "name": "ETF·行业轮动",
+      "dataPath": "outputs/etf-sector-rotation/assets/data.json",
+      "recordsKey": "rotationHistory.rows",
+      "entrypoints": [
+        "outputs/etf-sector-rotation/scripts/refresh_rotation.py"
+      ],
+      "checks": [
+        "work/test_etf_rotation_cards.js"
+      ],
+      "inputs": [
+        "截止日",
+        "观察池",
+        "持有状态"
+      ],
+      "output": "动量与风险仓位研究基线",
+      "gaps": [
+        "历史时点观察池",
+        "退市和交易约束",
+        "策略收益及基准验证"
+      ]
+    },
+    {
+      "id": "etf_allocation",
+      "name": "ETF·组合配置",
+      "dataPath": "outputs/etf-sector-rotation/assets/selection-data.json",
+      "recordsKey": "rows",
+      "entrypoints": [],
+      "checks": [
+        "work/test_allocation_ui.js",
+        "work/test_allocation_strategy.js",
+        "work/check_capability_boundaries.cjs"
+      ],
+      "inputs": [
+        "资金",
+        "策略",
+        "权重",
+        "候选"
+      ],
+      "output": "目标金额、情景压力、可恢复研究档案",
+      "gaps": [
+        "真实持仓与再平衡",
+        "ETF底层重叠",
+        "策略历史验证",
+        "尚无独立配置执行脚本"
+      ]
+    },
+    {
+      "id": "fund_market",
+      "name": "基金·市场全景",
+      "dataPath": "outputs/fund-market/assets/data.json",
+      "recordsKey": "rows",
+      "entrypoints": [
+        "outputs/fund-market/scripts/refresh.py"
+      ],
+      "checks": [
+        "work/test_fund_market.js"
+      ],
+      "inputs": [
+        "类型",
+        "时段",
+        "搜索"
+      ],
+      "output": "收益排名与市场覆盖",
+      "gaps": [
+        "份额类别及基准口径核验",
+        "数据覆盖与陈旧诊断"
+      ]
+    },
+    {
+      "id": "fund_selection",
+      "name": "基金·基金择优",
+      "dataPath": "outputs/fund-market/assets/detail-data.json",
+      "recordsKey": "funds",
+      "entrypoints": [
+        "outputs/fund-market/scripts/refresh_details.py"
+      ],
+      "checks": [
+        "work/test_fund_performance.js"
+      ],
+      "inputs": [
+        "类型",
+        "年限",
+        "风险维度"
+      ],
+      "output": "收益风险同区间对照",
+      "gaps": [
+        "历史详情覆盖少",
+        "基准超额与费用",
+        "未知折算和份额类别"
+      ]
+    },
+    {
+      "id": "fund_manager",
+      "name": "基金·经理评价",
+      "dataPath": "outputs/fund-market/assets/detail-data.json",
+      "recordsKey": "funds",
+      "entrypoints": [
+        "outputs/fund-market/scripts/refresh_details.py"
+      ],
+      "checks": [
+        "work/test_fund_tools.js"
+      ],
+      "inputs": [
+        "基金代码",
+        "经理ID",
+        "任期"
+      ],
+      "output": "经理资料及来源评价，非本系统能力评分",
+      "gaps": [
+        "经理任期与共同管理归因",
+        "独立方法和样本外验证",
+        "来源评分定义核验"
+      ]
+    },
+    {
+      "id": "fund_holdings",
+      "name": "基金·持仓诊断",
+      "dataPath": "outputs/fund-market/assets/detail-data.json",
+      "recordsKey": "funds",
+      "entrypoints": [
+        "outputs/fund-market/scripts/refresh_holdings.py"
+      ],
+      "checks": [
+        "work/test_fund_overlap.js"
+      ],
+      "inputs": [
+        "代码与真实市值",
+        "报告期"
+      ],
+      "output": "集中度、披露持仓穿透、相关性代理",
+      "gaps": [
+        "完整历史持仓",
+        "真实组合总收益",
+        "穿透未披露部分未知"
+      ]
+    },
+    {
+      "id": "stock_market",
+      "name": "股票·市场全景",
+      "dataPath": "outputs/stock-market/assets/data.json",
+      "recordsKey": "rows",
+      "entrypoints": [
+        "outputs/stock-market/scripts/refresh.py",
+        "outputs/stock-market/scripts/refresh_flow.py"
+      ],
+      "checks": [],
+      "inputs": [
+        "交易所",
+        "申万行业",
+        "时段"
+      ],
+      "output": "价格与第三方资金净流排名",
+      "gaps": [
+        "申万行业映射逐项核对",
+        "资金流口径和时段覆盖",
+        "停牌与新上市样本"
+      ]
+    },
+    {
+      "id": "stock_analysis",
+      "name": "股票·个股研判",
+      "dataPath": "outputs/stock-market/assets/research-data.json",
+      "recordsKey": "stocks",
+      "entrypoints": [
+        "outputs/stock-market/scripts/refresh_research.py",
+        "outputs/stock-market/scripts/refresh_research_gaps.py",
+        "outputs/stock-market/scripts/enrich_research.py"
+      ],
+      "checks": [
+        "work/test_stock_research.js"
+      ],
+      "inputs": [
+        "证券代码",
+        "截止日"
+      ],
+      "output": "财务、估值、业务与证据缺口",
+      "gaps": [
+        "详情仅少量样本",
+        "财务原文逐项核验",
+        "业务分部与行业可比估值"
+      ]
+    },
+    {
+      "id": "stock_events",
+      "name": "股票·公告与事件",
+      "dataPath": "outputs/stock-market/assets/research-data.json",
+      "recordsKey": "stocks",
+      "entrypoints": [
+        "outputs/stock-market/scripts/refresh_research.py"
+      ],
+      "checks": [
+        "work/test_stock_research.js"
+      ],
+      "inputs": [
+        "证券代码",
+        "公告日期范围"
+      ],
+      "output": "公告来源和事件研究",
+      "gaps": [
+        "公告全文核验",
+        "事件去重与影响证据",
+        "事实观点推理分层"
+      ]
+    },
+    {
+      "id": "stock_factor",
+      "name": "股票·因子选股",
+      "dataPath": "outputs/bjx-newshare-toolkit/assets/factor-data.json",
+      "recordsKey": "observations",
+      "entrypoints": [
+        "outputs/factor-stock-guide/scripts/build_screening_snapshot.py",
+        "outputs/factor-stock-guide/scripts/screen_stocks.py",
+        "outputs/factor-stock-guide/scripts/backtest.py"
+      ],
+      "checks": [
+        "work/check-factor-ui.cjs"
+      ],
+      "inputs": [
+        "股票池",
+        "权重",
+        "过滤条件",
+        "截止日"
+      ],
+      "output": "因子筛选、覆盖与验证结果",
+      "gaps": [
+        "少量价格样本",
+        "点时财务及退市样本",
+        "全市场时隔回测",
+        "预设非有效性证明"
+      ]
+    },
+    {
+      "id": "stock_masters",
+      "name": "股票·投资大师",
+      "dataPath": "outputs/bjx-newshare-toolkit/assets/stock-masters-data.json",
+      "recordsKey": "masters",
+      "entrypoints": [],
+      "checks": [
+        "work/test_stock_masters.cjs"
+      ],
+      "inputs": [
+        "人物",
+        "理念",
+        "研究问题"
+      ],
+      "output": "有来源的理念摘要、工作台研究问题与可接续框架",
+      "gaps": [
+        "未针对具体证券形成结论",
+        "框架不等于验证后的交易模型",
+        "部分来源为机构介绍或他人回顾，已标明"
+      ]
+    },
+    {
+      "id": "macro_cycle",
+      "name": "宏观·周期研判",
+      "dataPath": "outputs/macro-indicator/assets/data.json",
+      "recordsKey": "indicators",
+      "entrypoints": [
+        "outputs/macro-indicator/scripts/validate_cycles_v2.py"
+      ],
+      "checks": [
+        "work/test_macro_cycle_research.cjs",
+        "work/test_price_model.js"
+      ],
+      "inputs": [
+        "截止日",
+        "指标版本"
+      ],
+      "output": "满足条件时输出判断，否则留空",
+      "gaps": [
+        "长期历史与可比口径",
+        "阶段规则历史验证",
+        "替代指标适用边界"
+      ]
+    },
+    {
+      "id": "macro_education",
+      "name": "宏观·投教百科",
+      "dataPath": "outputs/macro-indicator/assets/education.json",
+      "recordsKey": "",
+      "entrypoints": [],
+      "checks": [],
+      "inputs": [
+        "指标名",
+        "分组",
+        "搜索"
+      ],
+      "output": "定义、读法、投资联系与边界",
+      "gaps": [
+        "当前值和历史分位对应口径",
+        "科普来源核验",
+        "尚无独立研究执行脚本"
+      ]
+    },
+    {
+      "id": "macro_library",
+      "name": "宏观·指标库",
+      "dataPath": "outputs/macro-indicator/assets/data.json",
+      "recordsKey": "indicators",
+      "entrypoints": [
+        "outputs/macro-indicator/scripts/refresh.py",
+        "outputs/macro-indicator/scripts/backfill_cycles.py"
+      ],
+      "checks": [],
+      "inputs": [
+        "指标ID",
+        "区间",
+        "来源"
+      ],
+      "output": "原始历史与完整性状态，不直接产生结论",
+      "gaps": [
+        "逐项历史覆盖",
+        "官方发布时点",
+        "主备同口径及替代版本"
+      ]
+    },
+    {
+      "id": "bjx_data",
+      "name": "北交所·新股数据",
+      "dataPath": "outputs/bjx-newshare-toolkit/assets/data.json",
+      "recordsKey": "records",
+      "entrypoints": [
+        "outputs/bjx-newshare-toolkit/scripts/toolkit.py"
+      ],
+      "checks": [],
+      "inputs": [
+        "证券代码",
+        "日期范围"
+      ],
+      "output": "发行、上市、实际配售与公告",
+      "gaps": [
+        "公告字段逐项核验",
+        "历史简称代码匹配",
+        "首日价格及时间口径"
+      ]
+    },
+    {
+      "id": "bjx_capital",
+      "name": "北交所·百股资金",
+      "dataPath": "outputs/bjx-newshare-toolkit/assets/data.json",
+      "recordsKey": "records",
+      "entrypoints": [
+        "outputs/bjx-newshare-toolkit/scripts/validate_model.js"
+      ],
+      "checks": [],
+      "inputs": [
+        "新股代码",
+        "预测时点"
+      ],
+      "output": "顶格资金与三档整手资金门槛",
+      "gaps": [
+        "三档预测仍有误差",
+        "冻结预测和实际核验",
+        "持续模型优化已暂停"
+      ]
+    },
+    {
+      "id": "bjx_returns",
+      "name": "北交所·收益对比",
+      "dataPath": "outputs/bjx-newshare-toolkit/assets/data.json",
+      "recordsKey": "records",
+      "entrypoints": [],
+      "checks": [],
+      "inputs": [
+        "资金",
+        "时段",
+        "策略假设"
+      ],
+      "output": "资金流水与历史情景收益",
+      "gaps": [
+        "实际首日收益时点",
+        "完整资金占用",
+        "策略与样本外验证",
+        "仅页面计算入口"
+      ]
+    }
+  ]
+}

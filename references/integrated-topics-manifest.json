@@ -1,0 +1,17 @@
+[
+  {
+    "module": "bjx-newshare-toolkit",
+    "assetPolicy": "仅目录、方法配置、教学示例和必要计算引擎；不附市场缓存、用户资料及PDF",
+    "files": 112
+  },
+  {
+    "module": "macro-indicator",
+    "assetPolicy": "仅目录、方法配置、教学示例和必要计算引擎；不附市场缓存、用户资料及PDF",
+    "files": 32
+  },
+  {
+    "module": "etf-sector-rotation",
+    "assetPolicy": "仅目录、方法配置、教学示例和必要计算引擎；不附市场缓存、用户资料及PDF",
+    "files": 42
+  }
+]

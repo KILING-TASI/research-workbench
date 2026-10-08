@@ -1,0 +1,142 @@
+{
+  "updatedOn": "2026-10-03",
+  "excluded": "模型优化、真实账户结算验证、内置自动OCR不在交付范围；现金账为显式日期情景，扫描件可外部补充文本后人工复核",
+  "items": [
+    {
+      "id": "data-refresh",
+      "status": "partial-delivered",
+      "goal": "独立行情发行缓存增量更新，保留公告核验与失败旧快照，不调用模型",
+      "evidence": [
+        "scripts/refresh_public_data.py",
+        "scripts/build_bjx_workbench.py",
+        "scripts/test_data_delivery.py",
+        "scripts/publish_bjx_delivery.py",
+        "scripts/update_delivery_candidate.py",
+        "scripts/announcements.py",
+        "scripts/compare_delivery_data.py",
+        "scripts/test_update_status.py",
+        "scripts/release_workbench_candidate.py",
+        "scripts/test_candidate_release.py",
+        "scripts/public_issuance_data.py",
+        "scripts/announcement_versions.py",
+        "scripts/test_announcement_versions.py"
+      ],
+      "remaining": "356条缓存均有公告链接；38个待检索对象已查，失败0、待查0；铜冠补检2份PDF已核对身份与3字段。更新、发布回退、原文覆盖保留和页面依据一致性已实测；更正通知复杂语义、其他版式及首次公开时点尚未完整认证。公告链接覆盖不等于全量原文核验。更新候选将待检索数量纳入缺口；旧2查询/36待查实际批次重审为candidate-with-gaps，保留原始历史报告。",
+      "currentEvidence": {
+        "metadataCovered": 356,
+        "lastBatchQueried": 38,
+        "lastBatchFailures": 0,
+        "lastBatchPending": 0,
+        "researchPreservationReplay": "outputs/北交交付验收-20261003/刷新依据保留实测.json"
+      }
+    },
+    {
+      "id": "original-facts",
+      "status": "partial-delivered",
+      "goal": "近期发行价、配售率、上限和百股资金原文证据",
+      "evidence": [
+        "assets/calendar-verified-fields.json",
+        "outputs/近期新股市盈率核验/公告百股资金核验.json",
+        "scripts/recheck_original_evidence.py",
+        "scripts/test_original_recheck.py",
+        "scripts/extract_issuance_evidence.py",
+        "scripts/test_evidence_extract.py",
+        "scripts/download_issuance_originals.py",
+        "scripts/test_original_download.py",
+        "scripts/announcement_versions.py",
+        "scripts/test_announcement_versions.py",
+        "scripts/recheck_correction_notices.py",
+        "scripts/test_correction_recheck.py",
+        "scripts/compare_original_versions.py",
+        "scripts/test_original_versions.py"
+      ],
+      "remaining": "9只18份27字段已复核；铜冠披露率精确门槛未认证。4组全文差异中吉和昌5组与广信14组内容提示全部逐项复核，另两组单处文本变化已核对；全篇图像与排版遗漏、其他版式、首次公开时点仍未认证。天力29页、视声56页差异图已核验；视声更正后限售逐行合计3226.70万股与表合计相符，更正前不符。"
+    },
+    {
+      "id": "cash-calendar",
+      "status": "partial-delivered",
+      "goal": "交易日历与现金时间账；到账日期由显式输入或情景假设提供",
+      "evidence": [
+        "scripts/cash_repo_ledger.py",
+        "scripts/test_cash_repo_ledger.py",
+        "references/cash-repo-ledger.md",
+        "assets/trading-calendar-2026.json",
+        "scripts/trading_calendar.py",
+        "assets/cash-ledger.js",
+        "scripts/test_browser_cash_ledger.py",
+        "assets/bse-trading-calendar-2026.json",
+        "scripts/test_bse_calendar.py",
+        "scripts/generate_cash_plan.py",
+        "scripts/test_cash_plan_generation.py",
+        "assets/cash-plan.js",
+        "scripts/test_browser_cash_plan.py",
+        "scripts/test_calendar_coverage_warning.py",
+        "scripts/test_annual_cash_alignment.py"
+      ],
+      "remaining": "2026日历与自动账已核验；2025北交原文重试仍重定向循环，搜索缓存不提升原文状态；历史年份原文日历待补；已修复休市退款提前释放，零费三档与逐笔账一致；年收益整手取整改为十进制精确比例，门槛以下不再因浮点补偿抬升"
+    },
+    {
+      "id": "repo-cashflow",
+      "status": "partial-delivered",
+      "goal": "通用回购逐笔占款与资金冲突情景，采用明确输入的产品日期和费用",
+      "evidence": [
+        "scripts/cash_repo_ledger.py",
+        "scripts/test_cash_repo_ledger.py",
+        "references/cash-repo-ledger.md",
+        "assets/cash-ledger.js",
+        "scripts/test_browser_cash_ledger.py",
+        "scripts/generate_repo_scenario.py",
+        "scripts/test_repo_scheduling.py",
+        "assets/cash-repo-plan.js",
+        "scripts/test_browser_repo_schedule.py"
+      ],
+      "remaining": "逐笔导入及自动固定结算情景已接入并跨引擎通过；产品参数由用户输入或明确假设，不承担真实账户结算验证；Python与页面统一输入边界：现金精确到分、回购利率最多六位小数、日期须ISO格式、编号非空；6组错误输入双引擎均拒绝，24项现金回归通过。底层发行配售率保留完整精度。"
+    },
+    {
+      "id": "delivery-tests",
+      "status": "partial-delivered",
+      "goal": "可重复页面逻辑、便携包同步与验收记录",
+      "evidence": [
+        "scripts/test_cash_repo_ledger.py",
+        "scripts/test_data_delivery.py",
+        "scripts/publish_bjx_delivery.py",
+        "scripts/test_browser_cash_ledger.py",
+        "scripts/test_update_status.py",
+        "scripts/test_candidate_release.py",
+        "scripts/test_browser_cash_plan.py",
+        "scripts/test_browser_repo_schedule.py",
+        "scripts/audit_delivery.py",
+        "scripts/test_public_issuance_data.py"
+      ],
+      "remaining": "独立ZIP最近一次完整回归120项测试通过；当前63个声明文件一致。剩余真实浏览器视觉与交互验收；真实账户验证及内置OCR已移出交付范围。"
+    },
+    {
+      "id": "visual",
+      "status": "blocked",
+      "goal": "真实页面验收；file协议被工具安全策略阻止，不绕过"
+    }
+  ],
+  "completionAudit": {
+    "complete": false,
+    "report": "outputs/北交交付验收-20261003/当前交付逐项完成审计.json",
+    "independentIncludedTestsPassed": 120,
+    "browserAcceptance": false,
+    "scopeChangedOn": "2026-10-03",
+    "excludedRequirements": [
+      "account-settlement-verification",
+      "embedded-auto-ocr"
+    ]
+  },
+  "scopeExclusions": [
+    {
+      "id": "account-settlement-verification",
+      "status": "removed-by-user",
+      "reason": "用户明确取消交付要求，非验收通过"
+    },
+    {
+      "id": "embedded-auto-ocr",
+      "status": "removed-by-user",
+      "reason": "用户明确取消交付要求，非已实现；保留外部文本补充入口"
+    }
+  ]
+}

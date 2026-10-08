@@ -1,0 +1,31 @@
+{
+  "currency": "CNY",
+  "returnBasis": "total-return",
+  "benchmarkId": "000991-自身报告基准",
+  "benchmarkVersion": "两报告披露口径；完整有效修订链未核",
+  "inputPrecision": "reported-rounded",
+  "periods": [
+    {
+      "currency": "CNY",
+      "returnBasis": "total-return",
+      "benchmarkId": "000991-自身报告基准",
+      "benchmarkVersion": "两报告披露口径；完整有效修订链未核",
+      "start": "2025-01-01",
+      "end": "2025-12-31",
+      "fundReturnPct": "4.38",
+      "benchmarkReturnPct": "16.80",
+      "source": "年度报告第7页，原件及哈希见当前报告结论绑定"
+    },
+    {
+      "currency": "CNY",
+      "returnBasis": "total-return",
+      "benchmarkId": "000991-自身报告基准",
+      "benchmarkVersion": "两报告披露口径；完整有效修订链未核",
+      "start": "2026-01-01",
+      "end": "2026-06-30",
+      "fundReturnPct": "-19.91",
+      "benchmarkReturnPct": "9.39",
+      "source": "中期报告第7页，原件及哈希见当前报告结论绑定"
+    }
+  ]
+}

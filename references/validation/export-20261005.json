@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-05",
+  "code": "600660",
+  "period": "2026-06-30",
+  "selectedOriginalFieldsMatched": 14,
+  "formulaChecks": 78,
+  "selectedRegressionTestsPassed": 161,
+  "visualReview": "five-sheet selected-range previews inspected",
+  "inputSha256": "ae6899df6ede0591a8358ab70478fdc9e21fbbdce7832631bacad75760005592",
+  "workbookSha256": "0f838d291fd9e91b699ec8fe12e6d43a0a317c3959d776768be204ba1cb79aa5",
+  "limits": [
+    "unit declaration unresolved",
+    "adjacent-period quarterly inputs not verified",
+    "Word/PPT not validated",
+    "configured runtime in one Windows environment; dependencies not included"
+  ]
+}

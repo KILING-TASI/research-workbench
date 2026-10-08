@@ -1,0 +1,21 @@
+{
+  "scene": "基金",
+  "case": "睿远成长价值有限评价",
+  "status": "valid-binding-with-content-gaps",
+  "visualStatus": "not-verified-by-this-check",
+  "researchLevel": "focused-appraisal",
+  "answeredQuestions": [
+    "近期披露成绩与长期持有体验是否一致",
+    "基准变更与适用边界",
+    "期末权益敞口与前十大证券集中度",
+    "已取得年报投资自述与后续检验方向"
+  ],
+  "unansweredQuestions": [
+    "完整经理能力及同类排名",
+    "个人收益与适配",
+    "完整行业与发行人风险映射"
+  ],
+  "reportSha256": "20ac5c5665ffcb42e4c0613c7a738d43bfd7c271eacf2ea1802fb27a86106858",
+  "reportFileName": "睿远成长价值评价.md",
+  "scope": "额外真实基金的有限评价摘要；原文与作者数据不随包附带，不代替六类代表案例或完整研究认证"
+}

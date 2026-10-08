@@ -1,0 +1,26 @@
+/* Shared workbench presentation, independent of calculations. */
+:root{--ui-font:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;--ui-text:#24334b;--ui-muted:#64748b;--ui-border:#e2e8f0}
+body{font-family:var(--ui-font)!important;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+body.embedded{background:#f6f8fc!important}
+body.embedded main{max-width:1180px!important;margin:0 auto!important;width:100%;padding:24px 28px!important}
+body.embedded .hero{padding:0 0 18px!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+body.embedded h1,body.embedded .hero h1{font-size:24px!important;line-height:1.45!important}
+body.embedded h2,body.embedded #calendar>h2{font-size:18px!important;line-height:1.5!important}
+body.embedded h3{font-size:15px!important}
+body.embedded p{font-size:13px!important;line-height:1.8!important;color:#64748b}
+body.embedded section{padding:18px!important;margin:14px 0!important;border:1px solid #e2e8f0!important;border-radius:12px!important;box-shadow:0 2px 6px #24334b04!important}
+body.embedded .stock-card{padding:16px!important;box-shadow:none!important;border:1px solid #e2e8f0!important}
+body.embedded button{width:auto;min-height:34px!important;padding:7px 12px!important;font-size:13px!important;border-radius:7px!important}
+body.embedded input,body.embedded select,body.embedded textarea{font-size:13px!important;border-radius:8px!important}
+body.embedded .stock-card>button{align-self:flex-start!important;width:auto!important;max-width:100%}
+body.embedded .cards{gap:12px!important}
+body.embedded .cards strong,body.embedded .tier-amount strong{font-size:26px!important;line-height:1.4!important}
+body.embedded th,body.embedded td{padding:10px 12px!important;font-size:13px!important}
+body.embedded .risk{font-size:12px!important;line-height:1.75!important}
+/* Outer shell uses the same scale as embedded views. */
+.sidebar{background:#17283f;padding-top:22px;width:214px}.brand{margin-bottom:26px}.brand small{font-size:11px;letter-spacing:0}.sidebar nav>a{font-size:13px;padding:10px 13px}.nav-label{font-size:12px;letter-spacing:0;margin-top:22px;color:#a2b2c9}.sidebar nav>a.active{background:#2a4365;box-shadow:inset 3px 0 #8fb5ff}
+.landing{max-width:1180px;padding:26px 28px}.topbar{height:54px;padding:0 28px}.intro{margin-bottom:24px}.intro h1,.page-heading h1{font-size:24px;letter-spacing:0}.intro-note,.page-heading>p:last-child{font-size:13px}.eyebrow{font-size:11px;letter-spacing:1px}.intro-mark{display:none}.section-title h2{font-size:17px}.section-title>span{font-size:12px}
+.tool-grid{gap:12px}.tool-card{padding:18px;border-radius:12px;box-shadow:0 2px 6px #24334b04}.card-top{margin-bottom:12px}.card-icon{width:32px;height:32px;font-size:21px;border-radius:8px}.category{font-size:11px}.tool-card h3{font-size:15px}.tool-card p{font-size:13px;line-height:1.75;margin-bottom:14px}.card-action{font-size:13px;padding-top:12px;border-top:1px solid #edf1f7}.report-row{padding:15px 18px}.report-info strong{font-size:14px}.report-info p,.report-date{font-size:12px}.workflow-note p,.library-note{font-size:12px}.search input{font-size:13px}.filter-tabs button{font-size:13px}
+@media(min-width:1200px){.tool-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.tool-card p{min-height:68px}}
+@media(max-width:900px){.sidebar{width:188px}.landing{padding:24px}.topbar{padding:0 24px}}
+@media(max-width:650px){.sidebar{width:100%;padding:12px 14px}.brand{margin-bottom:12px}.landing{padding:20px 16px}.topbar{padding:0 16px;height:44px}.intro h1,.page-heading h1{font-size:22px}.tool-grid{grid-template-columns:1fr}.tool-card p{min-height:0}.report-row{padding:14px}.report-info strong{font-size:13px}body.embedded main{padding:20px 16px!important}body.embedded h1,body.embedded .hero h1{font-size:22px!important}}

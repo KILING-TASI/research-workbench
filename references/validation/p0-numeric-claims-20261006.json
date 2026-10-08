@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-06",
+  "company": "601138",
+  "selectedClaimsChecked": 10,
+  "sourcePdfSha256": "34d02741f6651eba443de0b3ec16562a43d22b31c12d548e4f17004ed618ba2d",
+  "checks": [
+    "exact quotes located in re-extracted PDF",
+    "Decimal recomputation matches displayed two decimals",
+    "prior-year versus year-end denominator distinguished",
+    "consolidated profit versus parent profit distinguished"
+  ],
+  "entireReportNumericAcceptance": false,
+  "causalAcceptance": false,
+  "freshAcquisition": false,
+  "visualAcceptance": false,
+  "reportMarkdownSha256": "deb2fa09138024f25261f25c0999404cb241f0cdde5ba5177977d35b0886bb46"
+}

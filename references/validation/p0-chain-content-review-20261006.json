@@ -1,0 +1,64 @@
+{
+  "reportSha256": "61dea2a4d1b08266df1a7956c20f57e63c408d9e5f02815a45dbdc35126924a1",
+  "reportPath": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-01\\skill-x20-bjx-newshare-toolkit-x20\\outputs\\judgment-report-20261006\\report\\公司与行业点评.md",
+  "reviewer": "AI-content-review",
+  "checks": [
+    {
+      "key": "question",
+      "status": "passed",
+      "location": "总体判断",
+      "reason": "回答增长质量问题，并将现金兑现不足与增长并列；没有据此断定盈利虚假。"
+    },
+    {
+      "key": "evidence",
+      "status": "partial",
+      "location": "总体判断、盈利质量、现金兑现",
+      "reason": "7项当前财务值匹配原文，但全部正文派生数字、费用及业务解释尚未逐项建立计算绑定，不能宣称全报告核验完成。"
+    },
+    {
+      "key": "meaning",
+      "status": "passed",
+      "location": "增长驱动、现金兑现",
+      "reason": "说明增长线索与现金转换风险；区分公司陈述、研究解释和单季差分。"
+    },
+    {
+      "key": "alternatives",
+      "status": "partial",
+      "location": "增长驱动、盈利质量",
+      "reason": "列出产品组合、交付时点和税率等竞争解释，但未取得资料逐项排除。"
+    },
+    {
+      "key": "falsification",
+      "status": "partial",
+      "location": "怎样改变判断",
+      "reason": "提出增长放缓和现金持续偏弱，尚需明确跟踪期间及验证口径，不能事后随意改变条件。"
+    },
+    {
+      "key": "gaps",
+      "status": "passed",
+      "location": "待核实问题、研究定位",
+      "reason": "列出销量单价、资金占用与库龄等缺口，并说明不构成完整投资价值判断。"
+    },
+    {
+      "key": "comparability",
+      "status": "passed",
+      "location": "现金兑现及单季度财务变化",
+      "reason": "累计与单季区分，年末比较不与收入同比直接一对一比较；保留比较口径限制。"
+    },
+    {
+      "key": "basis",
+      "status": "partial",
+      "location": "币种、报表范围及原文说明",
+      "reason": "数据范围已声明，但本报告未完成全部会计政策和审计依据复查，不能认证合规。"
+    },
+    {
+      "key": "scope",
+      "status": "passed",
+      "location": "判断范围、研究定位",
+      "reason": "单公司财报观察，不把行业标题当作完整行业覆盖，不输出估值吸引力。"
+    }
+  ],
+  "status": "partial-or-failed",
+  "semanticCertification": false,
+  "scope": "绑定正文与逐项复查声明，不自动证明判断正确、原文真实或独立专家认可"
+}

@@ -1,0 +1,48 @@
+{
+  "fields": [
+    {
+      "metric": "price",
+      "value": null,
+      "unit": null,
+      "status": "missing-unknown",
+      "candidates": [],
+      "usedInCalculation": false,
+      "publicationTimeCertified": false
+    },
+    {
+      "metric": "maxShares",
+      "value": null,
+      "unit": null,
+      "status": "missing-unknown",
+      "candidates": [],
+      "usedInCalculation": false,
+      "publicationTimeCertified": false
+    },
+    {
+      "metric": "ratePct",
+      "value": null,
+      "unit": null,
+      "status": "missing-unknown",
+      "candidates": [],
+      "usedInCalculation": false,
+      "publicationTimeCertified": false
+    }
+  ],
+  "quality": {
+    "requestedCount": 3,
+    "availableCount": 0,
+    "originalNumericMatchedCount": 0,
+    "coveragePct": "0",
+    "originalMatchedPct": "0",
+    "conflictCount": 0,
+    "missingCount": 3,
+    "latestDeclaredPublication": null,
+    "freshness": "latest-effective-version-not-independently-confirmed",
+    "investmentQualityScore": null
+  },
+  "limitations": [
+    "原文数值匹配不等于线上来源、字段语义和首次公开时间均获认证",
+    "计算使用状态来自实际工作流记录或显式引用，不凭有值推断",
+    "覆盖率分母是所查询字段，不是全套公告字段"
+  ]
+}

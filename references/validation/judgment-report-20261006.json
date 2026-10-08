@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-06",
+  "targetedTestsPassed": 43,
+  "realCompanyArchiveReused": "601138",
+  "contentChecks": [
+    "core tension rendered",
+    "judgment boundary rendered",
+    "research positioning rendered"
+  ],
+  "fullInvestmentAppraisalCertified": false,
+  "freshDownload": false,
+  "visualAcceptance": false
+}

@@ -1,0 +1,83 @@
+{
+  "checkedAt": "2026-10-02T07:29:32.188820+00:00",
+  "method": "isolated copied skill scripts, empty user directory, no existing project cache",
+  "checks": [
+    {
+      "name": "fund cold-start network",
+      "status": "passed",
+      "observations": [
+        2764,
+        4410
+      ]
+    },
+    {
+      "name": "stock cold-start quote",
+      "status": "passed",
+      "quoteDate": "2026-09-30",
+      "classificationVerified": false
+    },
+    {
+      "name": "etf cold-start quote",
+      "status": "passed",
+      "quoteDate": "2026-09-30",
+      "classificationVerified": false
+    },
+    {
+      "name": "common dates and identical benchmark mechanical check",
+      "status": "passed"
+    },
+    {
+      "name": "portfolio calculation fixture",
+      "status": "passed"
+    },
+    {
+      "name": "frozen timing and error fixture",
+      "status": "passed"
+    },
+    {
+      "name": "evidence metadata fixture, not original numeric verification",
+      "status": "passed"
+    },
+    {
+      "name": "independent save, due and review",
+      "status": "passed"
+    },
+    {
+      "name": "failure preserves successful cache and timestamp",
+      "status": "passed"
+    },
+    {
+      "name": "future quote excluded",
+      "status": "passed"
+    },
+    {
+      "name": "macro cold-start catalog no carried observations",
+      "status": "passed"
+    },
+    {
+      "name": "BJX cold-start fetch without model optimization",
+      "status": "passed",
+      "records": 356
+    },
+    {
+      "name": "macro current official cold-start live refresh",
+      "status": "passed-with-gaps",
+      "indicators": 37,
+      "available": 25,
+      "errors": {}
+    }
+  ],
+  "limitations": [
+    "stock and ETF quote category not official verified; no independent price history, financial statements or disclosures",
+    "evidence test uses a fixture; no actual PDF numeric check",
+    "comparison and portfolio checks prove calculations only, not investment usefulness",
+    "complete multi-module HTML build still requires workspace assets; legacy entrypoints not independently accepted"
+  ],
+  "fixes": [
+    "master collector supports empty user directory",
+    "bundled task persistence independent of BJX folder",
+    "BJX independent raw fetch does not trigger model optimization",
+    "ETF missing build_market_tracking.py synchronized",
+    "macro installed stale 33-item refresh replaced by current 37-item official adapter"
+  ]
+}

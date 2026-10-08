@@ -1,0 +1,27 @@
+{
+  "snapshotDate": "2026-10-08",
+  "case": "001938半年有限评价",
+  "code": "001938",
+  "reportPeriod": "2026-06-30",
+  "sourceType": "third-party-report-copy",
+  "sourcePdfSha256": "ecb689d5a1860f37fa31fd944df7b52aeda66b0d7ec7d209796c57e8e53c6ccc",
+  "reportSha256": "178f8add90cde78fcd352c4d41d388b4763597be735000369793198e99fe2cc2",
+  "stockRows": 118,
+  "returnVerification": "specified-halfyear-endpoints-rounded-match",
+  "status": "valid-binding-with-content-gaps",
+  "visualStatus": "not-verified",
+  "researchLevel": "focused-appraisal",
+  "answeredQuestions": [
+    "半年收益与披露基准对比",
+    "期末股票集中度",
+    "共同管理及后续离任的归属边界",
+    "两处原始净值大幅下降的分红解释"
+  ],
+  "unansweredQuestions": [
+    "独立基准全收益",
+    "全历史风险与经理能力",
+    "全部资产及行业映射",
+    "官网同文件一致性及个人适配"
+  ],
+  "scope": "实际副本、持仓、半年收益及四项判断绑定；新增两处官方分红解释，不认证全历史复权或完整评价"
+}

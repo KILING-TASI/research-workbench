@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-05",
+  "code": "600660",
+  "reportPeriod": "2026-06-30",
+  "sourceType": "saved-public-financial-report-from-prior-real-acquisition",
+  "newMarketAcquisition": false,
+  "selectedPythonTestsPassed": 171,
+  "pptRuleChecksPassed": 6,
+  "docx": {
+    "pages": 3,
+    "allPagesVisuallyReviewed": true,
+    "outputSha256": "404d39e94d5b4fe4ef3fb4994758f014473cd39178c2495a602a8c5f18dbc8c9",
+    "renderMethod": "installed Microsoft Word PDF export; default LibreOffice renderer unavailable"
+  },
+  "pptx": {
+    "slides": 10,
+    "allSlidesVisuallyReviewed": true,
+    "outputSha256": "3f9a8fdd426a8be7f8b53c0fed615bfea025b5c973d02c890f355ac575c72fa6",
+    "fontFamily": "Microsoft YaHei"
+  },
+  "limitations": [
+    "single Windows/font/report sample",
+    "native Word PDF created; COM quit reported RPC failure, PDF pages were inspected",
+    "unit declaration and adjacent-period financial inputs still unresolved",
+    "integrity checker does not perform semantic or visual review"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "capital": "100000",
+  "start": "2026-10-08",
+  "end": "2026-10-20",
+  "issues": [
+    {
+      "id": "示例新股",
+      "applyDate": "2026-10-08",
+      "announcedRefundDate": "2026-10-12",
+      "refundAvailableDate": "2026-10-12",
+      "saleAvailableDate": "2026-10-20",
+      "subscriptionFunds": "50000",
+      "allocatedPrincipal": "1000",
+      "saleNetProceeds": "1200"
+    }
+  ],
+  "repos": [
+    {
+      "id": "示例回购",
+      "tradeDate": "2026-10-09",
+      "firstSettlementDate": "2026-10-12",
+      "maturitySettlementDate": "2026-10-13",
+      "availableDate": "2026-10-13",
+      "principal": "40000",
+      "annualRatePct": "1.5",
+      "commission": "1",
+      "dateBasis": "纯示例日期，不代表实际成交或券商到账"
+    }
+  ],
+  "notice": "纯假设输入，不是真实新股或回购交易。金额精确到分，利率最多六位小数。"
+}

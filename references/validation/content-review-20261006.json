@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-06",
+  "scope": "选定两份既有真实样本报告内容复查",
+  "reports": [
+    {
+      "sample": "工业富联601138",
+      "scope": "2026年中报经营专题，非完整估值研究",
+      "reportIdentifier": "company-final/report/公司与行业点评.md",
+      "bodySha256": "bbe187a3b24478b7b7b328325a225b76c43dd52d73c100bb892341e4d3db780c",
+      "status": "partial",
+      "reviewMethod": "AI阅读已生成正文与已有验收记录；非独立专家评审",
+      "findings": [
+        "结论、竞争解释及反证条件具备，原文匹配沿用已记录P0核验，本轮没有独立重读全部原文",
+        "极端现金流同比易误读，生成器已增加基数与方向解释提示；原报告保留不覆盖",
+        "客户、量价及现金流完整桥接仍缺失，不标完整公司深研"
+      ],
+      "visualReview": "not-performed",
+      "newCollection": false
+    },
+    {
+      "sample": "001714与003095",
+      "scope": "共同区间历史表现比较，非同类或完整基金评价",
+      "reportIdentifier": "fund-release/基金比较说明.md",
+      "bodySha256": "6eff28c55fd3c2dca1189e55b47d409df95861417e6278c2bece338142c80215",
+      "status": "passed-within-declared-scope",
+      "reviewMethod": "AI阅读已生成正文与已有验收记录；非独立专家评审",
+      "findings": [
+        "结论明确收益与回撤取舍，数字与已保存计算一致",
+        "缺基准、持仓、经理、费率等资料时明确不判断选股能力或替换",
+        "没有适用完整日历与分红完整性确认，范围明确收窄"
+      ],
+      "visualReview": "not-performed",
+      "newCollection": false
+    }
+  ],
+  "limitations": [
+    "不是所有报告验收",
+    "未新增联网原文核验",
+    "修复后的新成品需另行检查"
+  ]
+}

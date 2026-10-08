@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-06",
+  "syntheticCasesPassed": 6,
+  "existingIntegratedResult": "fund-series-acceptance/integrated-v2-result.json",
+  "inputSha256": "d92278edb67a40f480a20fba65e8bbc77dc5bf1dc3863111720d6aeb3d064d18",
+  "contentFieldsRendered": [
+    "conclusion",
+    "core tension",
+    "evidence",
+    "research positioning"
+  ],
+  "freshDownload": false,
+  "visualAcceptance": false,
+  "fullFundAppraisalCertified": false
+}

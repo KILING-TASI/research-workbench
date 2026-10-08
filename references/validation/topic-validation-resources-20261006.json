@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-06",
+  "scope": "main Python regression plus module integration with explicitly supplied local resources",
+  "mainPythonTestsPassed": 1350,
+  "mainJavaScriptSuitesPassed": 4,
+  "bjxTestsPassedWithResources": 157,
+  "macroTestsPassed": 23,
+  "etfTestsPassed": 3,
+  "bjxInitialErrors": 6,
+  "errorClassification": {
+    "externalHistoricalData": 2,
+    "optionalPageFixedPaths": 4
+  },
+  "fixedPagePaths": 4,
+  "testsSkipped": 0,
+  "projectDataBundled": false,
+  "visualAcceptance": false,
+  "freshCollection": false
+}

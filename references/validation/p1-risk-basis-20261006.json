@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-06",
+  "scope": "P0证据保护与P1滚动历史风险观察",
+  "sample": [
+    "001714",
+    "003095",
+    "601138"
+  ],
+  "newCollection": false,
+  "historyInputSha256": "d4ca58fc9120052621e1106b9688f7dadb318a8f6953569f94007ab8d132856f",
+  "methodHashes": {
+    "portfolio_stress.py": "4d26fea30049c57527fa7973a97dce26a8688aace15cad1901699f020dfd7e91",
+    "portfolio_history_report.py": "e9884b1020c3c160a192ca20bfb89984d3e57ec5e757e1eeb4712c568e74bf0a"
+  },
+  "observations": 423,
+  "rollingWindows": 20,
+  "tail": {
+    "status": "empirical-observed-intervals",
+    "observations": 423,
+    "tailObservations": 22,
+    "confidence": 0.95,
+    "worstTailMeanReturnPct": -2.6900288250371456,
+    "cutoffReturnPct": -1.8461030518780952,
+    "basis": "固定当前权重的观察区间收益；不是用户真实收益或未来损失概率"
+  },
+  "tests": 64,
+  "testsScope": "滚动/尾部及审计声明9项，买方资料包10项，会计依据4项，公司报告41项；合成边界与原样本复算分列",
+  "checks": [
+    "滚动最后窗口截止最新有效日期",
+    "极端尾部分位样本不足留空",
+    "未经审计不能标已审计",
+    "自然语言报告突出阶段差异并限制解释"
+  ],
+  "limitations": [
+    "复用已保存净值，不是新增采集或样本外检验",
+    "分红、完整日历仍未独立确认",
+    "固定等权示例，非真实账户",
+    "未含交易成本、无法成交、动态再平衡",
+    "未预设危机样本，不能声称危机验证",
+    "HTML视觉验收未完成"
+  ]
+}

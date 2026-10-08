@@ -1,0 +1,23 @@
+{
+  "method": "copy installed skills excluding all JSON/CSV caches and generated HTML; static import inventory",
+  "findings": [
+    {
+      "skill": "etf-sector-rotation",
+      "script": "build.py",
+      "dependency": "build_market_tracking",
+      "status": "needs-dependency-or-project"
+    },
+    {
+      "skill": "etf-sector-rotation",
+      "script": "build.py",
+      "dependency": "etf_embed",
+      "status": "needs-dependency-or-project"
+    },
+    {
+      "skill": "macro-indicator",
+      "script": "build.py",
+      "dependency": "etf_embed",
+      "status": "needs-dependency-or-project"
+    }
+  ]
+}

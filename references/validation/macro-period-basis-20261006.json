@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-06",
+  "testsPassed": 34,
+  "existingSourceReplay": [
+    "INDPRO",
+    "UNRATE"
+  ],
+  "freshDownload": false,
+  "publicationVintageVerified": false,
+  "archiveSha256": "8731454664a3728eff3e152ed9d6b1a84a8e67af8242960378669a0de50f45d5",
+  "strictCalendarMonthComparison": true
+}

@@ -1,0 +1,26 @@
+{
+  "path": "fund-report.pdf",
+  "sha256": "7b9fbb70eec11419865a4f6a8ba8863f1b156177904f17bb420f91d8c72b4fb4",
+  "code": "513100",
+  "reportDate": "2026-06-30",
+  "holdingsPages": [
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "navEvidence": {
+    "page": 7,
+    "quote": "期末基金资产净值 19,468,268,721.53",
+    "value": "19468268721.53"
+  },
+  "equityEvidence": {
+    "page": 39,
+    "quote": "合计 17,686,928,778.66 90.85",
+    "value": "17686928778.66"
+  }
+}

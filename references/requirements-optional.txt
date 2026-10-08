@@ -1,0 +1,9 @@
+# Optional features only; installing does not certify data or business coverage.
+pdfplumber
+pypdf
+pypdfium2
+numpy
+pandas
+xlrd
+openpyxl
+python-docx

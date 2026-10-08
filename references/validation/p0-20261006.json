@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-06",
+  "documentationVersion": "1.4",
+  "scope": "四项P0代码与有限样本验收，不是全市场或投资效果认证",
+  "engineeringTests": {
+    "testsRun": 231,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true,
+    "modules": [
+      "test_p0_contracts",
+      "test_source_health",
+      "test_financial_research_pipeline",
+      "test_company_financial_report",
+      "test_quarter_original_review",
+      "test_collection_quality_brief",
+      "test_fund_series_tools",
+      "test_quarter_pipeline_summary",
+      "test_fund_comparison_brief",
+      "test_portfolio_contribution_report",
+      "test_research_brief_html",
+      "test_comparison_alignment",
+      "test_comparison_integrity",
+      "test_macro_asset_observation",
+      "test_package_audit",
+      "test_portable_package",
+      "test_verify_document_export",
+      "test_company_comparisons",
+      "test_collection_resilience",
+      "test_collection_method_window",
+      "test_resume_request_binding",
+      "test_portable_integrity"
+    ],
+    "scope": "选定工程回归，不是全市场真实验收或准确率"
+  },
+  "samples": [
+    {
+      "scene": "company",
+      "code": "601138",
+      "period": "2026H1",
+      "liveOriginalReports": 4,
+      "currentSupportedFieldsMatched": 7,
+      "comparativeSupportedFieldsMatched": 7,
+      "quarterDependencyGroupsMatched": 21,
+      "appraisalRoles": 6,
+      "semanticReview": "本次人工复核含半年与单季现金流差异；结构齐备不认证因果",
+      "excelFormulaChecks": 78,
+      "excelDifferences": [],
+      "visualReview": "五张表关键范围，非长表全部行"
+    },
+    {
+      "scene": "fund-comparison",
+      "codes": [
+        "001714",
+        "003095"
+      ],
+      "observationsEach": 424,
+      "start": "2025-01-02",
+      "end": "2026-09-30",
+      "status": "真实净值共同区间比较，非同类排名",
+      "gaps": [
+        "分红记录完整性未独立核验",
+        "未提供适用全年净值日历",
+        "合同基准与经理评价不在本次样本范围"
+      ]
+    },
+    {
+      "scene": "etf",
+      "codes": [
+        "512800",
+        "512660"
+      ],
+      "observationsEach": 21,
+      "start": "2026-09-01",
+      "requestedEnd": "2026-10-06",
+      "lastObservation": "2026-09-30",
+      "status": "主源连接失败，备用源取得未复权行情；总收益入口正确拒绝混用",
+      "calendarSource": "https://www.sse.com.cn/disclosure/announcement/general/c/c_20260915_10832273.shtml",
+      "coverageScope": "仅指定窗口21个预期日期，非全部历史"
+    },
+    {
+      "scene": "portfolio",
+      "codes": [
+        "001714",
+        "003095"
+      ],
+      "status": "真实净值、示例50%/50%权重的历史贡献模拟",
+      "observations": 424,
+      "realAccountVerified": false,
+      "gaps": [
+        "未核实分红完整性",
+        "每日无成本再平衡，不是实际交易"
+      ]
+    },
+    {
+      "scene": "macro",
+      "series": [
+        "INDPRO",
+        "UNRATE"
+      ],
+      "observationsEach": 20,
+      "status": "实际取得FRED观测，与保存CSV逐点一致",
+      "publicationTimesVerified": false,
+      "gaps": [
+        "修订历史非事前冻结样本",
+        "两项指标不证明周期阶段"
+      ]
+    },
+    {
+      "scene": "bjx",
+      "code": "920188",
+      "status": "重新获取历史结果公告并复算比例；事前使用实际结果被拒绝",
+      "ratePct": "0.0312799900",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-03-18/1225287591.PDF",
+      "scopeNote": "历史结果复核，非新股预测与真实账户获配验收"
+    }
+  ],
+  "sourceHealth": {
+    "requests": 6,
+    "validResponses": 4,
+    "networkErrors": 2,
+    "scope": "一次主动体检，非长期可用率"
+  },
+  "limitations": [
+    "HTML未进行本轮浏览器截图验收",
+    "未承诺完整三表所有字段原文核验",
+    "未承诺全市场取数、未来收益或后台更新"
+  ],
+  "artifactHashes": {
+    "company-final\\acceptance.json": "335103b380a209f5548b8b4bb436ab53189d45da88af11ed06a203c9b2bbd100",
+    "fund-final\\比较结果.json": "a7860f43bf1ba76696be65d17694a26a0f716aa9ea0b76ee71884eb3102f3166",
+    "portfolio-result.json": "69fdd97e022919c608f93704d8724771f2a05bccb98911bbcc467951e717b244",
+    "macro-report\\result.json": "80237da9564ee4a833a2138c9dc8d123013f3c8a88c3579c107266a42be647dc",
+    "bjx-original-replay\\acceptance.json": "99cc61933e813c0c88e755688ddaead657b3415ad89bae9da219cc88deff83ac",
+    "regression.json": "35a9a26c91aff50c3ffc5a98299eb678686a56aa4de181d40d16fee6d9bb6574",
+    "fund-release/比较结果.json": "162710fd4e5d502d48ca82035d85746d06f9c988e9f31ded2d3da2bff2c294c8"
+  }
+}

@@ -1,0 +1,11 @@
+const assert=require('assert'),d=require('./fund_diagnostics.js'),p=require('./fund_report_presentation.js');
+const q={type:'fund-series-quality',code:'000001',asOf:'2026-10-03',sourceUrl:'https://example.org/q',observations:4,dateCompleteness:null,findings:[],limitations:['未核验日历']};
+const input={title:'<研究>',asOf:q.asOf,subjectCodes:['000001'],supplementaryResults:[q]};
+const r=d.report(input),html=p.build(r).html;
+assert.ok(html.includes('净值资料是否可靠'));assert.ok(html.includes('&lt;研究&gt;'));assert.ok(r.sources.includes(q.sourceUrl));assert.ok(d.markdown(r).includes('无适用日历'));
+assert.throws(()=>d.report({...input,supplementaryResults:[{...q,code:'000002'}]}));
+assert.throws(()=>d.report({...input,supplementaryResults:[{...q,asOf:'2026-01-01'}]}));
+const ev={type:'fund-evidence-package',asOf:q.asOf,subjectCodes:['000001'],evidence:[{id:'x',code:'000001',status:'original-disclosed',disclosedAt:q.asOf,field:'原文',value:'<script>',sourceUrl:'https://example.org/a',page:1,locator:'p1'}],conclusions:[{id:'c',text:'事实',grade:'disclosed-fact',evidenceIds:['x'],limitations:['仅披露日']}],limitations:[]};
+const eh=p.build(d.report({...input,supplementaryResults:[ev]})).html;
+assert.ok(eh.includes('#page=1'));assert.ok(eh.includes('&lt;script&gt;'));assert.ok(!eh.includes('<script>'));
+console.log('Supplemental report integration, provenance, subject/date rejection and HTML escaping passed.');

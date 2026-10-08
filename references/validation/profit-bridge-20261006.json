@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-06",
+  "sample": "工业富联601138，2026Q2与2025Q2",
+  "source": "复用P0已绑定结构化财务档案及原文；本轮未新采集",
+  "status": "partial-accounting-decomposition",
+  "checks": {
+    "reconciliationDifference": 0,
+    "tests": 46,
+    "missingExpensesNotZero": true,
+    "negativeFinanceExpensePreserved": true,
+    "financialSectorNotApplicable": true
+  },
+  "limitations": [
+    "销售、管理、研发、财务费用本轮未逐项原文核验",
+    "未分配差额未拆解税费、减值及其他损益",
+    "无量价、业务组合或因果证明",
+    "HTML视觉验收未执行"
+  ]
+}

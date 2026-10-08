@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-06",
+  "verification": "已打开官方原文确认标题与所列版本，非全法规库或全量现行性认证",
+  "sources": [
+    {
+      "id": "cas14-2017",
+      "title": "企业会计准则第14号——收入",
+      "version": "财会〔2017〕22号",
+      "url": "https://m.mof.gov.cn/zcfb/201707/t20170719_2653110.htm",
+      "scope": "收入事项；具体合同适用性与后续解释需另核"
+    },
+    {
+      "id": "csrc-halfyear-2025",
+      "title": "半年度报告的内容与格式",
+      "version": "证监会公告〔2025〕4号；2025-07-01施行",
+      "url": "https://www.csrc.gov.cn/csrc/c101954/c7547590/content.shtml",
+      "scope": "相应公开发行证券公司半年度披露；不替代年度或境外规则"
+    },
+    {
+      "id": "cpa1501-2022",
+      "title": "对财务报表形成审计意见和出具审计报告",
+      "version": "2022-01-05修订",
+      "url": "https://kjs.mof.gov.cn/zhengcefabu/202201/P020220107606619906616.pdf",
+      "scope": "审计报告阅读；工具不执行审计业务"
+    }
+  ]
+}

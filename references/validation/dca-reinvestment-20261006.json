@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-06",
+  "testsPassed": 17,
+  "scope": "synthetic event bookkeeping and existing DCA regressions",
+  "actualDistributionNoticeVerified": false,
+  "accountSettlementVerified": false,
+  "limits": [
+    "event date entitlement uses prior-to-contribution units",
+    "missing reinvestDate uses same-date model",
+    "no actual registration or settlement certification"
+  ]
+}

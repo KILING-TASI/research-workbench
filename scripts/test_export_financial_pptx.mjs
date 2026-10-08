@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';import {wrap,plan,build} from './export_financial_pptx.mjs';
+import {fileURLToPath} from 'node:url';import fs from 'node:fs/promises';import crypto from 'node:crypto';
+assert.ok(wrap('测算'+ '甲'.repeat(42)+'-28.14%').some(l=>l.includes('-28.14%')));
+assert.ok(wrap('甲'.repeat(42)+'PDF第41页').some(l=>l.includes('PDF第41页')));
+assert.throws(()=>plan('# 报告\n|列|数值|'),/表格/);
+assert.throws(()=>plan('# 报告\n```json\n{}\n```'),/代码块/);
+await assert.rejects(build(null),/正文路径/);
+const p=plan('# 公司报告\n## 风险\n'+ '风险限制。'.repeat(200));
+assert.equal(p.slides.flatMap(s=>s.paragraphs.map(p=>p.text.replaceAll('\n',''))).join(''),'风险限制。'.repeat(200));
+const source=fileURLToPath(new URL('./export_financial_pptx.mjs',import.meta.url));
+await assert.rejects(build({markdownPath:source,markdownSha256:'changed',outDir:'unused'}),/哈希/);
+await assert.rejects(build({markdownPath:source,markdownSha256:crypto.createHash('sha256').update(await fs.readFile(source)).digest('hex'),outDir:'unused'}),/fontFamily/);
+console.log('8 PPT export checks passed');

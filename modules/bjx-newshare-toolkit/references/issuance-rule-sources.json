@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "type": "bjx-rule-source-index",
+  "updatedAt": "2026-10-03",
+  "rules": [
+    {
+      "id": "allocation-order",
+      "sourceUrl": "https://www.bse.cn/fxrz_list/200025384.html",
+      "versionPublishedAt": "2025-04-03",
+      "description": "比例配售及不足100股部分排序",
+      "verification": "official-search-excerpt-reviewed-not-full-original-archived"
+    },
+    {
+      "id": "strategic-and-greenshoe",
+      "sourceUrl": "https://www.bse.cn/fxrz_list/200025384.html",
+      "versionPublishedAt": "2025-04-03",
+      "description": "战略配售、锁定期及超额配售约束",
+      "verification": "official-search-excerpt-reviewed-not-full-original-archived"
+    },
+    {
+      "id": "subscription-and-settlement",
+      "sourceUrl": "https://www.bse.cn/fxrz_list/200018119.html",
+      "versionPublishedAt": "2023-08-21",
+      "description": "申购单位、重复申购、撤销及结算规则",
+      "verification": "official-search-excerpt-reviewed-not-full-original-archived"
+    }
+  ],
+  "limitations": [
+    "版本索引不是现行有效性自动认证，逐笔发行以公告与适用版本复核",
+    "官网正文访问有重定向限制，未取得完整规则原文归档",
+    "本索引不驱动交易或概率计算"
+  ]
+}

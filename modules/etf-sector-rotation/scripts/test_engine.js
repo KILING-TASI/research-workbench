@@ -1,0 +1,14 @@
+const assert=require('assert/strict'),E=require('../assets/engine.js');
+let weights=[25,25,25,25];for(let i=0;i<1000;i++){weights=E.redistribute(weights,i%4,(i*19.731)%101);assert(Math.abs(weights.reduce((a,b)=>a+b)-100)<1e-8);assert(weights.every(n=>n>=-1e-10&&n<=100+1e-10));}
+assert.deepEqual(E.redistribute([100,0,0,0],0,40),[40,20,20,20]);
+for(const index of [-1,4,1.5,true,'0'])assert.throws(()=>E.redistribute([25,25,25,25],index,40),/权重维度/);
+assert.equal(E.percentile(2,[1,2,2,3]),50);assert.equal(E.percentile(1,[1,2,3],true),100);assert.equal(E.percentile(null,[1,2,3]),null);assert.equal(E.percentile(1,[1]),null);
+const event={verified:true,sectors:['s'],date:'2026-09-24',url:'https://www.miit.gov.cn/a',level:'major',direction:1};
+assert.equal(E.news([event],'s','2026-09-24').score,70);assert(Math.abs(E.news([event],'s','2026-09-25').score-(50+20*6/7))<1e-9);assert.equal(E.news([event],'s','2026-10-01').score,50);assert.equal(E.news([event],'s','2026-09-23').score,50);assert.equal(E.news([{...event,verified:false}],'s','2026-09-24').score,50);assert.equal(E.news([{...event,date:'2026-02-30'}],'s','2026-09-24').score,50);
+const sectors=[1,2,3].map(n=>({id:String(n),name:String(n),date:'2026-09-30',raw:{earnings:n,roe:n,valuation:4-n,flow:n,trend:n,ma:n,volume:n}}));const data={date:'2026-09-30',sectors,events:[]};
+const scores=E.calculate(data,[25,25,25,25],'2026-10-01');assert.equal(scores[0].total,87.5);assert.equal(scores[1].total,50);assert.equal(scores[2].total,12.5);
+const bad=E.calculate({...data,sectors:[...sectors,{...sectors[0],id:'bad',stale:true}]},[25,25,25,25],'2026-10-01');assert.equal(bad.find(x=>x.id==='bad').total,null);assert.equal(bad[0].total,87.5);
+const missing=E.calculate({...data,sectors:sectors.map(s=>({...s,raw:{...s.raw,flow:null}}))},[25,25,25,25],'2026-10-01');assert(missing.every(s=>s.total===null));
+const r=[{id:'a',name:'a',total:90},{id:'b',name:'b',total:20},{id:'c',name:'c',total:10}];let allocation=E.allocate(r,['a','b','c']);assert(Math.abs(allocation.reduce((a,s)=>a+s.pct,0)-100)<1e-8);assert(allocation.every(s=>s.pct<=40));allocation=E.allocate(r,['a']);assert.equal(allocation[0].pct,40);assert.deepEqual(E.allocate(r,[]),[]);
+const funds=[{code:'a',sizeYi:100,avgAmountYi:10,trackingErrorPct:null,feePct:.6,inceptionDate:'2010-01-01'},{code:'b',sizeYi:10,avgAmountYi:1,trackingErrorPct:null,feePct:.6,inceptionDate:'2020-01-01'}];const chosen=E.chooseFunds(funds,'2026-10-01');assert.equal(chosen[0].code,'a');assert(Math.abs(chosen[0].selectionCoverage-.8)<1e-9);assert(!chosen[0].selectionFactors.includes('trackingErrorPct'));assert.equal(E.chooseFunds([funds[0]],'2026-10-01')[0].selectionScore,null);
+console.log('ETF: weight invariants, tied ranks, event decay/future exclusion, data gaps, capped allocation and fund coverage passed');

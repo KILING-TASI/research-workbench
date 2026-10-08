@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-06",
+  "company": "601138",
+  "reportSha256": "61c5082aad3a067295ccc7e67d51101b057d61a5a73b5fa4b692d08bab4a8efa",
+  "evidenceAdded": "2026 H1 PDF physical page 168 cash flow supplementary disclosure",
+  "cashBridgeReconciles": true,
+  "sourceQuoteCheck": "company report original binding and quotation checks passed during regeneration",
+  "contentCorrections": [
+    "operating payables offset included",
+    "balance changes not substituted for cash adjustments",
+    "H1 not attributed to Q2 without evidence",
+    "fixed annual-report review node"
+  ],
+  "fullReportAcceptance": "partial; remaining business causality and all numerical claims not certified",
+  "freshAcquisition": false,
+  "visualAcceptance": false
+}

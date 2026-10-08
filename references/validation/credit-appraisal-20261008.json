@@ -1,0 +1,31 @@
+{
+  "snapshotDate": "2026-10-08",
+  "scene": "中国信用观察",
+  "researchLevel": "focused-appraisal",
+  "status": "valid-binding-with-content-gaps",
+  "reportSha256": "e3b306cec1360a4c55c978a812744794f70ef6a3ca0502a3e65b55a7efc3413b",
+  "reportFileName": "信用评价.md",
+  "answeredQuestions": [
+    "社融余额与新增融资为何可以不同方向",
+    "不同融资渠道能否视为同步走弱",
+    "累计差分与月度利率如何区分"
+  ],
+  "unansweredQuestions": [
+    "完整融资修订及直接月度增量表",
+    "实体需求与信用变化的因果",
+    "完整经济周期与资产方向"
+  ],
+  "sources": [
+    {
+      "url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026081416320925645/index.html",
+      "observedPeriod": "2026-07",
+      "publishedAt": "2026-08-14"
+    },
+    {
+      "url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2026091417020862747/index.html",
+      "observedPeriod": "2026-08",
+      "publishedAt": "2026-09-14"
+    }
+  ],
+  "scope": "补充样本的版本与范围摘要；不附作者原件或报告，不认证实时数据、完整修订、经济周期或视觉"
+}

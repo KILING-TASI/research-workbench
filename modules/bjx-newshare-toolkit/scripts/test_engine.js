@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict'),E=require('../assets/engine.js');
+const s={code:'000001',name:'Test',price:10,maxShares:1000000,minShares:100,ratePct:.1,gainPct:50,applyDate:'2025-01-02',refundDate:'2025-01-04',listingDate:'2025-01-06'};
+assert.equal(E.threshold(10,.1,1000000).shares,100000);
+assert.equal(E.threshold(10,.1,99900).reachable,false);
+assert.equal(E.threshold(10,0,1e6),null);
+assert.equal(E.allocation(s,999999).allotted,0);
+assert.equal(E.allocation(s,1e6).allotted,100);
+assert.equal(E.allocation(s,1e9).shares,1e6);
+assert(E.allocation(s,1e6,.1,-20).profit<0);
+const same={...s,code:'000002'};
+assert.equal(E.backtest([s,same],1e6,'2025','2025-12-31').participated,1);
+assert.equal(E.backtest([s,{...same,applyDate:'2025-01-04'}],1e6,'2025','2025-12-31').participated,2);
+assert.equal(E.backtest([{...s,listingDate:null}],1e6,'2025','2025-12-31').missing,1);
+assert.equal(E.backtest([{...s,ratePct:null}],1e6,'2025','2025-12-31').missing,1);
+assert.equal(E.backtest([],1e6,'2024','2026-10-01').days,366);
+assert.equal(E.backtest([],1e6,'2025','2025-01-10').days,10);
+console.log('12 calculation and cash-overlap checks passed');

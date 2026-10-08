@@ -1,0 +1,44 @@
+{
+  "asOf": "2026-10-03",
+  "purpose": "scenario",
+  "evidence": {
+    "nodes": []
+  },
+  "allocation": {
+    "code": "920022",
+    "price": "10",
+    "budget": "100000",
+    "maxShares": 100000,
+    "ratesPct": {
+      "P75": "2",
+      "P50": "1",
+      "P25": "0.5"
+    },
+    "rateBasis": "教学情景，不是实际配售率",
+    "gainPct": {
+      "P75": "0",
+      "P50": "0",
+      "P25": "0"
+    },
+    "applyDate": "2026-10-09",
+    "refundDate": "2026-10-13",
+    "saleSettlementDate": "2026-10-20"
+  },
+  "rateEvidence": {
+    "P75": {
+      "grade": "C",
+      "value": "2",
+      "basis": "教学假设，非预测分位"
+    },
+    "P50": {
+      "grade": "C",
+      "value": "1",
+      "basis": "教学假设，非预测分位"
+    },
+    "P25": {
+      "grade": "C",
+      "value": "0.5",
+      "basis": "教学假设，非预测分位"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "snapshotDate": "2026-10-08",
+  "scope": "当前六类阅读版范围摘要；不附作者资料文件，不认证完整研究或视觉",
+  "cases": [
+    {
+      "scene": "公司",
+      "case": "国电南瑞：增长有支撑，盈利兑现仍是关键",
+      "status": "valid-binding-with-content-gaps",
+      "visualStatus": "not-verified-by-this-check",
+      "researchLevel": "focused-appraisal",
+      "answeredQuestions": [
+        "半年收入增长与利润现金是否同步",
+        "产品毛利与费用对盈利的影响",
+        "选定现金调节与管理层解释",
+        "单一业务相关公司的历史静态价格参照"
+      ],
+      "unansweredQuestions": [
+        "项目量价和结算的完整原因",
+        "当前估值吸引力"
+      ],
+      "reportSha256": "e513ba1e234e90189c28aad5a0e7d8ae2d5d6593a05cd40bcdf4aa3ef58e45bf",
+      "reportFileName": "公司点评阅读改写.md"
+    },
+    {
+      "scene": "基金",
+      "case": "工银战略转型与中欧医疗创新：收益差距明显，两只都不是防守产品",
+      "status": "valid-binding-with-content-gaps",
+      "visualStatus": "not-verified-by-this-check",
+      "researchLevel": "focused-appraisal",
+      "answeredQuestions": [
+        "选定区间收益与回撤取舍",
+        "2025年度各自基准比较",
+        "持仓重叠与组合历史分散",
+        "经理年报逻辑的检验条件"
+      ],
+      "unansweredQuestions": [
+        "完整经理能力",
+        "全历史合同基准超额",
+        "共同下跌时的完整组合分散效果",
+        "个人适配"
+      ],
+      "reportSha256": "7928132a4f44295dc24f998b2e952927a4931920279cc8572555d5de1b4af79f",
+      "reportFileName": "基金点评阅读改写.md"
+    },
+    {
+      "scene": "ETF",
+      "case": "510880：红利是选股方式，不是固定收益承诺",
+      "status": "valid-binding-with-content-gaps",
+      "visualStatus": "not-verified-by-this-check",
+      "researchLevel": "focused-appraisal",
+      "answeredQuestions": [
+        "披露时点股票与行业风险",
+        "分红和业绩基准口径",
+        "选定分配条款及冲突",
+        "交易机制与成本范围",
+        "9月选定端点未复权价格变化"
+      ],
+      "unansweredQuestions": [
+        "当前估值",
+        "完整复制质量",
+        "完整有效条款",
+        "个人组合适配"
+      ],
+      "reportSha256": "b4af2e691ce6c7c4ce5598f4e4c8f8e9986b587f204357d8ffc20f5bdf31cf72",
+      "reportFileName": "ETF点评阅读改写.md"
+    },
+    {
+      "scene": "组合",
+      "case": "两基金组合：分散了股票名单，仍要承受明显权益风险",
+      "status": "valid-binding-with-content-gaps",
+      "visualStatus": "not-verified-by-this-check",
+      "researchLevel": "focused-appraisal",
+      "answeredQuestions": [
+        "选定历史分散效果",
+        "买入持有权重漂移",
+        "固定权重波动分配",
+        "静态资产与选定主体风险",
+        "同一买入持有回撤段的资产跌幅贡献"
+      ],
+      "unansweredQuestions": [
+        "完整细分行业及剩余资产暴露",
+        "真实账户和费用后收益",
+        "未来风险",
+        "其他同名证券关系及完整发行人排名",
+        "全部持仓公司主体与细分行业重复暴露"
+      ],
+      "reportSha256": "8acf44b7bfa0017f95f75884c5d1041a80e17169a239506ee78e29b08e80b097",
+      "reportFileName": "组合点评阅读改写.md"
+    },
+    {
+      "scene": "宏观",
+      "case": "利率升、股涨债跌：长债能否缓冲风险，取决于冲击来源",
+      "status": "valid-binding-with-content-gaps",
+      "visualStatus": "not-verified-by-this-check",
+      "researchLevel": "focused-appraisal",
+      "answeredQuestions": [
+        "利率与跨资产同期表现",
+        "政策陈述与价格解释的区别",
+        "需求供给情景如何影响分散用途",
+        "历史压力阶段与整段缓冲的区别"
+      ],
+      "unansweredQuestions": [
+        "本窗口冲击识别与独立因果贡献",
+        "统一总收益与完整压力周期",
+        "个人配置及未来保护效果"
+      ],
+      "reportSha256": "4869877a718c9b4a7588b46680310d43936585da5bc871d8bd4dd8e27de586f2",
+      "reportFileName": "宏观点评阅读改写.md"
+    },
+    {
+      "scene": "北交",
+      "case": "莫森泰克：资金门槛算得清，不等于申购价值已确定",
+      "status": "valid-binding-with-content-gaps",
+      "visualStatus": "not-verified-by-this-check",
+      "researchLevel": "focused-appraisal",
+      "answeredQuestions": [
+        "比例整手资金档位与申购上限",
+        "发行PE口径",
+        "选定客户价格与现金兑现风险"
+      ],
+      "unansweredQuestions": [
+        "完整价值与年化",
+        "首次公开与真实账户"
+      ],
+      "reportSha256": "20c0c972e47c4e008b87e9c141976a70db92bd530db547cf27d155186cfe33de",
+      "reportFileName": "北交点评阅读改写.md"
+    }
+  ]
+}

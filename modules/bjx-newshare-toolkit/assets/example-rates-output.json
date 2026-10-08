@@ -1,0 +1,195 @@
+{
+  "status": "calculated-conditional",
+  "rateEvidence": {
+    "P75": {
+      "grade": "C",
+      "ratePct": "2",
+      "usable": true,
+      "basis": "教学假设，非预测分位",
+      "evidenceIds": [],
+      "verification": "user-declared-scenario",
+      "notProbability": true
+    },
+    "P50": {
+      "grade": "C",
+      "ratePct": "1",
+      "usable": true,
+      "basis": "教学假设，非预测分位",
+      "evidenceIds": [],
+      "verification": "user-declared-scenario",
+      "notProbability": true
+    },
+    "P25": {
+      "grade": "C",
+      "ratePct": "0.5",
+      "usable": true,
+      "basis": "教学假设，非预测分位",
+      "evidenceIds": [],
+      "verification": "user-declared-scenario",
+      "notProbability": true
+    }
+  },
+  "result": {
+    "type": "bjx-allocation-cash-scenarios",
+    "code": "920022",
+    "subscriptionShares": 10000,
+    "subscriptionFunds": "100000",
+    "factEvidence": {},
+    "currency": "CNY",
+    "unusedBudget": "0",
+    "atLimit": false,
+    "rateBasis": "P75:教学假设，非预测分位; P50:教学假设，非预测分位; P25:教学假设，非预测分位",
+    "scenarios": {
+      "P75": {
+        "ratePct": "2",
+        "gainPctAssumption": "0",
+        "wholeLotShares": 200,
+        "oddLotOutcome": "no-fractional-remainder",
+        "possibleAdditionalSharesUpperBound": 0,
+        "hundredShareThreshold": 5000,
+        "thresholdFunds": "50000",
+        "thresholdReachable": true,
+        "thresholdAdditionalFunds": "0",
+        "thresholdAdditionalSubscriptionFunds": "0",
+        "nextWholeLotAdditionalFunds": "50000",
+        "refundPrincipal": "98000",
+        "retainedPrincipal": "2000",
+        "capitalDays": "414000",
+        "segments": [
+          {
+            "start": "2026-10-09",
+            "endExclusive": "2026-10-13",
+            "capital": "100000",
+            "days": 4
+          },
+          {
+            "start": "2026-10-13",
+            "endExclusive": "2026-10-20",
+            "capital": "2000",
+            "days": 7
+          }
+        ],
+        "grossSaleProceeds": "2000",
+        "saleCosts": "0",
+        "financingCost": "0",
+        "netSettlementCash": "2000",
+        "netProfit": "0",
+        "opportunityCost": "0",
+        "profitAfterOpportunityCost": "0",
+        "subscriptionFundsReturnPct": "0",
+        "capitalDaySimpleAnnualizedPct": "0"
+      },
+      "P50": {
+        "ratePct": "1",
+        "gainPctAssumption": "0",
+        "wholeLotShares": 100,
+        "oddLotOutcome": "no-fractional-remainder",
+        "possibleAdditionalSharesUpperBound": 0,
+        "hundredShareThreshold": 10000,
+        "thresholdFunds": "100000",
+        "thresholdReachable": true,
+        "thresholdAdditionalFunds": "0",
+        "thresholdAdditionalSubscriptionFunds": "0",
+        "nextWholeLotAdditionalFunds": "100000",
+        "refundPrincipal": "99000",
+        "retainedPrincipal": "1000",
+        "capitalDays": "407000",
+        "segments": [
+          {
+            "start": "2026-10-09",
+            "endExclusive": "2026-10-13",
+            "capital": "100000",
+            "days": 4
+          },
+          {
+            "start": "2026-10-13",
+            "endExclusive": "2026-10-20",
+            "capital": "1000",
+            "days": 7
+          }
+        ],
+        "grossSaleProceeds": "1000",
+        "saleCosts": "0",
+        "financingCost": "0",
+        "netSettlementCash": "1000",
+        "netProfit": "0",
+        "opportunityCost": "0",
+        "profitAfterOpportunityCost": "0",
+        "subscriptionFundsReturnPct": "0",
+        "capitalDaySimpleAnnualizedPct": "0"
+      },
+      "P25": {
+        "ratePct": "0.5",
+        "gainPctAssumption": "0",
+        "wholeLotShares": 0,
+        "oddLotOutcome": "unknown-not-probability",
+        "possibleAdditionalSharesUpperBound": 100,
+        "hundredShareThreshold": 20000,
+        "thresholdFunds": "2.0000E+5",
+        "thresholdReachable": true,
+        "thresholdAdditionalFunds": "100000",
+        "thresholdAdditionalSubscriptionFunds": "100000",
+        "nextWholeLotAdditionalFunds": "100000",
+        "refundPrincipal": "100000",
+        "retainedPrincipal": "0",
+        "capitalDays": "400000",
+        "segments": [
+          {
+            "start": "2026-10-09",
+            "endExclusive": "2026-10-13",
+            "capital": "100000",
+            "days": 4
+          },
+          {
+            "start": "2026-10-13",
+            "endExclusive": "2026-10-20",
+            "capital": "0",
+            "days": 7
+          }
+        ],
+        "grossSaleProceeds": "0",
+        "saleCosts": "0",
+        "financingCost": "0",
+        "netSettlementCash": "0",
+        "netProfit": "0",
+        "opportunityCost": "0",
+        "profitAfterOpportunityCost": "0",
+        "subscriptionFundsReturnPct": "0",
+        "capitalDaySimpleAnnualizedPct": "0"
+      }
+    },
+    "dates": {
+      "applyDate": "2026-10-09",
+      "refundDate": "2026-10-13",
+      "saleSettlementDate": "2026-10-20"
+    },
+    "riskNotice": "仅为给定假设的计算，不保证获配或收益，不构成申购指令",
+    "limitations": [
+      "排除未知零股，获配为整手比例情景而非实际结果",
+      "涨跌幅为输入假设，不预测上市表现",
+      "自然日分段占用；退款与卖出结算日期由输入提供，未自动核对交易日历",
+      "费用未按券商账单核验；机会成本与融资成本分列，可能存在经济口径重叠，需按资金来源解释",
+      "资金日简单年化不是可持续复利收益；短占用期可能放大年化数字"
+    ]
+  },
+  "allocationSpec": {
+    "code": "920022",
+    "price": "10",
+    "budget": "100000",
+    "maxShares": 100000,
+    "ratesPct": {
+      "P75": "2",
+      "P50": "1",
+      "P25": "0.5"
+    },
+    "rateBasis": "P75:教学假设，非预测分位; P50:教学假设，非预测分位; P25:教学假设，非预测分位",
+    "gainPct": {
+      "P75": "0",
+      "P50": "0",
+      "P25": "0"
+    },
+    "applyDate": "2026-10-09",
+    "refundDate": "2026-10-13",
+    "saleSettlementDate": "2026-10-20"
+  }
+}

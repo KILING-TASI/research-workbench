@@ -1,0 +1,12 @@
+{
+  "code": "920022",
+  "asOf": "2026-10-03",
+  "fields": [
+    "price",
+    "maxShares",
+    "ratePct"
+  ],
+  "evidence": {
+    "nodes": []
+  }
+}

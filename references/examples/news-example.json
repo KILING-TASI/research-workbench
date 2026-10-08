@@ -1,0 +1,9 @@
+{
+  "entry": "news",
+  "input": {
+    "asOf": "2026-10-05",
+    "currency": "CNY",
+    "holdings": [{"assetId": "stock:example", "assetClass": "stock", "currency": "CNY", "marketValue": 100}],
+    "event": {"entityId": "stock:example", "title": "教学消息，不是真实公告", "source": "教学来源", "publishedAt": "2026-10-01", "acquiredAt": "2026-10-02"}
+  }
+}

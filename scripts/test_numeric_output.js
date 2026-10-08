@@ -1,0 +1,12 @@
+'use strict';
+const assert=require('node:assert/strict');
+const api=require('./research_analytics.js');
+const valid={face:100,price:100,stockPrice:10,conversionPrice:10,yieldPct:3,cashflows:[{years:1,amount:103}]};
+assert.ok(Math.abs(api.bond(valid).modelStraightBondValue-100)<1e-10);
+assert.throws(()=>api.bond({...valid,face:1e308,stockPrice:1e308}),/非有限/);
+assert.throws(()=>api.bond({...valid,yieldPct:-99.999,cashflows:[{years:1000,amount:100}]}),/非有限/);
+assert.throws(()=>api.shock({capital:1e308,assets:[{code:'a',weight:1,shockPct:1e308}]}),/非有限/);
+const result=api.shock({capital:100,assets:[{code:'a',weight:1,shockPct:-10}]});
+assert.equal(result.pnl,-10);
+assert.equal(result.maximumDrawdown,null);
+console.log('numeric output checks passed; no market source verification');

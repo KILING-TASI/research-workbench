@@ -1,0 +1,29 @@
+{
+  "compiledOn": "2026-10-05",
+  "refetchedThisRevision": false,
+  "examples": [
+    {
+      "case": "fund-holdings",
+      "code": "110011",
+      "reportDate": "2025-06-30",
+      "holdingCount": 49,
+      "industryCount": 12,
+      "status": "明细逐分勾稽、权重分母及章节边界通过",
+      "sourceUrl": "https://cdn.efunds.com.cn/owch/data/bulletin/20250830/%E6%98%93%E6%96%B9%E8%BE%BE%E4%BC%98%E8%B4%A8%E7%B2%BE%E9%80%89%E6%B7%B7%E5%90%88%E5%9E%8B%E8%AF%81%E5%88%B8%E6%8A%95%E8%B5%84%E5%9F%BA%E9%87%912025%E5%B9%B4%E4%B8%AD%E6%9C%9F%E6%8A%A5%E5%91%8A.pdf",
+      "originalSha256": "38c1b52f2d5b0219b2809513212aecc92e750e26ea4d05574ebf91a6291597e0",
+      "retrievedAt": "2026-10-02T12:03:51.043648+00:00",
+      "recordSha256": "7eb557fa4551b36ba9f24e809b30e65cc7b38abfd0a8821a2b2e676a85575433"
+    },
+    {
+      "case": "cross-market-price",
+      "market": "US",
+      "code": "AAPL",
+      "status": "历史未取得",
+      "reason": "供应商未返回日线；报价可用不代表历史可用",
+      "sourceUrl": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usAAPL%2Cday%2C2026-01-01%2C2026-09-30%2C640%2C",
+      "retrievedAt": "2026-10-03T10:45:35.050512+00:00",
+      "responseSha256": "ca3bd43b66999cab7b0bf6bc082d83d8cc3aadbccaeb03370a28c3fe66620111",
+      "recordSha256": "64d5faadcd36c1b967cf3d2c40334ec48e1aee8c7617449cb0cf40109dd83f18"
+    }
+  ]
+}

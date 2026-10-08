@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "checkedFiles": 575,
+  "issues": [],
+  "packageSha256": "a3604025fb3dd563d3b0f887f8f5d1ae5cfc62d45fb7c97d909f73220c84a7b6",
+  "scope": "脚本、安装说明、依赖提示、教学示例与agent配置；项目研究记录不纳入交付",
+  "sourceInstallIdentical": true,
+  "sourceFiles": 575,
+  "brokenMarkdownLinks": [],
+  "pythonSyntaxFiles": 367,
+  "pythonTests": 148,
+  "pptRuleChecks": 5,
+  "realPptVisualAcceptance": "not-performed-component-dependent",
+  "bytecodeFiles": 0,
+  "researchRecordsBundled": false,
+  "recordDate": "2026-10-05",
+  "recordKind": "historical-engineering-regression",
+  "sourceRecordSha256": "c8071f0bb60ab4aae249fb02c064416cd9bcbdd0c2ece6ba65b5c91a691a2c10"
+}

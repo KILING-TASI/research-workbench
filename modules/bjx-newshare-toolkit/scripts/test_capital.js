@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict'),E=require('../assets/engine.js');
+const stock={code:'920196',price:14.21,maxShares:1231400,applyDate:'2026-09-28'};
+const short=E.funding(stock,1e6,.02945);
+assert.equal(short.top,17498194);assert.equal(short.state,'short');assert.equal(short.target.funds,4825716);assert.equal(short.gap,3825716);
+assert.equal(E.funding(stock,4825716,.02945).state,'enough');
+assert.equal(E.funding(stock,1e8,.0001).state,'unreachable');
+assert.equal(E.funding({...stock,maxShares:null},1e6,.02945).state,'unknown');
+assert.equal(E.funding(stock,1e8,0).state,'unreachable');
+const records=[.01,.02,.03,.04,.05].map((rate,i)=>({code:'x'+i,ratePct:rate,applyDate:'2026-01-01',listingDate:'2026-02-0'+(i+1)}));
+records.push({...stock,ratePct:99,listingDate:'2026-09-29'},{code:'future',ratePct:90,applyDate:'2026-01-01',listingDate:'2026-10-01'});
+const rates=E.scenarios(records,stock,'2026-10-01',20);
+assert.equal(rates.samples.length,5);assert.equal(rates.optimistic,.04);assert.equal(rates.baseline,.03);assert.equal(rates.pessimistic,.02);
+assert(E.threshold(stock.price,rates.optimistic,stock.maxShares).funds<E.threshold(stock.price,rates.pessimistic,stock.maxShares).funds);
+assert.equal(E.scenarios([],stock,'2026-10-01').baseline,null);
+const a=E.allocation(stock,short.top,.02945,50,.1),loss=E.allocation(stock,short.top,.02945,-20,.1);
+assert(a.allotted>=100&&a.profit>0);assert(loss.profit<0);
+console.log('Capital acceptance: 1m budget, 3,825,716 gap; limit, percentiles and loss checks passed');
