@@ -6,6 +6,19 @@ from research_results import publish
 
 
 class Results(unittest.TestCase):
+    def test_date_label_does_not_require_chinese_locale_strftime(self):
+        from datetime import datetime
+        from unittest.mock import patch
+        class AsciiFormat(datetime):
+            def strftime(self,fmt):
+                if not fmt.isascii():raise UnicodeEncodeError('locale',fmt,0,len(fmt),'unsupported')
+                return super().strftime(fmt)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);old=root/'old';old.mkdir()
+            (old/'start-result.json').write_text(json.dumps({'status':'partial','message':'已保存','savedAt':'2026-09-01T00:00:00+00:00'}),'utf-8')
+            (old/'打开这里.html').write_text('入口','utf-8')
+            with patch('research_results.datetime',AsciiFormat):publish(root,root/'index.md')
+            self.assertIn('2026-09-01 08:00:00 北京时间',(root/'index.md').read_text('utf-8'))
     def test_changed_registered_input_hides_old_headline_but_remains_findable(self):
         import hashlib
         with tempfile.TemporaryDirectory() as tmp:

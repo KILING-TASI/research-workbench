@@ -155,7 +155,7 @@ def publish(folder, output, query=None, limit=None):
         if row.get('followup')=='bjx-annual':body+='\n可以接着问：“沿用这份年度情景，把资金改为……元。”市场和权限声明仍需确认是否适用，新报告不会自动更新资料。\n'
         if row.get('independentEngine'):body+='\n可以接着问：“沿用这份资料继续核对”或“我补充新资料，再看结论是否改变”。旧输入改动需明确提供新输入；不自动安装工具或刷新资料。\n'
         saved=row.get('savedAt')
-        displayed=datetime.fromisoformat(saved).astimezone(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S 北京时间') if saved else '旧记录未登记，无法按留存日期判断新旧'
+        displayed=datetime.fromisoformat(saved).astimezone(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')+' 北京时间' if saved else '旧记录未登记，无法按留存日期判断新旧'
         body+='\n记录留存时间：'+displayed+'\n'
         if row['entry']:
             import os
