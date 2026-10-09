@@ -10,7 +10,7 @@
 |比较组合配置、回撤预算、成本与现金流|[portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine)|独立组合研究；主包等价迁移尚未验收，不自动替换既有模型|
 |北交网上发行比例获配情景、占款与复盘|[bjx-ipo-engine](https://github.com/KILING-TASI/bjx-ipo-engine)|独立发行情景研究；主包保留已有北交专题，未完成全部等价迁移|
 |可转债现金流、收益率与条款条件|[convertible-bond-engine](https://github.com/KILING-TASI/convertible-bond-engine)|独立转债研究；按其README输入，不把主包基础诊断说成含权定价|
-|证券市场规则、个案条款与离线情景|[cn-market-rules](https://github.com/KILING-TASI/cn-market-rules)|规则清单与条款模板；不是交易许可认证，不默认被主包执行|
+|证券市场规则、个案条款与离线情景|[cn-market-rules](https://github.com/KILING-TASI/cn-market-rules)|规则清单、有效版本、条款与情景口径；不是公司事件库或交易许可认证，不默认被主包执行|
 |公开宏观数据与周期代理指标看板|[macro-dashboard-engine](https://github.com/KILING-TASI/macro-dashboard-engine)|独立宏观看板；不是主包全量数据库或自动后台监控|
 
 ## 八仓关系
@@ -43,3 +43,5 @@ HTML需下载后用浏览器打开。三份均为实际demo生成的教学结果
 ## 有限真实案例与缺口
 
 007119中报77条股票的独立适配与旧主包逐项等价，财报原表选定六个金额重新提取一致；见[本批验证](development-validation.md)。原件不随代码发布；这不能外推到其他管理人/任意版式。第二管理人、机构预测留档和REITs估值仍未实现，不列为已支持。更完整的接口与迁移边界见[独立工具衔接](independent-engines.md)。
+
+公司监管事件由主包组织证据与解释；规则库只提供定义、条款与版本。现有小样本事件台账不等于全量检索/完整时间轴，规则接口未接通时保留未知，不给自动违规或退市概率。
