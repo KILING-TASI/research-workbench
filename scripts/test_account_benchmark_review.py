@@ -23,3 +23,8 @@ class TestAccountBenchmark(unittest.TestCase):
    out=Path(tmp)/'new';publish(self.s,out)
    self.assertNotIn('<script>alert(1)</script>',(out/'报告.html').read_text('utf-8'))
    with self.assertRaises(FileExistsError):publish(self.s,out)
+ def test_explicit_unknown_schema_or_method(self):
+  for key in ['inputSchema','methodVersion']:
+   for value in [None,'future-v999']:
+    s=copy.deepcopy(self.s);s[key]=value
+    with self.assertRaises(ValueError):calculate(s)

@@ -16,3 +16,6 @@ python scripts/account_benchmark_review.py references/examples/account-benchmark
 
 
 [本批教学报告](examples/account-benchmark-report.html)（下载后查看，未完成浏览器视觉验收）；[计算结果](examples/account-benchmark-result.json)。
+
+
+输入schema可显式声明 account-benchmark-observation-v1，方法 account-benchmark-observation-1；未知显式版本（含null）拒绝，不静默执行。未声明版本的旧教学输入允许，结果记录实际schema及方法，旧产物保持冻结。

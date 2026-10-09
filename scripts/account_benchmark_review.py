@@ -7,6 +7,14 @@ from research_brief_html import render
 
 
 def calculate(spec):
+    if not isinstance(spec, dict):
+        raise ValueError('输入须为对象')
+    if set(spec) - {'inputSchema', 'methodVersion', 'exampleType', 'account', 'comparisonBasis', 'product', 'benchmark', 'effectEvidence'}:
+        raise ValueError('未知输入字段，不能忽略后继续计算')
+    if 'inputSchema' in spec and spec['inputSchema'] != 'account-benchmark-observation-v1':
+        raise ValueError('未知输入schema，须显式转换')
+    if 'methodVersion' in spec and spec['methodVersion'] != 'account-benchmark-observation-1':
+        raise ValueError('方法版本不支持，不能静默改用本轮方法')
     if spec.get('exampleType') != 'teaching-only':
         raise ValueError('本批入口仅验收教学输入，未恢复真实账户验收')
     account = spec['account']
@@ -53,7 +61,8 @@ def calculate(spec):
         effects.append(dict(effect=name, status='provided-not-independently-verified' if evidence else 'unknown',
                             evidence=evidence or None, contributionPct=None))
     difference = observed['twrPct'] - rows[1]['cumulativeReturnPct']
-    return dict(type='account-benchmark-observation', start=observed['start'], end=observed['end'],
+    return dict(type='account-benchmark-observation', inputSchema='account-benchmark-observation-v1',
+                methodVersion='account-benchmark-observation-1', start=observed['start'], end=observed['end'],
                 currency=account['currency'], dividends=basis['dividends'], benchmarkVersion=basis['benchmarkVersion'],
                 accountCumulativeTwrPct=observed['twrPct'], accountAnnualizedXirrPct=observed['xirrPct'],
                 comparisons=rows, accountMinusBenchmarkPercentagePoints=difference, effects=effects,
