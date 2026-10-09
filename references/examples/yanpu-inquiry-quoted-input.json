@@ -1,0 +1,94 @@
+{
+  "inputSchema": "inquiry-ledger-v1",
+  "methodVersion": "explicit-association-2",
+  "entity": "上海沿浦精工科技（集团）股份有限公司",
+  "asOf": "2026-10-10",
+  "originalInquiryStatus": "not-obtained",
+  "originalInquiryDate": null,
+  "documents": [
+    {
+      "id": "company-reply",
+      "entity": "上海沿浦精工科技（集团）股份有限公司",
+      "publishedAt": "2026-06-09",
+      "version": "reply-2026-029",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+      "sha256": "00bdca89b9c52eb1e67b49d7955a9d47f5ce6035ba1baa6cea8b1b880038d860"
+    }
+  ],
+  "questions": [
+    {
+      "id": "1",
+      "text": "主营业务分类和集装箱业务披露（从公司回复内转引定位，不代表独立原问询全文已取得）",
+      "questionOrigin": "quoted-in-reply",
+      "evidence": {
+        "documentId": "company-reply",
+        "physicalPage": 1,
+        "quote": "1.关于主营业务。"
+      }
+    },
+    {
+      "id": "2",
+      "text": "应收账款增长、信用政策和回款（从公司回复内转引定位，不代表独立原问询全文已取得）",
+      "questionOrigin": "quoted-in-reply",
+      "evidence": {
+        "documentId": "company-reply",
+        "physicalPage": 17,
+        "quote": "2.关于应收账款。"
+      }
+    },
+    {
+      "id": "3",
+      "text": "关联交易定价、欠款与资金占用解释（从公司回复内转引定位，不代表独立原问询全文已取得）",
+      "questionOrigin": "quoted-in-reply",
+      "evidence": {
+        "documentId": "company-reply",
+        "physicalPage": 27,
+        "quote": "3.关于关联交易。"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "id": "response-1",
+      "questionIds": [
+        "1"
+      ],
+      "evidence": {
+        "documentId": "company-reply",
+        "physicalPage": 2,
+        "quote": "【公司回复】问题 1.（1）自集装箱业务开始开展以来历年开展"
+      },
+      "openItems": [
+        "独立原问询全文和发函日期尚未取得；未认证所有子问题与实质回答充分性"
+      ]
+    },
+    {
+      "id": "response-2",
+      "questionIds": [
+        "2"
+      ],
+      "evidence": {
+        "documentId": "company-reply",
+        "physicalPage": 17,
+        "quote": "公司销售的主要产品为汽车座椅骨架总成、精密冲压件"
+      },
+      "openItems": [
+        "独立原问询全文和发函日期尚未取得；未认证所有子问题与实质回答充分性"
+      ]
+    },
+    {
+      "id": "response-3",
+      "questionIds": [
+        "3"
+      ],
+      "evidence": {
+        "documentId": "company-reply",
+        "physicalPage": 27,
+        "quote": "【公司回复】问题 3.（1）上述关联交易的主要内容、开展时间"
+      },
+      "openItems": [
+        "独立原问询全文和发函日期尚未取得；未认证所有子问题与实质回答充分性"
+      ]
+    }
+  ]
+}

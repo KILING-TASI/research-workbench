@@ -1,0 +1,84 @@
+{
+  "inputSchema": "forecast-observations-v1",
+  "methodVersion": "acquisition-bound-history-1",
+  "asOf": "2026-10-09T15:59:45.458128+00:00",
+  "observations": [
+    {
+      "ids": [
+        "midea-huaxing-summary-2026-acquired-20261009"
+      ],
+      "entity": "美的集团",
+      "institution": "华兴证券",
+      "reportId": "declared-summary-20260902-midea-huaxing",
+      "forecastPeriod": "2026-12-31",
+      "metric": "parentNetProfit",
+      "status": "single-observation",
+      "comparableBasis": "unknown",
+      "acquisitions": [
+        "2026-10-09T15:59:45.458128+00:00"
+      ],
+      "values": [
+        {
+          "value": 465,
+          "unit": "亿元",
+          "sourceVersion": "b22209a2a22d8b9798bfab157edbe894b452bdc6567feb24e95d733f02f31fe0"
+        }
+      ]
+    },
+    {
+      "ids": [
+        "midea-huaxing-summary-2028-acquired-20261009"
+      ],
+      "entity": "美的集团",
+      "institution": "华兴证券",
+      "reportId": "declared-summary-20260902-midea-huaxing",
+      "forecastPeriod": "2028-12-31",
+      "metric": "parentNetProfit",
+      "status": "single-observation",
+      "comparableBasis": "unknown",
+      "acquisitions": [
+        "2026-10-09T15:59:45.458128+00:00"
+      ],
+      "values": [
+        {
+          "value": 520,
+          "unit": "亿元",
+          "sourceVersion": "b22209a2a22d8b9798bfab157edbe894b452bdc6567feb24e95d733f02f31fe0"
+        }
+      ]
+    },
+    {
+      "ids": [
+        "midea-huaxing-summary-2027-acquired-20261009"
+      ],
+      "entity": "美的集团",
+      "institution": "华兴证券",
+      "reportId": "declared-summary-20260902-midea-huaxing",
+      "forecastPeriod": "2027-12-31",
+      "metric": "parentNetProfit",
+      "status": "single-observation",
+      "comparableBasis": "unknown",
+      "acquisitions": [
+        "2026-10-09T15:59:45.458128+00:00"
+      ],
+      "values": [
+        {
+          "value": 493,
+          "unit": "亿元",
+          "sourceVersion": "b22209a2a22d8b9798bfab157edbe894b452bdc6567feb24e95d733f02f31fe0"
+        }
+      ]
+    }
+  ],
+  "revisions": [],
+  "excluded": [],
+  "actualComparisonStatus": "not-paired",
+  "conclusion": "按已经留存的取得时点查历史；报告写得早，不代表我们当时已拿到。来源冲突与分析师修正分开，缺口不补。",
+  "limitations": [
+    "中国市场发布日期按+08:00日历日，非盘中时点；取得时点须含时区",
+    "公开网页补录不是事前冻结样本；仅已留存取得时点筛选",
+    "同报告不同源值不自动择优，修正关联仅为输入声明",
+    "实际业绩和重述尚未原文配对，不评价预测准确率；原始研报未取得不冒充机构原文",
+    "日期精度无法区分同日发布先后，不输出全市场覆盖承诺"
+  ]
+}

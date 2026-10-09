@@ -41,3 +41,12 @@ HTML可按当前表内文字筛选、按首列名称排序。它只改变显示�
 cn-market-rules负责规则定义、适用条款、有效版本与情景口径；其事件页只能作有限规则例子。主包引用规则时须保留规则标识、版本/有效日期与原文来源，不能因引用到条款就自动认定事件违法。当前未接通规则版本查询接口，不把职责约定说成自动调用实现。本次不修改规则库工作区，不扩大采集范围。审计信息与处罚分别解释，财务/内控审计与审计师变更继续区分。
 
 事件公开时点、混杂、选择偏差与事实/假设/版本边界见[研究方法卡](research-method-cards.md)。未取得行情与时分级公开信息时不称事件回测或因果推断完成。
+
+
+## 原问询未取得时的限定替代（2026-10-10）
+
+上海沿浦已按巨潮官方主体9900037900查询2026-01-01至2026-06-09问询相关披露，取得三份回复/独董意见索引；未取得独立原函。检索结果不证明原函不存在，原问询日期仍未知，不能拿回复披露日或第三方F10日期回填。
+
+[取得缺口记录](examples/yanpu-inquiry-acquisition-gap.json)保留正确主体与查询窗口/响应SHA/标题。[三项回复内转引输入](examples/yanpu-inquiry-quoted-input.json)、[本地原页结果](examples/yanpu-inquiry-quoted-result.json)、[可读底稿](examples/yanpu-inquiry-quoted-report.html)分别定位主营业务/应收账款/关联交易至物理页1/17/27，问题与回复依据注明 quoted-in-reply，不冒充原函全文或所有子问题已核。原来样本和记录未覆盖。
+
+问询入口新方法 explicit-association-2 保留 questionOrigin/originalInquiryStatus/originalInquiryDate；未知显式schema/方法拒绝，旧未声明版本输入仍输出当前实际方法。原函完整性、发函日期及实质回答充分性仍是缺口。

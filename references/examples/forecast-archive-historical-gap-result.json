@@ -1,0 +1,29 @@
+{
+  "inputSchema": "forecast-observations-v1",
+  "methodVersion": "acquisition-bound-history-1",
+  "asOf": "2026-09-30T23:59:59+08:00",
+  "observations": [],
+  "revisions": [],
+  "excluded": [
+    {
+      "id": "midea-huaxing-summary-2026-acquired-20261009",
+      "reason": "取得晚于截止；不从发布日期回填可得"
+    },
+    {
+      "id": "midea-huaxing-summary-2028-acquired-20261009",
+      "reason": "取得晚于截止；不从发布日期回填可得"
+    },
+    {
+      "id": "midea-huaxing-summary-2027-acquired-20261009",
+      "reason": "取得晚于截止；不从发布日期回填可得"
+    }
+  ],
+  "actualComparisonStatus": "not-paired",
+  "conclusion": "按已经留存的取得时点查历史；报告写得早，不代表我们当时已拿到。来源冲突与分析师修正分开，缺口不补。",
+  "limitations": [
+    "公开网页补录不是事前冻结样本；仅已留存取得时点筛选",
+    "同报告不同源值不自动择优，修正关联仅为输入声明",
+    "实际业绩和重述尚未原文配对，不评价预测准确率；原始研报未取得不冒充机构原文",
+    "日期精度无法区分同日发布先后，不输出全市场覆盖承诺"
+  ]
+}

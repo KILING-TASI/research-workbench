@@ -1,0 +1,33 @@
+{
+  "asOf": "2026-10-10",
+  "scope": "only declared query window and indexed searches, not proof no letter exists",
+  "officialQuery": {
+    "url": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "parameters": {
+      "pageNum": 1,
+      "pageSize": 30,
+      "column": "sse",
+      "plate": "sh",
+      "stock": "605128,9900037900",
+      "searchkey": "问询函",
+      "seDate": "2026-01-01~2026-06-09",
+      "tabName": "fulltext"
+    },
+    "sha256": "ba7e656d3b37468f54fbbc00e2504b009cfcac94ec27c2cde64391433d0c3d11",
+    "total": 3,
+    "titles": [
+      "上海沿浦精工科技（集团）股份有限公司关于2025年年度报告的信息披露监管问询函所涉及部分问题的独立董事意见",
+      "立信会计师事务所（特殊普通合伙）关于《关于上海沿浦精工科技(集团)股份有限公司2025年年度报告的信息披露监管问询函》的回复",
+      "上海沿浦精工科技（集团）股份有限公司关于2025年年度报告的信息披露监管问询函的回复公告"
+    ]
+  },
+  "originalInquiryStatus": "not-obtained",
+  "originalInquiryDate": null,
+  "alternativeSourceTier": "company-reply-quoting-inquiry",
+  "alternativeSource": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+  "notUsedAsOriginalDate": [
+    "reply publication 2026-06-09",
+    "third-party F10 receipt date"
+  ],
+  "visualStatus": "not-browser-verified"
+}

@@ -9,6 +9,9 @@ def day(text):
     return text
 
 def review(spec):
+    if 'inputSchema' in spec and spec['inputSchema']!='inquiry-ledger-v1':raise ValueError('未知问询输入schema')
+    if 'methodVersion' in spec and spec['methodVersion']!='explicit-association-2':raise ValueError('未知问询方法版本')
+    if spec.get('originalInquiryStatus','not-established') not in ('not-established','not-obtained','declared-obtained-not-full-verified'):raise ValueError('原问询取得状态不能冒充全文验收')
     cutoff=day(spec['asOf']);entity=spec['entity']
     if not isinstance(entity,str) or not entity.strip():raise ValueError('主体缺失')
     documents=spec['documents'];questions=spec['questions'];responses=spec.get('responses',[])
@@ -36,7 +39,9 @@ def review(spec):
         key=q['id']
         if not isinstance(key,str) or not key.strip() or key in rows:raise ValueError('问题编号重复或缺失')
         if not isinstance(q.get('text'),str) or not q['text'].strip():raise ValueError('问题正文缺失')
-        rows[key]={'questionId':key,'question':q['text'],'questionEvidence':evidence(q['evidence']),'replies':[]}
+        origin=q.get('questionOrigin','declared-not-original-established')
+        if origin not in ('original-inquiry','quoted-in-reply','declared-not-original-established'):raise ValueError('问题原文来源层级无效')
+        rows[key]={'questionId':key,'question':q['text'],'questionOrigin':origin,'questionEvidence':evidence(q['evidence']),'replies':[]}
     ids=set()
     for response in responses:
         key=response['id'];targets=response['questionIds']
@@ -68,14 +73,20 @@ def review(spec):
             rows[target][name].append(dict(link,evidence=ref,associationStatus='declared-link-not-causal-proof'))
     missing=[key for key,row in rows.items() if not row['replies']]
     for row in rows.values():row['status']='reply-linked-not-quality-reviewed' if row['replies'] else 'matching-reply-not-obtained'
-    return {'toolVersion':'inquiry-review-0.1.dev1','inputSchema':'inquiry-ledger-v1','rulesVersion':'explicit-association-1','entity':entity,'asOf':cutoff,'questions':list(rows.values()),'missingReplyQuestionIds':missing,'conclusion':f'已整理{len(rows)}个问题，其中{len(missing)}个尚未取得匹配回复材料；关联成功不代表回复充分。','limitations':['问题拆分和匹配由输入明确声明，未自动读取PDF','页码与引句按各条证据状态说明；引句存在不等于回复充分','缺回复不等于公司没有回复，不以问询推断造假或投资结论']}
+    original_date=spec.get('originalInquiryDate')
+    if original_date is not None and day(original_date)>cutoff:raise ValueError('声明原问询日期超过截止日')
+    headline=f'已整理{len(rows)}个选定问题，其中{len(missing)}个尚未取得匹配回复材料；关联成功不代表回复充分。'
+    if spec.get('originalInquiryStatus')=='not-obtained':headline='本次只能做回复内转引对照，独立原函完整性与发函日期仍未知。'+headline
+    return {'toolVersion':'inquiry-review-0.2.dev1','inputSchema':'inquiry-ledger-v1','rulesVersion':'explicit-association-2','entity':entity,'asOf':cutoff,'originalInquiryDate':original_date,'originalInquiryStatus':spec.get('originalInquiryStatus','not-established'),'questions':list(rows.values()),'missingReplyQuestionIds':missing,'conclusion':headline,'limitations':['问题拆分和匹配由输入明确声明，未自动读取PDF','页码与引句按各条证据状态说明；引句存在不等于回复充分','回复内转引问题不是独立原问询全文；回复披露日不回填原问询日期','缺回复不等于公司没有回复，不以问询推断造假或投资结论']}
 
 def markdown(result):
     labels={'quote-found-on-page':'引句在指定原页找到','quote-not-found':'指定原页未找到引句，需复查','declared-not-original-verified':'仅声明页码，尚未核原页','pdf-component-missing':'原页读取组件缺失，尚未核对'}
     clean=lambda text:str(text).replace('|','／').replace(chr(10),' ')
     body='# 问询与回复：逐项研究底稿'+chr(10)*2+'> '+result['conclusion']+chr(10)*2+'本次主体：'+clean(result['entity'])+'；资料截止日：'+result['asOf']+'。'+chr(10)*2
+    body+='独立原问询材料：'+('尚未取得，不能确认全文完整性' if result.get('originalInquiryStatus')=='not-obtained' else '状态按记录保留，未自动认证完整性')+'；原问询日期：'+str(result.get('originalInquiryDate') or '未知，不采用回复披露日代替')+'。'+chr(10)*2
     for row in result['questions']:
         body+='## 问题 '+clean(row['questionId'])+chr(10)*2+clean(row['question'])+chr(10)*2
+        body+='问题依据层级：'+('公司回复内转引，未取得独立原函' if row.get('questionOrigin')=='quoted-in-reply' else '按输入声明的原件来源，完整性另核')+'。'+chr(10)*2
         evidence=row['questionEvidence'];body+='问题来源：'+evidence['source']+'，版本'+clean(evidence['version'])+'，PDF物理页'+str(evidence['physicalPage'])+'。'+chr(10)*2
         if not row['replies']:body+='尚未取得匹配回复材料，不表示公司没有回复。'+chr(10)*2
         for reply in row['replies']:

@@ -39,4 +39,11 @@ class Tests(unittest.TestCase):
  def test_reply_cannot_precede_question(self):
   spec=self.spec();spec['documents'][1]['publishedAt']='2025-04-01'
   with self.assertRaises(ValueError):review(spec)
+ def test_quote_in_reply_does_not_fill_original_date(self):
+  spec=self.spec();spec['originalInquiryStatus']='not-obtained';spec['questions'][0]['questionOrigin']='quoted-in-reply'
+  r=review(spec);self.assertIsNone(r['originalInquiryDate']);self.assertEqual(r['questions'][0]['questionOrigin'],'quoted-in-reply')
+ def test_unknown_schema_method_and_full_claim_rejected(self):
+  for key,value in [('inputSchema','future'),('methodVersion','future'),('originalInquiryStatus','full-verified')]:
+   spec=self.spec();spec[key]=value
+   with self.assertRaises(ValueError):review(spec)
 if __name__=='__main__':unittest.main()
