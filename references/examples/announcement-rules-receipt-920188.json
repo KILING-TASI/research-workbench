@@ -1,0 +1,35 @@
+{
+  "consumer": "cn-market-rules.announcement_consumer",
+  "header_sha256": "cc1706d0cacb5d80060bfcfb2c65d00ec165234a0d04cc96eff59ced327a5836",
+  "source_sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+  "input": "interfaces/announcement-samples/sidecar-920188.json",
+  "review": "interfaces/announcement-samples/review-920188.json",
+  "output": "outputs/announcement-rules-consumption-920188.json",
+  "native_payload_equal": true,
+  "unknown_time_preserved": true,
+  "qualification": null,
+  "rule_version_id": null,
+  "negative_cases": [
+    {
+      "case": "tampered_digest",
+      "status": "rejected",
+      "reason": "original file digest mismatch"
+    },
+    {
+      "case": "version_conflict",
+      "status": "rejected",
+      "reason": "source version conflicts with native source"
+    },
+    {
+      "case": "unknown_historical_time",
+      "status": "rejected",
+      "reason": "prospective use unsupported; no historical availability certification"
+    }
+  ],
+  "semantic_review": {
+    "extraction": "PyMuPDF get_text, six pages",
+    "visual": "Poppler rendered page 2, manually reviewed",
+    "limits": "Selected page 2 numeric fields; page 1 identity/permission and page 3 body date text only; not full-document certification"
+  },
+  "cross_repository_status": "pending_workbench_actual_receipt"
+}

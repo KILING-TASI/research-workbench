@@ -1,0 +1,20 @@
+{
+  "scope": "one saved 920188 result notice; candidate, not nine-repository standard",
+  "status": "actual three-consumer source/input association passed; PR CI pending",
+  "sourceSha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+  "sidecarSha256": "cc1706d0cacb5d80060bfcfb2c65d00ec165234a0d04cc96eff59ced327a5836",
+  "nativePayloadPreserved": true,
+  "noDownload": true,
+  "files": {
+    "announcement-sidecar-920188.json": "cc1706d0cacb5d80060bfcfb2c65d00ec165234a0d04cc96eff59ced327a5836",
+    "announcement-workbench-920188.json": "6e574000ed764cb88431b8e5156ff99775c7acdb05a8e11581de790a4302e443",
+    "announcement-bjx-920188.json": "10df24ce5cdec9fa806d176bd617456ad3dda1d30f729fa66963cc7740057664",
+    "announcement-rules-920188.json": "dc3c338d83758ed35e163ac8e29c9a25ce9b6d765f67519b77873aaf97c67c56",
+    "announcement-rules-receipt-920188.json": "c2cf40940ff4cb6baf0ec4ac063787506594fb790376a1bdae212e249042a652"
+  },
+  "limits": [
+    "Specialist receipts captured while their final cross-repository status remained pending; no rewriting upstream receipts",
+    "No first public clock, account eligibility, full PDF/version or all-market certification",
+    "Raw PDF not distributed"
+  ]
+}
