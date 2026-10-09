@@ -1,0 +1,50 @@
+{
+  "type": "account-benchmark-observation",
+  "start": "2025-01-01",
+  "end": "2026-01-01",
+  "currency": "CNY",
+  "dividends": "reinvested",
+  "benchmarkVersion": "teaching-v1",
+  "accountCumulativeTwrPct": 15.500000000000025,
+  "accountAnnualizedXirrPct": 14.484608833963414,
+  "comparisons": [
+    {
+      "kind": "product",
+      "cumulativeReturnPct": 19.999999999999996,
+      "source": "教学总回报指数，不是市场数据"
+    },
+    {
+      "kind": "benchmark",
+      "cumulativeReturnPct": 12.00000000000001,
+      "source": "教学总回报指数，不是市场数据"
+    }
+  ],
+  "accountMinusBenchmarkPercentagePoints": 3.500000000000014,
+  "effects": [
+    {
+      "effect": "allocation",
+      "status": "unknown",
+      "evidence": null,
+      "contributionPct": null
+    },
+    {
+      "effect": "holdingStart",
+      "status": "unknown",
+      "evidence": null,
+      "contributionPct": null
+    },
+    {
+      "effect": "cash",
+      "status": "unknown",
+      "evidence": null,
+      "contributionPct": null
+    }
+  ],
+  "accountMinusProductPercentagePoints": -4.499999999999972,
+  "conclusion": "在相同区间和声明口径下，账户累计收益比基准高3.50个百分点。",
+  "limitations": [
+    "只比较已提供的观察记录；完整性和分红口径是声明，未认证账单",
+    "累计TWR与年化XIRR分别列示，不直接相减；差异不证明择时或配置能力",
+    "没有配置路径、买入起点与现金记录时，影响原因保持未知；不从期末截图重建账户"
+  ]
+}

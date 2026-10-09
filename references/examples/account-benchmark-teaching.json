@@ -1,0 +1,71 @@
+{
+  "exampleType": "teaching-only",
+  "account": {
+    "cashFlowCoverage": "declared-complete",
+    "basis": "教学估值与现金流；未认证真实账单",
+    "currency": "CNY",
+    "amountUnit": "base",
+    "dividends": "reinvested",
+    "observations": [
+      {
+        "date": "2025-01-01",
+        "beforeFlowValue": 100,
+        "externalFlow": 0,
+        "afterFlowValue": 100
+      },
+      {
+        "date": "2025-07-01",
+        "beforeFlowValue": 110,
+        "externalFlow": 50,
+        "afterFlowValue": 160
+      },
+      {
+        "date": "2026-01-01",
+        "beforeFlowValue": 168,
+        "externalFlow": 0,
+        "afterFlowValue": 168
+      }
+    ]
+  },
+  "comparisonBasis": {
+    "dividends": "reinvested",
+    "benchmarkVersion": "teaching-v1"
+  },
+  "effectEvidence": {},
+  "product": {
+    "start": "2025-01-01",
+    "end": "2026-01-01",
+    "currency": "CNY",
+    "dividends": "reinvested",
+    "version": "teaching-v1",
+    "source": "教学总回报指数，不是市场数据",
+    "totalValueSeries": [
+      {
+        "date": "2025-01-01",
+        "value": 100
+      },
+      {
+        "date": "2026-01-01",
+        "value": 120
+      }
+    ]
+  },
+  "benchmark": {
+    "start": "2025-01-01",
+    "end": "2026-01-01",
+    "currency": "CNY",
+    "dividends": "reinvested",
+    "version": "teaching-v1",
+    "source": "教学总回报指数，不是市场数据",
+    "totalValueSeries": [
+      {
+        "date": "2025-01-01",
+        "value": 100
+      },
+      {
+        "date": "2026-01-01",
+        "value": 112
+      }
+    ]
+  }
+}
