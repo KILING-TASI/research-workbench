@@ -16,7 +16,7 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 
 打开 `local-data/first-comparison/基金比较说明.html`。输出目录/文件须不存在；重复运行请换新路径，不覆盖旧结果。限定PDF接口需要另装可选依赖，下面的教学demo不需要。
 
-[按问题选择八仓库工具](references/tool-navigation.md)
+[按问题选择九仓库工具](references/tool-navigation.md)
 
 说明版本：1.93 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
 
@@ -122,10 +122,13 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 
 ## 许可范围
 
-[MIT原创许可](LICENSE) · [第三方、示例与数据范围](THIRD_PARTY_NOTICES.md)。代码许可不包含原文、数据或品牌的再分发授权。
+[MIT原创许可](LICENSE)（KILING-TASI及原有贡献者版权） · [第三方、示例与数据范围](THIRD_PARTY_NOTICES.md)。第三方保留原许可；代码许可不包含原文、数据或品牌的再分发授权。
 
 ## 有限更正案例（待审增量）
 
 新增[官方更正案例与边界](references/event-association.md)：选定股权比例和表格单位更正，不能代替旧版/修订版全文配对或审计意见认证。原问询缺失仍保留，未自动安装待审代码。
 
 截图重试记录（2026-10-09）：用户恢复权限后，本地HTML仍被浏览器file协议策略拒绝，且禁止绕过。实际HTML生成与代码验证已完成，三个报告尚未取得浏览器截图或视觉验收；不是合成图替代，也不是许可证或原件核验通过证明。
+
+
+当前待审增量的实现、真实样本、版本与未完成项见[详细交付状态](references/development-validation.md)；CI不代表原件认证或投资有效，不自动更新已安装版。

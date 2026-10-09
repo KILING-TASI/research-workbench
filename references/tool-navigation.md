@@ -1,19 +1,20 @@
 # 按问题选择工具
 
-更新日期：2026-10-09。本页随待审主包更新。八个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
+更新日期：2026-10-10。本页随待审主包更新。九个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
 
 |你想解决什么|工具|交付与衔接范围|
 |---|---|---|
 |研究公司、基金、ETF，比较产品，找回报告继续问|[research-workbench](https://github.com/KILING-TASI/research-workbench)|理解问题、组织公开资料、建立判断并生成报告；工作台可选|
-|多只基金是否重复持有同一批公司|[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)|证券/公司敞口、未知路径、已映射股票集中度；主包已有显式JSON桥，待审增量限定单管理人PDF桥|
+|多只基金是否重复持有同一批公司|[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)|证券/公司敞口、未知路径、已映射股票集中度；主包已有显式JSON桥，待审增量另核华夏成长2025年报和单日选定发行人；主包PDF桥仍只接原限定产品|
 |财报金额是不是同口径、原文差多少|[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)|金额差异/舍入/不可比；主包有显式JSON桥，待审行列定位仍限定金额，不是完整三表认证|
-|比较组合配置、回撤预算、成本与现金流|[portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine)|独立组合研究；主包等价迁移尚未验收，不自动替换既有模型|
-|北交网上发行比例获配情景、占款与复盘|[bjx-ipo-engine](https://github.com/KILING-TASI/bjx-ipo-engine)|独立发行情景研究；主包保留已有北交专题，未完成全部等价迁移|
-|可转债现金流、收益率与条款条件|[convertible-bond-engine](https://github.com/KILING-TASI/convertible-bond-engine)|独立转债研究；按其README输入，不把主包基础诊断说成含权定价|
-|证券市场规则、个案条款与离线情景|[cn-market-rules](https://github.com/KILING-TASI/cn-market-rules)|规则清单、有效版本、条款与情景口径；不是公司事件库或交易许可认证，不默认被主包执行|
+|比较组合配置、回撤预算、成本与现金流|[portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine)|窄范围TWR/XIRR对照与现金需求原生透传已验；全部模型迁移未验，不自动替换|
+|北交网上发行比例获配情景、占款与复盘|[bjx-ipo-engine](https://github.com/KILING-TASI/bjx-ipo-engine)|有限单发行API原生桥已验；年度/滑点/融资不等价，内置专题保留|
+|可转债现金流、收益率与条款条件|[convertible-bond-engine](https://github.com/KILING-TASI/convertible-bond-engine)|固定未来现金流原生桥已验；非平坦曲线/条款权利不作全部等价，内置诊断保留|
+|证券市场规则、个案条款与离线情景|[cn-market-rules](https://github.com/KILING-TASI/cn-market-rules)|信封1.2/共用1.0可选消费已验，版本选择与项目未知分开；不认证实际资格|
 |公开宏观数据与周期代理指标看板|[macro-dashboard-engine](https://github.com/KILING-TASI/macro-dashboard-engine)|独立宏观看板；不是主包全量数据库或自动后台监控|
+|市场叙事是否有证据，计划是否真的执行|[MarketLens](https://github.com/KILING-TASI/marketlens)|股票/ETF/政策叙事证据、限定观察池代理、份额估值/融资分歧及计划执行区分；[v0.1.0已发布](https://github.com/KILING-TASI/marketlens/releases/tag/v0.1.0)，尚未接入主包，不替换既有份额观察/事件台账|
 
-## 八仓关系
+## 九仓关系
 
 ```mermaid
 flowchart TD
@@ -28,9 +29,14 @@ flowchart TD
     I --> C[convertible-bond-engine：转债]
     I --> R[cn-market-rules：规则]
     I --> M[macro-dashboard-engine：宏观]
+    I --> N[MarketLens：市场叙事证据]
+    W -. 有界原生契约，待审 .-> P
+    W -. 有界原生契约，待审 .-> B
+    W -. 有界原生契约，待审 .-> C
+    W -. 信封1.2/交接1.0，待审 .-> R
 ```
 
-虚线只代表已提供的可选显式JSON接口；未画连线的工具不意味着主包已经自动调用。用户不必安装八个仓库。主包不自动下载或安装独立工具，调用者明确可信目录；各仓库的README和版本记录决定实际可运行范围。
+虚线代表已提供的有限可选JSON/原生接口；未画连线的工具不意味着主包已经自动调用。用户不必安装九个仓库。主包不自动下载或安装独立工具，调用者明确可信目录；各仓库的README和版本记录决定实际可运行范围。
 
 ## 先看什么结果
 
@@ -42,6 +48,9 @@ HTML需下载后用浏览器打开。三份均为实际demo生成的教学结果
 
 ## 有限真实案例与缺口
 
-007119中报77条股票的独立适配与旧主包逐项等价，财报原表选定六个金额重新提取一致；见[本批验证](development-validation.md)。原件不随代码发布；这不能外推到其他管理人/任意版式。第二管理人、机构预测留档和REITs估值仍未实现，不列为已支持。更完整的接口与迁移边界见[独立工具衔接](independent-engines.md)。
+007119中报77条股票的独立适配与旧主包逐项等价，财报原表选定六个金额重新提取一致；见[本批验证](development-validation.md)。原件不随代码发布；这不能外推到其他管理人/任意版式。独立持仓库另验华夏成长132条股票；主包新增离线预测档案，公开转述缺机构原文/实际配对；REITs估值仍未实现。更完整的接口与迁移边界见[独立工具衔接](independent-engines.md)。
 
-公司监管事件由主包组织证据与解释；规则库只提供定义、条款与版本。现有小样本事件台账不等于全量检索/完整时间轴，规则接口未接通时保留未知，不给自动违规或退市概率。
+公司监管事件由主包组织证据与解释；规则库只提供定义、条款与版本。现有小样本事件台账不等于全量检索/完整时间轴，规则接口只在已验有限范围消费，其他版本仍保留缺口，不给自动违规或退市概率。
+
+
+主包负责问题入口、资料组织、薄调用和报告找回；独立算法/样本维护归各仓。MarketLens只新增问题导航和归属，不创建第二套市场噪音模块，不宣称接入或迁移。其v0.1.0发布与本任务三个待审PR分开。各仓代码/第三方/数据许可逐仓核验；本页不因共同作者而推定新仓全部素材MIT。
