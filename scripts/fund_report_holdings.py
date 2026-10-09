@@ -102,7 +102,31 @@ def domestic_result(doc,raw,code,report_date,published_at,source_url,net_assets,
     holdings.sort(key=lambda h:-h['weight'])
     rank_ties=[{'segment':x['segment'],'rank':x['rank'],'codes':[p['cells'][1],x['cells'][1]],'marketValueCNY':float(number(x['cells'][4])) if number(p['cells'][4])==number(x['cells'][4]) else None,'valuesCNY':[float(number(p['cells'][4])),float(number(x['cells'][4]))],'basis':'equal-values' if number(p['cells'][4])==number(x['cells'][4]) else 'reported-shared-rank-distinct-securities','locator':'PDF页'+str(x['pages'][0])} for p,x in zip(rows,rows[1:]) if p['segment']==x['segment'] and p['rank']==x['rank']]
     return {'id':code,'allocation':1,'currency':'CNY','reportDate':report_date,'publishedAt':published_at,'sourceUrl':source_url,'locator':'中报§7.3/年报§8.3全部股票表；金额为人民币','disclosureScope':'completeEquity','equityWeight':float(equity_value/net_assets),'netAssetsCNY':float(net_assets),'equityMarketValueCNY':float(equity_value),'holdings':holdings,'rawRowCount':len(rows),'segments':{k:{'rows':len(sequences[k]),'marketValueCNY':float(v)} for k,v in segments.items()},'rankTies':rank_ties,'portfolioScope':'fund-all-share-classes','sourceSha256':hashlib.sha256(raw).hexdigest(),'parserVersion':'complete-equity-9','verification':'逐行权重、各表序号、跨表合并与总市值逐分勾稽通过；报告身份/日期/分母仍需原文核验','limitations':['持仓分母为基金全部份额合计净资产，不是某份额类净资产','市场命名空间依据原文股票代码及明确港股通章节区分；具体交易所尚未核验，不猜板块','非股票资产未穿透；不是实时持仓或交易流水','行业未分类，不输出行业集中度结论']}
-def extract(pdf,code,report_date,published_at,source_url,net_assets,equity_value):
+def independent_ruiyuan(pdf,code,report_date,published_at,source_url,net_assets,equity_value,project_dir):
+    import os,sys,subprocess,tempfile
+    if code!='007119':raise ValueError('独立首版仅支持007119；其他产品请省略adapter-project-dir沿用内置入口')
+    root=Path(project_dir).resolve();entry=root/'cnlookthrough/report_cli.py'
+    if not entry.is_file() or not entry.resolve().is_relative_to(root):raise ValueError('须显式指定可信的已安装独立项目；不自动下载。省略参数可使用内置回退')
+    with tempfile.TemporaryDirectory(prefix='holdings-adapter-') as temporary:
+        output=Path(temporary)/'parsed.json'
+        args=[sys.executable,'-m','cnlookthrough.report_cli',str(Path(pdf).resolve()),'--report-date',report_date,'--published-at',published_at,'--source-url',source_url,'--net-assets',str(net_assets),'--equity-value',str(equity_value),'--format','parsed','--out',str(output)]
+        environment=dict(os.environ,PYTHONIOENCODING='utf-8');environment.pop('PYTHONPATH',None)
+        try:done=subprocess.run(args,cwd=root,env=environment,capture_output=True,text=True,encoding='utf-8',timeout=180)
+        except (OSError,subprocess.TimeoutExpired) as error:raise ValueError('独立适配未完成；未静默改用其他算法') from error
+        if done.returncode or not output.is_file():raise ValueError('独立适配未完成：'+done.stderr[-1000:]+'；如需内置回退，请明确省略adapter-project-dir')
+        from collection_validation import unique_pairs,reject_constant
+        result=json.loads(output.read_text('utf-8'),object_pairs_hook=unique_pairs,parse_constant=reject_constant)
+        if result.get('id')!=code or result.get('reportDate')!=report_date or result.get('sourceSha256')!=hashlib.sha256(Path(pdf).read_bytes()).hexdigest():raise ValueError('独立输出的身份/版本与本次输入不符')
+        if result.get('adapterProfile')!='ruiyuan-growth-six-column-v1' or result.get('disclosureScope')!='completeEquity' or result.get('portfolioScope')!='fund-all-share-classes' or result.get('currency')!='CNY' or result.get('publishedAt')!=published_at:raise ValueError('独立输出接口或口径不等价，不能替代旧解析')
+        if result.get('inputSchema')!='explicit-report-totals-v1' or result.get('rulesVersion')!='six-column-equity-1':raise ValueError('独立适配schema或规则版本未确认')
+        try:totals_match=number(str(result.get('netAssetsCNY')))==number(str(net_assets)) and number(str(result.get('equityMarketValueCNY')))==number(str(equity_value))
+        except ArithmeticError:raise ValueError('独立适配金额字段无效')
+        if not totals_match:raise ValueError('独立适配净资产/权益总额与显式输入不符')
+        result['engineSelection']={'engine':'cn-fund-lookthrough','inputSchema':'explicit-report-totals-v1','rulesVersion':'six-column-equity-1','methodFiles':{name:hashlib.sha256((root/'cnlookthrough'/name).read_bytes()).hexdigest() for name in ('report_adapter.py','report_cli.py','engine.py')}}
+        return result
+
+def extract(pdf,code,report_date,published_at,source_url,net_assets,equity_value,adapter_project_dir=None):
+    if adapter_project_dir is not None:return independent_ruiyuan(pdf,code,report_date,published_at,source_url,net_assets,equity_value,adapter_project_dir)
     if not re.fullmatch(r'\d{6}',code): raise ValueError('基金代码须为六位数字')
     if datetime.date.fromisoformat(report_date)>datetime.date.fromisoformat(published_at): raise ValueError('发布日期早于报告日')
     if urlparse(source_url).scheme!='https': raise ValueError('需HTTPS原文地址')
@@ -162,10 +186,10 @@ def extract(pdf,code,report_date,published_at,source_url,net_assets,equity_value
     return {'id':code,'allocation':1,'currency':'CNY','reportDate':report_date,'publishedAt':published_at,'sourceUrl':source_url,'locator':'中报§7.4/年报§8.4完整权益明细；金额为人民币','disclosureScope':'completeEquity','equityWeight':float(equity_value/net_assets),'netAssetsCNY':float(net_assets),'equityMarketValueCNY':float(equity_value),'holdings':holdings,'portfolioScope':'fund-all-share-classes','sourceSha256':hashlib.sha256(raw).hexdigest(),'parserVersion':'complete-equity-9','verification':'逐行权重与金额勾稽、连续序号及权益合计通过；输入身份/日期/总额仍需原文人工核验','limitations':['仅报告日股票快照，不是当前持仓或交易流水','行业未分类，不输出行业集中度结论','权重用人民币市值/净资产，保留报告中0.00%的非零小额持仓']}
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('pdf');p.add_argument('--code',required=True);p.add_argument('--report-date',required=True);p.add_argument('--published-at',required=True);p.add_argument('--source-url',required=True);p.add_argument('--net-assets',required=True);p.add_argument('--equity-value',required=True);p.add_argument('--out',required=True);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('pdf');p.add_argument('--code',required=True);p.add_argument('--report-date',required=True);p.add_argument('--published-at',required=True);p.add_argument('--source-url',required=True);p.add_argument('--net-assets',required=True);p.add_argument('--equity-value',required=True);p.add_argument('--out',required=True);p.add_argument('--adapter-project-dir',help='可选：可信独立持仓适配项目目录，仅限定007119；默认保留内置流程');a=p.parse_args()
     out=Path(a.out);out.parent.mkdir(parents=True,exist_ok=True)
     if out.exists():raise FileExistsError('输出文件已存在，请使用新文件名；首次依据不覆盖')
-    result=extract(a.pdf,a.code,a.report_date,a.published_at,a.source_url,a.net_assets,a.equity_value)
+    result=extract(a.pdf,a.code,a.report_date,a.published_at,a.source_url,a.net_assets,a.equity_value,adapter_project_dir=a.adapter_project_dir)
     with out.open('x',encoding='utf8') as f:json.dump(result,f,ensure_ascii=False,indent=2,allow_nan=False)
     print(f'Extracted {len(result["holdings"])} equities; amount reconciled; source archived separately')
 if __name__=='__main__': main()

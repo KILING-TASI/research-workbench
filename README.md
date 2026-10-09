@@ -1,12 +1,20 @@
 # 投研研究助手
 
-说明版本：1.92 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
+说明版本：1.93 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
 
 持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill仅按需衔接，不强制安装或自动下载，详见[接口与范围](references/independent-engines.md)。
 
 面向个人与买方研究的多资产投研助手，提供可追溯的资料、分析与研究报告。
 
 将本目录复制到AI工具支持的Skill目录，读取SKILL.md。工作台可选，不需要作者项目路径或数据库。
+
+## 版本与使用状态
+
+截至2026-10-09，已发布版本为 `v0.1.0-beta.6`（预览版，说明1.92）。本分支说明1.93及下述增量尚未发布，合并与发布需另行审阅；本地安装不代表GitHub发布包已更新。
+
+入口按四类问题组织：研究一只标的、比较产品、诊断组合、找回报告继续研究。先识别问题，再按公司、基金、ETF等对象选择方法，工作台不是使用前提。
+
+本批已实现：问询回复显式逐项关联与本地页缓存；独立工具契约记录；限定基金PDF显式适配桥。REITs估值与机构预测留档目前只有设计，不能作为可执行能力调用。实现与有限样本见[本批验证](references/development-validation.md)。
 
 ## 第一次使用
 
@@ -86,3 +94,10 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 ## 免责声明
 
 本项目仅供学习与研究，不构成投资建议或交易指令，不保证收益或结果准确性。请在使用前阅读[免责声明与使用边界](DISCLAIMER.md)，并结合本次数据来源、假设与缺口独立判断。代码许可不包含第三方数据使用授权。
+
+
+## 本次首批开发补充（尚未发布）
+
+- [问询专题](references/inquiry-research.md)：逐项底稿、缺回复与声明的未回答事项，页码/版本/来源及财报、后续事件关联；真实首样本仍未取得独立原问询全文。
+- [REITs具体设计](references/reits-operating-research.md)：产业园产权类输入和验收范围，未实现估值，不重复发售规则。
+- [机构盈利预测档案](references/forecast-history-archive.md)：下一批优先，先结构化离线留档、再限定联网；当前仅设计。
