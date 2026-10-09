@@ -26,3 +26,6 @@ python scripts/independent_engine.py lookthrough --project-dir TRUSTED_PROJECT -
 
 
 开发中的归属、输入/schema/规则版本、尚不等价流程及有限迁移见[契约与迁移](engine-ownership-and-migration.md)。现有JSON桥保留，新增限定PDF适配仅在显式指定可信项目时使用；不按仓库存在就判功能等价。
+
+
+组合、北交、可转债与规则库新增 opt-in 原生调用见[有界可选接口](bounded-native-bridges.md)。内置入口保留，透传与已证交集分开，不承诺完整等价。
