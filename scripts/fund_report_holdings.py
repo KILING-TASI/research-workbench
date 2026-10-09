@@ -1,5 +1,6 @@
 """Extract nine-column QDII or six-column domestic complete-equity tables.
-Requires pdfplumber. Report identity, publication date and totals must be checked
+Six-column core requires the independent cn-fund-lookthrough compatibility module;
+nine-column QDII remains local. Requires pdfplumber. Report identity, publication date and totals must be checked
 against the original by the caller. Does not infer industry or current holdings.
 """
 import argparse,datetime,hashlib,json,re
@@ -31,16 +32,16 @@ def domestic_result(doc,raw,code,report_date,published_at,source_url,net_assets,
 
 def independent_ruiyuan(pdf,code,report_date,published_at,source_url,net_assets,equity_value,project_dir):
     import os,sys,subprocess,tempfile
-    if code!='007119':raise ValueError('独立首版仅支持007119；其他产品请省略adapter-project-dir沿用内置入口')
+    if code!='007119':raise ValueError('独立首版仅支持007119；其他产品请使用默认入口；六列核心仍需独立包，九列QDII保留本地解析')
     root=Path(project_dir).resolve();entry=root/'cnlookthrough/report_cli.py'
-    if not entry.is_file() or not entry.resolve().is_relative_to(root):raise ValueError('须显式指定可信的已安装独立项目；不自动下载。省略参数可使用内置回退')
+    if not entry.is_file() or not entry.resolve().is_relative_to(root):raise ValueError('须显式指定可信的已安装独立项目；不自动下载。省略此参数不提供六列内置回退；请安装兼容专业包或设置RESEARCH_WORKBENCH_LOOKTHROUGH_DIR')
     with tempfile.TemporaryDirectory(prefix='holdings-adapter-') as temporary:
         output=Path(temporary)/'parsed.json'
         args=[sys.executable,'-m','cnlookthrough.report_cli',str(Path(pdf).resolve()),'--report-date',report_date,'--published-at',published_at,'--source-url',source_url,'--net-assets',str(net_assets),'--equity-value',str(equity_value),'--format','parsed','--out',str(output)]
         environment=dict(os.environ,PYTHONIOENCODING='utf-8');environment.pop('PYTHONPATH',None)
         try:done=subprocess.run(args,cwd=root,env=environment,capture_output=True,text=True,encoding='utf-8',timeout=180)
         except (OSError,subprocess.TimeoutExpired) as error:raise ValueError('独立适配未完成；未静默改用其他算法') from error
-        if done.returncode or not output.is_file():raise ValueError('独立适配未完成：'+done.stderr[-1000:]+'；如需内置回退，请明确省略adapter-project-dir')
+        if done.returncode or not output.is_file():raise ValueError('独立适配未完成：'+done.stderr[-1000:]+'；未改用其他算法，六列核心不提供内置回退')
         from collection_validation import unique_pairs,reject_constant
         result=json.loads(output.read_text('utf-8'),object_pairs_hook=unique_pairs,parse_constant=reject_constant)
         if result.get('id')!=code or result.get('reportDate')!=report_date or result.get('sourceSha256')!=hashlib.sha256(Path(pdf).read_bytes()).hexdigest():raise ValueError('独立输出的身份/版本与本次输入不符')
@@ -113,7 +114,7 @@ def extract(pdf,code,report_date,published_at,source_url,net_assets,equity_value
     return {'id':code,'allocation':1,'currency':'CNY','reportDate':report_date,'publishedAt':published_at,'sourceUrl':source_url,'locator':'中报§7.4/年报§8.4完整权益明细；金额为人民币','disclosureScope':'completeEquity','equityWeight':float(equity_value/net_assets),'netAssetsCNY':float(net_assets),'equityMarketValueCNY':float(equity_value),'holdings':holdings,'portfolioScope':'fund-all-share-classes','sourceSha256':hashlib.sha256(raw).hexdigest(),'parserVersion':'complete-equity-9','verification':'逐行权重与金额勾稽、连续序号及权益合计通过；输入身份/日期/总额仍需原文人工核验','limitations':['仅报告日股票快照，不是当前持仓或交易流水','行业未分类，不输出行业集中度结论','权重用人民币市值/净资产，保留报告中0.00%的非零小额持仓']}
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('pdf');p.add_argument('--code',required=True);p.add_argument('--report-date',required=True);p.add_argument('--published-at',required=True);p.add_argument('--source-url',required=True);p.add_argument('--net-assets',required=True);p.add_argument('--equity-value',required=True);p.add_argument('--out',required=True);p.add_argument('--adapter-project-dir',help='可选：可信独立持仓适配项目目录，仅限定007119；默认保留内置流程');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('pdf');p.add_argument('--code',required=True);p.add_argument('--report-date',required=True);p.add_argument('--published-at',required=True);p.add_argument('--source-url',required=True);p.add_argument('--net-assets',required=True);p.add_argument('--equity-value',required=True);p.add_argument('--out',required=True);p.add_argument('--adapter-project-dir',help='可选：可信独立持仓适配项目目录，仅限定007119；默认六列需兼容独立包；九列QDII保留本地解析');a=p.parse_args()
     out=Path(a.out);out.parent.mkdir(parents=True,exist_ok=True)
     if out.exists():raise FileExistsError('输出文件已存在，请使用新文件名；首次依据不覆盖')
     result=extract(a.pdf,a.code,a.report_date,a.published_at,a.source_url,a.net_assets,a.equity_value,adapter_project_dir=a.adapter_project_dir)
