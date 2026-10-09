@@ -2,7 +2,7 @@
 import argparse,hashlib,json,zipfile
 from pathlib import Path
 ROOT='research-workbench/'
-ALLOWED=('SKILL.md','README.md','DISCLAIMER.md','LICENSE','agents/','references/','scripts/','modules/')
+ALLOWED=('SKILL.md','README.md','DISCLAIMER.md','THIRD_PARTY_NOTICES.md','LICENSE','agents/','references/','scripts/','modules/')
 RESOURCE_SUFFIXES={'.py','.js','.cjs','.mjs','.md','.json','.txt','.csv','.html','.css','.yaml','.yml'}
 
 def allowed(rel):

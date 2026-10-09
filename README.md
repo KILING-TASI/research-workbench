@@ -1,5 +1,23 @@
 # 投研研究助手
 
+把“研究什么、比较什么、组合有什么问题”转成可读的研究结果：先给判断，再说明依据和缺口。
+
+## 先看结果，再试一次
+
+[实际生成的教学HTML预览（下载后打开）](references/examples/readme-preview.html) · [对应输入](references/examples/readme-preview-input.json) · [生成与版本记录](references/examples/readme-preview-manifest.json)
+
+输出基金比较说明.html、Markdown、计算结果和输入底稿。教学样本只有两个日期，能说明区间取舍，不能评价经理能力或计算可靠的长期风险。 预览生成于2026-10-09，尚未取得截图或完成浏览器视觉验收；不是已发布版本的验收证明。
+
+在仓库根目录运行，Python 3.11+，此教学demo只用标准库、不联网：
+
+```bash
+python scripts/start.py demo --out-dir local-data/first-comparison
+```
+
+打开 `local-data/first-comparison/基金比较说明.html`。输出目录/文件须不存在；重复运行请换新路径，不覆盖旧结果。限定PDF接口需要另装可选依赖，下面的教学demo不需要。
+
+[按问题选择八仓库工具](references/tool-navigation.md)
+
 说明版本：1.93 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
 
 持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill仅按需衔接，不强制安装或自动下载，详见[接口与范围](references/independent-engines.md)。
@@ -101,3 +119,7 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 - [问询专题](references/inquiry-research.md)：逐项底稿、缺回复与声明的未回答事项，页码/版本/来源及财报、后续事件关联；真实首样本仍未取得独立原问询全文。
 - [REITs具体设计](references/reits-operating-research.md)：产业园产权类输入和验收范围，未实现估值，不重复发售规则。
 - [机构盈利预测档案](references/forecast-history-archive.md)：下一批优先，先结构化离线留档、再限定联网；当前仅设计。
+
+## 许可范围
+
+[MIT原创许可](LICENSE) · [第三方、示例与数据范围](THIRD_PARTY_NOTICES.md)。代码许可不包含原文、数据或品牌的再分发授权。

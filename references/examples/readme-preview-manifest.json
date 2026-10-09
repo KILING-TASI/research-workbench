@@ -1,0 +1,18 @@
+{
+  "generatedOn": "2026-10-09",
+  "sampleType": "teaching-only",
+  "version": "说明1.93，未发布开发分支",
+  "commandFromRepositoryRoot": "python scripts/start.py demo --out-dir local-data/first-comparison",
+  "input": "references/examples/readme-preview-input.json",
+  "inputSha256": "7b904c683fc1edd30f6a194d6aebab762d816baaf1701d489db8ab0841ad2ead",
+  "originalOutputSha256": "b4263c24f06e3d0f57d70cbddbbd61d1730c62c31756e1a73c02bb45f342ab3c",
+  "previewSha256": "fc62421790ae891045a9c3c4341462ef55b46b800022583c146eb87bd6918cdf",
+  "transformation": "Only added a visible teaching/date/development-version banner; generated findings unchanged",
+  "screenshot": "not acquired; browser visual permission unavailable",
+  "checks": [
+    "demo exit code 0",
+    "generated findings and teaching label inspected as text",
+    "no private paths or PDF included"
+  ],
+  "visualAcceptance": "not performed"
+}
