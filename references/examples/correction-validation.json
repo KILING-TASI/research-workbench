@@ -1,0 +1,17 @@
+{
+  "case": "600187 limited correction announcement",
+  "publishedAt": "2026-05-06",
+  "source": "https://static.cninfo.com.cn/finalpage/2026-05-06/1225277438.PDF",
+  "sha256": "b651016a8cf3004eb4aa02205a07be03b376ddf84d9abb96bbd0e965ef28b2ce",
+  "physicalPages": [
+    1,
+    4
+  ],
+  "verified": "selected short quote matches against freshly downloaded original",
+  "originalAndRevisedFullVersions": "not acquired and not paired",
+  "auditorChange": "not inferred",
+  "auditOpinion": "not independently certified from correction excerpt",
+  "rawPDFBundled": false,
+  "installedCode": "not silently synchronized",
+  "visualStatus": "blocked by browser file protocol policy"
+}

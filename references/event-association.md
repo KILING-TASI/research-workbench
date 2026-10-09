@@ -14,7 +14,7 @@ python scripts/event_review.py references/examples/event-evidence-example.json -
 
 ## 输入与结果
 
-使用event-evidence-ledger-v1：entity、asOf、documents、events、relations。文档保留entity/publishedAt/version/source/sha256；证据使用documentId/physicalPage/quote。事件保留kind、entity、eventDate、reportPeriod、summary、researchQuestion、limitation，未知日期为null，不拿披露日回填。审计意见额外独立opinionText，审计师变更独立auditorChange；两者不可替代。
+使用event-evidence-ledger-v1：entity、asOf、documents、events、relations。文档保留entity/publishedAt/version/source/sha256；证据使用documentId/physicalPage/quote。事件保留kind、entity、eventDate、reportPeriod、summary、researchQuestion、limitation，未知日期为null，不拿披露日回填。审计意见额外独立opinionText与auditScope（financial-statements/internal-control/other），审计师变更独立auditorChange；两者不可替代。
 
 relations明确from/to/type/reason/evidence；responds-to是问询到回复，corrects/restates由明确文档声明，context-for只是研究背景。没有足够依据不声明关联。输出保留工具、输入契约、规则版本与逐条原页状态，关系不会自动替换历史财报数据或判违法。
 
@@ -25,3 +25,11 @@ relations明确from/to/type/reason/evidence；responds-to是问询到回复，co
 HTML可按当前表内文字筛选、按首列名称排序。它只改变显示，不重新计算、换情景或修改未知值；保存输入及方法摘要，新结果另存。分享前检查输入里的私人路径与内容。本批没有截图或浏览器视觉验收，不将HTML生成成功视为视觉通过。
 
 [本次实际生成的HTML预览](examples/event-review-20261009.html)使用上述输入，不附PDF；页码仍为声明状态，不把本地另核结果冒充可公开复跑的原件认证。
+
+## 新增有限更正案例
+
+[国中水务更正输入](examples/correction-evidence-example.json)与[核对记录](examples/correction-validation.json)来自2026-05-06官方公告，选定页1/4短引句在新取得的原件中匹配。比例由20.89%更正21.89%，资金往来表单位由万元更正元；不是自动替换旧金额、财务改善或审计意见解除结论。原/修订全文尚未配对，处罚案例未新增，审计意见只在更正文件中出现，不作为独立审计意见认证。
+
+浏览器截图曾重试，但file协议被安全策略明确拒绝且禁止绕过，因此三个本地报告的截图与视觉验收仍未完成。HTML生成、原页文字匹配、浏览器视觉分别记录，不合成截图。
+
+[实际生成的更正HTML](examples/correction-review-20261009.html)使用公开短引句输入，不附原文；公开运行仍显示声明状态。

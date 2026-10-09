@@ -36,6 +36,7 @@ def review(spec):
         if period is not None and day(period)>ref['publishedAt']:raise ValueError('披露期超出来源日期')
         if occurred is not None and day(occurred)>ref['publishedAt']:raise ValueError('事件日期超出来源日期')
         if kind=='audit-opinion' and (not isinstance(event.get('opinionText'),str) or not event['opinionText'].strip()):raise ValueError('审计意见须独立记录原意见文字')
+        if kind=='audit-opinion' and event.get('auditScope') not in {'financial-statements','internal-control','other'}:raise ValueError('审计意见需区分财务报表与内控范围，不由审计师变更推断')
         if kind=='auditor-change' and not isinstance(event.get('auditorChange'),dict):raise ValueError('审计师变更需独立字段，不能代替审计意见')
         if kind=='auditor-change':
             change=event['auditorChange']
@@ -55,7 +56,7 @@ def review(spec):
     return {'toolVersion':'event-review-0.1.dev1','inputSchema':'event-evidence-ledger-v1','rulesVersion':'explicit-event-links-1','entity':entity,'asOf':cutoff,'sampleScope':spec.get('sampleType','declared-input-not-authenticated'),'events':list(rows.values()),'relations':links,'conclusion':f'整理了{len(rows)}项事件线索与{len(links)}条明确关联；应围绕所指问题继续核对，不凭标签定性。','limitations':['事件日期或报告期未知时保留空值，不拿披露日回填','审计意见与审计师变更分开；未提供的事件不表示不存在','不自动认定违规、因果或退市概率；关系不替换财报事实版本','原页引句匹配不等于事件全文或法律效力已经认证']}
 
 def markdown(result):
-    text='# 事件与研究问题\n\n'+result['conclusion']+'\n\n本次截止日：'+result['asOf']+'。样本范围：'+('有限公开回复案例，非完整事件核验' if result['sampleScope']=='limited-public-evidence-not-full-case-certification' else '声明输入，未自动认证')+'。\n\n'
+    text='# 事件与研究问题\n\n'+result['conclusion']+'\n\n本次截止日：'+result['asOf']+'。样本范围：'+{'limited-public-evidence-not-full-case-certification':'有限公开回复案例，非完整事件核验','limited-public-correction-evidence':'有限公开更正案例，未配对原版和修订全文'}.get(result['sampleScope'],'声明输入，未自动认证')+'。\n\n'
     for event in result['events']:
         ref=event['evidence'];state={'quote-found-on-page':'指定原页找到引句，未完成全文核验','declared-not-original-verified':'仅声明页码与引句，未核本地原件','quote-not-found':'原页未找到引句','pdf-component-missing':'缺原页读取组件'}.get(ref['pageVerification'],'原页未确认');text+='原页状态：'+state+'\n\n';text+='## '+LABELS[event['kind']]+'：'+event['summary']+'\n\n研究上要问：'+event['researchQuestion']+'\n\n仍不能判断：'+event['limitation']+'\n\n来源：'+ref['source']+'，物理页'+str(ref['physicalPage'])+'，披露日'+ref['publishedAt']+'。\n\n'
     return text+'方法版本：'+result['toolVersion']+' / '+result['inputSchema']+' / '+result['rulesVersion']+'。\n\n## 限制\n\n'+'\n'.join('- '+x for x in result['limitations'])
