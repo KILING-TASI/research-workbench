@@ -24,4 +24,11 @@ class Tests(unittest.TestCase):
    self.assertFalse(audit(z,p)['passed'])
    with zipfile.ZipFile(z,'w') as f:f.writestr('research-workbench/SKILL.md','skill');f.writestr('research-workbench/LICENSE','MIT License')
    self.assertTrue(audit(z,p)['passed'])
+ def test_disclaimer_required_in_package_when_present(self):
+  with tempfile.TemporaryDirectory() as t:
+   p=Path(t);(p/'SKILL.md').write_text('skill');(p/'DISCLAIMER.md').write_text('Research only');z=p/'a.zip'
+   with zipfile.ZipFile(z,'w') as f:f.writestr('research-workbench/SKILL.md','skill')
+   self.assertFalse(audit(z,p)['passed'])
+   with zipfile.ZipFile(z,'w') as f:f.writestr('research-workbench/SKILL.md','skill');f.writestr('research-workbench/DISCLAIMER.md','Research only')
+   self.assertTrue(audit(z,p)['passed'])
 if __name__=='__main__':unittest.main()
