@@ -6,7 +6,7 @@
       "repository": "cn-fund-lookthrough",
       "module": "cnlookthrough",
       "inputSchema": "cnlookthrough-nodes-v1",
-      "rulesVersion": "disclosed-paths-1",
+      "rulesVersion": "disclosed-paths-2",
       "optional": true,
       "bridgeAvailable": true,
       "defaultReplacement": false,
@@ -14,14 +14,19 @@
         "automatic issuer resolution",
         "leverage over 100%",
         "arbitrary PDF"
-      ]
+      ],
+      "compatibleRulesVersions": [
+        "disclosed-paths-1",
+        "disclosed-paths-2"
+      ],
+      "legacyInputPolicy": "absent schema retains legacy input; unknown explicit schema rejected; no silent migration"
     },
     {
       "id": "financial",
       "repository": "cn-financial-reconcile",
       "module": "cnreconcile",
       "inputSchema": "cnreconcile-pairs-v1",
-      "rulesVersion": "amount-dimensions-1",
+      "rulesVersion": "amount-dimensions-2",
       "optional": true,
       "bridgeAvailable": true,
       "defaultReplacement": false,
@@ -29,7 +34,12 @@
         "all financial statement extraction",
         "audit opinions",
         "automatic restatement priority"
-      ]
+      ],
+      "compatibleRulesVersions": [
+        "amount-dimensions-1",
+        "amount-dimensions-2"
+      ],
+      "legacyInputPolicy": "absent schema retains legacy input; unknown explicit schema rejected; no silent migration"
     },
     {
       "id": "fund-report-ruiyuan",
