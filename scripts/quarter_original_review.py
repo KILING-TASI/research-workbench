@@ -9,7 +9,11 @@ from company_report_batch import report_title_variants,report_identity_confirmed
 
 def method_versions():
  names=['quarter_original_review.py','company_financial_report.py','industry_financials.py','financial_source_binding.py','research_report_reading.py','company_report_batch.py']
- return {name:hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in names}
+ result={name:hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in names}
+ from specialist_loader import location,fingerprint
+ try:result['financialSpecialistMethods']=fingerprint(location('financial'))
+ except ValueError:result['financialSpecialistMethods']='not-installed; schema-1 unavailable, schema-2 not migrated'
+ return result
 
 def review(archive,metadata,period,reports):
  calculation=analyze_company(archive,metadata,period)

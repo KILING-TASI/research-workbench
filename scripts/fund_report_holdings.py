@@ -15,93 +15,20 @@ def number(s):
     return value
 
 def issuer_order_values(groups,values,declared,hk_scope):
-    """Validate the explicitly disclosed A/H ranking convention, not issuer identity."""
-    result=[];i=0
-    while i<len(groups):
-        group=groups[i]
-        if declared and hk_scope and len(group)==1 and i+1<len(groups) and len(groups[i+1])==1:
-            a,b=group[0],groups[i+1][0]
-            if a['cells'][2]==b['cells'][2] and sorted([len(a['cells'][1]),len(b['cells'][1])])==[5,6]:
-                if i+2<len(groups) and any(x['cells'][2]==a['cells'][2] for x in groups[i+2]):raise ValueError('A/H排序组超过明确双行，需复核')
-                pair=[a['cells'][1],b['cells'][1]]
-                a['issuerOrderPairCodes']=pair;b['issuerOrderPairCodes']=pair
-                result.append(values[i]+values[i+1]);i+=2;continue
-        result.append(values[i]);i+=1
-    return result
+    from specialist_loader import call
+    return call('lookthrough','report_adapter','issuer_order_values',groups,values,declared,hk_scope)
+
 
 def domestic_rows(doc):
-    rows=[];started=False;finished=False;segment='indexInvestment';sequences={}
-    hk_scope=any(re.search(r'(?m)^[78]\.2\.[23]\s*报告期末按行业分类的港股通投资股票投资组合\s*$',p.extract_text() or '') for p in doc.pages)
-    issuer_order_declared=any('对于同时在A+H股上市的股票，合并计算公允价值参与排序，并按照不同股票分别披露。' in clean(p.extract_text() or '') for p in doc.pages)
-    for page_no,page in enumerate(doc.pages,1):
-        text=page.extract_text() or '';normalized=clean(text)
-        if re.search(r'^(?:[78]\.3(?:\.[12])?\s*)?(?:报告)?期末按[^\n]*所有股票投资明细\s*$',text,re.M):
-            started=True
-            segment='indexInvestment' if '指数投资' in normalized else 'allEquity'
-        if not started or finished:continue
-        ends=page.search(r'(?m)^(?:[78]\.4\s*)?报告期内股票投资组合的重大变动\s*$')
-        end_top=ends[0]['top'] if ends else float('inf')
-        for table in page.find_tables():
-            if table.bbox[1]>=end_top:continue
-            for cells in table.extract():
-                c=[clean(x) for x in cells if clean(x)]
-                reported_code=c[1] if len(c)>1 else None
-                if hk_scope and len(c)==6 and re.fullmatch(r'H\d{5}',c[1]):c[1]=c[1][1:]
-                if len(c)!=6 or not c[0].isdigit() or not (re.fullmatch(r'\d{6}',c[1]) or hk_scope and re.fullmatch(r'\d{5}',c[1])):continue
-                rank=int(c[0])
-                if rank==1 and rows and rows[-1]["rank"]!=1:
-                    if segment!='indexInvestment' or 'activeInvestment' in sequences:raise ValueError('出现未知排名重置，不能合并股票表')
-                    segment='activeInvestment'
-                sequences.setdefault(segment,[]).append(rank)
-                rows.append({'rank':rank,'segment':segment,'cells':c,'reportedCode':reported_code,'pages':[page_no]})
-        if ends and rows:finished=True
-    if not started or not finished or not rows:raise ValueError('未找到完整7.3股票表至7.4边界')
-    for segment,ranks in sequences.items():
-        # Some reports use dense ranks for exactly equal fair values.
-        section=[r for r in rows if r['segment']==segment]
-        if ranks[0]!=1:raise ValueError(segment+'未从1开始')
-        groups=[]
-        for row in section:
-            if not groups or groups[-1][0]['rank']!=row['rank']:groups.append([row])
-            else:groups[-1].append(row)
-        ranked_values=[]
-        for group in groups:
-            amounts=[number(x['cells'][4]) for x in group]
-            if len(set(amounts))>1:
-                if not hk_scope or len(group)!=2 or sorted(len(x['cells'][1]) for x in group)!=[5,6]:raise ValueError(segment+'非等值共享序号缺少明确境内/港股双行结构')
-                ranked_values.append(sum(amounts,Decimal(0)))
-            else:ranked_values.append(amounts[0])
-        for before,after in zip(groups,groups[1:]):
-            delta=after[0]['rank']-before[0]['rank']
-            competition_tie=len(before)>1 and len({number(x['cells'][4]) for x in before})==1 and delta==len(before)
-            if delta!=1 and not competition_tie:raise ValueError(segment+'股票序号缺失或逆序')
-        ordered_values=issuer_order_values(groups,ranked_values,issuer_order_declared,hk_scope)
-        if any(b>a for a,b in zip(ordered_values,ordered_values[1:])):raise ValueError(segment+'权益公允价值排序逆序')
-    if 'indexInvestment' in sequences and 'activeInvestment' not in sequences:raise ValueError('指数/积极双表未完整取得')
-    return rows,sequences
+    from specialist_loader import call
+    return call('lookthrough','report_adapter','legacy_domestic_rows',doc)
+
 
 def domestic_result(doc,raw,code,report_date,published_at,source_url,net_assets,equity_value):
-    rows,sequences=domestic_rows(doc);total=sum((number(r['cells'][4]) for r in rows),Decimal(0))
-    if total!=equity_value:raise ValueError(f'权益市值合计不一致：{total} vs {equity_value}')
-    merged={};segments={}
-    for r in rows:
-        c=r['cells'];mv=number(c[4]);weight=mv/net_assets;shown=number(c[5]);qty=number(c[3])
-        if mv<0 or qty<0 or qty!=qty.to_integral_value():raise ValueError('市值/股数不合法')
-        if abs(weight*100-shown)>Decimal('.00501'):raise ValueError(c[1]+'权重与金额分母不匹配')
-        segments[r['segment']]=segments.get(r['segment'],Decimal(0))+mv
-        component={'reportedCode':r.get('reportedCode',c[1]),'segment':r['segment'],'rank':r['rank'],'quantity':int(qty),'marketValueCNY':float(mv),'reportedWeightPct':float(shown),'locator':'PDF页'+str(r['pages'][0])}
-        if r.get('issuerOrderPairCodes'):component['issuerOrderPairCodes']=r['issuerOrderPairCodes'];component['rankingBasis']='报告明示A/H合并公允价值排序，证券仍分列；非全市场发行人身份认证'
-        if c[1] not in merged:merged[c[1]]={'code':c[1],'name':c[2],'market':'HK-exchange-unresolved' if len(c[1])==5 else 'CN-exchange-unresolved','securityNamespace':'HK-equity' if len(c[1])==5 else 'CN-equity','shareClass':'ordinary','industry':'','components':[],'amount':Decimal(0),'quantity':0}
-        h=merged[c[1]]
-        if h['name']!=c[2]:raise ValueError('同代码跨表名称冲突')
-        if any(x['segment']==r['segment'] for x in h['components']):raise ValueError('同表股票代码重复')
-        h['components'].append(component);h['amount']+=mv;h['quantity']+=int(qty)
-    holdings=[]
-    for h in merged.values():
-        amount=h.pop('amount');h.update({'weight':float(amount/net_assets),'marketValueCNY':float(amount),'locator':'；'.join(x['locator'] for x in h['components'])});holdings.append(h)
-    holdings.sort(key=lambda h:-h['weight'])
-    rank_ties=[{'segment':x['segment'],'rank':x['rank'],'codes':[p['cells'][1],x['cells'][1]],'marketValueCNY':float(number(x['cells'][4])) if number(p['cells'][4])==number(x['cells'][4]) else None,'valuesCNY':[float(number(p['cells'][4])),float(number(x['cells'][4]))],'basis':'equal-values' if number(p['cells'][4])==number(x['cells'][4]) else 'reported-shared-rank-distinct-securities','locator':'PDF页'+str(x['pages'][0])} for p,x in zip(rows,rows[1:]) if p['segment']==x['segment'] and p['rank']==x['rank']]
-    return {'id':code,'allocation':1,'currency':'CNY','reportDate':report_date,'publishedAt':published_at,'sourceUrl':source_url,'locator':'中报§7.3/年报§8.3全部股票表；金额为人民币','disclosureScope':'completeEquity','equityWeight':float(equity_value/net_assets),'netAssetsCNY':float(net_assets),'equityMarketValueCNY':float(equity_value),'holdings':holdings,'rawRowCount':len(rows),'segments':{k:{'rows':len(sequences[k]),'marketValueCNY':float(v)} for k,v in segments.items()},'rankTies':rank_ties,'portfolioScope':'fund-all-share-classes','sourceSha256':hashlib.sha256(raw).hexdigest(),'parserVersion':'complete-equity-9','verification':'逐行权重、各表序号、跨表合并与总市值逐分勾稽通过；报告身份/日期/分母仍需原文核验','limitations':['持仓分母为基金全部份额合计净资产，不是某份额类净资产','市场命名空间依据原文股票代码及明确港股通章节区分；具体交易所尚未核验，不猜板块','非股票资产未穿透；不是实时持仓或交易流水','行业未分类，不输出行业集中度结论']}
+    from specialist_loader import call
+    return call('lookthrough','report_adapter','legacy_domestic_result',doc,raw,code,report_date,published_at,source_url,net_assets,equity_value)
+
+
 def independent_ruiyuan(pdf,code,report_date,published_at,source_url,net_assets,equity_value,project_dir):
     import os,sys,subprocess,tempfile
     if code!='007119':raise ValueError('独立首版仅支持007119；其他产品请省略adapter-project-dir沿用内置入口')

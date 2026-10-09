@@ -20,10 +20,34 @@ jobs:
       PYTHONIOENCODING: utf-8
       PYTHONUTF8: '1'
       PYTHONDONTWRITEBYTECODE: '1'
+      RESEARCH_WORKBENCH_LOOKTHROUGH_DIR: ${{ github.workspace }}/_specialists/lookthrough
+      RESEARCH_WORKBENCH_FINANCIAL_DIR: ${{ github.workspace }}/_specialists/financial
+      RESEARCH_WORKBENCH_PORTFOLIO_DIR: ${{ github.workspace }}/_specialists/portfolio
     steps:
       - name: Check out code
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          persist-credentials: false
+      - name: Check out pinned specialist cn-fund-lookthrough
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: KILING-TASI/cn-fund-lookthrough
+          ref: 71655554c897e15e3a7d765b8404321ba70c4dc8
+          path: _specialists/lookthrough
+          persist-credentials: false
+      - name: Check out pinned specialist cn-financial-reconcile
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: KILING-TASI/cn-financial-reconcile
+          ref: adcf6cc9036dfa0c32b4ab115914cd80f2589492
+          path: _specialists/financial
+          persist-credentials: false
+      - name: Check out pinned specialist portfolio-decision-engine
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: KILING-TASI/portfolio-decision-engine
+          ref: 5465f940c3ee111cec9c150ce3f60ece27b2b2be
+          path: _specialists/portfolio
           persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5

@@ -40,3 +40,22 @@
 [有界原生接口](bounded-native-bridges.md)已联调，原入口保留。第二管理人/分红/双版原文算法与真实样本由各独立仓维护；主包只导航和薄调用。MarketLens归市场叙事证据，宏观看板归宏观观察、规则库归规则版本。新仓未集成，不替换ETF份额观察或事件台账。
 
 后续减重候选：旧持仓解析与独立适配器的重复代码；单位/选定财报核验的重复实现；组合/北交/转债有限交集的旧计算包装。先证迁移兼容再处理，未证等价不得删除；不把候选清单自动变成长任务。
+
+
+## 第一批实际去重（2026-10-10，独立于上批结案）
+
+主包仅兼容转发，以下重复核心已从主包函数中移除：
+
+|旧调用名|专业归属|兼容与暂未迁移|
+|---|---|---|
+|fund_report_holdings.issuer_order_values/domestic_rows/domestic_result|cnlookthrough.report_adapter；legacy投影只省略新增定位字段，共用一份六列核心|旧形状完整保留；九列QDII、FOF/行业/利润等其他解析暂未迁移|
+|verify_original.verify 的缺省/schema1分支|cnreconcile.original_compat.verify；搬迁旧行列/身份/日期核验|旧结果与错误消息保持；schema2仍调用original_layouts，明确暂未迁移；不是全部财务模型/三表迁移|
+|portfolio_cashflow_review.calculate|portfolio_engine.observed_review.review；原观察流与150次二分XIRR搬迁|旧返回键/状态/ledger/单位/声明币种/数值字符串不变；publish/找回/综合解释留主包；fund_dca及industry_exit的独立XIRR暂未迁移|
+
+选择方式是同进程受控独立命名空间：显式可信项目目录或已安装专业包，不是PYTHON隔离子进程。本批不使用/不承诺PORTFOLIO_PYTHON变量。通过文件SHA检查调用前后方法，保留旧Python对象/字段类型；不复制新算法回主包。
+
+用户先安装支持本迁移接口的专业版本，或设置 RESEARCH_WORKBENCH_LOOKTHROUGH_DIR / RESEARCH_WORKBENCH_FINANCIAL_DIR / RESEARCH_WORKBENCH_PORTFOLIO_DIR。不自动下载、安装或搜私人目录；缺包/接口清晰不可用，不能静默回重复算法。已发布专业v0.1.0尚不含这些新增兼容入口；使用当前待审源码或本地构建wheel，未发布新版。CI显式检出固定专业提交是测试设置，不是运行时安装。
+
+六列原文132行与迁移前完整对象相等；schema1真实原页净资产字段完整对象相等；组合15正例/11失败及根上下边界由独立任务全对象/错误消息验证。跨平台仅XIRR按Gross growth factor 8ULP比较，其他字段精确；不是放宽全部数字。已有广泛回归继续通过。
+
+公司经营/估值判断、基金综合评价、问询解释、跨资产研究、报告/找回仍主包。北交/可转债/宏观只保留已有可选接入，本批不删旧模型。穿透旧格式计算、复杂财报版式/分项核算及未证整链继续列暂未迁移，不宣称全部去重。

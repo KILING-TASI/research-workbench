@@ -1,9 +1,7 @@
 """Observed account valuation/flow review; not an execution or allocation engine."""
 import argparse,json,math
 from decimal import Decimal
-from collections import defaultdict
 from pathlib import Path
-from fund_dca import xirr
 from collection_validation import unique_pairs,reject_constant,finite_json_float
 from research_brief_html import render
 
@@ -14,40 +12,19 @@ def number(value):
     if not math.isfinite(result):raise ValueError('金额须为有限数字')
     return result
 
-def calculate(spec):
-    from datetime import date
-    if not isinstance(spec,dict) or spec.get('cashFlowCoverage')!='declared-complete':raise ValueError('需要声明本区间外部现金流完整；未知不能按零处理')
-    if not isinstance(spec.get('basis'),str) or not spec['basis'].strip():raise ValueError('请提供账户估值与现金流的依据')
-    if not isinstance(spec.get('currency'),str) or len(spec['currency'])!=3 or not spec['currency'].isalpha() or not spec['currency'].isupper():raise ValueError('需要三位大写币种声明，不能假定人民币')
-    if spec.get('amountUnit') not in ('base','thousand','million'):raise ValueError('金额单位须明确为base、thousand或million；不自动缩放')
-    label=spec.get('accountLabel')
-    if label is not None and (not isinstance(label,str) or not label.strip() or len(label)>100 or '\n' in label or '\r' in label):raise ValueError('账户研究名称须为1至100字单行文字，不必提供真实账号')
-    unit_scale={'base':1,'thousand':1000,'million':1000000}[spec['amountUnit']]
-    rows=spec.get('observations')
-    if not isinstance(rows,list) or not 2<=len(rows)<=20000:raise ValueError('需要2至20000条流入前后估值记录')
-    ledger=[];previous=None;product=1.;flows=defaultdict(float);external=0.
-    for row in rows:
-        if not isinstance(row,dict):raise ValueError('估值记录须为对象')
-        day=row['date'];date.fromisoformat(day)
-        if date.fromisoformat(day).isoformat()!=day or (previous and day<=previous['date']):raise ValueError('日期须唯一、严格递增且为YYYY-MM-DD')
-        before=number(row['beforeFlowValue']);flow=number(row['externalFlow']);after=number(row['afterFlowValue'])
-        tolerance=max(.01/unit_scale,math.ulp(max(abs(before),abs(after),abs(flow)))*8)
-        if before<0 or after<0 or abs(after-before-flow)>tolerance:raise ValueError('外部现金流前后估值不勾稽；交易成本不得伪装成外部出入金')
-        period=None
-        if previous:
-            if previous['afterFlowValue']<=0:raise ValueError('前次出入金后资产为零，不能拼接时间加权收益')
-            period=before/previous['afterFlowValue']-1;product*=1+period
-        else:flows[day]-=before
-        flows[day]-=flow;external+=flow
-        previous={'date':day,'beforeFlowValue':before,'externalFlow':flow,'afterFlowValue':after,'periodReturnPct':None if period is None else period*100}
-        ledger.append(previous)
-    flows[ledger[-1]['date']]+=ledger[-1]['afterFlowValue']
-    ordered=[(day,value) for day,value in sorted(flows.items()) if value]
-    signs=[1 if value>0 else -1 for _,value in ordered];changes=sum(a!=b for a,b in zip(signs,signs[1:]))
-    rate=xirr(ordered) if changes==1 and signs[0]<0 and signs[-1]>0 else None
-    twr=(product-1)*100
-    if not math.isfinite(twr):raise ValueError('时间加权收益超出支持数值范围')
-    return {'type':'portfolio-observed-cashflow-review','start':ledger[0]['date'],'end':ledger[-1]['date'],'twrPct':twr,'xirrPct':rate,'xirrStatus':'calculated-conventional-flows' if rate is not None else 'unresolved-or-nonconventional-flows','netExternalFlow':external,'openingValue':ledger[0]['beforeFlowValue'],'endingValue':ledger[-1]['afterFlowValue'],'profit':ledger[-1]['afterFlowValue']-ledger[0]['beforeFlowValue']-external,'ledger':ledger,'basis':spec['basis']}
+def calculate(spec,engine_project_dir=None):
+    from specialist_loader import call
+    envelope={'schema':'workbench-observed-review-input-v1',
+              'requested_method_version':'observed-review-workbench-bisection-v1',
+              'valuation_timing':'before-and-after-external-flow',
+              'fee_basis':'included-in-observed-values',
+              'frozen_basis':'included-in-total-value-not-available-cash',
+              'settlement_basis':'observed-values-not-guaranteed-receipts',
+              'payload':spec}
+    response=call('portfolio','observed_review','review',envelope,project_dir=engine_project_dir)
+    if response.get('method_version')!='observed-review-workbench-bisection-v1':
+        raise ValueError('观察收益迁移方法不匹配，未替代旧语义')
+    return response['result']
 
 def publish(spec,out):
     from datetime import datetime,timezone
@@ -81,6 +58,10 @@ def publish(spec,out):
     for name,text in files.items():(out/name).write_text(text,'utf-8')
     (out/'research-request.json').write_text(json.dumps({'command':'cashflow','start':result['start'],'asOf':result['end'],'names':[result['accountLabel']] if result.get('accountLabel') else []},ensure_ascii=False,indent=2),'utf-8')
     files['research-request.json']=None
+    from specialist_loader import LAST_PROVENANCE
+    contract={'method':'observed-review-workbench-bisection-v1','provider':LAST_PROVENANCE.get('portfolio')}
+    (out/'engine-contract.json').write_text(json.dumps(contract,ensure_ascii=False,indent=2),'utf-8')
+    files['engine-contract.json']=None
     (out/'report-manifest.json').write_text(json.dumps({'files':{name:None for name in files},'primaryReport':'组合出入金与收益观察.html','savedAt':datetime.now(timezone.utc).isoformat()},ensure_ascii=False,indent=2),'utf-8')
     return result
 

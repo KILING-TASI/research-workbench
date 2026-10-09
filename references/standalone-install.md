@@ -76,3 +76,8 @@ Excel相关组件单独检查：xlrd用于申万股票行业历史XLS原表，op
 2026-10-08，[独立运行37785852969](https://github.com/KILING-TASI/research-workbench/actions/runs/37785852969)在Ubuntu/Windows和Python3.11/3.12四组均成功，每组实际2053项主包测试通过，另有三个禁用site-packages的教学入口成功。声明依赖按已测试约束安装；不携带专有导出组件或作者数据。首次Windows运行的3项路径断言失败已保留，修正短路径/规范路径比较后复验通过。
 
 该结果对应提交658395355b2b46c1f683f086ce38b691af00c61c。流程仅拉取请求及手动事件触发，无定时设置；后续代码变化须重新运行，不能沿用此状态。上述检查不代表联网数据稳定、全部专题资源、视觉或经济判断全部通过。
+
+
+## 待审去重路径的专业依赖
+
+基础比较demo仍标准库可运行。六列持仓、schema1原页字段、观察出入金的计算已迁入专业仓：cn-fund-lookthrough、cn-financial-reconcile、portfolio-decision-engine。安装支持当前兼容入口的专业包，或给可信源码目录设置RESEARCH_WORKBENCH_LOOKTHROUGH_DIR、RESEARCH_WORKBENCH_FINANCIAL_DIR、RESEARCH_WORKBENCH_PORTFOLIO_DIR。不是后台安装；旧v0.1.0发布包不包含新增兼容接口时会报明确不可用。报告和综合判断仍在主包；schema2/九列QDII/定投等未迁移路径见归属说明，不视为全部独立化。

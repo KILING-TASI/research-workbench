@@ -132,3 +132,6 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 
 
 当前待审增量的实现、真实样本、版本与未完成项见[详细交付状态](references/development-validation.md)；CI不代表原件认证或投资有效，不自动更新已安装版。
+
+
+本批实际迁移的六列解析、schema1原页字段核验和观察收益需支持兼容接口的独立专业工具；缺失时明确不可用，不回到重复算法。[去重与依赖范围](references/engine-ownership-and-migration.md)。主包报告/判断与未证流程保留。
