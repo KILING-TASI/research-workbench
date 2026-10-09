@@ -35,7 +35,7 @@ description: 用户要研究公司、基金、ETF或其他投资标的，比较�
 
 公告、合同、研报精读与事实核验共用[资料与事件](references/announcements-events.md)；笔记、快照、版本对比与导出共用[研究档案](references/archives-reports.md)。两者贯穿研究，不另设重复取数流程。
 
-已安装独立持仓穿透或财报字段核对工具时，按[独立工具衔接](references/independent-engines.md)明确接口后调用；未安装继续主包流程，不自动下载或把两个输入格式混用。
+已安装独立持仓穿透或财报字段核对工具时，按[独立工具衔接](references/independent-engines.md)明确接口后调用；六列持仓、schema1原页核验和观察账户收益已迁移，缺对应兼容专业包时明确该路径不可用；其他未迁移流程按实际依赖继续。不自动下载或把两个输入格式混用。
 
 “我的组合有什么问题”“消息影响我的持仓吗”“原先逻辑还成立吗”，读[日常研究入口](references/retail-entry-points.md)。单主体深研或一页纸读[报告类型](references/deep-research-profiles.md)，不把报告模板当成完整数据能力。深度报告与一页纸是交付形式，不是额外模块。
 

@@ -20,7 +20,7 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 
 说明版本：1.93 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
 
-持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill仅按需衔接，不强制安装或自动下载，详见[接口与范围](references/independent-engines.md)。
+持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill基础教学可独立运行；已迁移的六列持仓、schema1原页核验和观察账户收益需对应兼容专业包，不自动安装或下载，详见[接口与范围](references/independent-engines.md)。
 
 面向个人与买方研究的多资产投研助手，提供可追溯的资料、分析与研究报告。
 
@@ -32,7 +32,7 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 
 入口按四类问题组织：研究一只标的、比较产品、诊断组合、找回报告继续研究。先识别问题，再按公司、基金、ETF等对象选择方法，工作台不是使用前提。
 
-本批已实现：问询回复显式逐项关联与本地页缓存；独立工具契约记录；限定基金PDF显式适配桥。REITs估值与机构预测留档目前只有设计，不能作为可执行能力调用。实现与有限样本见[本批验证](references/development-validation.md)。
+本批已实现：问询回复显式逐项关联与本地页缓存；独立工具契约记录；限定基金PDF显式适配桥。REITs完整估值仍是设计；离线机构预测观察档案已实现，但不代表一致预期数据库或预测准确率验收。实现与有限样本见[本批验证](references/development-validation.md)。
 
 ## 第一次使用
 

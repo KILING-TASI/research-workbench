@@ -81,3 +81,11 @@ Excel相关组件单独检查：xlrd用于申万股票行业历史XLS原表，op
 ## 待审去重路径的专业依赖
 
 基础比较demo仍标准库可运行。六列持仓、schema1原页字段、观察出入金的计算已迁入专业仓：cn-fund-lookthrough、cn-financial-reconcile、portfolio-decision-engine。安装支持当前兼容入口的专业包，或给可信源码目录设置RESEARCH_WORKBENCH_LOOKTHROUGH_DIR、RESEARCH_WORKBENCH_FINANCIAL_DIR、RESEARCH_WORKBENCH_PORTFOLIO_DIR。不是后台安装；旧v0.1.0发布包不包含新增兼容接口时会报明确不可用。报告和综合判断仍在主包；schema2/九列QDII/定投等未迁移路径见归属说明，不视为全部独立化。
+
+## 当前迁移依赖
+
+基础离线教学不需要其他自家仓库。六列完整股票表依赖兼容 cn-fund-lookthrough，schema1原页字段核验依赖兼容 cn-financial-reconcile，观察账户收益依赖兼容 portfolio-decision-engine。缺包清晰不可用，不静默改用重复算法。已发布专业v0.1.0不含这些新兼容接口，不能用旧包替代当前待审源码或构建wheel。PDF第三方组件与专业包是不同依赖：装pdfplumber不等于装了专业工具。
+
+## 2026-10-10 单仓实际验收
+
+当前待审源码经git归档，在新目录、新venv和空用户缓存环境完成README最短教学HTML/Markdown/JSON交付，并拒绝已存在输出。Skill包877文件、根SKILL及直接参考/资源已核对，无PDF；CLI结果不代表自然语言安装发现或视觉通过。第三方PDF组件按声明单独安装后，实际调用六列、schema1和观察收益三路径均提示缺兼容专业包，不安装其他自家仓库来掩盖不可用。结论为基础教学独立通过、迁移场景单仓不可用。源模块仅来自隔离导出目录/该venv/运行时标准库，不读取作者工作区；宿主仍有其他仓，不是新OS。远端新增Single repository installation仅检出本仓。已发布beta.6未另验。
