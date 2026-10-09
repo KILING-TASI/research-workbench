@@ -159,9 +159,17 @@ def run(engine, project_dir, input_path, out_dir, engine_python=None, timeout=60
                 query = selection.get('query', {})
                 body += '## ' + row.get('entity_name', row['record_id']) + '\n\n' + labels.get(selection.get('status'), str(selection.get('status', 'unknown'))) + '。规则标识：' + str(selection.get('rule_version_id') or '未知') + '。\n\n'
                 body += '适用日期：' + str(query.get('applicability_date') or '未知') + '；知识截止日期：' + str(query.get('knowledge_date') or '未知') + '。两个日期不同，当前回溯判断不能冒充当时已知结果。\n\n'
+                body += '适用对象：市场' + str(query.get('market') or '未知') + '，板块' + str(query.get('board') or '未知') + '，主体' + str(query.get('subject') or '未知') + '，资产类型' + str(query.get('asset_type') or '未知') + '。\n\n'
+                body += '版本公布：' + str(selection.get('published_at') or '未知') + '；有效区间：' + str(selection.get('effective_from') or '未知') + '至' + str(selection.get('effective_until') or '未给定终止日（不推定永久有效）') + '。\n\n'
+                body += '适用范围：' + str(selection.get('scope') or '未知') + '；选版限制：' + str(selection.get('reason') or '未知') + '。\n\n'
+                evidence = selection.get('evidence') or {}
+                body += '版本依据：' + str(evidence.get('source_id') or '未知来源') + '，定位' + str(evidence.get('locator') or '未知位置') + '。\n\n'
                 body += '项目层核对：' + ('仅完成部分核对' if original.get('rule_check_status') == 'partial' else '未知或尚有缺口') + '；不据此认定实际可执行。原始状态：' + str(original.get('rule_check_status', 'unknown')) + '。\n\n'
                 for fact in row.get('facts', []):
                     body += fact['key'] + '：' + ('未知' if fact.get('value') is None else str(fact['value'])) + '；证据状态' + str(fact.get('status')) + '；' + str(fact.get('reason', '')) + '\n\n'
+                    evidence = fact.get('evidence') or {}
+                    if evidence:
+                        body += '事实依据：' + str(evidence.get('source_id') or '未知来源') + '，定位' + str(evidence.get('locator') or '未知位置') + '。\n\n'
             for source_record in response.get('sources', []):
                 body += '来源：' + str(source_record.get('url')) + '；等级' + str(source_record.get('source_tier')) + '；日期' + json.dumps(source_record.get('dates'), ensure_ascii=False) + '；核验' + json.dumps(source_record.get('verification'), ensure_ascii=False) + '\n\n'
             (destination / '规则观察.md').write_text(body, encoding='utf-8')
