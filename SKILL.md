@@ -40,7 +40,7 @@ description: 用户要研究公司、基金、ETF或其他投资标的，比较�
 “我的组合有什么问题”“消息影响我的持仓吗”“原先逻辑还成立吗”，读[日常研究入口](references/retail-entry-points.md)。单主体深研或一页纸读[报告类型](references/deep-research-profiles.md)，不把报告模板当成完整数据能力。深度报告与一页纸是交付形式，不是额外模块。
 
 
-问询函与回复逐项研究按[问询专题](references/inquiry-research.md)处理；首批仅小样本关联与原页核对，不给统一风险评分。REITs按[经营与估值首版设计](references/reits-operating-research.md)确认产权/特许经营类型，该专题尚未实现完整估值。机构预测与实际财报分开，历史留档路线见[预测档案](references/forecast-history-archive.md)。
+问询、处罚、审计意见和更正的限定关联按[事件关联](references/event-association.md)处理；只有选定回复案例验证，不据标签作法律定性。问询函与回复逐项研究按[问询专题](references/inquiry-research.md)处理；首批仅小样本关联与原页核对，不给统一风险评分。REITs按[经营与估值首版设计](references/reits-operating-research.md)确认产权/特许经营类型，该专题尚未实现完整估值。机构预测与实际财报分开，历史留档路线见[预测档案](references/forecast-history-archive.md)。
 
 ## 连贯完成研究
 
