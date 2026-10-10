@@ -80,3 +80,9 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 失败时保留成功部分，说明缺什么、影响哪个判断、接下来如何补齐；具体降级路径见[执行前提与失败输出](references/execution-contract.md)。不要用教学数据替代真实标的，也不要让用户填写技术JSON。
 
 方法、公式与参数按需查[方法索引](references/capability-reference-index.md)，专题命令见[专用脚本](references/integrated-topics.md)。功能范围见[功能说明](references/current-capabilities.md)，实际验证范围见[当前案例范围](references/acceptance-current.md)；安装依赖见[安装说明](references/standalone-install.md)，原文附件分享见[许可说明](references/third-party-notices.md)。
+
+## 用问题开场，给出有限答案
+
+“两只沪深300 ETF 是不是重复”：先解释共同指数方向，再取得披露计算已知重合，未披露比例保留。“营业收入为何有两个数”：先核对字段定义、期间和单位，解释营业收入与营业总收入可能不是同一字段；没有原文时只能说明这个可能，不能认定差额原因。“这只转债风险在哪”：先解释已知现金流与条款，再补报价、曲线或公告链。“组合现金够不够”：先按已给金额和明确日期核对，不强制用户先提供收益历史。
+
+不要求用户命中 CLI 固定句式；脚本 unsupported 是入口能力限制，由助手选择现有专题继续回答能支持的部分。离线名称无法唯一定位时优先使用用户已给代码或本地目录，确有歧义才问身份；不能把模型记忆当作当前证券目录。首次回答按“已能回答的部分、关键依据、仍缺什么及影响、补齐方法”组织，避免用错误状态代替结论。专业仓独立 Skill 可直接使用，本工作台不是其安装前提。
