@@ -2,10 +2,35 @@
 
 研究公司、比较基金和 ETF、检查持仓组合，把关键判断和数据来源一起留下来。
 
+## 你可以用它解决什么
+
+**这两只基金有什么差异？利润增长有没有现金支持？上次的报告还能接着问吗？**
+
+按已有资料组织比较和判断，说明来源、研究区间与缺口。
+
+先看[保存的结果示例](references/examples/readme-preview.html)，不需要安装 Python：图片可直接查看；HTML 请下载完整源码后用浏览器打开。示例按原记录标注教学或限定真实样本，不能换个名称就当作你的研究结果。重新计算才需要 Python。
+
+其他问题可看[九个工具如何选择](https://github.com/KILING-TASI/research-workbench/blob/main/references/tool-navigation.md)。各工具可独立使用，不必安装全部仓库。
+
 [![原创代码 MIT](https://img.shields.io/badge/%E5%8E%9F%E5%88%9B%E4%BB%A3%E7%A0%81-MIT-green)](LICENSE)
 [![运行检查](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml)
 
 当前版本：[v0.1.0-beta.14](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.14)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+
+## 按问题选择独立工具
+
+| 你想核对什么 | 工具 |
+|---|---|
+| 基金底层公司是否重叠 | [cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough) |
+| 财报金额与口径是否一致 | [cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile) |
+| 组合敞口、配置情景与现金占用 | [portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine) |
+| 北交所比例获配情景 | [bjx-ipo-engine](https://github.com/KILING-TASI/bjx-ipo-engine) |
+| 转债现金流、收益率与条款 | [convertible-bond-engine](https://github.com/KILING-TASI/convertible-bond-engine) |
+| 规则版本与公告适用条件 | [cn-market-rules](https://github.com/KILING-TASI/cn-market-rules) |
+| 宏观指标、来源与缺口 | [macro-dashboard-engine](https://github.com/KILING-TASI/macro-dashboard-engine) |
+| 市场消息与执行证据 | [marketlens](https://github.com/KILING-TASI/marketlens) |
+
+各工具独立发布。导航不代表工作台已自动集成全部功能；具体接口范围见[衔接说明](references/tool-navigation.md)。
 
 ## 先看一份教学报告
 
@@ -15,9 +40,9 @@
 
 ## 安装和首次试用
 
-本轮对应[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.14)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+安装包见[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.14)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-本轮源码版本为 `0.1.0-beta.14`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+安装包版本为 `0.1.0-beta.14`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
@@ -26,7 +51,7 @@ python -m venv .venv
 .\.venv\Scripts\research-workbench.exe demo --out-dir reports/demo --auto-name
 ```
 
-工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/research-workbench`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`research-workbench run --help` 查看原生参数，原来的命令继续兼容。其他专题可用 `research-workbench script --help` 查看入口，以脚本名调用，不需要记住源码路径。pip 安装提供 CLI；作为 Skill 使用仍须保留完整源码及许可资源，不能只复制 SKILL.md。安装可能需要联网获取普通构建依赖；教学离线。下面保留原生入口及此前发行记录，本轮安装和版本以本节为准。
+工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/research-workbench`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`research-workbench run --help` 查看原生参数，原来的命令继续兼容。其他专题可用 `research-workbench script --help` 查看入口，以脚本名调用，不需要记住源码路径。pip 安装提供 CLI；作为 Skill 使用仍须保留完整源码及许可资源，不能只复制 SKILL.md。安装可能需要联网获取普通构建依赖；教学离线。下面保留原生入口及此前发行记录，安装步骤和对应版本以本节为准。
 
 ## 先试一次
 
@@ -89,7 +114,7 @@ research-workbench/
 
 配置矩阵、部分 Excel 和 JavaScript 入口有各自依赖，不必为了试用一次就全部安装。普通组件、可选 PDF 组件和自家专业包是三类不同前提；安装了 PDF 组件不等于安装了专业工具。
 
-历史beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`，这三版均已上线；这不是本轮兼容结论。[当前兼容矩阵](references/compatibility.md)区分已测接口、软件版本和未认证范围。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI，也不把旧版默默当成兼容替代。
+历史beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`，这三版均已上线；这不是当前版本的兼容结论。[当前兼容矩阵](references/compatibility.md)区分已测接口、软件版本和未认证范围。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI，也不把旧版默默当成兼容替代。
 
 [持仓工具 Release](https://github.com/KILING-TASI/cn-fund-lookthrough/releases) · [财报工具 Release](https://github.com/KILING-TASI/cn-financial-reconcile/releases) · [组合工具 Release](https://github.com/KILING-TASI/portfolio-decision-engine/releases)。安装后检查例子见下文；本程序不自动下载或安装。
 
@@ -117,7 +142,7 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 
 下载旧压缩包或使用旧安装，不会自动得到这些新增内容。专业工具也要使用支持对应接口的版本，不能默认用旧包替代。[功能归属与依赖](references/engine-ownership-and-migration.md)列出已经转交的计算和仍留在主包的部分。
 
-解压安装包得到完整的 `research-workbench` 目录；命令行试用可在该目录运行，安装 Skill 则按所用 AI 工具的规则放入 Skill 目录。不要覆盖自己保存的研究资料，安装步骤见[安装说明](references/standalone-install.md)。旧 beta.7 只交付 Skill 源码 ZIP；本轮新增 pyproject 与 wheel/sdist，完整 Skill 源码仍单独提供。资产保留构建时的说明，发布状态以本页和 Release 页为准；更新本页不重打旧标签或安装包。
+解压安装包得到完整的 `research-workbench` 目录；命令行试用可在该目录运行，安装 Skill 则按所用 AI 工具的规则放入 Skill 目录。不要覆盖自己保存的研究资料，安装步骤见[安装说明](references/standalone-install.md)。旧 beta.7 只交付 Skill 源码 ZIP；已新增 pyproject 与 wheel/sdist，完整 Skill 源码仍单独提供。资产保留构建时的说明，发布状态以本页和 Release 页为准；更新本页不重打旧标签或安装包。
 
 ## 验证、许可与使用边界
 
@@ -131,6 +156,6 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 
 当前公告路由只支持单家A股、近一或三个月，并非任意自然语言解析器。可以说“查询招商银行近三个月的公告”或“查看600036近一个月的公告”。输入JSON也可明确填写 `code` 或 `query`，并提供 `asOf`。名称无法唯一确认、日期冲突或超出支持范围时，先澄清，不猜测代码或忽略条件。
 
-## 本轮验证范围
+## 验证范围
 
 源码教学启动、软件环境查询和安装后教学入口分别验证；软件就绪不等于真实资料已取得。中文问答需要助手按本仓Skill准备已声明输入，没有宣称任意自然语言自动发现或全市场数据闭环。旧报告、历史tag与案例证据保留。
