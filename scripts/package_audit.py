@@ -2,11 +2,11 @@
 import argparse,hashlib,json,zipfile
 from pathlib import Path
 ROOT='research-workbench/'
-ALLOWED=('SKILL.md','README.md','BEGINNER.md','try_demo.py','Start-Demo.cmd','Start-Demo.sh','DISCLAIMER.md','THIRD_PARTY_NOTICES.md','LICENSE','agents/','references/','scripts/','modules/')
+ALLOWED=('SKILL.md','README.md','BEGINNER.md','try_demo.py','Start-Demo.cmd','Start-Demo.sh','pyproject.toml','setup.py','_build_skill.py','MANIFEST.in','research_workbench/','DISCLAIMER.md','THIRD_PARTY_NOTICES.md','LICENSE','agents/','references/','scripts/','modules/')
 RESOURCE_SUFFIXES={'.py','.js','.cjs','.mjs','.md','.json','.txt','.csv','.html','.css','.yaml','.yml'}
 
 def allowed(rel):
- return (rel in {'LICENSE','Start-Demo.cmd','Start-Demo.sh'} or Path(rel).suffix.lower() in RESOURCE_SUFFIXES) and any(rel.startswith(x) if x.endswith('/') else rel==x for x in ALLOWED)
+ return (rel in {'LICENSE','Start-Demo.cmd','Start-Demo.sh','pyproject.toml','MANIFEST.in'} or Path(rel).suffix.lower() in RESOURCE_SUFFIXES) and any(rel.startswith(x) if x.endswith('/') else rel==x for x in ALLOWED)
 
 def source_file(source,path):
  source=Path(source).resolve();path=Path(path)
