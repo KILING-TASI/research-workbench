@@ -14,12 +14,12 @@
 
 2026-10-11 实际打开的历史教学页面；只完成该页面桌面显示检查，未认证全部报告或窄屏。[本次截图记录](references/examples/readme-preview-browser.json)
 
-其他问题可看[十二个工具如何选择](https://github.com/KILING-TASI/research-workbench/blob/main/references/tool-navigation.md)。各工具可独立使用，不必安装全部仓库。
+其他问题可看[按问题选择工具](https://github.com/KILING-TASI/research-workbench/blob/main/references/tool-navigation.md)。各工具可独立使用，不必安装全部仓库。
 
 [![原创代码 MIT](https://img.shields.io/badge/%E5%8E%9F%E5%88%9B%E4%BB%A3%E7%A0%81-MIT-green)](LICENSE)
 [![运行检查](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml)
 
-当前版本：[v0.1.0-beta.16](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.16)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+当前版本：[v0.1.0-beta.17](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.17)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
 
 ## 看几个历史研究案例
 
@@ -42,7 +42,7 @@
 |---|---|
 | REITs经营、扩募与份额估值 | [cn-reits-research](https://github.com/KILING-TASI/cn-reits-research) |
 | 净值与宏观微观资料格式和重放 | [cn-data-adapters](https://github.com/KILING-TASI/cn-data-adapters) |
-| 资料身份、单位与时点的格式校验 | [cn-research-contracts](https://github.com/KILING-TASI/cn-research-contracts) |
+| ETF相对强弱、轮动规则与固定池历史情景 | [cn-etf-rotation-engine](https://github.com/KILING-TASI/cn-etf-rotation-engine) |
 | 基金底层公司是否重叠 | [cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough) |
 | 财报金额与口径是否一致 | [cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile) |
 | 组合敞口、配置情景与现金占用 | [portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine) |
@@ -84,9 +84,9 @@
 
 ## 安装和首次试用
 
-安装包见[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.16)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+安装包见[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.17)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-安装包版本为 `0.1.0b16`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+安装包版本为 `0.1.0b17`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
@@ -95,7 +95,7 @@ python -m venv .venv
 .\.venv\Scripts\research-workbench.exe demo --out-dir reports/demo --auto-name
 ```
 
-工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/research-workbench`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`research-workbench run --help` 查看原生参数，原来的命令继续兼容。其他专题可用 `research-workbench script --help` 查看入口，以脚本名调用，不需要记住源码路径。pip 安装提供 CLI；作为 Skill 使用仍须保留完整源码及许可资源，不能只复制 SKILL.md。安装可能需要联网获取普通构建依赖；教学离线。下面保留原生入口及此前发行记录，安装步骤和对应版本以本节为准。
+工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/research-workbench`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`research-workbench run --help` 查看原生参数，原来的命令继续兼容。其他专题可用 `research-workbench script --help` 查看入口，以脚本名调用，不需要记住源码路径。pip 安装提供 CLI；作为 Skill 使用仍须保留完整源码及许可资源，不能只复制 SKILL.md。安装可能需要联网获取普通构建依赖；教学离线。原生入口与当前安装步骤见下文；历史版本说明见 CHANGELOG。
 
 
 ## 结果是什么样
@@ -194,19 +194,10 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 本轮新增预测实际配对、公开问答、假设变化与可迁移引擎索引。独立入口、底稿与限制见 [EXPANSION.md](EXPANSION.md)。
 
 
-
-
 共同采集与观察表的单位、时间及版本范围见 [FORMAT_SCOPE.md](FORMAT_SCOPE.md)。宏观、微观和规则事件保留各自口径，不混作净值。
 
-## v0.1.0-beta.15 本轮补强
+## 参与、更新与清理
 
-新增预测实际/重述配对、公开问答、假设版本差异、可迁移引擎索引及标准净值/表格式入口；保留FOF旧入口；Windows瞬时锁竞争有界重试。各仓独立使用要求继续保留，CRM不在本轮。历史报告、tag和原始证据摘要不改写。
-
-
-[本轮审计范围与未认证事项](AUDIT_SCOPE.md)。
-
-## v0.1.0-beta.16 缺口修正与数据入口
-
-清理重复使用者页面的发布残留，新增英文项目入口及版本变更索引；独立使用和历史冻结记录保持。新增八类公告专题底稿复查，修正REITs状态及工具衔接说明。
+[贡献说明](CONTRIBUTING.md) · [安全反馈](SECURITY.md) · [更新、缓存与卸载](LIFECYCLE.md)。
 
 [English introduction](README.en.md) · [版本变更](CHANGELOG.md)。

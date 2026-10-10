@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "research-interface-compatibility/1",
+  "combinations": [
+    {
+      "consumer": "research-workbench 0.1.0b17",
+      "provider": "cn-financial-reconcile",
+      "providerVersion": "0.2.9",
+      "status": "limited-source-interface-checks-passed",
+      "validationScope": "source interface probe / specific regression only; not all workflow compatibility"
+    },
+    {
+      "consumer": "research-workbench 0.1.0b17",
+      "provider": "cn-fund-lookthrough",
+      "providerVersion": "0.3.4",
+      "status": "limited-source-interface-checks-passed",
+      "validationScope": "source interface probe / specific regression only; not all workflow compatibility"
+    },
+    {
+      "consumer": "research-workbench 0.1.0b17",
+      "provider": "portfolio-decision-engine",
+      "providerVersion": "0.9.3",
+      "status": "limited-source-interface-checks-passed",
+      "validationScope": "source interface probe / specific regression only; not all workflow compatibility"
+    },
+    {
+      "consumer": "research-workbench 0.1.0b17",
+      "provider": "cn-etf-rotation-engine",
+      "providerVersion": "0.1.0",
+      "status": "limited-source-interface-checks-passed",
+      "validationScope": "source interface probe / specific regression only; not all workflow compatibility"
+    }
+  ],
+  "unlistedCombinations": "not-verified",
+  "historicalProbe": "compatibility-probe-20261010.json",
+  "currentSourceProbe": "compatibility-probe-release-20261011.json"
+}

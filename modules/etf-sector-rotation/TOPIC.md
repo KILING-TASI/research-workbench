@@ -60,3 +60,7 @@ ETF评价按 [三层评价规范](references/evaluation-layers.md) 分别输出�
 问申赎成本或跑赢、信息比率、上下行捕捉时，读[测算入口规范](references/research-analytics.md)。净值已扣运作费不重复扣；现行费率应用历史路径仅为情景。先明确参照对象，同伴基金不是合同基准，相对收益不是纯Alpha。缺原文、渠道或历史有效期如实说明，不生成最优份额或交易指令。
 
 分发、商业部署或分享含原文附件的研究包前，查阅[第三方许可说明](references/third-party-notices.md)。
+
+## 当前轮动计算归属
+
+相对强弱、旧轮动门槛与新固定池历史情景由cn-etf-rotation-engine独立维护，见[迁移入口](../../references/etf-engine-migration.md)。本专题的旧网页与报价入口只保留已验证范围，不作为新回测入口。

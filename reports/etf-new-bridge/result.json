@@ -1,0 +1,310 @@
+{
+  "conclusion": "按声明ETF观察池计算，结果范围与假设见下方；不是全市场择优或实际交易。",
+  "result": {
+    "methodVersion": "etf-fixed-pool-next-close-scenario/1",
+    "asOf": "2026-03-05",
+    "path": [
+      {
+        "date": "2026-01-30",
+        "wealthIndex": 1.0,
+        "cashWeight": 1
+      },
+      {
+        "date": "2026-01-31",
+        "wealthIndex": 0.999,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-01",
+        "wealthIndex": 1.0002487500000001,
+        "cashWeight": 1.1102230246251565e-16
+      },
+      {
+        "date": "2026-02-02",
+        "wealthIndex": 1.0014991233750001,
+        "cashWeight": 2.220446049250313e-16
+      },
+      {
+        "date": "2026-02-03",
+        "wealthIndex": 1.0027511223103125,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-04",
+        "wealthIndex": 1.0040047489942783,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-05",
+        "wealthIndex": 1.0052587506126471,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-06",
+        "wealthIndex": 1.0065153240509128,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-07",
+        "wealthIndex": 1.0077735310346483,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-08",
+        "wealthIndex": 1.0090333737628572,
+        "cashWeight": -2.220446049250313e-16
+      },
+      {
+        "date": "2026-02-09",
+        "wealthIndex": 1.0102948544375898,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-10",
+        "wealthIndex": 1.0115567123956957,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-11",
+        "wealthIndex": 1.0128211582861903,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-12",
+        "wealthIndex": 1.0140872479563425,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-13",
+        "wealthIndex": 1.0153549836189324,
+        "cashWeight": -2.220446049250313e-16
+      },
+      {
+        "date": "2026-02-14",
+        "wealthIndex": 1.0166243674898072,
+        "cashWeight": -2.220446049250313e-16
+      },
+      {
+        "date": "2026-02-15",
+        "wealthIndex": 1.0178941310077412,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-16",
+        "wealthIndex": 1.0191664986715008,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-17",
+        "wealthIndex": 1.0204405204132232,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-18",
+        "wealthIndex": 1.021716198459552,
+        "cashWeight": -2.220446049250313e-16
+      },
+      {
+        "date": "2026-02-19",
+        "wealthIndex": 1.0229935350402162,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-20",
+        "wealthIndex": 1.0242712536464342,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-21",
+        "wealthIndex": 1.0255515927134922,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-22",
+        "wealthIndex": 1.0268335962213375,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-23",
+        "wealthIndex": 1.0281172664105631,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-24",
+        "wealthIndex": 1.0294026055248677,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-25",
+        "wealthIndex": 1.0306883290581224,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-26",
+        "wealthIndex": 1.0319766894694453,
+        "cashWeight": 1.1102230246251565e-16
+      },
+      {
+        "date": "2026-02-27",
+        "wealthIndex": 1.0332667247493026,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-02-28",
+        "wealthIndex": 1.0345584371523255,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-03-01",
+        "wealthIndex": 1.0358518289362688,
+        "cashWeight": 2.220446049250313e-16
+      },
+      {
+        "date": "2026-03-02",
+        "wealthIndex": 1.037145607547553,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-03-03",
+        "wealthIndex": 1.0384420395569876,
+        "cashWeight": 1.1102230246251565e-16
+      },
+      {
+        "date": "2026-03-04",
+        "wealthIndex": 1.0397401569280342,
+        "cashWeight": 0.0
+      },
+      {
+        "date": "2026-03-05",
+        "wealthIndex": 1.0410399619294493,
+        "cashWeight": 0.0
+      }
+    ],
+    "trades": [
+      {
+        "signalDate": "2026-01-30",
+        "executionDate": "2026-01-31",
+        "turnover": 1.0,
+        "costBps": 10,
+        "weights": {
+          "900003": 0.5,
+          "900002": 0.5
+        }
+      },
+      {
+        "signalDate": "2026-02-04",
+        "executionDate": "2026-02-05",
+        "turnover": 0.0012484388280253889,
+        "costBps": 10,
+        "weights": {
+          "900003": 0.5,
+          "900002": 0.5
+        }
+      },
+      {
+        "signalDate": "2026-02-09",
+        "executionDate": "2026-02-10",
+        "turnover": 0.0012484388280254999,
+        "costBps": 10,
+        "weights": {
+          "900003": 0.5,
+          "900002": 0.5
+        }
+      },
+      {
+        "signalDate": "2026-02-14",
+        "executionDate": "2026-02-15",
+        "turnover": 0.0012484388280252778,
+        "costBps": 10,
+        "weights": {
+          "900003": 0.5,
+          "900002": 0.5
+        }
+      },
+      {
+        "signalDate": "2026-02-19",
+        "executionDate": "2026-02-20",
+        "turnover": 0.0012484388280252778,
+        "costBps": 10,
+        "weights": {
+          "900003": 0.5,
+          "900002": 0.5
+        }
+      },
+      {
+        "signalDate": "2026-02-24",
+        "executionDate": "2026-02-25",
+        "turnover": 0.0012484388280253889,
+        "costBps": 10,
+        "weights": {
+          "900003": 0.5,
+          "900002": 0.5
+        }
+      },
+      {
+        "signalDate": "2026-03-01",
+        "executionDate": "2026-03-02",
+        "turnover": 0.0012484388280254999,
+        "costBps": 10,
+        "weights": {
+          "900003": 0.5,
+          "900002": 0.5
+        }
+      }
+    ],
+    "totalReturn": 0.041039961929449253,
+    "maxDrawdown": 0.0010000000000000009,
+    "parameters": {
+      "topN": 2,
+      "rebalanceEvery": 5,
+      "costBps": 10,
+      "execution": "next_observed_close"
+    },
+    "limitations": [
+      "固定声明池历史情景，未取得历史成分或退市全集，不宣称无幸存者偏差",
+      "信号只用当时及以前价格，下一观察日收盘执行；不是下一开盘成交",
+      "成本是统一假设，不含真实交易税费、滑点和流动性",
+      "未提供市场价格时不应用市场风险档位；不推定完整交易日历"
+    ]
+  },
+  "engineProvenance": {
+    "provider": "cn_etf_rotation",
+    "module": "review",
+    "function": "backtest",
+    "methodFiles": {
+      "__init__.py": "3144b892365ad0f6f48cdaee3dc18d58cf89f29cc3a9969c747d84c5dd12705e",
+      "__main__.py": "08ebbc6d5d5db8ebfea9a119fad504e4ee400fdbb2133f7d411e5228df7bf06c",
+      "review.py": "56e5577dadca64c0e8cd4484bb5577370cc1330a6b90cb013d12e33abf607bbc",
+      "rotation.py": "73ae591d553cdf994e34425eda5558f167e1cac002829382017a04916d4820df"
+    },
+    "selectedFolder": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\dui-y\\work\\expansion-20261011\\cn-etf-rotation-engine\\cn_etf_rotation",
+    "moduleOrigins": {
+      "review": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\dui-y\\work\\expansion-20261011\\cn-etf-rotation-engine\\cn_etf_rotation\\review.py",
+      "rotation": "C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\dui-y\\work\\expansion-20261011\\cn-etf-rotation-engine\\cn_etf_rotation\\rotation.py"
+    },
+    "methodIdentitySha256": "c4bb89b93aa05df80c0a67b019d7ca22f491f3732edfe12b2ce65eac4b8d94fb",
+    "selection": "explicit-project-or-installed-package"
+  },
+  "methodVersion": "etf-fixed-pool-next-close-scenario/1",
+  "limitations": [
+    "固定声明池历史情景，未取得历史成分或退市全集，不宣称无幸存者偏差",
+    "信号只用当时及以前价格，下一观察日收盘执行；不是下一开盘成交",
+    "成本是统一假设，不含真实交易税费、滑点和流动性",
+    "未提供市场价格时不应用市场风险档位；不推定完整交易日历"
+  ],
+  "humanRows": [
+    [
+      "观察对象",
+      3
+    ],
+    [
+      "研究截止",
+      "2026-03-05"
+    ],
+    [
+      "计算入口",
+      "独立ETF引擎；工作台只解释和归档"
+    ]
+  ],
+  "inputSha256": "08173c33fb63c340ffa0ca56f89ffb9d3718e5644fd3547cf6258556c3aede11"
+}

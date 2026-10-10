@@ -1,0 +1,310 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ETF轮动研究</title><style>body{max-width:960px;margin:32px auto;padding:0 20px;font:17px/1.7 system-ui;color:#203047}td,th{padding:10px;border-bottom:1px solid #ddd;overflow-wrap:anywhere}table{width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere}details{margin-top:24px}</style><h1>ETF轮动研究</h1><p>按声明ETF观察池计算，结果范围与假设见下方；不是全市场择优或实际交易。</p><table><tr><th>核对项</th><th>本次结果</th></tr><tr><td>观察对象</td><td>3</td></tr><tr><td>研究截止</td><td>2026-03-05</td></tr><tr><td>计算入口</td><td>独立ETF引擎；工作台只解释和归档</td></tr></table><h2>范围与缺口</h2><ul><li>固定声明池历史情景，未取得历史成分或退市全集，不宣称无幸存者偏差</li><li>信号只用当时及以前价格，下一观察日收盘执行；不是下一开盘成交</li><li>成本是统一假设，不含真实交易税费、滑点和流动性</li><li>未提供市场价格时不应用市场风险档位；不推定完整交易日历</li></ul><details><summary>完整输入绑定、结果及依据</summary><pre>{
+  &quot;conclusion&quot;: &quot;按声明ETF观察池计算，结果范围与假设见下方；不是全市场择优或实际交易。&quot;,
+  &quot;result&quot;: {
+    &quot;methodVersion&quot;: &quot;etf-fixed-pool-next-close-scenario/1&quot;,
+    &quot;asOf&quot;: &quot;2026-03-05&quot;,
+    &quot;path&quot;: [
+      {
+        &quot;date&quot;: &quot;2026-01-30&quot;,
+        &quot;wealthIndex&quot;: 1.0,
+        &quot;cashWeight&quot;: 1
+      },
+      {
+        &quot;date&quot;: &quot;2026-01-31&quot;,
+        &quot;wealthIndex&quot;: 0.999,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-01&quot;,
+        &quot;wealthIndex&quot;: 1.0002487500000001,
+        &quot;cashWeight&quot;: 1.1102230246251565e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-02&quot;,
+        &quot;wealthIndex&quot;: 1.0014991233750001,
+        &quot;cashWeight&quot;: 2.220446049250313e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-03&quot;,
+        &quot;wealthIndex&quot;: 1.0027511223103125,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-04&quot;,
+        &quot;wealthIndex&quot;: 1.0040047489942783,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-05&quot;,
+        &quot;wealthIndex&quot;: 1.0052587506126471,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-06&quot;,
+        &quot;wealthIndex&quot;: 1.0065153240509128,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-07&quot;,
+        &quot;wealthIndex&quot;: 1.0077735310346483,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-08&quot;,
+        &quot;wealthIndex&quot;: 1.0090333737628572,
+        &quot;cashWeight&quot;: -2.220446049250313e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-09&quot;,
+        &quot;wealthIndex&quot;: 1.0102948544375898,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-10&quot;,
+        &quot;wealthIndex&quot;: 1.0115567123956957,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-11&quot;,
+        &quot;wealthIndex&quot;: 1.0128211582861903,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-12&quot;,
+        &quot;wealthIndex&quot;: 1.0140872479563425,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-13&quot;,
+        &quot;wealthIndex&quot;: 1.0153549836189324,
+        &quot;cashWeight&quot;: -2.220446049250313e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-14&quot;,
+        &quot;wealthIndex&quot;: 1.0166243674898072,
+        &quot;cashWeight&quot;: -2.220446049250313e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-15&quot;,
+        &quot;wealthIndex&quot;: 1.0178941310077412,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-16&quot;,
+        &quot;wealthIndex&quot;: 1.0191664986715008,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-17&quot;,
+        &quot;wealthIndex&quot;: 1.0204405204132232,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-18&quot;,
+        &quot;wealthIndex&quot;: 1.021716198459552,
+        &quot;cashWeight&quot;: -2.220446049250313e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-19&quot;,
+        &quot;wealthIndex&quot;: 1.0229935350402162,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-20&quot;,
+        &quot;wealthIndex&quot;: 1.0242712536464342,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-21&quot;,
+        &quot;wealthIndex&quot;: 1.0255515927134922,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-22&quot;,
+        &quot;wealthIndex&quot;: 1.0268335962213375,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-23&quot;,
+        &quot;wealthIndex&quot;: 1.0281172664105631,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-24&quot;,
+        &quot;wealthIndex&quot;: 1.0294026055248677,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-25&quot;,
+        &quot;wealthIndex&quot;: 1.0306883290581224,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-26&quot;,
+        &quot;wealthIndex&quot;: 1.0319766894694453,
+        &quot;cashWeight&quot;: 1.1102230246251565e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-27&quot;,
+        &quot;wealthIndex&quot;: 1.0332667247493026,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-02-28&quot;,
+        &quot;wealthIndex&quot;: 1.0345584371523255,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-03-01&quot;,
+        &quot;wealthIndex&quot;: 1.0358518289362688,
+        &quot;cashWeight&quot;: 2.220446049250313e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-03-02&quot;,
+        &quot;wealthIndex&quot;: 1.037145607547553,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-03-03&quot;,
+        &quot;wealthIndex&quot;: 1.0384420395569876,
+        &quot;cashWeight&quot;: 1.1102230246251565e-16
+      },
+      {
+        &quot;date&quot;: &quot;2026-03-04&quot;,
+        &quot;wealthIndex&quot;: 1.0397401569280342,
+        &quot;cashWeight&quot;: 0.0
+      },
+      {
+        &quot;date&quot;: &quot;2026-03-05&quot;,
+        &quot;wealthIndex&quot;: 1.0410399619294493,
+        &quot;cashWeight&quot;: 0.0
+      }
+    ],
+    &quot;trades&quot;: [
+      {
+        &quot;signalDate&quot;: &quot;2026-01-30&quot;,
+        &quot;executionDate&quot;: &quot;2026-01-31&quot;,
+        &quot;turnover&quot;: 1.0,
+        &quot;costBps&quot;: 10,
+        &quot;weights&quot;: {
+          &quot;900003&quot;: 0.5,
+          &quot;900002&quot;: 0.5
+        }
+      },
+      {
+        &quot;signalDate&quot;: &quot;2026-02-04&quot;,
+        &quot;executionDate&quot;: &quot;2026-02-05&quot;,
+        &quot;turnover&quot;: 0.0012484388280253889,
+        &quot;costBps&quot;: 10,
+        &quot;weights&quot;: {
+          &quot;900003&quot;: 0.5,
+          &quot;900002&quot;: 0.5
+        }
+      },
+      {
+        &quot;signalDate&quot;: &quot;2026-02-09&quot;,
+        &quot;executionDate&quot;: &quot;2026-02-10&quot;,
+        &quot;turnover&quot;: 0.0012484388280254999,
+        &quot;costBps&quot;: 10,
+        &quot;weights&quot;: {
+          &quot;900003&quot;: 0.5,
+          &quot;900002&quot;: 0.5
+        }
+      },
+      {
+        &quot;signalDate&quot;: &quot;2026-02-14&quot;,
+        &quot;executionDate&quot;: &quot;2026-02-15&quot;,
+        &quot;turnover&quot;: 0.0012484388280252778,
+        &quot;costBps&quot;: 10,
+        &quot;weights&quot;: {
+          &quot;900003&quot;: 0.5,
+          &quot;900002&quot;: 0.5
+        }
+      },
+      {
+        &quot;signalDate&quot;: &quot;2026-02-19&quot;,
+        &quot;executionDate&quot;: &quot;2026-02-20&quot;,
+        &quot;turnover&quot;: 0.0012484388280252778,
+        &quot;costBps&quot;: 10,
+        &quot;weights&quot;: {
+          &quot;900003&quot;: 0.5,
+          &quot;900002&quot;: 0.5
+        }
+      },
+      {
+        &quot;signalDate&quot;: &quot;2026-02-24&quot;,
+        &quot;executionDate&quot;: &quot;2026-02-25&quot;,
+        &quot;turnover&quot;: 0.0012484388280253889,
+        &quot;costBps&quot;: 10,
+        &quot;weights&quot;: {
+          &quot;900003&quot;: 0.5,
+          &quot;900002&quot;: 0.5
+        }
+      },
+      {
+        &quot;signalDate&quot;: &quot;2026-03-01&quot;,
+        &quot;executionDate&quot;: &quot;2026-03-02&quot;,
+        &quot;turnover&quot;: 0.0012484388280254999,
+        &quot;costBps&quot;: 10,
+        &quot;weights&quot;: {
+          &quot;900003&quot;: 0.5,
+          &quot;900002&quot;: 0.5
+        }
+      }
+    ],
+    &quot;totalReturn&quot;: 0.041039961929449253,
+    &quot;maxDrawdown&quot;: 0.0010000000000000009,
+    &quot;parameters&quot;: {
+      &quot;topN&quot;: 2,
+      &quot;rebalanceEvery&quot;: 5,
+      &quot;costBps&quot;: 10,
+      &quot;execution&quot;: &quot;next_observed_close&quot;
+    },
+    &quot;limitations&quot;: [
+      &quot;固定声明池历史情景，未取得历史成分或退市全集，不宣称无幸存者偏差&quot;,
+      &quot;信号只用当时及以前价格，下一观察日收盘执行；不是下一开盘成交&quot;,
+      &quot;成本是统一假设，不含真实交易税费、滑点和流动性&quot;,
+      &quot;未提供市场价格时不应用市场风险档位；不推定完整交易日历&quot;
+    ]
+  },
+  &quot;engineProvenance&quot;: {
+    &quot;provider&quot;: &quot;cn_etf_rotation&quot;,
+    &quot;module&quot;: &quot;review&quot;,
+    &quot;function&quot;: &quot;backtest&quot;,
+    &quot;methodFiles&quot;: {
+      &quot;__init__.py&quot;: &quot;3144b892365ad0f6f48cdaee3dc18d58cf89f29cc3a9969c747d84c5dd12705e&quot;,
+      &quot;__main__.py&quot;: &quot;08ebbc6d5d5db8ebfea9a119fad504e4ee400fdbb2133f7d411e5228df7bf06c&quot;,
+      &quot;review.py&quot;: &quot;56e5577dadca64c0e8cd4484bb5577370cc1330a6b90cb013d12e33abf607bbc&quot;,
+      &quot;rotation.py&quot;: &quot;73ae591d553cdf994e34425eda5558f167e1cac002829382017a04916d4820df&quot;
+    },
+    &quot;selectedFolder&quot;: &quot;C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\dui-y\\work\\expansion-20261011\\cn-etf-rotation-engine\\cn_etf_rotation&quot;,
+    &quot;moduleOrigins&quot;: {
+      &quot;review&quot;: &quot;C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\dui-y\\work\\expansion-20261011\\cn-etf-rotation-engine\\cn_etf_rotation\\review.py&quot;,
+      &quot;rotation&quot;: &quot;C:\\Users\\caiqi\\Documents\\Codex\\2026-10-09\\dui-y\\work\\expansion-20261011\\cn-etf-rotation-engine\\cn_etf_rotation\\rotation.py&quot;
+    },
+    &quot;methodIdentitySha256&quot;: &quot;c4bb89b93aa05df80c0a67b019d7ca22f491f3732edfe12b2ce65eac4b8d94fb&quot;,
+    &quot;selection&quot;: &quot;explicit-project-or-installed-package&quot;
+  },
+  &quot;methodVersion&quot;: &quot;etf-fixed-pool-next-close-scenario/1&quot;,
+  &quot;limitations&quot;: [
+    &quot;固定声明池历史情景，未取得历史成分或退市全集，不宣称无幸存者偏差&quot;,
+    &quot;信号只用当时及以前价格，下一观察日收盘执行；不是下一开盘成交&quot;,
+    &quot;成本是统一假设，不含真实交易税费、滑点和流动性&quot;,
+    &quot;未提供市场价格时不应用市场风险档位；不推定完整交易日历&quot;
+  ],
+  &quot;humanRows&quot;: [
+    [
+      &quot;观察对象&quot;,
+      3
+    ],
+    [
+      &quot;研究截止&quot;,
+      &quot;2026-03-05&quot;
+    ],
+    [
+      &quot;计算入口&quot;,
+      &quot;独立ETF引擎；工作台只解释和归档&quot;
+    ]
+  ],
+  &quot;inputSha256&quot;: &quot;08173c33fb63c340ffa0ca56f89ffb9d3718e5644fd3547cf6258556c3aede11&quot;
+}</pre></details></html>

@@ -2,12 +2,12 @@
 name: research-workbench
 description: 用户要研究公司、基金、ETF或其他投资标的，比较产品，诊断持仓组合，找回旧报告或沿用资料继续追问时使用；也支持行业、宏观和北交所新股研究。先识别用户要解决的问题，再组织资料与分析，输出自然语言判断、来源、口径和缺口，不执行交易。
 metadata:
-  version: "0.1.0-beta.14"
+  version: "0.1.0-beta.17"
 ---
 
 # 投研工作台
 
-软件版本：0.1.0-beta.14 · 说明版本：1.93 · 更新日期：2026-10-10。
+软件版本：0.1.0-beta.17 · 说明版本：1.94 · 更新日期：2026-10-10。
 
 面向个人与买方研究。用户用自然语言提出问题，组织参数并调用现有脚本；工作台可选，不要求用户选技术模块或填写JSON。只读取本次问题需要的参考，复用已选标的、组合、区间和已取得资料。
 
@@ -97,3 +97,7 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 新增复查用 scripts/research_review.py，见[本轮入口](EXPANSION.md)；预测与首次实际/重述、公开问答、假设变化、引擎索引分别保存新结果。原FOF的research_extensions.py继续保留。
 
 业绩预告、股东户数或专项公告底稿复查，读取[公告专题入口](references/disclosure-review.md)。先复用已有资料并核对原文，不把新增结构化复查当成自动取得真实公告。
+
+深度问题先按[研究框架导航](references/research-framework-index.md)选当前任务与行业；framework_route.py校验机读索引和引用摘要。轻量查询不加载全套参考，专业方法按归属查阅。
+
+ETF行业轮动与固定池历史情景按[独立ETF入口](references/etf-engine-migration.md)调用；缺专业工具明确不可用，不用历史网页计算回退。

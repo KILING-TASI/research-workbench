@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "research-workbench"
-version = "0.1.0b16"
+version = "0.1.0b17"
 description = "独立研究工具与完整资源；未知证据保留"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -18,3 +18,6 @@ research-workbench = "research_workbench._entry:main"
 [tool.setuptools]
 packages = ["research_workbench"]
 package-dir = {"research_workbench" = "research_workbench"}
+
+[tool.setuptools.data-files]
+"share/research-workbench" = ["SHARED_CODE.json", "RIGHTS_INDEX.json", "CONTRIBUTING.md", "SECURITY.md", "LIFECYCLE.md"]
