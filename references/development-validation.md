@@ -21,7 +21,7 @@
 
 主包负责问题入口、资料组织、公司经营/估值判断、基金综合评价、问询解释、跨资产研究与报告/找回；独立基金库负责披露穿透/限定解析，不是基金全评价；独立财报库负责事实/单位/原文/版本观察，不是估值或审计平台。[九仓问题导航](tool-navigation.md)列其余归属，MarketLens不是全部公司事件库，规则库不扩事件平台。
 
-软件版本、输入schema、方法、规则及数据原文版本分别记录。主包已发布beta.6与待审文档1.93不同；两独立库已发布v0.1.0与开发0.2.0.dev1不同。方法：分红观察3（教学2兼容）、选定双版bound-selected-occurrences-1、基金核心disclosed-paths-2、问询explicit-association-2、预测acquisition-bound-history-1、原生gateway-1。对应专业说明定义支持范围，未知显式版本拒绝或明确迁移。 installed未自动替换，旧输入/结果/原预览冻结。
+软件版本、输入schema、方法、规则及数据原文版本分别记录。主包已发布beta.6与待审文档1.93不同；两独立库已发布v0.1.0与开发0.2.0.dev1不同。方法：分红观察3（教学2兼容）、选定双版bound-selected-occurrences-1、基金核心disclosed-paths-2、问询explicit-association-2、预测acquisition-bound-history-2（1输入明确兼容、历史1结果冻结）、原生gateway-1。对应专业说明定义支持范围，未知显式版本拒绝或明确迁移。 installed未自动替换，旧输入/结果/原预览冻结。
 
 ## 验证入口
 

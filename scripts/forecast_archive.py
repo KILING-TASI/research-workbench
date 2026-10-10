@@ -10,7 +10,8 @@ from independent_engine import load
 from research_brief_html import render
 
 SCHEMA = 'forecast-observations-v1'
-METHOD = 'acquisition-bound-history-1'
+METHOD = 'acquisition-bound-history-2'
+LEGACY_METHOD = 'acquisition-bound-history-1'
 UNITS = {'元': Decimal(1), '万元': Decimal(10000), '亿元': Decimal(100000000), '元/股': Decimal(1)}
 
 
@@ -61,26 +62,36 @@ def validate(record):
     return value * UNITS[unit]
 
 
-def calculate(spec):
+def validate_input(spec):
     if not isinstance(spec, dict):
         raise ValueError('预测档案输入须为对象')
-    if spec.get('inputSchema') != SCHEMA or spec.get('methodVersion') != METHOD:
+    if spec.get('inputSchema') != SCHEMA or spec.get('methodVersion') not in (METHOD, LEGACY_METHOD):
         raise ValueError('未知显式档案schema或方法版本')
     cutoff = instant(spec['asOf'])
     records = spec['records']
     if not isinstance(records, list) or not 1 <= len(records) <= 10000:
         raise ValueError('需要1至10000条明确预测观察')
-    ids, eligible, excluded, groups = set(), [], [], {}
+    ids, validated = set(), []
     for row in records:
+        if not isinstance(row, dict):
+            raise ValueError('预测观察须为对象')
         value = validate(row)
         if row['id'] in ids:
             raise ValueError('观察标识重复，不能覆盖历史')
         ids.add(row['id'])
+        validated.append((row, value))
+    return cutoff, validated
+
+
+def calculate(spec):
+    cutoff, validated = validate_input(spec)
+    eligible, excluded, groups = [], [], {}
+    for row, value in validated:
         if instant(row['acquiredAt']) > cutoff:
-            excluded.append(dict(id=row['id'], reason='取得晚于截止；不从发布日期回填可得'))
+            excluded.append(dict(id=row['id'], reportVersion=row['reportVersion'], reason='取得晚于截止；不从发布日期回填可得'))
             continue
         eligible.append(row)
-        key = tuple(row.get(k) for k in ('entity', 'institution', 'reportId', 'forecastPeriod', 'metric', 'currency', 'scope', 'basis', 'profitAttribution', 'shareBasis'))
+        key = tuple(row.get(k) for k in ('entity', 'institution', 'reportId', 'reportVersion', 'forecastPeriod', 'metric', 'currency', 'scope', 'basis', 'profitAttribution', 'shareBasis'))
         groups.setdefault(key, []).append((row, value))
     observations = []
     for members in groups.values():
@@ -88,10 +99,11 @@ def calculate(spec):
         rows = [row for row, _ in members]
         unknown = any(rows[0].get(k) is None for k in ('scope', 'basis')) or (rows[0]['metric'] == 'eps' and rows[0].get('shareBasis') is None) or (rows[0]['metric'] == 'parentNetProfit' and rows[0].get('profitAttribution') is None)
         observations.append(dict(ids=[row['id'] for row in rows], entity=rows[0]['entity'], institution=rows[0]['institution'],
-                                 reportId=rows[0]['reportId'], forecastPeriod=rows[0]['forecastPeriod'], metric=rows[0]['metric'],
+                                 reportId=rows[0]['reportId'], reportVersion=rows[0]['reportVersion'], reportVersionStatus='declared-only',
+                                 forecastPeriod=rows[0]['forecastPeriod'], metric=rows[0]['metric'],
                                  status='source-value-conflict' if len(values) > 1 else 'repeat-observation' if len(rows) > 1 else 'single-observation',
                                  comparableBasis='unknown' if unknown else 'declared-only', acquisitions=[row['acquiredAt'] for row in rows],
-                                 values=[dict(value=row['value'], unit=row['unit'], sourceVersion=row['sourceVersion']) for row in rows]))
+                                 values=[dict(value=row['value'], unit=row['unit'], reportVersion=row['reportVersion'], sourceVersion=row['sourceVersion']) for row in rows]))
     revisions = []
     index = {row['id']: row for row in eligible}
     for row in eligible:
@@ -105,6 +117,8 @@ def calculate(spec):
         dimensions = ('entity', 'institution', 'forecastPeriod', 'metric', 'currency', 'scope', 'basis', 'profitAttribution', 'shareBasis')
         if any(row.get(k) != previous.get(k) for k in dimensions) or any(row.get(k) is None for k in ('scope', 'basis')) or (row['metric'] == 'parentNetProfit' and row.get('profitAttribution') is None) or (row['metric'] == 'eps' and row.get('shareBasis') is None):
             status = 'not-comparable-basis';difference = None
+        elif row['reportId'] == previous['reportId'] and row['reportVersion'] != previous['reportVersion']:
+            status = 'declared-report-version-change-not-analyst-revision';difference = None
         elif row['reportId'] == previous['reportId']:
             status = 'same-report-source-conflict-not-analyst-revision';difference = None
         elif row['publishedDate'] <= previous['publishedDate']:
@@ -112,17 +126,22 @@ def calculate(spec):
         else:
             status = 'declared-revision-not-original-verified';difference = str(validate(row) - validate(previous))
         revisions.append(dict(id=row['id'], priorId=previous_id, status=status, difference=difference,
+                              reportVersion=row['reportVersion'], priorReportVersion=previous['reportVersion'],
                               evidence=row['revisionEvidence']))
-    return dict(inputSchema=SCHEMA, methodVersion=METHOD, asOf=spec['asOf'], observations=observations, revisions=revisions,
+    return dict(inputSchema=SCHEMA, methodVersion=METHOD, requestedMethodVersion=spec['methodVersion'],
+                inputCompatibility='legacy-v1-input-under-corrected-v2-not-v1-output-replay' if spec['methodVersion'] == LEGACY_METHOD else 'current-v2',
+                asOf=spec['asOf'], observations=observations, revisions=revisions,
                 excluded=excluded, actualComparisonStatus='not-paired',
                 conclusion='按已经留存的取得时点查历史；报告写得早，不代表我们当时已拿到。来源冲突与分析师修正分开，缺口不补。',
                 limitations=['中国市场发布日期按+08:00日历日，非盘中时点；取得时点须含时区',
-                             '公开网页补录不是事前冻结样本；仅已留存取得时点筛选', '同报告不同源值不自动择优，修正关联仅为输入声明',
+                             '公开网页补录不是事前冻结样本；仅已留存取得时点筛选', '同报告同声明版本不同源值不自动择优；不同声明版本分别留存，版本及修正关系未核原文',
                              '实际业绩和重述尚未原文配对，不评价预测准确率；原始研报未取得不冒充机构原文',
                              '日期精度无法区分同日发布先后，不输出全市场覆盖承诺'])
 
 
 def publish(spec, archive_dir, out_dir):
+    # Validate this request before stored-ID filtering can change its meaning.
+    validate_input(spec)
     archive = Path(archive_dir);out = Path(out_dir)
     if out.exists() or out.resolve() == archive.resolve():
         raise ValueError('请使用新报告目录，历史结果不覆盖')
@@ -149,7 +168,7 @@ def publish(spec, archive_dir, out_dir):
     out.mkdir(parents=True)
     body = '# 机构预测留档观察\n\n' + result['conclusion'] + '\n\n本次显示' + str(len(result['observations'])) + '组预测观察；截止时点之后取得的' + str(len(result['excluded'])) + '条不纳入。\n\n'
     for row in result['observations']:
-        body += '## ' + row['entity'] + '：' + row['institution'] + '\n\n预测财年' + row['forecastPeriod'] + '，指标' + row['metric'] + '。'
+        body += '## ' + row['entity'] + '：' + row['institution'] + '\n\n预测财年' + row['forecastPeriod'] + '，指标' + row['metric'] + '；声明报告版本' + row['reportVersion'] + '（未核原文）。'
         body += '源值冲突，全部保留。' if row['status'] == 'source-value-conflict' else '保留已取得记录。'
         body += '口径：' + ('尚有未知，不作准确率评价。' if row['comparableBasis'] == 'unknown' else '按输入声明，未核机构原文。') + '\n\n'
         for v in row['values']:
