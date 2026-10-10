@@ -95,3 +95,5 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 本轮新增预测实际配对、公开问答、假设变化与可迁移引擎索引。独立入口、底稿与限制见 [EXPANSION.md](EXPANSION.md)。
 
 新增复查用 scripts/research_review.py，见[本轮入口](EXPANSION.md)；预测与首次实际/重述、公开问答、假设变化、引擎索引分别保存新结果。原FOF的research_extensions.py继续保留。
+
+业绩预告、股东户数或专项公告底稿复查，读取[公告专题入口](references/disclosure-review.md)。先复用已有资料并核对原文，不把新增结构化复查当成自动取得真实公告。

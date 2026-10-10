@@ -1,0 +1,24 @@
+{
+  "asOf": "2025-03-01T08:00:00+08:00",
+  "topic": "shareholders",
+  "entity": "原创教学公司",
+  "records": [
+    {
+      "id": "teaching-1",
+      "entity": "原创教学公司",
+      "stage": "announced",
+      "source": "https://example.invalid/teaching",
+      "locator": "原创教学第1行",
+      "sourceVersion": "teaching-1",
+      "rawSourceSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "publishedDate": "2025-02-01",
+      "acquiredAt": "2025-02-02T08:00:00+08:00",
+      "facts": {
+        "observedDate": "2025-01-31",
+        "count": "100",
+        "shareClass": "A",
+        "scope": "登记持有人"
+      }
+    }
+  ]
+}

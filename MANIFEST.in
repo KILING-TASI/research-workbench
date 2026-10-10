@@ -20,3 +20,7 @@ include EXPANSION_RELEASE.md
 include AUDIT_SCOPE.md
 
 include NAV_IMPLEMENTATION.json
+
+include README.en.md CHANGELOG.md
+
+include examples/disclosure-teaching.json
