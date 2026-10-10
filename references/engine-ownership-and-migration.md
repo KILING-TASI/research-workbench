@@ -52,7 +52,7 @@
 |verify_original.verify 的缺省/schema1分支|cnreconcile.original_compat.verify；搬迁旧行列/身份/日期核验|旧结果与错误消息保持；schema2仍调用original_layouts，明确暂未迁移；不是全部财务模型/三表迁移|
 |portfolio_cashflow_review.calculate|portfolio_engine.observed_review.review；原观察流与150次二分XIRR搬迁|旧返回键/状态/ledger/单位/声明币种/数值字符串不变；publish/找回/综合解释留主包；fund_dca及industry_exit的独立XIRR暂未迁移|
 
-选择方式是同进程受控独立命名空间：显式可信项目目录或已安装专业包，不是PYTHON隔离子进程。本批不使用/不承诺PORTFOLIO_PYTHON变量。通过文件SHA检查调用前后方法，保留旧Python对象/字段类型；不复制新算法回主包。
+选择方式是同进程受控独立命名空间：显式可信项目目录或已安装专业包，不是PYTHON隔离子进程。本批不使用/不承诺PORTFOLIO_PYTHON变量。缓存身份绑定解析后的专业目录与递归Python方法SHA；执行前后核对方法摘要和已加载模块来源。初始化失败清理该命名空间，重试重新加载，不复用半初始化模块。来源记录保留selectedFolder、moduleOrigins和methodIdentitySha256；旧计算对象/字段类型不变，不复制新算法回主包。
 
 用户先安装支持本迁移接口的专业版本，或设置 RESEARCH_WORKBENCH_LOOKTHROUGH_DIR / RESEARCH_WORKBENCH_FINANCIAL_DIR / RESEARCH_WORKBENCH_PORTFOLIO_DIR。不自动下载、安装或搜私人目录；缺包/接口清晰不可用，不能静默回重复算法。已发布专业v0.1.0尚不含这些新增兼容入口；使用当前待审源码或本地构建wheel，未发布新版。CI显式检出固定专业提交是测试设置，不是运行时安装。
 
