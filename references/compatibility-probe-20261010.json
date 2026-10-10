@@ -1,0 +1,110 @@
+{
+  "consumerVersion": "0.1.0-beta.10",
+  "providers": [
+    {
+      "domain": "lookthrough",
+      "softwareVersion": "0.2.3",
+      "interfaces": [
+        "report_adapter.issuer_order_values",
+        "report_adapter.legacy_domestic_rows",
+        "report_adapter.legacy_domestic_result"
+      ],
+      "methodIdentitySha256": "dc5d2ca1e7285e14fb17895e8de726a4613e6e75d6608d6030038b1209fad73e",
+      "methodFiles": {
+        "__init__.py": "4e84e29181a3f86f3f3ca59b53eba95cf6a642afa6436877561486e0e9cf2485",
+        "__main__.py": "dc191021b811c81e4698fd0eb163e729363dac10353eca8bc0ff623d2170c06d",
+        "_entry.py": "5db007c2a36b149d384b9e1a5048b84b8ca8ce0526bb916c4290f35f8ca8a44b",
+        "cli_feedback.py": "30ba53040312077f863f35eee0d96bc513b56e48e089f79755863d6ac31a5774",
+        "csv_import.py": "28e84b6fd4ab21a5caac441c1871464536292ccfebd358c33713ab2d57f50289",
+        "engine.py": "dd65281dd84830c86023edf9c1e30358bb398581259c76b49ffbf87ad3ad29d8",
+        "html_controls.py": "76d24a00fdc945e0e9dee52383c4d0ae5f61952536c762928395daacbf1eecf8",
+        "input_diagnostics.py": "3bfc0b035b5c9d98deee3d07f7b9de1bc239a4b7dc4bca44d6dda1b385405a6c",
+        "issuer_snapshot.py": "5bf934ec732cd8240604b2bbea0ebce4201179804b0edcb7f65ecdb7deb20e03",
+        "preflight.py": "4a6b6c8a319b826a2bccdf9c3394a03600ef31d67f8b0831ba0f1ecd5a121f96",
+        "progress.py": "efce7417d91df9dfb25d029fdc8806071fc16edb0351681d4ad58f57487ad45c",
+        "report.py": "071e796336ac685ab51f8abddef2683c614a4a51ae31482a3f63da902aeb64a3",
+        "report_adapter.py": "87aefdbbae83550de0e737bc27bd65091287537a43111de5b4736cbc6b030668",
+        "report_cli.py": "d4a6868ad975809b06255fe212ad0753f1e94bea33585a8b0469c5b0bcc95d14"
+      },
+      "scope": "source declaration located; function execution probes below are limited"
+    },
+    {
+      "domain": "financial",
+      "softwareVersion": "0.2.3",
+      "interfaces": [
+        "original_compat.verify"
+      ],
+      "methodIdentitySha256": "fae5632fe5cb6504de34103b15b10076c23bbc979c0f2d476ed04fe60b025ae0",
+      "methodFiles": {
+        "__init__.py": "44b06d232eba6e240a98f9e50e8ea5a5cfd515fe301d8cd971855eb5bec4bc32",
+        "__main__.py": "6bc5e1424592253219c33f08d95bdef72375a4f75c5f632fdc4dc0c31373d675",
+        "_entry.py": "6011a421082631ac2c03aedf71e3d6b5d5652037fdcb7141a3b34ab86c9e5712",
+        "cli_feedback.py": "3aeb5582e8f0026d372b591354216b2121afa134393e9e67d8d3a5d4c6f6f01a",
+        "difference_guidance.py": "99c02a679b471975df8f7ce7925d2a1011b7c9f6160876029cdb6d11ed4af723",
+        "dividend_observation.py": "529572091863d9f4a28589058c0ca4167220740ec6d44f82bf9a07631b3cdde7",
+        "engine.py": "8438ec90beeafa417bc931810a41d52b548f58da635a21ec68f5c8c03868bea4",
+        "html_controls.py": "76d24a00fdc945e0e9dee52383c4d0ae5f61952536c762928395daacbf1eecf8",
+        "original_compat.py": "9a662128feed58c35fe06f2dda8d71e4ee6823b89f944369a69084286f61d5f4",
+        "preflight.py": "2c370f61e149b80b040f151ec43c690cf16cffa92c7f2cfbb6aa55320509f56b",
+        "report.py": "42096d14539cb25a8dcdb3f8901a4f7acd40afa4da3b1c9ac7d291632490bbf6",
+        "table_extract.py": "34175828259e8274f4fce31db20675ffa6f14cba4416b13204f5cf3d092cc4d5",
+        "version_review.py": "a54fdbc49ab209845061d4b50f85cf1d088371e5292f44cfde70a03ff6102714"
+      },
+      "scope": "source declaration located; function execution probes below are limited"
+    },
+    {
+      "domain": "portfolio",
+      "softwareVersion": "0.8.2",
+      "interfaces": [
+        "observed_review.review"
+      ],
+      "methodIdentitySha256": "17645c7ec1564a6ea6f1dd54ee445978ff1aa53ace9120c0db856ff3b95d5f84",
+      "methodFiles": {
+        "__init__.py": "41ad349c76168788156c8d3cdf82bd97e0200bae3fccf6a9ef681e327157b910",
+        "__main__.py": "8198edaa763a9949654f6db5bf33c6fb0e0bf484b0e202f125a51674603fab9c",
+        "_entry.py": "5c585443615fb2380cb993e8e36a45c779e2dd475b2e9c2433aa7633b2f2a97a",
+        "account_exposure.py": "e259f3b63b75938b01269909373b79fe5498dc2aea304589cfe2a9bcddc798b7",
+        "allocation.py": "2d3d0ce542bbd3897dafa3999ee315f82e1d60b3e2d6309d8ba93827f4c25aa5",
+        "archive.py": "4c923b78cd0a0496c2b9b3aa7c57c28930b28e70358a31e952a752388d2efe94",
+        "attribution.py": "9f385e83d10819f791ab487666ef77a0d9137aad094a858218c481b8df1484e7",
+        "backtest.py": "90de740c5a9c198ee69798b5b67428fa304794f30d9e09a0597fc120f2cdcc77",
+        "bootstrap.py": "83a820442fc10e998d6b90525e1b996e6a91d8ac1e77c0586fdb516a79a01654",
+        "cash_demand.py": "0c761e605d8a38fcd67b62e23866b0a9683d1bc4899afbb0991dd017cf8b02f0",
+        "cash_demand_report.py": "92353405d3814a96d937957a049c2291d2744881f615c78fc0f339186d46086a",
+        "cli.py": "4ef7292000a47ab2a99583f6c49ac5534f68803cb2cd3198543a0eaa558e3803",
+        "collect.py": "3a913f5c72b29527d2285f6c606d87f80fc2fc4f3ddf6e98e4acc01c53a57428",
+        "data_bridge.py": "0de5932eb589373882982e6e1cec51b34cfbc0ac596edef852fb2836c587d24a",
+        "decision.py": "4c3455f084c360ddae52b2a6abcc0f73606df1b9e1baaeec6e55792478297da8",
+        "disclosure_time.py": "75a8d3623fe7fc92800f7ddaec75a4cab73ea70b68906781164ab7e9723b73b0",
+        "engine.py": "1cc20a3a8df647d8692a046fd6c2069ab06e111392864d0611dc4485e99f1bc3",
+        "evaluation.py": "c329f89973c46b151eea44fc423bf178753ff3503372adfc00e7051298916190",
+        "exposure_report.py": "070bb7acdf21545578e06edee955fabb3c3393a7e405e6bd40055583b396e014",
+        "io.py": "732757f6e552d1c9c113227dab4cf08e926ffc7b53dae44aefe93e791c97cf8e",
+        "lookthrough_adapter.py": "30897a91917ad849af5e720152de736ad826211fe71119ff3df9cbc8dd5c6804",
+        "m2_evaluation.py": "d961c21cdd95239e086edc8f29cd4dca0ae120a1c1fae14a38303ff084541fdb",
+        "m2_report.py": "e413d2c0f8bc18bfd3d89f68a321ff08dd91a711a0fa6ee66122d1106decf725",
+        "migration.py": "49ab1f6a70d5ca9d1169c2694234328c371da3f1c544a15f0593c4b1c3a39e87",
+        "observed_review.py": "1357019d3eaf3b8371d72f7451cb1e4f99edf84eca8e2d5a5e993930f3c091f0",
+        "report.py": "e142c1b6ff2e58b539255b2b96f15628deb3c3bdad2b1da041a17f575559cd16",
+        "risk.py": "d7f973aeb00f543027b2b0b3403c826a557531060e5d208339b813cf7f29417e",
+        "statistical_cases.py": "1a53cfa3ae722396a0912f87db06c76d05fafd4fcacc81223d6dfab251a3870d",
+        "stress.py": "ccd8c2ff1a2d03f73bd05efa6a2e3b0733c0d0726a2087400b42977cc24116c3",
+        "validation.py": "63cca33475101162682bf4ecee33dd70024e3bcd3becf951c4d0f2bb1390d224",
+        "workbench_cashflow.py": "8a5806653d3cc657d1273fe79c34f3de5837ec7aa2f0a76f4274cce68cfc0a61",
+        "workbench_contract.py": "4cb3d242f1dbe0619c063ff3f47b97eb9f1feb61fcbe8792b4f156bca9a611ce"
+      },
+      "scope": "source declaration located; function execution probes below are limited"
+    }
+  ],
+  "executionProbes": [
+    "explicit A/H ranking pair",
+    "unknown schema1 rejection",
+    "synthetic observed-account reference case"
+  ],
+  "status": "limited-interface-probes-passed",
+  "limitations": [
+    "显式可信源码目录，不是从PyPI安装或全部依赖组合认证",
+    "函数定位不是实际PDF格式全覆盖；财报项只验证未知schema拒绝，完整正例另由固定提交CI检查",
+    "教学观察账户不是恢复真实账户；未列版本不能推定兼容"
+  ]
+}
