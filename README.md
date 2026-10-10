@@ -17,6 +17,21 @@
 
 当前版本：[v0.1.0-beta.14](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.14)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
 
+## 按问题选择独立工具
+
+| 你想核对什么 | 工具 |
+|---|---|
+| 基金底层公司是否重叠 | [cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough) |
+| 财报金额与口径是否一致 | [cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile) |
+| 组合敞口、配置情景与现金占用 | [portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine) |
+| 北交所比例获配情景 | [bjx-ipo-engine](https://github.com/KILING-TASI/bjx-ipo-engine) |
+| 转债现金流、收益率与条款 | [convertible-bond-engine](https://github.com/KILING-TASI/convertible-bond-engine) |
+| 规则版本与公告适用条件 | [cn-market-rules](https://github.com/KILING-TASI/cn-market-rules) |
+| 宏观指标、来源与缺口 | [macro-dashboard-engine](https://github.com/KILING-TASI/macro-dashboard-engine) |
+| 市场消息与执行证据 | [marketlens](https://github.com/KILING-TASI/marketlens) |
+
+各工具独立发布。导航不代表工作台已自动集成全部功能；具体接口范围见[衔接说明](references/tool-navigation.md)。
+
 ## 先看一份教学报告
 
 完整源码解压后，需要 Python 3.11+。Windows 可运行 `Start-Demo.cmd`；或在源码目录执行 `python try_demo.py`。Linux/macOS 用 `sh Start-Demo.sh`。不需要先执行 pip 安装，不自动下载数据或覆盖旧报告；缺 Python 会提示处理路径。
@@ -99,7 +114,7 @@ research-workbench/
 
 配置矩阵、部分 Excel 和 JavaScript 入口有各自依赖，不必为了试用一次就全部安装。普通组件、可选 PDF 组件和自家专业包是三类不同前提；安装了 PDF 组件不等于安装了专业工具。
 
-历史beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`，这三版均已上线；这不是本轮兼容结论。[当前兼容矩阵](references/compatibility.md)区分已测接口、软件版本和未认证范围。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI，也不把旧版默默当成兼容替代。
+历史beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`，这三版均已上线；这不是当前版本的兼容结论。[当前兼容矩阵](references/compatibility.md)区分已测接口、软件版本和未认证范围。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI，也不把旧版默默当成兼容替代。
 
 [持仓工具 Release](https://github.com/KILING-TASI/cn-fund-lookthrough/releases) · [财报工具 Release](https://github.com/KILING-TASI/cn-financial-reconcile/releases) · [组合工具 Release](https://github.com/KILING-TASI/portfolio-decision-engine/releases)。安装后检查例子见下文；本程序不自动下载或安装。
 
