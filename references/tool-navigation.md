@@ -1,12 +1,12 @@
 # 按问题选择工具
 
-更新日期：2026-10-10。本页随待审主包更新。九个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
+更新日期：2026-10-11。本页是当前源码的工具导航。九个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
 
 |你想解决什么|工具|交付与衔接范围|
 |---|---|---|
 |研究公司、基金、ETF，比较产品，找回报告继续问|[research-workbench](https://github.com/KILING-TASI/research-workbench)|理解问题、组织公开资料、建立判断并生成报告；工作台可选|
-|多只基金是否重复持有同一批公司|[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)|证券/公司敞口、未知路径、已映射股票集中度；主包已有显式JSON桥，待审增量另核华夏成长2025年报和单日选定发行人；主包PDF桥仍只接原限定产品|
-|财报金额是不是同口径、原文差多少|[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)|金额差异/舍入/不可比；主包有显式JSON桥，待审行列定位仍限定金额，不是完整三表认证|
+|多只基金是否重复持有同一批公司|[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)|证券/公司敞口、未知路径、已映射股票集中度；主包已有显式JSON桥，独立仓增量另核华夏成长2025年报和单日选定发行人；主包PDF桥仍只接原限定产品|
+|财报金额是不是同口径、原文差多少|[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)|金额差异/舍入/不可比；主包有显式JSON桥，行列定位仍限定金额，不是完整三表认证|
 |比较组合配置、回撤预算、成本与现金流|[portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine)|窄范围TWR/XIRR对照与现金需求原生透传已验；全部模型迁移未验，不自动替换|
 |北交网上发行比例获配情景、占款与复盘|[bjx-ipo-engine](https://github.com/KILING-TASI/bjx-ipo-engine)|有限单发行API原生桥已验；年度/滑点/融资不等价，内置专题保留|
 |可转债现金流、收益率与条款条件|[convertible-bond-engine](https://github.com/KILING-TASI/convertible-bond-engine)|固定未来现金流原生桥已验；非平坦曲线/条款权利不作全部等价，内置诊断保留|
@@ -30,10 +30,10 @@ flowchart TD
     I --> R[cn-market-rules：规则]
     I --> M[macro-dashboard-engine：宏观]
     I --> N[MarketLens：市场叙事证据]
-    W -. 有界原生契约，待审 .-> P
-    W -. 有界原生契约，待审 .-> B
-    W -. 有界原生契约，待审 .-> C
-    W -. 信封1.2/交接1.0，待审 .-> R
+    W -. 有界原生契约，限定范围 .-> P
+    W -. 有界原生契约，限定范围 .-> B
+    W -. 有界原生契约，限定范围 .-> C
+    W -. 信封1.2/交接1.0，限定范围 .-> R
 ```
 
 虚线代表已提供的有限可选JSON/原生接口；未画连线的工具不意味着主包已经自动调用。用户不必安装九个仓库。主包不自动下载或安装独立工具，调用者明确可信目录；各仓库的README和版本记录决定实际可运行范围。
@@ -41,10 +41,10 @@ flowchart TD
 ## 先看什么结果
 
 - [主包教学比较预览](examples/readme-preview.html)：说明共同区间表现取舍，不是完整基金评价。
-- [独立持仓预览](https://github.com/KILING-TASI/cn-fund-lookthrough/blob/codex/bounded-research-extensions/examples/readme-preview.html)：已知/未知一起展示，不把覆盖率当准确率。
-- [独立财报预览](https://github.com/KILING-TASI/cn-financial-reconcile/blob/codex/bounded-research-extensions/examples/readme-preview.html)：数值结论与原页状态分开。
+- [独立持仓预览](https://github.com/KILING-TASI/cn-fund-lookthrough/blob/main/examples/readme-preview.html)：已知/未知一起展示，不把覆盖率当准确率。
+- [独立财报预览](https://github.com/KILING-TASI/cn-financial-reconcile/blob/main/examples/readme-preview.html)：数值结论与原页状态分开。
 
-HTML需下载后用浏览器打开。三份均为实际demo生成的教学结果，尚无截图或视觉验收；输入与生成记录在对应README中。三个待审分支未合并，链接指向待审版本，不代表发布包已有这些预览。
+HTML需下载后用浏览器打开。三份为 demo 生成的教学结果；各页面的输入、生成时间及验收范围见对应 README，不把历史预览推定为最新版本验收。链接指向各仓当前默认分支；预览按自身生成记录阅读，不代表使用最新资料重算。
 
 ## 有限真实案例与缺口
 
@@ -53,4 +53,4 @@ HTML需下载后用浏览器打开。三份均为实际demo生成的教学结果
 公司监管事件由主包组织证据与解释；规则库只提供定义、条款与版本。现有小样本事件台账不等于全量检索/完整时间轴，规则接口只在已验有限范围消费，其他版本仍保留缺口，不给自动违规或退市概率。
 
 
-主包负责问题入口、资料组织、薄调用和报告找回；独立算法/样本维护归各仓。MarketLens只新增问题导航和归属，不创建第二套市场噪音模块，不宣称接入或迁移。其v0.1.0发布与本任务三个待审PR分开。各仓代码/第三方/数据许可逐仓核验；本页不因共同作者而推定新仓全部素材MIT。
+主包负责问题入口、资料组织、薄调用和报告找回；独立算法/样本维护归各仓。MarketLens只新增问题导航和归属，不创建第二套市场噪音模块，不宣称接入或迁移。它独立发布，工作台导航不代表已集成调用。各仓代码/第三方/数据许可逐仓核验；本页不因共同作者而推定新仓全部素材MIT。
