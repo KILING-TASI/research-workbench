@@ -1,0 +1,20 @@
+{
+  "asOf": "2026-05-01T12:00:00+08:00",
+  "records": [
+    {
+      "source": "https://example.org/teaching-only",
+      "locator": "原创教学记录，无真实公告",
+      "sourceVersion": "teaching-1",
+      "publishedDate": "2025-01-01",
+      "acquiredAt": "2025-01-02T10:00:00+08:00",
+      "rawSourceSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "id": "qa-1",
+      "access": "public",
+      "meetingType": "earnings-briefing",
+      "question": "新增租约是否已经形成收入？",
+      "answer": "仍在洽谈，尚未签署；不能计入已实现收入。",
+      "statementType": "forward-looking"
+    }
+  ],
+  "teaching": true
+}

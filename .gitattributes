@@ -2,3 +2,6 @@
 Start-Demo.sh text eol=lf
 
 Start-Demo.cmd text eol=crlf
+
+scripts/nav_collection/*.py text eol=lf
+scripts/research_tasks.py text eol=lf

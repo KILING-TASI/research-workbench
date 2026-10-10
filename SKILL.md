@@ -42,7 +42,7 @@ metadata:
 “我的组合有什么问题”“消息影响我的持仓吗”“原先逻辑还成立吗”，读[日常研究入口](references/retail-entry-points.md)。单主体深研或一页纸读[报告类型](references/deep-research-profiles.md)，不把报告模板当成完整数据能力。深度报告与一页纸是交付形式，不是额外模块。
 
 
-问询、处罚、审计意见和更正的限定关联按[事件关联](references/event-association.md)处理；只有选定回复案例验证，不据标签作法律定性。问询函与回复逐项研究按[问询专题](references/inquiry-research.md)处理；首批仅小样本关联与原页核对，不给统一风险评分。REITs按[经营与估值首版设计](references/reits-operating-research.md)确认产权/特许经营类型，该专题尚未实现完整估值。机构预测与实际财报分开，历史留档路线见[预测档案](references/forecast-history-archive.md)。
+问询、处罚、审计意见和更正的限定关联按[事件关联](references/event-association.md)处理；只有选定回复案例验证，不据标签作法律定性。问询函与回复逐项研究按[问询专题](references/inquiry-research.md)处理；首批仅小样本关联与原页核对，不给统一风险评分。REITs按[经营与估值首版设计](references/reits-operating-research.md)确认产权/特许经营类型，完整声明底稿的估值由[cn-reits-research](https://github.com/KILING-TASI/cn-reits-research)独立维护，产权/经营权分别测算。工作台负责问题、资料与报告归档，不复制估值算法或宣称已自动调用该仓。缺经营底稿时只解释公告事实和缺口，不编造真实估值。机构预测与实际财报分开，历史留档路线见[预测档案](references/forecast-history-archive.md)。
 
 ## 连贯完成研究
 
@@ -90,3 +90,8 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 ## 普通用户与失败接续
 
 首次使用或资料无法组织时，读 [中文资料准备](BEGINNER.md)，先确认影响问题的来源、日期和单位；不要让用户填写技术JSON。软件缺组件时使用本仓 `doctor`，不把环境就绪当作来源核验。报告生成、数据取得、计算完成和证据核对分别解释；能回答的部分先交付，未知说明影响与补齐路径。
+
+
+本轮新增预测实际配对、公开问答、假设变化与可迁移引擎索引。独立入口、底稿与限制见 [EXPANSION.md](EXPANSION.md)。
+
+新增复查用 scripts/research_review.py，见[本轮入口](EXPANSION.md)；预测与首次实际/重述、公开问答、假设变化、引擎索引分别保存新结果。原FOF的research_extensions.py继续保留。

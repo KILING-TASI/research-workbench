@@ -38,3 +38,8 @@ python scripts/forecast_archive.py references/examples/forecast-archive-teaching
 publish与calculate共用本次输入校验，在任何档案读取、已存ID过滤或写入之前拒绝重复ID及未知schema/方法。档案是否已有该ID不改变错误规则，失败不创建新报告或观察文件。
 
 旧acquisition-bound-history-1输入继续受理，但按修正后的方法2计算：结果methodVersion为2、requestedMethodVersion保留请求版本，并明确legacy-v1-input-under-corrected-v2-not-v1-output-replay；不是重放旧方法1结果。当前调用可以把新输入methodVersion明确设为2。既有观察文件、教学及公开补录输入、历史结果和预览冻结，不覆盖或自动迁移；本页旧结果链接仍对应方法1历史产物。报告声明版本与来源版本分别保留，不认证更正版本的真实性或优先级。
+
+
+## 新增：显式预测与实际配对
+
+`research-workbench script research_review forecast-actual --input 完整配对.json --out-dir 新目录`。预测必须在首次实际披露前取得，主体/期间/指标/单位/范围一致；首次实际与重述分开，零实际不算百分比误差。教学底稿见 examples/expansion-teaching/forecast-actual.json。该入口没有补齐前述公开转述样本的原研报或实际原文；旧观察及缺口不变。
