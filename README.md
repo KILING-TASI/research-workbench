@@ -10,12 +10,31 @@
 
 先看[保存的结果示例](references/examples/readme-preview.html)，不需要安装 Python：图片可直接查看；HTML 请下载完整源码后用浏览器打开。示例按原记录标注教学或限定真实样本，不能换个名称就当作你的研究结果。重新计算才需要 Python。
 
+![基金比较教学报告：共同区间结果与资料缺口](references/examples/readme-preview-desktop.jpg)
+
+2026-10-11 实际打开的历史教学页面；只完成该页面桌面显示检查，未认证全部报告或窄屏。[本次截图记录](references/examples/readme-preview-browser.json)
+
 其他问题可看[九个工具如何选择](https://github.com/KILING-TASI/research-workbench/blob/main/references/tool-navigation.md)。各工具可独立使用，不必安装全部仓库。
 
 [![原创代码 MIT](https://img.shields.io/badge/%E5%8E%9F%E5%88%9B%E4%BB%A3%E7%A0%81-MIT-green)](LICENSE)
 [![运行检查](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml)
 
 当前版本：[v0.1.0-beta.14](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.14)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+
+## 看几个历史研究案例
+
+以下摘自2026-10-06的案例范围记录，展示当时回答过的问题及仍未完成的部分。它们不是今天重新取数或验收的结论；本页不公开原始 PDF、私人账户和作者缓存。
+
+| 场景 | 代表报告 | 当时已回答 | 仍未完成 |
+|---|---|---|---|
+|公司研究|国电南瑞：订单增长，利润与现金兑现仍待跟上|半年收入与利润现金是否同步；披露的产品及地区增长是否均衡|完整估值吸引力；现金调节项目的逐笔经济原因与结算明细|
+|组合诊断|两基金组合：低重叠，为什么仍有明显回撤？|历史组合回撤与相关性；不同维持权重方式影响|完整细分行业及剩余资产暴露；真实账户和费用后收益|
+|北交所新股研究|莫森泰克：预算增加，为什么未必多获一百股？|历史资金档位；发行PE口径|完整价值与年化；首次公开与真实账户|
+|公司研究·医药新案例|恒瑞医药：利润持平，哪些变化被掩盖了？|选定财务表现方向差异；归母与扣非差额桥接|非经常性项目交易、估值及上期构成；现金变化来源与持续性|
+|FOF穿透|南方全天候FOF：债券毛额为主，仍需看权益、利率与融资|直接与已核间接股票暴露怎样相加；取得报告数量与底层解析覆盖如何区分|来源警告、1元股票会计差额及511090不计息负调整182,210.66元的具体经济构成；完整逐券及多层非股票穿透；完整行业、发行人重复风险及衍生品净敞口|
+|公司研究·水电新案例|长江电力：利润改善，现金与经营驱动仍需分开看|选定利润与现金同比方向是否一致；财务费用下降能否直接当归母利润贡献|完整三表及利润现金经济原因；来水、同范围售电量价与业务拆分|
+
+[全部16份历史案例及版本范围](references/acceptance-current.md#2026年10月6日16份历史范围记录) · [当时范围摘要](references/validation/current-case-scope-20261006.json)
 
 ## 按问题选择独立工具
 
@@ -38,9 +57,19 @@
 
 换成自己的资料，先看[中文资料准备与错误处理](BEGINNER.md)。已安装 CLI 可运行 `research-workbench doctor` 检查软件环境；它不检查资料或认证来源。
 
+## 已有报告，可以怎样接着问
+
+| 可以直接说 | 处理边界 |
+|---|---|
+| 这几只基金只看近一年，哪只更稳？ | 沿用旧截止日，分别看波动和回撤；不强选统一赢家 |
+| 我的组合收益主要靠谁？ | 需要已声明收益路径，不把持仓金额当风险贡献 |
+| 沿用上一份，把资金改为1,250万元 | 仅更改明确预算，原资料与日期保留，另存结果 |
+
+需先选定支持接续的报告，并由已注册 Skill 的助手或相应入口处理。[更多句式与支持范围](references/practical-entry.md)
+
 ## 安装和首次试用
 
-安装包见[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.14)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+安装包见[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.14)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
 安装包版本为 `0.1.0-beta.14`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
@@ -53,26 +82,12 @@ python -m venv .venv
 
 工具名与仓库名相同；在已激活的环境中可以直接输入工具名。Linux/macOS 使用 `.venv/bin/python` 和 `.venv/bin/research-workbench`。教学结果写入当前工作目录；`--auto-name` 自动另选新名字，旧结果保留。不加该参数时，教学入口拒绝已有目录。`research-workbench run --help` 查看原生参数，原来的命令继续兼容。其他专题可用 `research-workbench script --help` 查看入口，以脚本名调用，不需要记住源码路径。pip 安装提供 CLI；作为 Skill 使用仍须保留完整源码及许可资源，不能只复制 SKILL.md。安装可能需要联网获取普通构建依赖；教学离线。下面保留原生入口及此前发行记录，安装步骤和对应版本以本节为准。
 
-## 先试一次
-
-需要 **Python 3.11 或更高版本**。下面的教学例子不联网，不需要账户、PDF 组件或其他专业工具。
-
-下载或克隆仓库后，在仓库根目录打开 PowerShell：
-
-```powershell
-python scripts/start.py demo --out-dir local-data/first-comparison
-Invoke-Item ".\local-data\first-comparison\打开这里.html"
-```
-
-会生成 HTML、Markdown、计算结果和输入记录。先打开 `打开这里.html`，再看基金比较说明。如果输出目录已经存在，把 `first-comparison` 换成 `first-comparison-2`；程序不会覆盖旧报告。
-
-更多用法见[快速开始](references/quickstart.md)。真实资料需要另行提供或按请求获取，教学输入不能改个名字就当成真实基金。
 
 ## 结果是什么样
 
 教学例子会先说明：**在这段区间里，A 上涨 10%，B 下跌 10%；A 的区间表现更好，但不能据此判断长期能力。** 随后列出依据、计算口径和还缺哪些资料。
 
-这里只有两个日期，年化波动等长期指标不输出，也不评价经理能力。你可以下载[教学报告](references/examples/readme-preview.html)后在本地打开，或查看[对应输入](references/examples/readme-preview-input.json)和[生成记录](references/examples/readme-preview-manifest.json)。这份预览保留原有版本，尚未完成浏览器视觉验收。
+这里只有两个日期，年化波动等长期指标不输出，也不评价经理能力。你可以下载[教学报告](references/examples/readme-preview.html)后在本地打开，或查看[对应输入](references/examples/readme-preview-input.json)和[生成记录](references/examples/readme-preview-manifest.json)。这份预览保留原有版本；该页面已于2026-10-11完成桌面显示检查，记录见上方截图说明。
 
 ## 能做什么
 
