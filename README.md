@@ -7,9 +7,9 @@
 
 ## 安装和首次试用
 
-本轮对应[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.8)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+本轮对应[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.9)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-本轮源码版本为 `0.1.0-beta.8`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+本轮源码版本为 `0.1.0-beta.9`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
@@ -118,3 +118,7 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 有权授权的原创代码和说明采用 [MIT](LICENSE)。第三方代码、公告、研报、行情数据和品牌的权利分别处理，详见[第三方与数据说明](THIRD_PARTY_NOTICES.md)及[来源许可核查](references/third-party-notices.md)。
 
 本项目用于学习和研究，不构成投资建议，不执行交易，也不保证收益。请结合本次来源、假设和缺口独立判断；[完整免责声明](DISCLAIMER.md)保留具体使用边界。
+
+## 公告问答的可用句式
+
+当前公告路由只支持单家A股、近一或三个月，并非任意自然语言解析器。可以说“查询招商银行近三个月的公告”或“查看600036近一个月的公告”。输入JSON也可明确填写 `code` 或 `query`，并提供 `asOf`。名称无法唯一确认、日期冲突或超出支持范围时，先澄清，不猜测代码或忽略条件。
