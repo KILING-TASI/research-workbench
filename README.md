@@ -66,7 +66,7 @@ research-workbench/
 
 配置矩阵、部分 Excel 和 JavaScript 入口有各自依赖，不必为了试用一次就全部安装。普通组件、可选 PDF 组件和自家专业包是三类不同前提；安装了 PDF 组件不等于安装了专业工具。
 
-beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI。对应资产尚未上线时，不把旧版当成兼容替代：基础教学仍可运行，专业场景等待资产或使用经过核对的源码。
+beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`，这三版均已上线。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI，也不把旧版默默当成兼容替代。
 
 [持仓工具 Release](https://github.com/KILING-TASI/cn-fund-lookthrough/releases) · [财报工具 Release](https://github.com/KILING-TASI/cn-financial-reconcile/releases) · [组合工具 Release](https://github.com/KILING-TASI/portfolio-decision-engine/releases)。安装后检查例子见下文；本程序不自动下载或安装。
 
@@ -88,13 +88,13 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 
 ## 当前源码与下载包
 
-当前准备的软件版本是 **`0.1.0-beta.7`**，还没有发布。Skill 元数据和候选安装包使用这个版本号；说明版本、接口及计算方法各自保留原编号。发布内容见[beta.7 发布说明](references/release-notes-beta7.md)。
+当前软件版本是 **`0.1.0-beta.7`**，已于 **2026-10-10** 发布。Skill 元数据和安装包使用这个版本号；说明版本、接口及计算方法各自保留原编号。发布内容见[beta.7 发布说明](references/release-notes-beta7.md)。
 
-截至 **2026-10-10**，新增的依赖检查、专业工具调用和预测档案修正已经集成到默认 `main` 源码。可以克隆或下载当前源码；原来的 Release 仍是 [`v0.1.0-beta.6`](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.6)，它不是当前源码的重新打包版。
+可以克隆默认 `main` 源码，也可以从 [v0.1.0-beta.7 Release](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.7) 下载 [安装 ZIP](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/research-workbench-v0.1.0-beta.7.zip)及[SHA256 校验清单](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/SHA256SUMS.txt)。旧 [beta.6](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.6) 保留，不替换历史资产。
 
 下载旧压缩包或使用旧安装，不会自动得到这些新增内容。专业工具也要使用支持对应接口的版本，不能默认用旧包替代。[功能归属与依赖](references/engine-ownership-and-migration.md)列出已经转交的计算和仍留在主包的部分。
 
-安装包发布后，解压得到完整的 `research-workbench` 目录；命令行试用可在该目录运行，安装 Skill 则按所用 AI 工具的规则放入 Skill 目录。不要覆盖自己保存的研究资料，安装步骤见[安装说明](references/standalone-install.md)。本项目没有 pyproject，交付的是 Skill 源码 ZIP，不提供 wheel 或 sdist。
+解压安装包得到完整的 `research-workbench` 目录；命令行试用可在该目录运行，安装 Skill 则按所用 AI 工具的规则放入 Skill 目录。不要覆盖自己保存的研究资料，安装步骤见[安装说明](references/standalone-install.md)。本项目没有 pyproject，交付的是 Skill 源码 ZIP，不提供 wheel 或 sdist。资产保留构建时的说明，发布状态以本页和 Release 页为准；更新本页不重打旧标签或安装包。
 
 ## 验证、许可与使用边界
 
