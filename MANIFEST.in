@@ -1,0 +1,9 @@
+include pyproject.toml setup.py _build_skill.py README.md SKILL.md LICENSE THIRD_PARTY_NOTICES.md
+recursive-include scripts *.py *.js *.cjs *.mjs *.md *.json *.txt *.csv *.html *.css *.yaml *.yml *.jpg *.png *.svg
+recursive-include references *.py *.js *.cjs *.mjs *.md *.json *.txt *.csv *.html *.css *.yaml *.yml *.jpg *.png *.svg
+recursive-include agents *.py *.js *.cjs *.mjs *.md *.json *.txt *.csv *.html *.css *.yaml *.yml *.jpg *.png *.svg
+recursive-include modules *.py *.js *.cjs *.mjs *.md *.json *.txt *.csv *.html *.css *.yaml *.yml *.jpg *.png *.svg
+recursive-include research_workbench *.py
+global-exclude *.pyc *.pdf *.docx *.xlsx
+prune build
+prune dist
