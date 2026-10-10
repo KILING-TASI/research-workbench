@@ -7,7 +7,7 @@ name = "research-workbench"
 version = "0.1.0b8"
 description = "独立研究工具与完整资源；未知证据保留"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
 dependencies = []

@@ -20,6 +20,7 @@ def check():
             return {str(p):hashlib.sha256(p.read_bytes()).hexdigest() for folder in folders for p in folder.rglob('*') if p.is_file()}
         installed=installed_hashes();assert installed
         assert '--auto-name' in run(['--help']).stdout
+        assert '需要一个明确' in run(['run','--out-dir=a','--out-dir=b','--auto-name'],2).stderr
         assert '可用入口' in run(['script','--help']).stdout
         assert '未知脚本名' in run(['script','../private'],2).stderr
         first=run(['demo','--out-dir','reports/demo'])
