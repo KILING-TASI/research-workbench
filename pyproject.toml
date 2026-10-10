@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "research-workbench"
+version = "0.1.0b8"
+description = "独立研究工具与完整资源；未知证据保留"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+dependencies = []
+
+[project.scripts]
+research-workbench = "research_workbench._entry:main"
+
+[tool.setuptools]
+packages = ["research_workbench"]
+package-dir = {"research_workbench" = "research_workbench"}
