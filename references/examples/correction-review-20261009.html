@@ -1,0 +1,81 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>事件与研究问题</title><style>
+:root{--ink:#263449;--muted:#65758b;--blue:#285fc4;--line:#e1e7ef;--paper:#fff;--bg:#f4f6fa}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.85 "Microsoft YaHei UI","PingFang SC",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+.report-layout{max-width:1280px;margin:32px auto;display:grid;grid-template-columns:192px minmax(0,1fr);gap:24px;padding:0 24px}.report-layout.no-nav{grid-template-columns:1fr;max-width:1000px}.report-nav{position:sticky;top:28px;align-self:start;font-size:13px;max-height:calc(100vh - 56px);overflow-y:auto}.nav-title{font-size:12px;letter-spacing:.1em;color:var(--muted);margin:0 0 12px}.report-nav a{display:block;padding:7px 10px;border-left:2px solid transparent;text-decoration:none;color:var(--muted);line-height:1.6}.report-nav a:hover{color:var(--blue);background:#eaf0fa;border-color:var(--blue)}main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:34px 40px;box-shadow:0 4px 20px #21345405}
+h1{font-size:28px;line-height:1.45;letter-spacing:-.02em;margin:0 0 20px;color:#17263e}h2{font-size:20px;line-height:1.5;margin:36px 0 14px;padding:0 0 10px;border-bottom:1px solid var(--line)}h3{font-size:16px;line-height:1.6;margin:22px 0 10px}p{margin:10px 0 16px}p,li{overflow-wrap:anywhere}ul{padding-left:22px;margin:12px 0 20px}li{padding:3px 0}a{color:var(--blue);text-underline-offset:3px}a:focus-visible{outline:3px solid #b9cdf2;outline-offset:3px;border-radius:3px}.section-anchor{display:block;scroll-margin-top:20px}.table-wrap{overflow-x:auto;margin:18px 0 24px;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.7;font-variant-numeric:tabular-nums}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;overflow-wrap:normal;min-width:90px}th{background:#f0f4fa;color:#52637b;font-weight:600}tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#fafbfd}tbody tr:hover{background:#f1f5fb}.source{font-size:12px;color:var(--muted)}main>p:first-of-type:not(.conclusion){color:var(--muted);font-size:14px}
+@media(max-width:960px){.report-layout{grid-template-columns:1fr;max-width:940px;padding:0 20px}.report-nav{position:static;max-height:none;overflow:visible;display:flex;flex-wrap:wrap;gap:4px 8px}.nav-title{width:100%;margin-bottom:2px}.report-nav a{padding:5px 9px;border:1px solid var(--line);border-radius:6px;background:white}main{padding:28px}}
+@media(max-width:600px){.report-layout{margin:14px auto;padding:0 12px;gap:14px}main{padding:22px 18px;border-radius:10px}h1{font-size:23px}h2{font-size:18px;margin-top:28px}body{font-size:14px}.report-nav a{font-size:12px}th,td{padding:9px 10px}table{font-size:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{@page{size:A4;margin:16mm}body{background:white;font-size:11pt}.report-layout{display:block;margin:0;padding:0;max-width:none}.report-nav{display:none}main{border:0;box-shadow:none;border-radius:0;padding:0}h1{font-size:21pt}h2{font-size:15pt;break-after:avoid}h3{break-after:avoid}thead{display:table-header-group}tr{break-inside:avoid}.table-wrap{overflow:visible;border-radius:0}table{font-size:9pt;table-layout:fixed}th,td{min-width:0;padding:6px;overflow-wrap:anywhere}a{color:inherit}tbody tr:hover{background:inherit}}
+hr{border:0;border-top:1px solid var(--line);margin:26px 0}h4{font-size:14px;font-weight:600;color:var(--muted);margin:26px 0 8px}p.conclusion{font-size:21px;line-height:1.55;font-weight:700;color:#17263e;margin:8px 0 14px;padding:16px 20px;background:#f0f5ff;border-left:4px solid var(--blue);border-radius:0 8px 8px 0}p.evidence{font-size:13px;line-height:1.8;color:#58677b;margin:10px 0 18px}@media(max-width:600px){p.conclusion{font-size:18px;padding:13px 15px}p.evidence{font-size:13px}}@media print{p.conclusion{font-size:14pt;break-inside:avoid}p.evidence{font-size:9pt}h4{break-after:avoid}}pre.example{padding:14px 16px;background:#f5f7fa;border:1px solid var(--line);border-radius:8px;overflow-x:auto;font-size:12px;line-height:1.7;white-space:pre}pre.example code{font-family:Consolas,"Liberation Mono",monospace}@media print{pre.example{white-space:pre-wrap;overflow-wrap:anywhere;font-size:9pt}}th.align-right,td.align-right{text-align:right}th.align-center,td.align-center{text-align:center}.table-wrap:focus-visible{outline:3px solid #b9cdf2;outline-offset:3px}.table-hint{font-size:12px;color:var(--muted);margin:14px 0 4px}.table-hint+.table-wrap{margin-top:4px}@media print{.table-hint{display:none}.table-hint+.table-wrap{margin-top:18px}}</style></head><body><div class="report-layout"><nav class="report-nav" aria-label="报告目录"><p class="nav-title">报告目录</p><a href="#section-1">更正：间接股权比例由20.89%更正为21.89%</a><a href="#section-2">更正：资金往来情况表单位由万元更正为元</a><a href="#section-3">限制</a></nav><main><h1>事件与研究问题</h1><p>整理了2项事件线索与0条明确关联；应围绕所指问题继续核对，不凭标签定性。</p><p>本次截止日：2026-10-09。样本范围：有限公开更正案例，未配对原版和修订全文。</p><p>原页状态：仅声明页码与引句，未核本地原件</p><span class="section-anchor" id="section-1"></span><h2>更正：间接股权比例由20.89%更正为21.89%</h2><p>研究上要问：权益比例相关底稿要更新，但不能因此认定投资收益或减值判断已经改善。</p><p>仍不能判断：本次仅取得更正公告，未逐一核对旧版和修订版全文；审计意见与审计师变更没有独立认证。</p><p>来源：https://static.cninfo.com.cn/finalpage/2026-05-06/1225277438.PDF，物理页1，披露日2026-05-06。</p><p>原页状态：仅声明页码与引句，未核本地原件</p><span class="section-anchor" id="section-2"></span><h2>更正：资金往来情况表单位由万元更正为元</h2><p>研究上要问：先找到对应版本与原表，再按正确单位核对；不能直接将旧研究结果整体除以一万。</p><p>仍不能判断：未取得两版资金往来表，公告中的单位更正不等于表内每个金额都已核对。</p><p>来源：https://static.cninfo.com.cn/finalpage/2026-05-06/1225277438.PDF，物理页4，披露日2026-05-06。</p><p>方法版本：event-review-0.1.dev1 / event-evidence-ledger-v1 / explicit-event-links-1。</p><span class="section-anchor" id="section-3"></span><h2>限制</h2><ul><li>事件日期或报告期未知时保留空值，不拿披露日回填</li><li>审计意见与审计师变更分开；未提供的事件不表示不存在</li><li>不自动认定违规、因果或退市概率；关系不替换财报事实版本</li><li>原页引句匹配不等于事件全文或法律效力已经认证</li></ul></main></div><section><label>筛选当前结果 <input id="result-filter" type="search" placeholder="输入名称、状态或期间"></label> <label>排序 <select id="result-sort"><option value="original">原顺序</option><option value="name">首列名称</option></select></label><p id="result-count" aria-live="polite"></p><p>仅筛选、排序本页已保存结果，不重新计算，不更换研究情景，也不改变总量与未知部分。</p><div style="overflow:auto"><table id="result-table"><thead><tr><th scope="col">事件</th><th scope="col">类型</th><th scope="col">披露日</th><th scope="col">研究问题</th></tr></thead><tbody><tr data-order="0"><td>间接股权比例由20.89%更正为21.89%</td><td>更正</td><td>2026-05-06</td><td>权益比例相关底稿要更新，但不能因此认定投资收益或减值判断已经改善。</td></tr><tr data-order="1"><td>资金往来情况表单位由万元更正为元</td><td>更正</td><td>2026-05-06</td><td>先找到对应版本与原表，再按正确单位核对；不能直接将旧研究结果整体除以一万。</td></tr></tbody></table></div></section><script>
+(()=>{const q=document.getElementById('result-filter'),s=document.getElementById('result-sort'),t=document.querySelector('#result-table tbody'),rows=Array.from(t.rows);function update(){let count=0;rows.sort((a,b)=>s.value==='name'?a.cells[0].textContent.localeCompare(b.cells[0].textContent,'zh-CN'):Number(a.dataset.order)-Number(b.dataset.order));for(const row of rows){row.hidden=!row.textContent.toLowerCase().includes(q.value.trim().toLowerCase());if(!row.hidden)count++;t.appendChild(row);}document.getElementById('result-count').textContent='显示 '+count+' / '+rows.length+' 条';}q.addEventListener('input',update);s.addEventListener('change',update);update();})();
+</script><details><summary>输入与方法摘要（分享前检查隐私）</summary><pre>{
+  &quot;input&quot;: {
+    &quot;entity&quot;: &quot;黑龙江国中水务股份有限公司&quot;,
+    &quot;asOf&quot;: &quot;2026-10-09&quot;,
+    &quot;sampleType&quot;: &quot;limited-public-correction-evidence&quot;,
+    &quot;documents&quot;: [
+      {
+        &quot;id&quot;: &quot;correction-20260506&quot;,
+        &quot;entity&quot;: &quot;黑龙江国中水务股份有限公司&quot;,
+        &quot;publishedAt&quot;: &quot;2026-05-06&quot;,
+        &quot;version&quot;: &quot;original-correction-announcement-2026-024&quot;,
+        &quot;source&quot;: &quot;https://static.cninfo.com.cn/finalpage/2026-05-06/1225277438.PDF&quot;,
+        &quot;sha256&quot;: &quot;b651016a8cf3004eb4aa02205a07be03b376ddf84d9abb96bbd0e965ef28b2ce&quot;
+      }
+    ],
+    &quot;events&quot;: [
+      {
+        &quot;id&quot;: &quot;ownership-correction&quot;,
+        &quot;entity&quot;: &quot;黑龙江国中水务股份有限公司&quot;,
+        &quot;kind&quot;: &quot;correction&quot;,
+        &quot;eventDate&quot;: null,
+        &quot;reportPeriod&quot;: &quot;2025-12-31&quot;,
+        &quot;summary&quot;: &quot;间接股权比例由20.89%更正为21.89%&quot;,
+        &quot;researchQuestion&quot;: &quot;权益比例相关底稿要更新，但不能因此认定投资收益或减值判断已经改善。&quot;,
+        &quot;limitation&quot;: &quot;本次仅取得更正公告，未逐一核对旧版和修订版全文；审计意见与审计师变更没有独立认证。&quot;,
+        &quot;evidence&quot;: {
+          &quot;documentId&quot;: &quot;correction-20260506&quot;,
+          &quot;physicalPage&quot;: 1,
+          &quot;quote&quot;: &quot;20.89%&quot;
+        },
+        &quot;affectedFields&quot;: [
+          {
+            &quot;metric&quot;: &quot;间接持有北京汇源股权比例&quot;,
+            &quot;before&quot;: &quot;20.89&quot;,
+            &quot;after&quot;: &quot;21.89&quot;,
+            &quot;unit&quot;: &quot;percent&quot;,
+            &quot;authority&quot;: &quot;company-correction-announcement&quot;
+          }
+        ]
+      },
+      {
+        &quot;id&quot;: &quot;unit-correction&quot;,
+        &quot;entity&quot;: &quot;黑龙江国中水务股份有限公司&quot;,
+        &quot;kind&quot;: &quot;correction&quot;,
+        &quot;eventDate&quot;: null,
+        &quot;reportPeriod&quot;: &quot;2025-12-31&quot;,
+        &quot;summary&quot;: &quot;资金往来情况表单位由万元更正为元&quot;,
+        &quot;researchQuestion&quot;: &quot;先找到对应版本与原表，再按正确单位核对；不能直接将旧研究结果整体除以一万。&quot;,
+        &quot;limitation&quot;: &quot;未取得两版资金往来表，公告中的单位更正不等于表内每个金额都已核对。&quot;,
+        &quot;evidence&quot;: {
+          &quot;documentId&quot;: &quot;correction-20260506&quot;,
+          &quot;physicalPage&quot;: 4,
+          &quot;quote&quot;: &quot;单位“万元”更正为“元”&quot;
+        },
+        &quot;affectedFields&quot;: [
+          {
+            &quot;metric&quot;: &quot;资金往来表显示单位&quot;,
+            &quot;before&quot;: &quot;万元&quot;,
+            &quot;after&quot;: &quot;元&quot;,
+            &quot;authority&quot;: &quot;company-correction-announcement&quot;
+          }
+        ]
+      }
+    ],
+    &quot;relations&quot;: []
+  },
+  &quot;methodSha256&quot;: {
+    &quot;event_review.py&quot;: &quot;82f7f88e113b564b3f9207b5dcac8d9686507c16df9bfaf71d4d3d68e4b81af6&quot;,
+    &quot;event_html_controls.py&quot;: &quot;76d24a00fdc945e0e9dee52383c4d0ae5f61952536c762928395daacbf1eecf8&quot;
+  }
+}</pre></details></body></html>

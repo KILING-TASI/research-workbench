@@ -76,3 +76,22 @@ Excel相关组件单独检查：xlrd用于申万股票行业历史XLS原表，op
 2026-10-08，[独立运行37785852969](https://github.com/KILING-TASI/research-workbench/actions/runs/37785852969)在Ubuntu/Windows和Python3.11/3.12四组均成功，每组实际2053项主包测试通过，另有三个禁用site-packages的教学入口成功。声明依赖按已测试约束安装；不携带专有导出组件或作者数据。首次Windows运行的3项路径断言失败已保留，修正短路径/规范路径比较后复验通过。
 
 该结果对应提交658395355b2b46c1f683f086ce38b691af00c61c。流程仅拉取请求及手动事件触发，无定时设置；后续代码变化须重新运行，不能沿用此状态。上述检查不代表联网数据稳定、全部专题资源、视觉或经济判断全部通过。
+
+
+## 待审去重路径的专业依赖
+
+基础比较demo仍标准库可运行。六列持仓、schema1原页字段、观察出入金的计算已迁入专业仓：cn-fund-lookthrough、cn-financial-reconcile、portfolio-decision-engine。安装支持当前兼容入口的专业包，或给可信源码目录设置RESEARCH_WORKBENCH_LOOKTHROUGH_DIR、RESEARCH_WORKBENCH_FINANCIAL_DIR、RESEARCH_WORKBENCH_PORTFOLIO_DIR。不是后台安装；旧v0.1.0发布包不包含新增兼容接口时会报明确不可用。报告和综合判断仍在主包；schema2/九列QDII/定投等未迁移路径见归属说明，不视为全部独立化。
+
+## 当前迁移依赖
+
+基础离线教学不需要其他自家仓库。六列完整股票表依赖兼容 cn-fund-lookthrough，schema1原页字段核验依赖兼容 cn-financial-reconcile，观察账户收益依赖兼容 portfolio-decision-engine。缺包清晰不可用，不静默改用重复算法。已发布专业v0.1.0不含这些新兼容接口，不能用旧包替代当前待审源码或构建wheel。PDF第三方组件与专业包是不同依赖：装pdfplumber不等于装了专业工具。
+
+## 2026-10-10 单仓实际验收
+
+当前待审源码经git归档，在新目录、新venv和空用户缓存环境完成README最短教学HTML/Markdown/JSON交付，并拒绝已存在输出。Skill包877文件、根SKILL及直接参考/资源已核对，无PDF；CLI结果不代表自然语言安装发现或视觉通过。第三方PDF组件按声明单独安装后，实际调用六列、schema1和观察收益三路径均提示缺兼容专业包，不安装其他自家仓库来掩盖不可用。结论为基础教学独立通过、迁移场景单仓不可用。源模块仅来自隔离导出目录/该venv/运行时标准库，不读取作者工作区；宿主仍有其他仓，不是新OS。远端新增Single repository installation仅检出本仓。已发布beta.6未另验。
+
+## 按具体入口检查软件
+
+`python scripts/start.py doctor --for-entry cashflow --out-dir NEW_DIRECTORY` 只检查账户收益入口。`--for-entry fund-report-six-column`检查六列持仓的兼容专业接口及PDF组件，`--for-entry original-schema1`检查schema1原页核验；`--for-entry demo`只检查教学入口Python版本。也可用`python scripts/environment_check.py --entry cashflow --out NEW.json`留存JSON/Markdown。检查命令成功表示检查完成，available字段仍可能为false；接口可定位不等于已加载、计算或核验资料。
+
+专业依赖检查沿用specialist_loader的目录选择与Python方法摘要，仅定位指定函数声明；实际调用另记录已加载origin。缺兼容专业包时给对应仓库名及RESEARCH_WORKBENCH_*_DIR指引，不自动安装。仅账户收益入口主动预检，其他研究不统一挂专业包门槛。来源未知、净值缺期、现金流完整性未确认等仍属资料或口径问题，不据此写软件缺失。

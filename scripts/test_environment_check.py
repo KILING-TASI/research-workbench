@@ -3,6 +3,17 @@ import subprocess
 from unittest.mock import patch
 from environment_check import inspect,markdown
 class Tests(unittest.TestCase):
+ def test_single_demo_check_never_probes_unused_tools(self):
+  with patch('specialist_loader.check',side_effect=AssertionError('unused tool')),patch('environment_check.subprocess.run') as process:
+   result=inspect(entry='demo')
+   self.assertTrue(result['available']);self.assertEqual(result['dataStatus'],'not-checked')
+   self.assertIsNone(result['specialistDependency']);process.assert_not_called()
+ def test_single_cashflow_check_reports_missing_tool_not_missing_data(self):
+  from specialist_loader import SpecialistUnavailableError
+  with patch('specialist_loader.location',side_effect=SpecialistUnavailableError('独立工具不可用')),patch('environment_check.subprocess.run') as process:
+   result=inspect(entry='cashflow')
+   self.assertFalse(result['available']);self.assertEqual(result['dataStatus'],'not-checked')
+   self.assertIn('portfolio-decision-engine',markdown(result));process.assert_not_called()
  def test_empty_node_version_is_not_available(self):
   with patch('environment_check.importlib.util.find_spec',return_value=None),patch('environment_check.shutil.which',return_value='node'),patch('environment_check.subprocess.run',return_value=subprocess.CompletedProcess([],0,'','')) as process:
    rows={x['component']:x for x in inspect()['dependencies']}

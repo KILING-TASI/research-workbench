@@ -1,0 +1,65 @@
+{
+  "entity": "黑龙江国中水务股份有限公司",
+  "asOf": "2026-10-09",
+  "sampleType": "limited-public-correction-evidence",
+  "documents": [
+    {
+      "id": "correction-20260506",
+      "entity": "黑龙江国中水务股份有限公司",
+      "publishedAt": "2026-05-06",
+      "version": "original-correction-announcement-2026-024",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-05-06/1225277438.PDF",
+      "sha256": "b651016a8cf3004eb4aa02205a07be03b376ddf84d9abb96bbd0e965ef28b2ce"
+    }
+  ],
+  "events": [
+    {
+      "id": "ownership-correction",
+      "entity": "黑龙江国中水务股份有限公司",
+      "kind": "correction",
+      "eventDate": null,
+      "reportPeriod": "2025-12-31",
+      "summary": "间接股权比例由20.89%更正为21.89%",
+      "researchQuestion": "权益比例相关底稿要更新，但不能因此认定投资收益或减值判断已经改善。",
+      "limitation": "本次仅取得更正公告，未逐一核对旧版和修订版全文；审计意见与审计师变更没有独立认证。",
+      "evidence": {
+        "documentId": "correction-20260506",
+        "physicalPage": 1,
+        "quote": "20.89%"
+      },
+      "affectedFields": [
+        {
+          "metric": "间接持有北京汇源股权比例",
+          "before": "20.89",
+          "after": "21.89",
+          "unit": "percent",
+          "authority": "company-correction-announcement"
+        }
+      ]
+    },
+    {
+      "id": "unit-correction",
+      "entity": "黑龙江国中水务股份有限公司",
+      "kind": "correction",
+      "eventDate": null,
+      "reportPeriod": "2025-12-31",
+      "summary": "资金往来情况表单位由万元更正为元",
+      "researchQuestion": "先找到对应版本与原表，再按正确单位核对；不能直接将旧研究结果整体除以一万。",
+      "limitation": "未取得两版资金往来表，公告中的单位更正不等于表内每个金额都已核对。",
+      "evidence": {
+        "documentId": "correction-20260506",
+        "physicalPage": 4,
+        "quote": "单位“万元”更正为“元”"
+      },
+      "affectedFields": [
+        {
+          "metric": "资金往来表显示单位",
+          "before": "万元",
+          "after": "元",
+          "authority": "company-correction-announcement"
+        }
+      ]
+    }
+  ],
+  "relations": []
+}

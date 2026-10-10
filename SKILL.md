@@ -1,15 +1,26 @@
 ---
 name: research-workbench
-description: 用于标的查询与筛选、基金和ETF评价比较、跨资产组合诊断、公司与行业财务公告研究、可转债基础诊断、宏观观察及北交所新股测算。用户要求这些资料、分析、一页纸或研究报告时使用；保留来源、口径和缺口，不执行交易。
+description: 用户要研究公司、基金、ETF或其他投资标的，比较产品，诊断持仓组合，找回旧报告或沿用资料继续追问时使用；也支持行业、宏观和北交所新股研究。先识别用户要解决的问题，再组织资料与分析，输出自然语言判断、来源、口径和缺口，不执行交易。
 ---
 
 # 投研研究助手
 
-说明版本：1.92 · 更新日期：2026-10-09。
+说明版本：1.93 · 更新日期：2026-10-09。
 
 面向个人与买方研究。用户用自然语言提出问题，组织参数并调用现有脚本；工作台可选，不要求用户选技术模块或填写JSON。只读取本次问题需要的参考，复用已选标的、组合、区间和已取得资料。
 
-## 选择研究入口
+## 先按问题选择工作方式
+
+| 用户想做什么 | 识别线索 | 怎样处理与交付 |
+|---|---|---|
+| 研究一只标的或一个主题 | “这家公司怎么看”“评价这只基金”“分析这个行业” | 按对象读取下面的方法，回答核心判断、关键理由、风险和跟踪条件；轻量查询只回答所问字段 |
+| 比较几个产品 | “A和B有什么差别”“谁收益好、回撤小” | 对齐共同区间与口径，先说明优势和代价；指标冲突不强排统一赢家，不把用户指定池当作同类 |
+| 诊断我的组合 | “我的持仓有什么问题”“重复押注了吗”“收益主要靠谁” | 金额表先解释资金集中；底层重叠需披露持仓，历史风险与贡献需历史和路径。只补当前问题需要的资料，不强制完整穿透 |
+| 找回旧报告并继续研究 | “上次那份报告”“沿用上一份”“改看近一年” | 优先接续已选结果。需查找时只查用户指定目录；多份让用户确认。复用原请求和输入、另存新答复，不默认选最新或更新行情 |
+
+这四种方式用于组织工作，不要求用户选择模块或打开工作台。优先结合会话中的已选标的、报告与问题；同一句包含改区间和评价时一起处理。新研究与旧报告追问同时出现时，依用户的资料更新要求处理；是否沿用不明且影响结果时才询问，不能把旧快照冒充新数据。单项字段查询、筛选、宏观和北交专项仍可直接进入对应方法，不机械扩成完整报告。
+
+## 再按研究对象读取方法
 
 | 用户的问题 | 按需读取 |
 |---|---|
@@ -24,9 +35,12 @@ description: 用于标的查询与筛选、基金和ETF评价比较、跨资产�
 
 公告、合同、研报精读与事实核验共用[资料与事件](references/announcements-events.md)；笔记、快照、版本对比与导出共用[研究档案](references/archives-reports.md)。两者贯穿研究，不另设重复取数流程。
 
-已安装独立持仓穿透或财报字段核对工具时，按[独立工具衔接](references/independent-engines.md)明确接口后调用；未安装继续主包流程，不自动下载或把两个输入格式混用。
+已安装独立持仓穿透或财报字段核对工具时，按[独立工具衔接](references/independent-engines.md)明确接口后调用；六列持仓、schema1原页核验和观察账户收益已迁移，缺对应兼容专业包时明确该路径不可用；其他未迁移流程按实际依赖继续。不自动下载或把两个输入格式混用。
 
 “我的组合有什么问题”“消息影响我的持仓吗”“原先逻辑还成立吗”，读[日常研究入口](references/retail-entry-points.md)。单主体深研或一页纸读[报告类型](references/deep-research-profiles.md)，不把报告模板当成完整数据能力。深度报告与一页纸是交付形式，不是额外模块。
+
+
+问询、处罚、审计意见和更正的限定关联按[事件关联](references/event-association.md)处理；只有选定回复案例验证，不据标签作法律定性。问询函与回复逐项研究按[问询专题](references/inquiry-research.md)处理；首批仅小样本关联与原页核对，不给统一风险评分。REITs按[经营与估值首版设计](references/reits-operating-research.md)确认产权/特许经营类型，该专题尚未实现完整估值。机构预测与实际财报分开，历史留档路线见[预测档案](references/forecast-history-archive.md)。
 
 ## 连贯完成研究
 
@@ -51,30 +65,16 @@ description: 用于标的查询与筛选、基金和ETF评价比较、跨资产�
 - 不提供买卖、申购指令、收益保证或确定性价格预测；异常不直接定性造假、必然违约。经理观点限定已取得年报，不抓路演、采访。
 - 按用户请求主动更新，无默认后台轮询。独立包不附作者账户、全部PDF和市场缓存，不保证全量或实时。扫描件需人工复核，不承诺自动OCR。
 
-## 示例与运行参考
+## 首次运行与任务接续
 
-首次使用、验证安装或用户不知道从哪里开始时，先读[五分钟快速开始](references/quickstart.md)。可用 `python scripts/start.py demo --out-dir local-data/first-comparison` 生成无需网络和可选组件的教学报告。正式研究使用真实输入；失败时向用户解释原因与下一步，不把教学成功当作联网或全维度评价通过。
-
-单家A股近一/三个月公告问题，可使用 `scripts/start.py ask --question "用户问题" --as-of 实际截止日 --online --out-dir 新目录`。从自然语言识别名称并主动检索，不要求作者本地目录；取得元数据后继续按问题阅读关键原文，不能把partial线索报告说成完整公司评价。其他场景沿用对应研究入口，不误送入公告路由。
-
-已有基金代码与区间、持仓表格或组合历史输入时，按[日常简明入口](references/practical-entry.md)使用start.py的funds、snapshot、portfolio，复用既有计算。仅有金额先交付结构快照，不能输出行业重叠、健康评分或未来风险；关键参数由AI从会话组织，未明确的币种、单位和资金用途需确认。
-
-基金比较可使用完整名称；歧义先给候选，比较池名称可省略。续问优先复用当前结果的research-request.json和原响应，使用funds --continue-from并另建输出；不继承联网许可。用户想找旧报告时，使用research_results.py检索用户指定父目录，不扫描其他私人目录。比较正文先回答历史取舍，再解释回撤修复与月末阶段差异；这些不是个人回本预测或完整产品评价。
-
-snapshot、portfolio、compare和news也支持保存请求接续；更新资料使用用户确认的新输入，不默认刷新价格。用户只想看结构时先用已有市值回答，不将完整穿透和交易历史作为所有问题的前置要求；失败时优先给可读处理说明，成功部分继续保留。新增证据再按实际问题深入，不机械追加完整研究章节。
-
-style、lookthrough和rebalance接入同一结果导航与接续。再平衡先解释收益、回撤和费用取舍；复用已有历史，费用与频率由AI按用户要求准备，缺项须确认，不默认免费交易。通用份额模型不写成真实A股成交或场外基金申赎结算。穿透按证券别名、发行人及基金投资边分别处理，保留原路径和未知；有效持仓与冗余只描述已知股票范围，“独有公司为零”不能写成没有作用。用户未提供基准或底层报告时说明需要什么，不从净值或名称补造。
-
-最小离线示例：用户问“这条消息关联哪些持仓？”时，可先用包内教学输入验证入口：
+首次安装、验证运行或需要完整调用示例时，读[快速开始](references/quickstart.md)和[入口执行示例](references/entry-execution-examples.md)。教学示例不依赖网络：
 
 ```bash
-python scripts/retail_research.py references/examples/news-example.json --out-dir local-data/news-example
+python scripts/start.py demo --out-dir local-data/first-comparison
 ```
 
-输出result.json、研究结果.md和研究结果.html。示例为教学消息与金额；正式研究换成实际持仓和已取得事件，不将关联暴露当作预计损失。输出目录须为新目录；依赖缺失、下载失败或字段缺失按[失败输出](references/execution-contract.md)保留原因，不伪造成功。安装和环境检查见[README](README.md)与[独立安装](references/standalone-install.md)。
+正式研究按[日常入口](references/practical-entry.md)组织真实参数；输出目录使用新目录，保留原输入与请求。找回旧报告只检索用户指定目录，续问复用已选结果；更新资料按本次授权处理，不把旧快照当作最新数据。
 
-公式、参数、行业方法和专业依据见[方法与参数索引](references/capability-reference-index.md)。北交所、宏观指标与ETF轮动调用见[专用脚本](references/integrated-topics.md)，代码已在主包内；项目工作台和历史缓存路径不默认触发。数据源失败时按需读[体检说明](references/source-health.md)。
+失败时保留成功部分，说明缺什么、影响哪个判断、接下来如何补齐；具体降级路径见[执行前提与失败输出](references/execution-contract.md)。不要用教学数据替代真实标的，也不要让用户填写技术JSON。
 
-对外功能介绍见[功能说明](references/current-capabilities.md)，实际已核范围见[当前案例范围](references/acceptance-current.md)。分发或分享原文附件前查[许可说明](references/third-party-notices.md)。
-
-常用续问可使用 `scripts/resume_research.py --previous <已选定结果目录> --question "沿用上一份，只看近一年" --out-dir <新目录>`。仅支持文档列出的短句；最近区间以旧截止日为基准，额外参数变化须明确，不继承联网许可。详见[日常入口](references/practical-entry.md)。
+方法、公式与参数按需查[方法索引](references/capability-reference-index.md)，专题命令见[专用脚本](references/integrated-topics.md)。功能范围见[功能说明](references/current-capabilities.md)，实际验证范围见[当前案例范围](references/acceptance-current.md)；安装依赖见[安装说明](references/standalone-install.md)，原文附件分享见[许可说明](references/third-party-notices.md)。

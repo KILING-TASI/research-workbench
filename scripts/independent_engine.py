@@ -7,6 +7,13 @@ from collection_validation import unique_pairs,reject_constant,finite_json_float
 ENGINES={'lookthrough':'cnlookthrough','financial':'cnreconcile'}
 
 
+def contract(engine):
+    registry=load(Path(__file__).resolve().parents[1]/'references/engine-contracts.json')
+    rows=[row for row in registry['engines'] if row.get('id')==engine]
+    if len(rows)!=1 or not rows[0].get('bridgeAvailable') or rows[0].get('module')!=ENGINES.get(engine):raise ValueError('引擎尚未有等价可调用契约，不自动启用')
+    return dict(rows[0],registryVersion=registry['registryVersion'])
+
+
 def run(engine,project_dir,input_path,output,format='markdown',timeout=60):
     if engine not in ENGINES or format not in ('json','markdown','html'):raise ValueError('独立引擎或输出格式无效')
     if isinstance(timeout,bool) or not isinstance(timeout,int) or not 1<=timeout<=600:raise ValueError('超时须为1至600秒')
@@ -15,12 +22,15 @@ def run(engine,project_dir,input_path,output,format='markdown',timeout=60):
     if not root.is_dir() or not entry.is_file() or not entry.resolve().is_relative_to(root):raise ValueError('请指定已安装且可信的独立项目目录；不会自动下载')
     if not source.is_file() or source.stat().st_size>16*1024*1024:raise ValueError('输入缺失或超过16MB')
     if out.exists() or out.resolve()==source:raise ValueError('使用新输出文件，不覆盖输入或旧报告')
+    declared=load(source)
+    definition=contract(engine)
+    if isinstance(declared,dict) and declared.get('inputSchema') not in (None,definition['inputSchema']):raise ValueError('输入schema与所选引擎契约不同，未执行')
     env=dict(os.environ,PYTHONIOENCODING='utf-8');env.pop('PYTHONPATH',None)
     try:result=subprocess.run([sys.executable,'-m',module,str(source),'--format',format,'--out',str(out)],cwd=root,env=env,capture_output=True,text=True,encoding='utf-8',timeout=timeout)
     except (subprocess.TimeoutExpired,OSError) as error:raise ValueError('独立工具超时或无法启动，未认证输出成功') from error
     if result.returncode!=0:raise ValueError('独立工具未完成：'+result.stderr.strip()[-2000:])
     if not out.is_file():raise ValueError('工具未留下预期报告，不视为成功')
-    return {'engine':engine,'output':str(out),'status':'generated-not-reverified','inputSchema':'independent-not-main-skill-schema'}
+    return {'engine':engine,'output':str(out),'status':'generated-not-reverified','inputSchema':'independent-not-main-skill-schema','engineContract':definition}
 
 
 def method_files(engine,project_dir):
@@ -52,6 +62,7 @@ def bundle(engine,project_dir,output_dir,input_path=None,continue_from=None,time
         if manifest.get('methodFiles')!=method_files(engine,project_dir):note+=' 计算方法与旧版有变化，结果差别不能直接解释成市场变化。'
     else:source=Path(input_path).resolve()
     spec=load(source)
+    definition=contract(engine)
     if not isinstance(spec,dict):raise ValueError('独立接口输入须为对象')
     before=method_files(engine,project_dir)
     from research_brief_html import render
@@ -67,6 +78,7 @@ def bundle(engine,project_dir,output_dir,input_path=None,continue_from=None,time
         if first is not None and not lines[first].startswith('> '):lines[first]='> '+lines[first]
         body='\n'.join(lines)+'\n'
         (stage/'研究结果.md').write_text(body,'utf-8');(stage/'研究结果.html').write_text(render(body,'独立工具研究结果'),'utf-8')
+        (stage/'engine-contract.json').write_text(json.dumps({'engineContract':definition,'toolVersion':result.get('toolVersion','legacy-unregistered'),'rulesVersion':result.get('rulesVersion','legacy-unregistered'),'inputSchema':result.get('inputSchema',definition['inputSchema'])},ensure_ascii=False,indent=2),'utf-8')
         names=[]
         if engine=='lookthrough':names=[r['id'] for r in spec.get('positions',[]) if isinstance(r,dict) and isinstance(r.get('id'),str)]
         else:names=list(dict.fromkeys(r.get('reported',{}).get('entity') for r in spec.get('pairs',[]) if isinstance(r,dict) and isinstance(r.get('reported',{}).get('entity'),str)))

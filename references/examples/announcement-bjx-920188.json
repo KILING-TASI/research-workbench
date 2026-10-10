@@ -1,0 +1,36 @@
+{
+  "consumer": "bjx-selected-issuance-fields",
+  "header_sha256": "cc1706d0cacb5d80060bfcfb2c65d00ec165234a0d04cc96eff59ced327a5836",
+  "source_sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+  "parse_library": "pypdf",
+  "result": {
+    "status": "selected_text_anchors_matched",
+    "fields": [
+      "online_issue_shares",
+      "effective_subscription_shares",
+      "online_allocation_rate"
+    ],
+    "sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+    "historical_available_at": null,
+    "limits": "Three result-page anchors only; no new visual, full corrections, account or trusted publication-clock verification"
+  },
+  "negative_cases": [
+    {
+      "case": "tampered_digest",
+      "status": "rejected",
+      "reason": "Original file digest mismatch"
+    },
+    {
+      "case": "version_conflict",
+      "status": "rejected",
+      "reason": "Sidecar and native source version conflict"
+    },
+    {
+      "case": "unknown_historical_time",
+      "status": "rejected",
+      "reason": "Historical availability unknown; prospective use rejected"
+    }
+  ],
+  "native_payload_equal": true,
+  "cross_repository_status": "pending_external_receipts"
+}

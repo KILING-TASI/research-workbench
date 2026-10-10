@@ -30,6 +30,18 @@ class Tests(unittest.TestCase):
             with patch('independent_engine.subprocess.run',return_value=CompletedProcess([],2,'','bad input')):
                 with self.assertRaises(ValueError):bundle('lookthrough',project,root/'failed',input_path=source)
             self.assertFalse((root/'failed').exists())
+    def test_schema_mismatch_rejected_before_external_execution(self):
+        import json
+        with tempfile.TemporaryDirectory() as tmp:
+            project,source,out=self.fixture(Path(tmp));source.write_text(json.dumps({'inputSchema':'cnreconcile-pairs-v1'}),'utf-8')
+            with patch('independent_engine.subprocess.run') as execute:
+                with self.assertRaisesRegex(ValueError,'schema'):run('lookthrough',project,source,out)
+                execute.assert_not_called()
+    def test_unverified_owners_not_registered_as_callable(self):
+        from independent_engine import contract
+        self.assertEqual(contract('lookthrough')['inputSchema'],'cnlookthrough-nodes-v1')
+        with self.assertRaises(ValueError):contract('portfolio')
+
     def fixture(self,root):
         project=root/'project';(project/'cnlookthrough').mkdir(parents=True);(project/'cnlookthrough/__main__.py').write_text('','utf-8')
         source=root/'input.json';source.write_text('{}','utf-8');return project,source,root/'new.md'

@@ -1,0 +1,124 @@
+{
+  "toolVersion": "inquiry-review-0.2.dev1",
+  "inputSchema": "inquiry-ledger-v1",
+  "rulesVersion": "explicit-association-2",
+  "entity": "上海沿浦精工科技（集团）股份有限公司",
+  "asOf": "2026-10-10",
+  "originalInquiryDate": null,
+  "originalInquiryStatus": "not-obtained",
+  "questions": [
+    {
+      "questionId": "1",
+      "question": "主营业务分类和集装箱业务披露（从公司回复内转引定位，不代表独立原问询全文已取得）",
+      "questionOrigin": "quoted-in-reply",
+      "questionEvidence": {
+        "documentId": "company-reply",
+        "physicalPage": 1,
+        "quote": "1.关于主营业务。",
+        "source": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+        "version": "reply-2026-029",
+        "sha256": "00bdca89b9c52eb1e67b49d7955a9d47f5ce6035ba1baa6cea8b1b880038d860",
+        "pageVerification": "quote-found-on-page"
+      },
+      "replies": [
+        {
+          "responseId": "response-1",
+          "evidence": {
+            "documentId": "company-reply",
+            "physicalPage": 2,
+            "quote": "【公司回复】问题 1.（1）自集装箱业务开始开展以来历年开展",
+            "source": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+            "version": "reply-2026-029",
+            "sha256": "00bdca89b9c52eb1e67b49d7955a9d47f5ce6035ba1baa6cea8b1b880038d860",
+            "pageVerification": "quote-found-on-page"
+          },
+          "declaredOpenItems": [
+            "独立原问询全文和发函日期尚未取得；未认证所有子问题与实质回答充分性"
+          ],
+          "qualityJudgment": "not-assessed"
+        }
+      ],
+      "financialLinks": [],
+      "events": [],
+      "status": "reply-linked-not-quality-reviewed"
+    },
+    {
+      "questionId": "2",
+      "question": "应收账款增长、信用政策和回款（从公司回复内转引定位，不代表独立原问询全文已取得）",
+      "questionOrigin": "quoted-in-reply",
+      "questionEvidence": {
+        "documentId": "company-reply",
+        "physicalPage": 17,
+        "quote": "2.关于应收账款。",
+        "source": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+        "version": "reply-2026-029",
+        "sha256": "00bdca89b9c52eb1e67b49d7955a9d47f5ce6035ba1baa6cea8b1b880038d860",
+        "pageVerification": "quote-found-on-page"
+      },
+      "replies": [
+        {
+          "responseId": "response-2",
+          "evidence": {
+            "documentId": "company-reply",
+            "physicalPage": 17,
+            "quote": "公司销售的主要产品为汽车座椅骨架总成、精密冲压件",
+            "source": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+            "version": "reply-2026-029",
+            "sha256": "00bdca89b9c52eb1e67b49d7955a9d47f5ce6035ba1baa6cea8b1b880038d860",
+            "pageVerification": "quote-found-on-page"
+          },
+          "declaredOpenItems": [
+            "独立原问询全文和发函日期尚未取得；未认证所有子问题与实质回答充分性"
+          ],
+          "qualityJudgment": "not-assessed"
+        }
+      ],
+      "financialLinks": [],
+      "events": [],
+      "status": "reply-linked-not-quality-reviewed"
+    },
+    {
+      "questionId": "3",
+      "question": "关联交易定价、欠款与资金占用解释（从公司回复内转引定位，不代表独立原问询全文已取得）",
+      "questionOrigin": "quoted-in-reply",
+      "questionEvidence": {
+        "documentId": "company-reply",
+        "physicalPage": 27,
+        "quote": "3.关于关联交易。",
+        "source": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+        "version": "reply-2026-029",
+        "sha256": "00bdca89b9c52eb1e67b49d7955a9d47f5ce6035ba1baa6cea8b1b880038d860",
+        "pageVerification": "quote-found-on-page"
+      },
+      "replies": [
+        {
+          "responseId": "response-3",
+          "evidence": {
+            "documentId": "company-reply",
+            "physicalPage": 27,
+            "quote": "【公司回复】问题 3.（1）上述关联交易的主要内容、开展时间",
+            "source": "https://static.cninfo.com.cn/finalpage/2026-06-09/1225357545.PDF",
+            "version": "reply-2026-029",
+            "sha256": "00bdca89b9c52eb1e67b49d7955a9d47f5ce6035ba1baa6cea8b1b880038d860",
+            "pageVerification": "quote-found-on-page"
+          },
+          "declaredOpenItems": [
+            "独立原问询全文和发函日期尚未取得；未认证所有子问题与实质回答充分性"
+          ],
+          "qualityJudgment": "not-assessed"
+        }
+      ],
+      "financialLinks": [],
+      "events": [],
+      "status": "reply-linked-not-quality-reviewed"
+    }
+  ],
+  "missingReplyQuestionIds": [],
+  "conclusion": "本次只能做回复内转引对照，独立原函完整性与发函日期仍未知。已整理3个选定问题，其中0个尚未取得匹配回复材料；关联成功不代表回复充分。",
+  "limitations": [
+    "问题拆分和匹配由输入明确声明，未自动读取PDF",
+    "页码与引句按各条证据状态说明；引句存在不等于回复充分",
+    "回复内转引问题不是独立原问询全文；回复披露日不回填原问询日期",
+    "缺回复不等于公司没有回复，不以问询推断造假或投资结论"
+  ]
+}

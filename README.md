@@ -1,12 +1,38 @@
 # 投研研究助手
 
-说明版本：1.92 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
+把“研究什么、比较什么、组合有什么问题”转成可读的研究结果：先给判断，再说明依据和缺口。
 
-持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill仅按需衔接，不强制安装或自动下载，详见[接口与范围](references/independent-engines.md)。
+## 先看结果，再试一次
+
+[实际生成的教学HTML预览（下载后打开）](references/examples/readme-preview.html) · [对应输入](references/examples/readme-preview-input.json) · [生成与版本记录](references/examples/readme-preview-manifest.json)
+
+输出基金比较说明.html、Markdown、计算结果和输入底稿。教学样本只有两个日期，能说明区间取舍，不能评价经理能力或计算可靠的长期风险。 预览生成于2026-10-09，尚未取得截图或完成浏览器视觉验收；不是已发布版本的验收证明。
+
+在仓库根目录运行，Python 3.11+，此教学demo只用标准库、不联网：
+
+```bash
+python scripts/start.py demo --out-dir local-data/first-comparison
+```
+
+打开 `local-data/first-comparison/基金比较说明.html`。输出目录/文件须不存在；重复运行请换新路径，不覆盖旧结果。限定PDF接口需要另装可选依赖，下面的教学demo不需要。
+
+[按问题选择九仓库工具](references/tool-navigation.md)
+
+说明版本：1.93 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
+
+持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill基础教学可独立运行；已迁移的六列持仓、schema1原页核验和观察账户收益需对应兼容专业包，不自动安装或下载，详见[接口与范围](references/independent-engines.md)。
 
 面向个人与买方研究的多资产投研助手，提供可追溯的资料、分析与研究报告。
 
 将本目录复制到AI工具支持的Skill目录，读取SKILL.md。工作台可选，不需要作者项目路径或数据库。
+
+## 版本与使用状态
+
+截至2026-10-09，已发布版本为 `v0.1.0-beta.6`（预览版，说明1.92）。本分支说明1.93及下述增量尚未发布，合并与发布需另行审阅；本地安装不代表GitHub发布包已更新。
+
+入口按四类问题组织：研究一只标的、比较产品、诊断组合、找回报告继续研究。先识别问题，再按公司、基金、ETF等对象选择方法，工作台不是使用前提。
+
+本批已实现：问询回复显式逐项关联与本地页缓存；独立工具契约记录；限定基金PDF显式适配桥。REITs完整估值仍是设计；离线机构预测观察档案已实现，但不代表一致预期数据库或预测准确率验收。实现与有限样本见[本批验证](references/development-validation.md)。
 
 ## 第一次使用
 
@@ -17,6 +43,19 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 ```
 
 打开输出目录中的 `基金比较说明.html`。这是教学示例，不能当作真实基金评价。失败时入口说明原因与下一步，不覆盖旧文件。
+
+### 单装可用与专业包前提
+
+| 现在要做什么 | 最短使用方式 | 软件前提 |
+|---|---|---|
+| 先试教学报告 | `python scripts/start.py demo --out-dir local-data/first-comparison` | Python 3.11+；不需要其他自家仓库 |
+| 比较已有净值、整理持仓或沿用旧报告 | `compare`、`snapshot`及已有`--continue-from`入口 | 按该入口的资料与组件要求；不统一强制装三个专业包 |
+| 观察账户出入金与收益 | `python scripts/start.py cashflow --input references/examples/example-cashflow-review.json --out-dir local-data/cashflow-example` | 兼容portfolio-decision-engine；该输入是教学数据 |
+| 六列完整股票表、schema1原页核验 | 原有`fund_report_holdings.py`、`verify_original.py`调用 | 分别需要兼容cn-fund-lookthrough、cn-financial-reconcile及PDF组件；其他未迁移版式不据此统一阻断 |
+
+只想检查某个入口，可运行 `python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-cashflow`。六列与schema1分别使用 `--for-entry fund-report-six-column`、`--for-entry original-schema1`。检查不安装、不联网、不加载专业代码；接口可定位不代表已算过，也不代表数据齐全。检查成功只表示说明已生成，是否缺软件见结果。
+
+缺包只暂停需要它的那项测算，教学、公司研究、基金评价及报告接续按各自资料条件继续；不恢复重复算法兜底。兼容专业包与项目目录配置见[安装说明](references/standalone-install.md)。来源未核或字段缺失属于资料问题，不当成软件缺失。
 
 真实公司公告可直接按名称查询：`python scripts/start.py ask --question "分析招商银行最近三个月有什么重要公告变化" --as-of 2026-10-08 --online --out-dir local-data/cmb-notices`。换成你的公司名称与实际截止日；此入口仅支持单家A股公告，主动联网，报告区分目录线索与原文核验。
 
@@ -86,3 +125,26 @@ python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-da
 ## 免责声明
 
 本项目仅供学习与研究，不构成投资建议或交易指令，不保证收益或结果准确性。请在使用前阅读[免责声明与使用边界](DISCLAIMER.md)，并结合本次数据来源、假设与缺口独立判断。代码许可不包含第三方数据使用授权。
+
+
+## 本次首批开发补充（尚未发布）
+
+- [问询专题](references/inquiry-research.md)：逐项底稿、缺回复与声明的未回答事项，页码/版本/来源及财报、后续事件关联；真实首样本仍未取得独立原问询全文。
+- [REITs具体设计](references/reits-operating-research.md)：产业园产权类输入和验收范围，未实现估值，不重复发售规则。
+- [机构盈利预测档案](references/forecast-history-archive.md)：下一批优先，先结构化离线留档、再限定联网；当前仅设计。
+
+## 许可范围
+
+[MIT原创许可](LICENSE)（KILING-TASI及原有贡献者版权） · [第三方、示例与数据范围](THIRD_PARTY_NOTICES.md)。第三方保留原许可；代码许可不包含原文、数据或品牌的再分发授权。
+
+## 有限更正案例（待审增量）
+
+新增[官方更正案例与边界](references/event-association.md)：选定股权比例和表格单位更正，不能代替旧版/修订版全文配对或审计意见认证。原问询缺失仍保留，未自动安装待审代码。
+
+截图重试记录（2026-10-09）：用户恢复权限后，本地HTML仍被浏览器file协议策略拒绝，且禁止绕过。实际HTML生成与代码验证已完成，三个报告尚未取得浏览器截图或视觉验收；不是合成图替代，也不是许可证或原件核验通过证明。
+
+
+当前待审增量的实现、真实样本、版本与未完成项见[详细交付状态](references/development-validation.md)；CI不代表原件认证或投资有效，不自动更新已安装版。
+
+
+本批实际迁移的六列解析、schema1原页字段核验和观察收益需支持兼容接口的独立专业工具；缺失时明确不可用，不回到重复算法。[去重与依赖范围](references/engine-ownership-and-migration.md)。主包报告/判断与未证流程保留。

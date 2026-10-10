@@ -1,0 +1,193 @@
+{
+  "consumer": "research-workbench",
+  "methodVersion": "saved-bjx-result-selected-fields-1",
+  "sourceSha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+  "status": "three-selected-fields-text-verified",
+  "parser": "pdfplumber",
+  "evidence": [
+    {
+      "field": "online_issue_shares",
+      "physicalPage": 2,
+      "anchor": "19,793,879",
+      "value": 19793879,
+      "unit": "shares"
+    },
+    {
+      "field": "effective_subscription_shares",
+      "physicalPage": 2,
+      "anchor": "63,279,684,500",
+      "value": 63279684500,
+      "unit": "shares"
+    },
+    {
+      "field": "online_allocation_rate",
+      "physicalPage": 2,
+      "anchor": "0.0312799900%",
+      "value": 0.0003127999,
+      "unit": "fraction"
+    }
+  ],
+  "historicalAvailableAt": {
+    "value": null,
+    "precision": null,
+    "reason": "No trusted historical availability evidence"
+  },
+  "sourceRecord": {
+    "schema": "bjx-announcement-sidecar.v1",
+    "status": "candidate_not_cross_repository_standard",
+    "document_id": "BSE:920188:2026-019",
+    "official_url": "https://www.bse.cn/disclosure/2026/2026-03-18/1773825250_806346.pdf",
+    "publisher": "山东悦龙橡塑科技股份有限公司",
+    "acquisition_channel": "BSE official HTTPS disclosure; reused saved file, no redownload",
+    "sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+    "source_version": {
+      "announcement_number": "2026-019",
+      "correction_of": null,
+      "correction_reason": "Complete correction chain not verified"
+    },
+    "times": {
+      "body_date": {
+        "value": "2026-03-19",
+        "precision": "day"
+      },
+      "url_path_date": {
+        "value": "2026-03-18",
+        "precision": "day"
+      },
+      "published_at": {
+        "value": null,
+        "precision": null,
+        "reason": "First official publication clock not verified; body and URL dates differ"
+      },
+      "retrieved_at": {
+        "value": "2026-10-09T10:03:14.474883+00:00",
+        "precision": "microsecond",
+        "basis": "saved capture receipt; local clock not trusted historical clock"
+      },
+      "historical_available_at": {
+        "value": null,
+        "precision": null,
+        "reason": "No trusted historical availability evidence"
+      }
+    },
+    "rights": {
+      "scope": "Selected numerical facts and provenance only",
+      "original_redistribution": "not_authorized_by_repository_MIT"
+    },
+    "acquisition_status": "saved_official_capture_receipt",
+    "verification_scope": "consumer-specific; hash equality is not semantic verification",
+    "native_payload": {
+      "security": "920188",
+      "issuer_name": "山东悦龙橡塑科技股份有限公司",
+      "name": "悦龙科技",
+      "record_kind": "historical_public_sample",
+      "reviewed_on": "2026-10-09",
+      "documents": {
+        "offer": {
+          "url": "https://www.bse.cn/disclosure/2026/2026-03-12/1773305048_265801.pdf",
+          "sha256": "01f2a1dc9febe758032c004273905eaef29bed7b7a8ecefb00356915dfc97d4d",
+          "retrieved_at": "2026-10-09T10:03:44.117626+00:00",
+          "announcement_number": "2026-015",
+          "body_date": "2026-03-13",
+          "file_path_date": "2026-03-12",
+          "first_publication_time": "not_verified"
+        },
+        "result": {
+          "url": "https://www.bse.cn/disclosure/2026/2026-03-18/1773825250_806346.pdf",
+          "sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+          "retrieved_at": "2026-10-09T10:03:14.474883+00:00",
+          "announcement_number": "2026-019",
+          "body_date": "2026-03-19",
+          "file_path_date": "2026-03-18",
+          "first_publication_time": "not_verified"
+        },
+        "listing": {
+          "url": "https://www.bse.cn/disclosure/2026/2026-03-26/1774518490_702247.pdf",
+          "sha256": "012522a90d60713c17768e328b4e2f0963ddf9e089ceba1bf81f4b15df15fa3f",
+          "retrieved_at": "2026-10-09T10:03:15.000530+00:00",
+          "announcement_number": "2026-020",
+          "body_date": "2026-03-27",
+          "file_path_date": "2026-03-26",
+          "first_publication_time": "not_verified"
+        }
+      },
+      "fields": {
+        "issue_price": {
+          "value": 14.04,
+          "unit": "CNY/share",
+          "source_id": "offer",
+          "page": 8,
+          "text_anchor": "14.04",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "max_subscription_shares": {
+          "value": 989600,
+          "unit": "shares",
+          "source_id": "offer",
+          "page": 10,
+          "text_anchor": "989,600",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "online_issue_shares": {
+          "value": 19793879,
+          "unit": "shares",
+          "source_id": "result",
+          "page": 2,
+          "text_anchor": "19,793,879",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "effective_subscription_shares": {
+          "value": 63279684500,
+          "unit": "shares",
+          "source_id": "result",
+          "page": 2,
+          "text_anchor": "63,279,684,500",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "online_allocation_rate": {
+          "value": 0.0003127999,
+          "unit": "fraction",
+          "source_id": "result",
+          "page": 2,
+          "text_anchor": "0.0312799900%",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "subscription_date": {
+          "value": "2026-03-16",
+          "unit": "date",
+          "source_id": "offer",
+          "page": 8,
+          "text_anchor": "2026年3月16日",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "announced_refund_date": {
+          "value": "2026-03-18",
+          "unit": "date",
+          "source_id": "offer",
+          "page": 11,
+          "text_anchor": "2026年3月18日",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "listing_date": {
+          "value": "2026-03-30",
+          "unit": "date",
+          "source_id": "listing",
+          "page": 1,
+          "text_anchor": "2026年3月30日",
+          "review_status": "selected_page_image_and_text_reviewed"
+        }
+      },
+      "limitations": [
+        "Selected fields reviewed, not full-document or complete-version certification",
+        "First publication clocks and broker cash availability not verified",
+        "Residual allocation and actual individual holdings unknown"
+      ]
+    }
+  },
+  "limitations": [
+    "No download or new visual certification",
+    "Not full-document, complete-version or account eligibility verification",
+    "Body/URL dates do not establish first public availability"
+  ],
+  "sidecarFileSha256": "cc1706d0cacb5d80060bfcfb2c65d00ec165234a0d04cc96eff59ced327a5836"
+}

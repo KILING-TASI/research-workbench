@@ -1,0 +1,10 @@
+{
+  "exampleType": "teaching-only",
+  "generatedBy": "account_benchmark_review.py",
+  "visualStatus": "not-browser-verified",
+  "sha256": {
+    "account-benchmark-result.json": "0da084a44a8ce63ce3c67ab3718a377e9298afd5805859ae6b7011bef4515cfc",
+    "account-benchmark-report.md": "ff7d8ab767118d6b41df26ec23a629735cebd07e6f3f2706a60029b746a129e3",
+    "account-benchmark-report.html": "c425b16e3dc1ce414d5a503c7f4d44fb123f5e53a2115e0e0bdfdf5f69cc6f13"
+  }
+}

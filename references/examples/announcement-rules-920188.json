@@ -1,0 +1,223 @@
+{
+  "schema": "cn-market-rules.announcement-consumption/1",
+  "candidate_support": "bjx-announcement-sidecar.v1; retrospective result notice only",
+  "source_sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+  "byte_binding": "matched; not semantic verification",
+  "source_attachment": {
+    "schema": "bjx-announcement-sidecar.v1",
+    "status": "candidate_not_cross_repository_standard",
+    "document_id": "BSE:920188:2026-019",
+    "official_url": "https://www.bse.cn/disclosure/2026/2026-03-18/1773825250_806346.pdf",
+    "publisher": "山东悦龙橡塑科技股份有限公司",
+    "acquisition_channel": "BSE official HTTPS disclosure; reused saved file, no redownload",
+    "sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+    "source_version": {
+      "announcement_number": "2026-019",
+      "correction_of": null,
+      "correction_reason": "Complete correction chain not verified"
+    },
+    "times": {
+      "body_date": {
+        "value": "2026-03-19",
+        "precision": "day"
+      },
+      "url_path_date": {
+        "value": "2026-03-18",
+        "precision": "day"
+      },
+      "published_at": {
+        "value": null,
+        "precision": null,
+        "reason": "First official publication clock not verified; body and URL dates differ"
+      },
+      "retrieved_at": {
+        "value": "2026-10-09T10:03:14.474883+00:00",
+        "precision": "microsecond",
+        "basis": "saved capture receipt; local clock not trusted historical clock"
+      },
+      "historical_available_at": {
+        "value": null,
+        "precision": null,
+        "reason": "No trusted historical availability evidence"
+      }
+    },
+    "rights": {
+      "scope": "Selected numerical facts and provenance only",
+      "original_redistribution": "not_authorized_by_repository_MIT"
+    },
+    "acquisition_status": "saved_official_capture_receipt",
+    "verification_scope": "consumer-specific; hash equality is not semantic verification",
+    "native_payload": {
+      "security": "920188",
+      "issuer_name": "山东悦龙橡塑科技股份有限公司",
+      "name": "悦龙科技",
+      "record_kind": "historical_public_sample",
+      "reviewed_on": "2026-10-09",
+      "documents": {
+        "offer": {
+          "url": "https://www.bse.cn/disclosure/2026/2026-03-12/1773305048_265801.pdf",
+          "sha256": "01f2a1dc9febe758032c004273905eaef29bed7b7a8ecefb00356915dfc97d4d",
+          "retrieved_at": "2026-10-09T10:03:44.117626+00:00",
+          "announcement_number": "2026-015",
+          "body_date": "2026-03-13",
+          "file_path_date": "2026-03-12",
+          "first_publication_time": "not_verified"
+        },
+        "result": {
+          "url": "https://www.bse.cn/disclosure/2026/2026-03-18/1773825250_806346.pdf",
+          "sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+          "retrieved_at": "2026-10-09T10:03:14.474883+00:00",
+          "announcement_number": "2026-019",
+          "body_date": "2026-03-19",
+          "file_path_date": "2026-03-18",
+          "first_publication_time": "not_verified"
+        },
+        "listing": {
+          "url": "https://www.bse.cn/disclosure/2026/2026-03-26/1774518490_702247.pdf",
+          "sha256": "012522a90d60713c17768e328b4e2f0963ddf9e089ceba1bf81f4b15df15fa3f",
+          "retrieved_at": "2026-10-09T10:03:15.000530+00:00",
+          "announcement_number": "2026-020",
+          "body_date": "2026-03-27",
+          "file_path_date": "2026-03-26",
+          "first_publication_time": "not_verified"
+        }
+      },
+      "fields": {
+        "issue_price": {
+          "value": 14.04,
+          "unit": "CNY/share",
+          "source_id": "offer",
+          "page": 8,
+          "text_anchor": "14.04",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "max_subscription_shares": {
+          "value": 989600,
+          "unit": "shares",
+          "source_id": "offer",
+          "page": 10,
+          "text_anchor": "989,600",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "online_issue_shares": {
+          "value": 19793879,
+          "unit": "shares",
+          "source_id": "result",
+          "page": 2,
+          "text_anchor": "19,793,879",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "effective_subscription_shares": {
+          "value": 63279684500,
+          "unit": "shares",
+          "source_id": "result",
+          "page": 2,
+          "text_anchor": "63,279,684,500",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "online_allocation_rate": {
+          "value": 0.0003127999,
+          "unit": "fraction",
+          "source_id": "result",
+          "page": 2,
+          "text_anchor": "0.0312799900%",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "subscription_date": {
+          "value": "2026-03-16",
+          "unit": "date",
+          "source_id": "offer",
+          "page": 8,
+          "text_anchor": "2026年3月16日",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "announced_refund_date": {
+          "value": "2026-03-18",
+          "unit": "date",
+          "source_id": "offer",
+          "page": 11,
+          "text_anchor": "2026年3月18日",
+          "review_status": "selected_page_image_and_text_reviewed"
+        },
+        "listing_date": {
+          "value": "2026-03-30",
+          "unit": "date",
+          "source_id": "listing",
+          "page": 1,
+          "text_anchor": "2026年3月30日",
+          "review_status": "selected_page_image_and_text_reviewed"
+        }
+      },
+      "limitations": [
+        "Selected fields reviewed, not full-document or complete-version certification",
+        "First publication clocks and broker cash availability not verified",
+        "Residual allocation and actual individual holdings unknown"
+      ]
+    }
+  },
+  "rules_review": {
+    "schema": "cn-market-rules.announcement-review/1",
+    "document_id": "BSE:920188:2026-019",
+    "source_sha256": "228f91c01b41118cdd3c67b248cc1727d188c3530724fb3014476d862ca4bafb",
+    "source_version": "2026-019",
+    "reviewed_on": "2026-10-10",
+    "method": {
+      "extraction": "PyMuPDF get_text, six pages",
+      "visual": "Poppler rendered page 2, manually reviewed",
+      "limits": "Selected page 2 numeric fields; page 1 identity/permission and page 3 body date text only; not full-document certification"
+    },
+    "reviewed_native_fields": {
+      "online_issue_shares": {
+        "value": 19793879,
+        "unit": "shares",
+        "source_id": "result",
+        "page": 2,
+        "text_anchor": "19,793,879",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "effective_subscription_shares": {
+        "value": 63279684500,
+        "unit": "shares",
+        "source_id": "result",
+        "page": 2,
+        "text_anchor": "63,279,684,500",
+        "review_status": "selected_page_image_and_text_reviewed"
+      },
+      "online_allocation_rate": {
+        "value": 0.0003127999,
+        "unit": "fraction",
+        "source_id": "result",
+        "page": 2,
+        "text_anchor": "0.0312799900%",
+        "review_status": "selected_page_image_and_text_reviewed"
+      }
+    },
+    "notice_conditions": {
+      "value": "Online offering to qualified investors with BSE trading permission",
+      "status": "issuer_notice_text_reviewed",
+      "locator": "page 1; not a normative rule or individual permission certificate"
+    },
+    "rule_version_id": null,
+    "rule_selection": {
+      "status": "not_selected",
+      "reason": "Issuance result is not normative rule; no complete BSE issuance version binding in current catalog"
+    },
+    "qualification": {
+      "value": null,
+      "status": "unknown",
+      "reason": "No individual permission, subscription order, residual allocation or broker cash proof"
+    },
+    "limitations": [
+      "Body date 2026-03-19 and URL date 2026-03-18 differ; no inferred first publication",
+      "Offer/listing document fields retained but not reviewed in this batch",
+      "No personal allocation, cash availability or realized return conclusion"
+    ]
+  },
+  "historical_available_at": {
+    "value": null,
+    "precision": null,
+    "reason": "No trusted historical availability evidence"
+  },
+  "native_payload_preserved": true,
+  "semantic_status": "caller supplied selected-page review; not inferred from hash"
+}
