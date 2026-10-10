@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-11",
+  "page": "readme-preview.html",
+  "pageGeneratedAt": "2026-10-09",
+  "htmlSha256": "fc62421790ae891045a9c3c4341462ef55b46b800022583c146eb87bd6918cdf",
+  "screenshotSha256": "de526e517b8b6ef217cb71e74ce664e2c2afcd4dc084451dc031eb4db1b47f11",
+  "browser": "Codex in-app browser",
+  "viewport": "default desktop (1265 x 712 screenshot)",
+  "checks": [
+    "teaching label visible",
+    "10% and -10% comparison visible",
+    "missing volatility explained",
+    "Chinese text and first table readable"
+  ],
+  "limitations": [
+    "one historical teaching page only",
+    "no mobile/print/full-report certification",
+    "historical HTML banner retained; the new check does not rewrite its original record"
+  ]
+}
