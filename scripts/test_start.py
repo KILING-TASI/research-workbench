@@ -7,6 +7,38 @@ from start import execute
 
 
 class FirstUseTests(unittest.TestCase):
+    def test_cashflow_missing_specialist_has_specific_guidance_and_retains_input(self):
+        import os
+        from start import ROOT
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            with patch.dict(os.environ,{'RESEARCH_WORKBENCH_PORTFOLIO_DIR':str(root/'not-installed')}):
+                result=execute('cashflow',root/'blocked',input_path=ROOT/'references/examples/example-cashflow-review.json')
+            self.assertEqual(result['failureKind'],'missing-dependency')
+            self.assertIn('portfolio-decision-engine',' '.join(result['nextSteps']))
+            self.assertIn('其他研究可以继续',result['message'])
+            self.assertEqual(result['dependencyCheck']['dataStatus'],'not-checked')
+            self.assertTrue((root/'blocked/input.json').is_file())
+    def test_data_gap_is_not_reported_as_missing_software(self):
+        from start import ROOT
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch('specialist_loader.require',return_value={'available':True}),patch('portfolio_cashflow_review.publish',side_effect=ValueError('资料来源尚未取得')):
+                result=execute('cashflow',Path(tmp)/'blocked',input_path=ROOT/'references/examples/example-cashflow-review.json')
+            self.assertEqual(result['failureKind'],'invalid-input-or-runtime')
+            self.assertIn('资料来源尚未取得',result['message'])
+            self.assertNotIn('安装',' '.join(result['nextSteps']))
+    def test_unused_specialists_do_not_block_demo_or_report_continuation(self):
+        from start import ROOT
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            with patch('specialist_loader.check',side_effect=AssertionError('unused specialist must not be checked')):
+                demo=execute('demo',root/'demo')
+                first=execute('news',root/'old',input_path=ROOT/'references/examples/news-example.json')
+                old=(root/'old/input.json').read_bytes()
+                second=execute('news',root/'new',continue_from=root/'old')
+            self.assertEqual(demo['status'],'passed');self.assertEqual(demo['sourceVerification'],'not-verified')
+            self.assertEqual(first['status'],'partial');self.assertEqual(second['status'],'partial')
+            self.assertEqual((root/'old/input.json').read_bytes(),old)
     def test_cashflow_gap_has_relevant_next_steps(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);source=root/'input.json';source.write_text(json.dumps({'cashFlowCoverage':'unknown'}),'utf-8')

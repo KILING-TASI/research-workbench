@@ -3,10 +3,37 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from specialist_loader import call, LAST_PROVENANCE
+from specialist_loader import call, check, require, LAST_PROVENANCE, SpecialistUnavailableError
 
 
 class TestSpecialistLoader(unittest.TestCase):
+    def test_check_locates_without_executing_professional_code(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)/'cnreconcile';folder.mkdir();(folder/'__init__.py').write_text('',encoding='utf-8')
+            (folder/'probe.py').write_text("raise RuntimeError('must not execute')\ndef answer():\n return 42\n",encoding='utf-8')
+            before=dict(LAST_PROVENANCE)
+            result=check('financial','probe','answer',project_dir=tmp)
+            self.assertTrue(result['available']);self.assertEqual(result['loadState'],'not-executed')
+            self.assertEqual(result['dataStatus'],'not-checked');self.assertEqual(result['moduleOrigins'],{})
+            self.assertEqual(LAST_PROVENANCE,before)
+    def test_check_and_execution_share_directory_and_method_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)/'cnreconcile';folder.mkdir();(folder/'__init__.py').write_text('',encoding='utf-8')
+            (folder/'probe.py').write_text('def answer():\n return 42\n',encoding='utf-8')
+            result=require('financial','probe','answer',project_dir=tmp)
+            self.assertEqual(call('financial','probe','answer',project_dir=tmp),42)
+            self.assertEqual(result['methodIdentitySha256'],LAST_PROVENANCE['financial']['methodIdentitySha256'])
+            self.assertEqual(result['selectedFolder'],LAST_PROVENANCE['financial']['selectedFolder'])
+    def test_missing_required_interface_has_specific_software_guidance(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp)/'cnreconcile';folder.mkdir();(folder/'__init__.py').write_text('',encoding='utf-8')
+            (folder/'probe.py').write_text('def unrelated():\n pass\n',encoding='utf-8')
+            with self.assertRaises(SpecialistUnavailableError) as caught:
+                require('financial','probe','answer',project_dir=tmp)
+            record=caught.exception.dependency_record
+            self.assertFalse(record['available']);self.assertIn('cn-financial-reconcile',' '.join(record['nextSteps']))
+            self.assertIn('RESEARCH_WORKBENCH_FINANCIAL_DIR',' '.join(record['nextSteps']))
+            self.assertEqual(record['dataStatus'],'not-checked')
     def test_identical_source_different_projects_executes_selected_origin(self):
         with tempfile.TemporaryDirectory() as tmp:
             origins=[]

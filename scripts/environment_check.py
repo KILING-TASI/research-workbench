@@ -3,7 +3,40 @@ import argparse,datetime as dt,importlib.util,json,shutil,subprocess,sys
 from pathlib import Path
 from export_runtime import component_environment
 
-def inspect(node=None,artifact_node_modules=None):
+ENTRY_CHECKS = {
+ 'demo': (None, []), 'compare': (None, []), 'news': (None, []), 'snapshot': (None, []),
+ 'cashflow': (('portfolio','observed_review','review'), []),
+ 'fund-report-six-column': (('lookthrough','report_adapter','legacy_domestic_result'), ['pdfplumber']),
+ 'original-schema1': (('financial','original_compat','verify'), ['pdfplumber']),
+}
+
+def inspect_entry(entry):
+ if entry not in ENTRY_CHECKS:raise ValueError('未登记此具体入口的轻量检查；不要据此判断其他研究不可用')
+ interface,components=ENTRY_CHECKS[entry]
+ rows=[dict(component='python-runtime',label='Python运行版本',available=sys.version_info >= (3,11),
+            features=[entry],status='要求Python 3.11及以上；版本满足不等于研究通过')]
+ for name in components:
+  try:present=importlib.util.find_spec(name) is not None
+  except (ValueError,ImportError):present=False
+  rows.append(dict(component=name,label=name,available=present,features=[entry],
+                   status='组件可定位，尚未实跑' if present else '此入口需要的组件缺失',
+                   installCommand=None if present else 'python -m pip install '+name,
+                   nextStep=None if present else '仅按本次入口安装该第三方组件；这不等于安装了专业包'))
+ specialist=None
+ if interface:
+  from specialist_loader import check
+  specialist=check(*interface)
+  rows.append(dict(component=specialist['provider'],label=specialist['distribution'],
+                   available=specialist['available'],features=[entry],status=specialist['message']))
+ return dict(checkedAt=dt.datetime.now(dt.timezone.utc).isoformat(),pythonVersion=sys.version.split()[0],
+             entry=entry,dependencies=rows,specialistDependency=specialist,
+             available=all(row['available'] for row in rows),dataStatus='not-checked',
+             limitations=['只检查本次指定入口的软件；缺项不阻断其他研究',
+                          '不执行专业代码、不安装、不联网；可定位不等于实际计算通过',
+                          '资料来源、日期与缺口尚未检查，不能把资料未知写成缺软件'])
+
+def inspect(node=None,artifact_node_modules=None,entry=None):
+ if entry is not None:return inspect_entry(entry)
  config_error=None
  try:export_env=component_environment(artifact_node_modules)
  except ValueError as exc:export_env=None;config_error=str(exc)
@@ -39,12 +72,14 @@ def inspect(node=None,artifact_node_modules=None):
  return dict(checkedAt=dt.datetime.now(dt.timezone.utc).isoformat(),pythonVersion=sys.version.split()[0],dependencies=rows,standardLibraryRoutes=['名称候选目录','基金公开文件目录','港美股价格历史','基金净值与条件筛选'],limitations=['仅检查当前环境，不证明数据来源可访问或标的完整覆盖','不安装组件、不修改环境、不发起网络请求','组件可找到不代表PDF版式、模型或业务验收通过','工作台及作者项目数据库不属于独立运行依赖'])
 
 def markdown(r):
- lines=['# 独立运行环境检查','', 'Python '+r['pythonVersion'],'基础取数、目录与历史筛选使用Python标准库；网络可用性尚未检查。','']
+ lines=['# 独立运行环境检查','', 'Python '+r['pythonVersion'],
+        '仅检查入口 '+r['entry']+'；资料状态未核，不影响其他入口。' if r.get('entry') else '基础取数、目录与历史筛选使用Python标准库；网络可用性尚未检查。','']
  for row in r['dependencies']:
   lines.append('- '+row['label']+'：'+row['status']+'。涉及：'+'、'.join(row['features'])+'。')
   if row.get('installCommand'):lines.append('  按需安装：`'+row['installCommand']+'`。'+row['nextStep']+'。')
+ if r.get('specialistDependency'):lines+=['']+r['specialistDependency']['nextSteps']
  lines+=['']+r['limitations'];return '\n'.join(lines)
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--node');p.add_argument('--artifact-node-modules');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--node');p.add_argument('--artifact-node-modules');p.add_argument('--entry',choices=sorted(ENTRY_CHECKS));a=p.parse_args()
  if a.out.exists() or a.out.with_suffix('.md').exists():raise FileExistsError('输出已存在')
- r=inspect(a.node,a.artifact_node_modules);a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(r,ensure_ascii=False,indent=2),encoding='utf-8');a.out.with_suffix('.md').write_text(markdown(r),encoding='utf-8')
+ r=inspect(a.node,a.artifact_node_modules,a.entry);a.out.parent.mkdir(parents=True,exist_ok=True);a.out.write_text(json.dumps(r,ensure_ascii=False,indent=2),encoding='utf-8');a.out.with_suffix('.md').write_text(markdown(r),encoding='utf-8')

@@ -44,6 +44,19 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 
 打开输出目录中的 `基金比较说明.html`。这是教学示例，不能当作真实基金评价。失败时入口说明原因与下一步，不覆盖旧文件。
 
+### 单装可用与专业包前提
+
+| 现在要做什么 | 最短使用方式 | 软件前提 |
+|---|---|---|
+| 先试教学报告 | `python scripts/start.py demo --out-dir local-data/first-comparison` | Python 3.11+；不需要其他自家仓库 |
+| 比较已有净值、整理持仓或沿用旧报告 | `compare`、`snapshot`及已有`--continue-from`入口 | 按该入口的资料与组件要求；不统一强制装三个专业包 |
+| 观察账户出入金与收益 | `python scripts/start.py cashflow --input references/examples/example-cashflow-review.json --out-dir local-data/cashflow-example` | 兼容portfolio-decision-engine；该输入是教学数据 |
+| 六列完整股票表、schema1原页核验 | 原有`fund_report_holdings.py`、`verify_original.py`调用 | 分别需要兼容cn-fund-lookthrough、cn-financial-reconcile及PDF组件；其他未迁移版式不据此统一阻断 |
+
+只想检查某个入口，可运行 `python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-cashflow`。六列与schema1分别使用 `--for-entry fund-report-six-column`、`--for-entry original-schema1`。检查不安装、不联网、不加载专业代码；接口可定位不代表已算过，也不代表数据齐全。检查成功只表示说明已生成，是否缺软件见结果。
+
+缺包只暂停需要它的那项测算，教学、公司研究、基金评价及报告接续按各自资料条件继续；不恢复重复算法兜底。兼容专业包与项目目录配置见[安装说明](references/standalone-install.md)。来源未核或字段缺失属于资料问题，不当成软件缺失。
+
 真实公司公告可直接按名称查询：`python scripts/start.py ask --question "分析招商银行最近三个月有什么重要公告变化" --as-of 2026-10-08 --online --out-dir local-data/cmb-notices`。换成你的公司名称与实际截止日；此入口仅支持单家A股公告，主动联网，报告区分目录线索与原文核验。
 
 试用看[快速开始](references/quickstart.md)；了解能做什么看[功能说明](references/current-capabilities.md)；修改代码时看[方法与参数索引](references/capability-reference-index.md)。

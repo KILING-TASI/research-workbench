@@ -37,7 +37,7 @@ def verify_continuation_input(previous,prior,path,filename):
     return origin
 
 
-def execute(command, destination, input_path=None, example='compare', question=None, as_of=None, online=False, codes=None, start=None, group=None, names=None, reuse_from=None, continue_from=None, rebalance_options=None, budget=None):
+def execute(command, destination, input_path=None, example='compare', question=None, as_of=None, online=False, codes=None, start=None, group=None, names=None, reuse_from=None, continue_from=None, rebalance_options=None, budget=None, check_entry=None):
     """Publish a complete result or a useful failure, without replacing user files."""
     destination = Path(destination)
     if destination.exists():
@@ -49,6 +49,7 @@ def execute(command, destination, input_path=None, example='compare', question=N
         stage = Path(temporary) / 'result'
         request=None;input_reuse=None
         try:
+            if check_entry is not None and command!='doctor':raise ValueError('--for-entry 只用于doctor，不为其他研究设置总门槛')
             if rebalance_options and command!='rebalance':raise ValueError('再平衡参数仅适用于rebalance')
             if budget is not None and command!='bjx':raise ValueError('预算修改仅适用于北交情景入口')
             if continue_from:
@@ -76,13 +77,19 @@ def execute(command, destination, input_path=None, example='compare', question=N
                 raise RuntimeError('此入口需要 Python 3.11 或更高版本')
             if command == 'doctor':
                 from environment_check import inspect, markdown
-                result = inspect()
+                result = inspect(entry=check_entry) if check_entry else inspect()
                 stage.mkdir()
                 (stage / 'environment.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), 'utf-8')
                 (stage / '环境检查.md').write_text(markdown(result), 'utf-8')
                 summary = {'status': 'passed', 'mode': 'environment-check',
                            'message': '环境检查完成；未联网，未安装组件。',
                            'nextSteps': ['先运行 demo；缺少可选组件不妨碍标准库离线示例。']}
+                if check_entry:
+                    summary['checkedEntry']=check_entry
+                    summary['message']='本次入口的软件检查已完成；尚未计算或核验资料。'
+                    dependency=result.get('specialistDependency')
+                    summary['nextSteps']=(dependency['nextSteps'] if dependency and not dependency['available'] else
+                                          ['只处理本次入口所列缺项；软件可定位后仍需核对资料并实跑。'])
             elif command == 'ask':
                 from research_question import run
                 from research_brief_html import render
@@ -172,9 +179,13 @@ def execute(command, destination, input_path=None, example='compare', question=N
                 request={'command':'cashflow'}
                 from portfolio_cashflow_review import publish
                 if not input_path:raise ValueError('出入金复盘需要已取得的现金流前后估值，由AI准备；不能从期末截图猜历史')
-                result=publish(load_input(input_path),stage);request=load_input(stage/'research-request.json')
+                document=load_input(input_path)
+                from specialist_loader import require
+                dependency=require('portfolio','observed_review','review')
+                result=publish(document,stage);request=load_input(stage/'research-request.json')
                 headline=result['headline']
                 summary={'status':'partial','mode':'cashflow-observed-review','headline':headline,'message':'出入金与收益观察已生成；完整性仅为声明，不认证账户或实际到账。','nextSteps':['打开组合出入金与收益观察.html，核对估值、投入取出、币种单位和期末假设变现。']}
+                summary['dependencyCheck']=dependency
                 if result.get('exampleType')=='teaching-only':summary['exampleType']='teaching-only'
             elif command=='allocation':
                 request={'command':'allocation'}
@@ -268,7 +279,12 @@ def execute(command, destination, input_path=None, example='compare', question=N
                                          '教学示例不是实际基金或账户；正式研究请提供真实输入。'] if command == 'demo' else
                                         ['阅读报告中的结论、口径与缺口；来源真实性仍需核验。']}
         except (OSError, ValueError, TypeError, KeyError, RuntimeError, ImportError, ArithmeticError, csv.Error) as error:
-            if isinstance(error, ImportError):
+            from specialist_loader import SpecialistUnavailableError
+            if isinstance(error,SpecialistUnavailableError):
+                dependency=error.dependency_record
+                kind,steps='missing-dependency',(dependency['nextSteps'] if dependency else
+                    ['使用含本次迁移接口的兼容专业包，或按安装说明设置可信项目目录；不自动安装。'])
+            elif isinstance(error, ImportError):
                 kind, steps = 'missing-dependency', ['运行 doctor 查看当前依赖。', '按 references/standalone-install.md 安装本次功能需要的组件。']
             elif isinstance(error, FileNotFoundError):
                 kind, steps = 'missing-input', ['确认 --input 文件存在；相对路径以当前终端目录为起点。', '首次试用可改用 demo，无须准备输入。']
@@ -286,6 +302,9 @@ def execute(command, destination, input_path=None, example='compare', question=N
                     if '外部现金流完整' in str(error):
                         steps[0]='先补齐并核对本区间全部外部转入、取出及前后估值；资料不完整时暂不计算收益。'
             summary = {'status': 'blocked', 'failureKind': kind, 'message': str(error), 'nextSteps': steps}
+            if isinstance(error,SpecialistUnavailableError):
+                summary['message']='这项测算需要的兼容专业工具尚未就绪；其他研究可以继续。'
+                if error.dependency_record:summary['dependencyCheck']=error.dependency_record
             if isinstance(error,ImportError):
                 component=getattr(error,'name',None)
                 if isinstance(component,str) and component.split('.')[0]=='numpy':summary['message']='配置与矩阵计算需要的组件还没准备好，这次没有算出结果。已经提供的资料会保留，补齐环境后可以接着算。'
@@ -362,6 +381,7 @@ def main():
     parser.add_argument('--input', type=Path)
     parser.add_argument('--example', choices=['compare', 'news'], default='compare')
     parser.add_argument('--out-dir', type=Path, required=True)
+    parser.add_argument('--for-entry',choices=['demo','compare','news','snapshot','cashflow','fund-report-six-column','original-schema1'],help='doctor：只检查这一个入口的软件，不检查数据或安装组件')
     parser.add_argument('--question', help='ask：单家A股近一或三个月公告问题')
     parser.add_argument('--as-of', help='ask：研究截止日 YYYY-MM-DD')
     parser.add_argument('--online', action='store_true', help='ask/funds：主动取数；funds复用时只补不可用资料')
@@ -381,6 +401,7 @@ def main():
     parser.add_argument('--spread-bps',type=float,help='rebalance：全价差bp，每腿计一半')
     parser.add_argument('--slippage-bps',type=float,help='rebalance：每腿滑点bp')
     args = parser.parse_args()
+    if args.for_entry and args.command!='doctor':parser.error('--for-entry只用于doctor')
     if args.command == 'demo' and args.input:
         parser.error('demo 使用教学输入；真实输入请用 compare 或 news')
     if args.command not in ('ask','funds') and args.online:
@@ -403,7 +424,7 @@ def main():
     if args.cost_reference is not None:options['costCounterfactual']=args.cost_reference
     if options and args.command!='rebalance':parser.error('频率和费用参数仅用于rebalance')
     if args.budget is not None and args.command!='bjx':parser.error('--budget仅用于bjx情景')
-    result = execute(args.command, args.out_dir, args.input, args.example, args.question, args.as_of, args.online, args.codes, args.start, args.group,args.names,args.reuse_from,args.continue_from,options,args.budget)
+    result = execute(args.command, args.out_dir, args.input, args.example, args.question, args.as_of, args.online, args.codes, args.start, args.group,args.names,args.reuse_from,args.continue_from,options,args.budget,check_entry=args.for_entry)
     print(result['message'])
     for step in result['nextSteps']:
         print('- ' + step)
