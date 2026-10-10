@@ -201,11 +201,25 @@ def publish(spec, out):
 
 
 if __name__ == '__main__':
+    import sys
+    from cli_text import configure
+    configure()
     parser=argparse.ArgumentParser();parser.add_argument('input');parser.add_argument('--out-dir',required=True)
     args=parser.parse_args()
     try:
         p=Path(args.input)
         if p.stat().st_size>16*1024*1024:raise ValueError('输入文件过大')
-        publish(json.loads(p.read_text('utf-8-sig'),object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float),args.out_dir)
-    except (ValueError,KeyError,TypeError,OSError) as error:
-        parser.exit(1,f'未能完成可转债诊断：{error}\n')
+        result=publish(json.loads(p.read_text('utf-8-sig'),object_pairs_hook=unique_pairs,parse_constant=reject_constant,parse_float=finite_json_float),args.out_dir)
+        print('已生成可转债现金流与给定条款的基础诊断。',file=sys.stderr)
+        print('结果目录：'+str(Path(args.out_dir).resolve()),file=sys.stderr)
+        print('先打开：'+str((Path(args.out_dir)/'可转债基础诊断.html').resolve()),file=sys.stderr)
+        print('也可阅读同目录的可转债基础诊断.md。',file=sys.stderr)
+        if result.get('exampleType')=='teaching-only':print('本次为教学假设，不是真实标的或报价。',file=sys.stderr)
+    except FileExistsError:
+        parser.exit(1,'输出目录已经存在，请换一个新名字；旧报告没有覆盖。\n')
+    except FileNotFoundError:
+        parser.exit(1,'找不到输入文件，请核对命令中的第一个文件路径。\n')
+    except OSError:
+        parser.exit(1,'文件读取或写入未完成，请检查目录及读写权限。\n')
+    except (ValueError,KeyError,TypeError):
+        parser.exit(1,'输入未通过检查，请核对 fullPrice、faceValue、currency、cashFlows 的时间与金额及条款字段；可对照 references/examples/convertible-review-example.json。\n')

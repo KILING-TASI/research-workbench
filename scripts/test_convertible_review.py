@@ -2,6 +2,29 @@ import unittest
 from convertible_review import calculate, present_value, yield_rate, rolling_clause
 
 class Tests(unittest.TestCase):
+    def test_direct_cli_human_notice_keeps_stdout_and_result_compatible(self):
+        import json,subprocess,sys,tempfile,hashlib
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[1];example=root/'references/examples/convertible-review-example.json'
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp)/'report';command=[sys.executable,str(root/'scripts/convertible_review.py'),str(example),'--out-dir',str(out)]
+            first=subprocess.run(command,capture_output=True,text=True,encoding='utf-8')
+            self.assertEqual(first.returncode,0,first.stderr);self.assertEqual(first.stdout,'')
+            self.assertIn('教学假设',first.stderr);self.assertIn('可转债基础诊断.html',first.stderr)
+            self.assertEqual(json.loads((out/'result.json').read_text('utf-8')),calculate(json.loads(example.read_text('utf-8'))))
+            before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.iterdir()}
+            second=subprocess.run(command,capture_output=True,text=True,encoding='utf-8')
+            self.assertEqual(second.returncode,1);self.assertIn('换一个新名字',second.stderr)
+            self.assertEqual(before,{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.iterdir()})
+    def test_cli_failure_does_not_echo_private_input_path(self):
+        import subprocess,sys,tempfile
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as tmp:
+            command=[sys.executable,str(root/'scripts/convertible_review.py'),str(Path(tmp)/'PRIVATE_TOKEN_INPUT.json'),'--out-dir',str(Path(tmp)/'report')]
+            result=subprocess.run(command,capture_output=True,text=True,encoding='utf-8')
+            self.assertEqual(result.returncode,1);self.assertIn('核对',result.stderr)
+            self.assertNotIn('PRIVATE_TOKEN',result.stderr);self.assertEqual(result.stdout,'')
     def test_invalid_direct_yield_inputs_do_not_enter_root_search(self):
         for price in [0,-100,True,float('nan'),10**10000]:
             with self.assertRaises(ValueError):yield_rate([(1,100)],price)
