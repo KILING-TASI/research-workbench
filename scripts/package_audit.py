@@ -6,7 +6,7 @@ ALLOWED=('SKILL.md','README.md','BEGINNER.md','try_demo.py','Start-Demo.cmd','St
 RESOURCE_SUFFIXES={'.py','.js','.cjs','.mjs','.md','.json','.txt','.csv','.html','.css','.yaml','.yml'}
 
 def allowed(rel):
- return (rel in {'LICENSE','Start-Demo.cmd','Start-Demo.sh','pyproject.toml','MANIFEST.in'} or Path(rel).suffix.lower() in RESOURCE_SUFFIXES) and any(rel.startswith(x) if x.endswith('/') else rel==x for x in ALLOWED)
+ return (rel in {'LICENSE','Start-Demo.cmd','Start-Demo.sh','pyproject.toml','MANIFEST.in','references/examples/readme-preview-desktop.jpg'} or Path(rel).suffix.lower() in RESOURCE_SUFFIXES) and any(rel.startswith(x) if x.endswith('/') else rel==x for x in ALLOWED)
 
 def source_file(source,path):
  source=Path(source).resolve();path=Path(path)
