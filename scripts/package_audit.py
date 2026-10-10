@@ -2,8 +2,8 @@
 import argparse,hashlib,json,zipfile
 from pathlib import Path
 ROOT='research-workbench/'
-ALLOWED=('SKILL.md','README.md','DISCLAIMER.md','THIRD_PARTY_NOTICES.md','LICENSE','agents/','references/','scripts/','modules/')
-RESOURCE_SUFFIXES={'.py','.js','.cjs','.mjs','.md','.json','.txt','.csv','.html','.css','.yaml','.yml'}
+ALLOWED=('SKILL.md','README.md','BEGINNER.md','try_demo.py','Start-Demo.cmd','Start-Demo.sh','DISCLAIMER.md','THIRD_PARTY_NOTICES.md','LICENSE','agents/','references/','scripts/','modules/')
+RESOURCE_SUFFIXES={'.py','.js','.cjs','.mjs','.md','.json','.txt','.csv','.html','.css','.yaml','.yml','.cmd','.sh'}
 
 def allowed(rel):
  return (rel=='LICENSE' or Path(rel).suffix.lower() in RESOURCE_SUFFIXES) and any(rel.startswith(x) if x.endswith('/') else rel==x for x in ALLOWED)

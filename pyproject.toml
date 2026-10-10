@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "research-workbench"
-version = "0.1.0b12"
+version = "0.1.0b13"
 description = "独立研究工具与完整资源；未知证据保留"
 readme = "README.md"
 requires-python = ">=3.11"
