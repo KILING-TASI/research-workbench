@@ -13,6 +13,7 @@ DOMAINS = {
     'lookthrough': ('cnlookthrough', 'RESEARCH_WORKBENCH_LOOKTHROUGH_DIR'),
     'financial': ('cnreconcile', 'RESEARCH_WORKBENCH_FINANCIAL_DIR'),
     'portfolio': ('portfolio_engine', 'RESEARCH_WORKBENCH_PORTFOLIO_DIR'),
+    'etf': ('cn_etf_rotation', 'RESEARCH_WORKBENCH_ETF_DIR'),
 }
 LAST_PROVENANCE = {}
 
@@ -58,7 +59,7 @@ def check(domain, module, function, project_dir=None):
         raise ValueError('未登记专业模块')
     package, variable = DOMAINS[domain]
     distribution = {'lookthrough': 'cn-fund-lookthrough', 'financial': 'cn-financial-reconcile',
-                    'portfolio': 'portfolio-decision-engine'}[domain]
+                    'portfolio': 'portfolio-decision-engine', 'etf':'cn-etf-rotation-engine'}[domain]
     record = dict(provider=package, module=module, function=function, available=False,
                   selectedFolder=None, moduleOrigins={}, methodFiles={}, methodIdentitySha256=None,
                   selection='explicit-project-or-installed-package', loadState='not-executed',

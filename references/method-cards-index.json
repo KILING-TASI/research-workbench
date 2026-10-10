@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "research-method-card-index/1",
+  "fields": [
+    "question",
+    "basis",
+    "dataScope",
+    "assumptionsAndAlgorithm",
+    "falsification",
+    "implemented",
+    "notImplemented"
+  ],
+  "cards": [
+    {
+      "id": "WB-1",
+      "provider": "research-workbench",
+      "source": "references/research-method-cards.md",
+      "cardOrdinal": 1,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "WB-2",
+      "provider": "research-workbench",
+      "source": "references/research-method-cards.md",
+      "cardOrdinal": 2,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "WB-3",
+      "provider": "research-workbench",
+      "source": "references/research-method-cards.md",
+      "cardOrdinal": 3,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "MACRO-1",
+      "provider": "macro-dashboard-engine",
+      "source": "references/macro_method_cards.md",
+      "cardOrdinal": 1,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "MACRO-2",
+      "provider": "macro-dashboard-engine",
+      "source": "references/macro_method_cards.md",
+      "cardOrdinal": 2,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "MACRO-3",
+      "provider": "macro-dashboard-engine",
+      "source": "references/macro_method_cards.md",
+      "cardOrdinal": 3,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "MACRO-4",
+      "provider": "macro-dashboard-engine",
+      "source": "references/macro_method_cards.md",
+      "cardOrdinal": 4,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "MACRO-5",
+      "provider": "macro-dashboard-engine",
+      "source": "references/macro_method_cards.md",
+      "cardOrdinal": 5,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "CB-1",
+      "provider": "convertible-bond-engine",
+      "source": "docs/FIXED_INCOME_METHOD_CARDS.md",
+      "cardOrdinal": 1,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "CB-2",
+      "provider": "convertible-bond-engine",
+      "source": "docs/FIXED_INCOME_METHOD_CARDS.md",
+      "cardOrdinal": 2,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "CB-3",
+      "provider": "convertible-bond-engine",
+      "source": "docs/FIXED_INCOME_METHOD_CARDS.md",
+      "cardOrdinal": 3,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "CB-4",
+      "provider": "convertible-bond-engine",
+      "source": "docs/FIXED_INCOME_METHOD_CARDS.md",
+      "cardOrdinal": 4,
+      "contentOwnership": "provider-maintained",
+      "implementedStatus": "read source card; not inferred from index"
+    },
+    {
+      "id": "METHOD-1",
+      "provider": "research-workbench",
+      "title": "量价与盈利情景",
+      "source": "references/forecast-decomposition.md",
+      "contentOwnership": "original research guidance",
+      "implementedStatus": "guidance, not a new automatic calculation engine"
+    },
+    {
+      "id": "METHOD-2",
+      "provider": "research-workbench",
+      "title": "同业可比口径",
+      "source": "references/comparable-selection.md",
+      "contentOwnership": "original research guidance",
+      "implementedStatus": "guidance, not a new automatic calculation engine"
+    },
+    {
+      "id": "METHOD-3",
+      "provider": "research-workbench",
+      "title": "预期与实际分开",
+      "source": "references/forecast-history-archive.md",
+      "contentOwnership": "original research guidance",
+      "implementedStatus": "guidance, not a new automatic calculation engine"
+    },
+    {
+      "id": "METHOD-4",
+      "provider": "research-workbench",
+      "title": "情景与现金一致性",
+      "source": "references/research-methods.md",
+      "contentOwnership": "original research guidance",
+      "implementedStatus": "guidance, not a new automatic calculation engine"
+    },
+    {
+      "id": "METHOD-5",
+      "provider": "research-workbench",
+      "title": "会计质量与替代解释",
+      "source": "references/profitability-decomposition.md",
+      "contentOwnership": "original research guidance",
+      "implementedStatus": "guidance, not a new automatic calculation engine"
+    }
+  ],
+  "scope": "统一阅读字段与归属，保留原卡，不复制各仓全文；17条索引不是17个已实现计算"
+}

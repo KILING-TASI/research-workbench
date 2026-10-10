@@ -15,7 +15,6 @@ recursive-include examples/expansion-teaching *.json
 
 include FORMAT_SCOPE.md
 
-include EXPANSION_RELEASE.md
 
 include AUDIT_SCOPE.md
 
@@ -24,3 +23,12 @@ include NAV_IMPLEMENTATION.json
 include README.en.md CHANGELOG.md
 
 include examples/disclosure-teaching.json
+
+include CONTRIBUTING.md SECURITY.md LIFECYCLE.md
+
+global-exclude *.xls
+
+include RIGHTS_INDEX.json
+
+include SHARED_CODE.json
+recursive-include tools *.py

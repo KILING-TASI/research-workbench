@@ -15,8 +15,16 @@ def resolve(topic,action):
 def main(argv=None):
  p=argparse.ArgumentParser(description='主Skill内置专题入口；参数转交专题脚本，不联网刷新除非显式请求')
  p.add_argument('--timeout',type=int,default=600);p.add_argument('--list',action='store_true');p.add_argument('topic',nargs='?');p.add_argument('action',nargs='?');p.add_argument('args',nargs=argparse.REMAINDER);a=p.parse_args(argv)
+ if not 1<=a.timeout<=3600:p.error('--timeout须为1..3600秒')
  if a.list:
-  print(json.dumps({t:{k:str((ROOT/'modules'/m/'scripts'/v).relative_to(ROOT)) for k,v in actions.items()} for t,(m,actions) in ROUTES.items()},ensure_ascii=False,indent=2));return 0
+  mapping={t:{k:str((ROOT/'modules'/m/'scripts'/v).relative_to(ROOT)) for k,v in actions.items()} for t,(m,actions) in ROUTES.items()}
+  mapping['etf'].update({'rotation-review':'scripts/etf_rotation_bridge.py review','rotation-backtest':'scripts/etf_rotation_bridge.py backtest'})
+  print(json.dumps(mapping,ensure_ascii=False,indent=2));return 0
+ if a.topic=='etf' and a.action in ('rotation-review','rotation-backtest'):
+  forwarded=a.args[1:] if a.args[:1]==['--'] else a.args
+  try:return subprocess.run([sys.executable,str(ROOT/'scripts/etf_rotation_bridge.py'),'review' if a.action=='rotation-review' else 'backtest',*forwarded],timeout=a.timeout).returncode
+  except (subprocess.TimeoutExpired,OSError) as exc:
+   print('ETF专业入口未完成：'+str(exc),file=sys.stderr);return 2
  try:path=resolve(a.topic,a.action)
  except ValueError as exc:p.error(str(exc))
  forwarded=a.args[1:] if a.args[:1]==['--'] else a.args

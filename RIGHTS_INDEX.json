@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "research-rights-index/1",
+  "repository": "research-workbench",
+  "originalCodeLicense": "MIT",
+  "noticeFiles": [
+    {
+      "path": "LICENSE",
+      "sha256": "e2e3a3f682bbb78dcce5cc2d7c9f97afa545d6ba3a51a29d38e26e07f1730938"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "f4986aa155bfafc5253a1eb40ef10d82b87c61290bbf78ec85d5468461cf3e3b"
+    }
+  ],
+  "dataRights": "Source-specific; not granted by code MIT",
+  "methodReferences": "See repository method documents; citations do not convey text or data redistribution rights",
+  "scope": "Notice-file inventory and hashes, not an authorization or legal compliance certificate",
+  "hashFormat": "utf-8-lf"
+}

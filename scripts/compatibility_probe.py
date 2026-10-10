@@ -1,5 +1,5 @@
 """Explicit trusted-source interface probes; not general package compatibility."""
-import argparse,ast,json,sys,hashlib
+import argparse,ast,json,sys,hashlib,re
 from pathlib import Path
 from specialist_loader import check,call,LAST_PROVENANCE
 
@@ -15,7 +15,7 @@ def probe(lookthrough,financial,portfolio):
         folder=root/('src/portfolio_engine' if domain=='portfolio' else 'cnlookthrough' if domain=='lookthrough' else 'cnreconcile')
         records=[check(domain,module,name,project_dir=root) for name in names]
         if not all(x['available'] for x in records):raise ValueError('所选版本缺少已登记接口：'+domain)
-        entries.append(dict(domain=domain,softwareVersion=version(folder),interfaces=[module+'.'+name for name in names],methodIdentitySha256=records[0]['methodIdentitySha256'],methodFiles=records[0]['methodFiles'],scope='source declaration located; function execution probes below are limited'))
+        entries.append(dict(domain=domain,softwareVersion=re.search(r'^version\s*=\s*"([^"]+)"', (root/'pyproject.toml').read_text(encoding='utf-8'), re.M).group(1),componentDeclaredVersion=version(folder),interfaces=[module+'.'+name for name in names],methodIdentitySha256=records[0]['methodIdentitySha256'],methodFiles=records[0]['methodFiles'],scope='source declaration located; function execution probes below are limited'))
     groups=[[{'cells':['1','600000','教学A/H主体']}],[{'cells':['2','01988','教学A/H主体']}]]
     assert call('lookthrough','report_adapter','issuer_order_values',groups,[20,30],True,True,project_dir=lookthrough)==[50]
     rejected=False
@@ -26,7 +26,7 @@ def probe(lookthrough,financial,portfolio):
     observed=call('portfolio','observed_review','review',case['input'],project_dir=portfolio)['result']
     expected=dict(case['expected_result']);actual=dict(observed);a=actual.pop('xirrPct');b=expected.pop('xirrPct');assert actual==expected
     assert a==b or a is not None and b is not None and abs(a-b)<1e-10
-    return dict(consumerVersion='0.1.0-beta.10',providers=entries,executionProbes=['explicit A/H ranking pair','unknown schema1 rejection','synthetic observed-account reference case'],status='limited-interface-probes-passed',limitations=['显式可信源码目录，不是从PyPI安装或全部依赖组合认证','函数定位不是实际PDF格式全覆盖；财报项只验证未知schema拒绝，完整正例另由固定提交CI检查','教学观察账户不是恢复真实账户；未列版本不能推定兼容'])
+    return dict(consumerVersion=re.search(r'^version\s*=\s*"([^"]+)"',(Path(__file__).resolve().parents[1]/'pyproject.toml').read_text(encoding='utf-8'),re.M).group(1),providers=entries,executionProbes=['explicit A/H ranking pair','unknown schema1 rejection','synthetic observed-account reference case'],status='limited-interface-probes-passed',limitations=['显式可信源码目录，不是从PyPI安装或全部依赖组合认证','函数定位不是实际PDF格式全覆盖；财报项只验证未知schema拒绝，完整正例另由固定提交CI检查','教学观察账户不是恢复真实账户；未列版本不能推定兼容'])
 
 if __name__=='__main__':
     for stream in (sys.stdout,sys.stderr):
