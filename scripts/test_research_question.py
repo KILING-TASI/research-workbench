@@ -8,6 +8,11 @@ class Router(unittest.TestCase):
             result=run({'asOf':'2026-10-03',**spec},folder,search or self.search)
             self.assertTrue(Path(result['archivePath']).exists())
             return result
+    def test_unrecognized_name_gives_example_without_collection(self):
+        r=self.execute({"question":"招商银行近三个月有哪些需要核对原文的公告？"})
+        self.assertNotIn("eventResult",r)
+        self.assertIn("查询招商银行",r["answer"])
+        self.assertEqual(r["failureKind"],"request-needs-clarification")
     def test_name_window(self):
         r=self.execute({'question':'分析招商银行最近三个月公告','items':[{'date':'2026-09-01','title':'拟回购公告'}]})
         self.assertEqual(r['eventResult']['start'],'2026-07-03');self.assertEqual(r['status'],'partial');self.assertIn('待补',r['answer'])

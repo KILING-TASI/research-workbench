@@ -118,3 +118,7 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 有权授权的原创代码和说明采用 [MIT](LICENSE)。第三方代码、公告、研报、行情数据和品牌的权利分别处理，详见[第三方与数据说明](THIRD_PARTY_NOTICES.md)及[来源许可核查](references/third-party-notices.md)。
 
 本项目用于学习和研究，不构成投资建议，不执行交易，也不保证收益。请结合本次来源、假设和缺口独立判断；[完整免责声明](DISCLAIMER.md)保留具体使用边界。
+
+## 公告问答的可用句式
+
+当前公告路由只支持单家A股、近一或三个月，并非任意自然语言解析器。可以说“查询招商银行近三个月的公告”或“查看600036近一个月的公告”。输入JSON也可明确填写 `code` 或 `query`，并提供 `asOf`。名称无法唯一确认、日期冲突或超出支持范围时，先澄清，不猜测代码或忽略条件。

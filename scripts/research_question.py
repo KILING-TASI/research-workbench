@@ -96,7 +96,7 @@ def run(spec,workspace,searcher=search,event_runner=events):
             result['nextSteps']=['核对候选名称和市场，明确单一A股代码；不要自动选择同名或相似名称。']
         else:
             result['failureKind']='request-needs-clarification'
-            result['nextSteps']=['明确单家A股公司及近一或三个月的公告问题；其他场景使用对应研究入口。']
+            result['nextSteps']=['例如：查询招商银行近三个月的公告；也可用六位代码，例如查询600036近一个月的公告。', '输入JSON可显式填写code或query，并填写asOf；仅支持单家A股和近一或三个月，冲突信息仍需澄清。']
     lines+=['','## 下一步','']+['- '+step for step in result['nextSteps']]
     lines+=['','## 资料限制','',result['riskNotice']]
     lines+=['待补：'+'；'.join(result['gaps'])];result['answer']='\n'.join(lines)
