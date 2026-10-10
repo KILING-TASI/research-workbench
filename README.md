@@ -19,7 +19,7 @@
 [![原创代码 MIT](https://img.shields.io/badge/%E5%8E%9F%E5%88%9B%E4%BB%A3%E7%A0%81-MIT-green)](LICENSE)
 [![运行检查](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml)
 
-当前版本：[v0.1.0-beta.15](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.15)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+当前版本：[v0.1.0-beta.16](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.16)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
 
 ## 看几个历史研究案例
 
@@ -84,9 +84,9 @@
 
 ## 安装和首次试用
 
-安装包见[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.15)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+安装包见[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.16)，提供完整源码、wheel、sdist 和校验清单。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-安装包版本为 `0.1.0-beta.14`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+安装包版本为 `0.1.0b16`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
