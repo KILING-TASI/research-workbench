@@ -35,6 +35,7 @@ flowchart TD
     I --> N[MarketLens：市场叙事证据]
     I --> T[cn-reits-research：REITs经营估值]
     I --> D[cn-data-adapters：资料接入与重放]
+    D -. 固定旧版净值实现随包，非全部新入口集成 .-> W
     I --> K[cn-research-contracts：格式校验]
     W -. 有界原生契约，限定范围 .-> P
     W -. 有界原生契约，限定范围 .-> B

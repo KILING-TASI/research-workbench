@@ -117,7 +117,7 @@ python -m venv .venv
 
 本项目负责组织研究、写出判断和报告；需要专门的持仓、财报或组合计算时，再调用对应工具。[完整功能说明](references/current-capabilities.md)和[按问题选择工具](references/tool-navigation.md)列出具体范围。
 
-**暂不支持：**任意标的全量资料的一键获取、实时行情保证、默认后台监控、交易执行或收益承诺。REITs 完整估值尚未完成；机构预测档案可以离线留存观察，但不是完整一致预期数据库。其他缺口见[详细交付说明](references/development-validation.md)。
+**暂不支持：**任意标的全量资料的一键获取、实时行情保证、默认后台监控、交易执行或收益承诺。REITs 条件估值由独立 cn-reits-research 提供，完整真实产品经营底稿仍需准备；机构预测档案可以离线留存观察，但不是完整一致预期数据库。其他缺口见[详细交付说明](references/development-validation.md)。
 
 ## 怎么安装，哪些依赖要准备
 
@@ -204,3 +204,9 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 
 
 [本轮审计范围与未认证事项](AUDIT_SCOPE.md)。
+
+## v0.1.0-beta.16 缺口修正与数据入口
+
+清理重复使用者页面的发布残留，新增英文项目入口及版本变更索引；独立使用和历史冻结记录保持。新增八类公告专题底稿复查，修正REITs状态及工具衔接说明。
+
+[English introduction](README.en.md) · [版本变更](CHANGELOG.md)。
