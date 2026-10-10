@@ -7,3 +7,5 @@ recursive-include research_workbench *.py
 global-exclude *.pyc *.pdf *.docx *.xlsx
 prune build
 prune dist
+
+include try_demo.py Start-Demo.cmd Start-Demo.sh BEGINNER.md
