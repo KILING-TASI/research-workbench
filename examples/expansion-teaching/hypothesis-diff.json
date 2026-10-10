@@ -1,0 +1,31 @@
+{
+  "before": {
+    "entityId": "teaching",
+    "asOf": "2025-01-01T10:00:00+08:00",
+    "hypotheses": [
+      {
+        "id": "h1",
+        "claim": "续租稳定",
+        "invalidation": "出租率跌破阈值",
+        "evidence": [
+          "教学依据1"
+        ]
+      }
+    ]
+  },
+  "after": {
+    "entityId": "teaching",
+    "asOf": "2025-02-01T10:00:00+08:00",
+    "hypotheses": [
+      {
+        "id": "h1",
+        "claim": "续租待观察",
+        "invalidation": "两季出租率下降",
+        "evidence": [
+          "教学依据2"
+        ]
+      }
+    ]
+  },
+  "teaching": true
+}

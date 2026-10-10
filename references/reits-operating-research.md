@@ -15,4 +15,4 @@ entity、asOf、assetModel=property、projects、operatingPeriods、distribution
 ## 验收
 选一只园区REIT的年度报告与分派公告，逐笔核对分派所属期间、每份金额及分母；已披露运营数据与现金流假设分栏。复核扩募前后份额及项目范围。资料缺失则保留空值，不推导公平价格或买卖指令。
 
-当前状态：具体设计与输入/验收范围；未实现定价或完成真实样本。后续先补真实期间核对，再接情景计算；特许经营、跨资产比较与全市场覆盖不在首批。
+本文保留最初产业园设计背景。2026-10-11实施归属已更新为[cn-reits-research](https://github.com/KILING-TASI/cn-reits-research)：产权与有限经营权完整声明底稿估值独立实现，两个公开分配公告作限定研究。前文首批设计不是现行算法契约；现行方法、CLI与缺口以专业仓README/METHODS为准。工作台不重复实现估值，不宣称真实全市场资料或任意REIT全底稿已齐备。

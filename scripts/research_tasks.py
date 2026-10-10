@@ -44,6 +44,10 @@ def transaction(function):
             except FileExistsError:
                 if time.monotonic() >= deadline:raise TimeoutError('研究记录正在写入；若进程异常退出，请确认无写入进程后移除 .research.lock')
                 time.sleep(.05)
+            except PermissionError as error:
+                if os.name != 'nt' or getattr(error, 'winerror', None) not in (5, 32) or time.monotonic() >= deadline:
+                    raise
+                time.sleep(.05)
         try:
             os.write(fd, str(os.getpid()).encode())
             return function(folder, *args, **kwargs)

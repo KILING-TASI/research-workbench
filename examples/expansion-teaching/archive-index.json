@@ -1,0 +1,24 @@
+{
+  "entries": [
+    {
+      "id": "e1",
+      "engine": "cn-reits-research",
+      "engineVersion": "0.1.0",
+      "inputSchema": "teaching",
+      "methodVersion": "teaching",
+      "entity": "教学",
+      "asOf": "2025-01-01",
+      "status": "blocked",
+      "inputSha256": "e9e7aee380c63d83c47a3a96aac64b90a335be24aa73af2a2aedb6a818c493f5",
+      "resultSha256": "28426c6b8a9aef53a541c328b08e9743de8058047e4a38c0e5aece7c305b7e8b",
+      "input": {
+        "teaching": true
+      },
+      "result": {
+        "status": "blocked",
+        "reason": "缺未来现金流"
+      }
+    }
+  ],
+  "teaching": true
+}
