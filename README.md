@@ -7,9 +7,9 @@
 
 ## 安装和首次试用
 
-本轮对应[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.9)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+本轮对应[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.10)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-本轮源码版本为 `0.1.0-beta.9`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+本轮源码版本为 `0.1.0-beta.10`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
@@ -81,7 +81,7 @@ research-workbench/
 
 配置矩阵、部分 Excel 和 JavaScript 入口有各自依赖，不必为了试用一次就全部安装。普通组件、可选 PDF 组件和自家专业包是三类不同前提；安装了 PDF 组件不等于安装了专业工具。
 
-beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`，这三版均已上线。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI，也不把旧版默默当成兼容替代。
+历史beta.7 对应的专业版本是 `cn-fund-lookthrough 0.2.0`、`cn-financial-reconcile 0.2.0` 和 `portfolio-decision-engine 0.8.0`，这三版均已上线；这不是本轮兼容结论。[当前兼容矩阵](references/compatibility.md)区分已测接口、软件版本和未认证范围。从各仓库的 GitHub Release 页面取得对应 wheel 或源码，再装入当前 Python 环境；不假设这些包已经上传 PyPI，也不把旧版默默当成兼容替代。
 
 [持仓工具 Release](https://github.com/KILING-TASI/cn-fund-lookthrough/releases) · [财报工具 Release](https://github.com/KILING-TASI/cn-financial-reconcile/releases) · [组合工具 Release](https://github.com/KILING-TASI/portfolio-decision-engine/releases)。安装后检查例子见下文；本程序不自动下载或安装。
 
@@ -103,9 +103,9 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 
 ## 当前源码与下载包
 
-当前软件版本是 **`0.1.0-beta.7`**，已于 **2026-10-10** 发布。Skill 元数据和安装包使用这个版本号；说明版本、接口及计算方法各自保留原编号。发布内容见[beta.7 发布说明](references/release-notes-beta7.md)。
+以下是历史beta.7的发布记录，当前软件与安装包版本以首页安装节为准；说明版本、接口及计算方法各自保留原编号。发布内容见[beta.7 发布说明](references/release-notes-beta7.md)。
 
-可以克隆默认 `main` 源码，也可以从 [v0.1.0-beta.7 Release](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.7) 下载 [安装 ZIP](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/research-workbench-v0.1.0-beta.7.zip)及[SHA256 校验清单](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/SHA256SUMS.txt)。旧 [beta.6](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.6) 保留，不替换历史资产。
+可以克隆默认 `main` 源码；需要历史beta.7时从 [v0.1.0-beta.7 Release](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.7) 下载 [安装 ZIP](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/research-workbench-v0.1.0-beta.7.zip)及[SHA256 校验清单](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/SHA256SUMS.txt)。旧 [beta.6](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.6) 保留，不替换历史资产。
 
 下载旧压缩包或使用旧安装，不会自动得到这些新增内容。专业工具也要使用支持对应接口的版本，不能默认用旧包替代。[功能归属与依赖](references/engine-ownership-and-migration.md)列出已经转交的计算和仍留在主包的部分。
 

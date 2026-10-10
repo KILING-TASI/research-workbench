@@ -32,21 +32,21 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/cn-fund-lookthrough
-          ref: 71655554c897e15e3a7d765b8404321ba70c4dc8
+          ref: 327a627d9575bc8c544db8df34bbe29a022d6a9e
           path: _specialists/lookthrough
           persist-credentials: false
       - name: Check out pinned specialist cn-financial-reconcile
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/cn-financial-reconcile
-          ref: 9a7a25154e56c174955419f42a62a29549301cb9
+          ref: 60db97c131bf57c613592f45c3f5078709d20f9f
           path: _specialists/financial
           persist-credentials: false
       - name: Check out pinned specialist portfolio-decision-engine
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/portfolio-decision-engine
-          ref: 5465f940c3ee111cec9c150ce3f60ece27b2b2be
+          ref: f9627248775ca38c1d66da1f9e7dfe79c2b4b877
           path: _specialists/portfolio
           persist-credentials: false
       - name: Set up Python
