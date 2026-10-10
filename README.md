@@ -194,7 +194,6 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 本轮新增预测实际配对、公开问答、假设变化与可迁移引擎索引。独立入口、底稿与限制见 [EXPANSION.md](EXPANSION.md)。
 
 
-[15类使用者的任务路径、术语口径与验收边界](USER_SCENARIOS.md)。
 
 
 共同采集与观察表的单位、时间及版本范围见 [FORMAT_SCOPE.md](FORMAT_SCOPE.md)。宏观、微观和规则事件保留各自口径，不混作净值。
