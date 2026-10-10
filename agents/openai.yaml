@@ -1,5 +1,5 @@
 interface:
-  display_name: "投研研究助手"
+  display_name: "投研工作台"
   short_description: "面向个人与买方研究的多资产投研助手，提供可追溯的资料、分析与研究报告。"
   brand_color: "#2563EB"
   default_prompt: "使用 $research-workbench 获取指定标的数据，核对口径并保存可复查的研究依据。"

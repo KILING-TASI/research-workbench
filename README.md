@@ -1,4 +1,4 @@
-# 投研研究助手
+# 投研工作台
 
 研究公司、比较基金和 ETF、检查持仓组合，把关键判断和数据来源一起留下来。
 
@@ -66,6 +66,18 @@
 | 沿用上一份，把资金改为1,250万元 | 仅更改明确预算，原资料与日期保留，另存结果 |
 
 需先选定支持接续的报告，并由已注册 Skill 的助手或相应入口处理。[更多句式与支持范围](references/practical-entry.md)
+
+## 名称与使用入口
+
+| 用途 | 名称 |
+|---|---|
+| 中文展示名称 | 投研工作台 |
+| GitHub 仓库／Python 发行包 | `research-workbench` |
+| Skill 注册名 | `research-workbench` |
+| 安装后的命令 | `research-workbench` |
+| Python 模块 | `research_workbench` |
+
+中文名称用于介绍；安装、调用和已有记录沿用表中的技术标识。CLI 安装与 Skill 注册分别完成，使用 Skill 时保留完整仓库资源。
 
 ## 安装和首次试用
 
