@@ -29,3 +29,9 @@ python scripts/independent_engine.py lookthrough --project-dir TRUSTED_PROJECT -
 
 
 组合、北交、可转债与规则库新增 opt-in 原生调用见[有界可选接口](bounded-native-bridges.md)。内置入口保留，透传与已证交集分开，不承诺完整等价。
+
+## 普通用户的基金重合路径
+
+已取得股票披露CSV时，可由助手在可信 cn-fund-lookthrough 完整源码或已安装包使用中文 guide，确认净资产百分数和资料日期，不要求用户填写技术配置。已有同截止日两份单基金输入时使用该仓 question compare；明确改变配置比例则 question follow 沿用已选快照另存。该路径没有新增自动持仓采集器，不替代本包已有取数、索引与接续。来源不足时先回答共同配置方向及缺口，不能换教学输入。
+
+组合仓的基础安装现可使用金额敞口、日期现金需求和完整性检查；完整历史风险、回归和优化另需 analysis 组件。环境doctor、输入预检、计算完成和原文核验必须分开解释。兼容矩阵中旧固定组合只是历史验证记录，不能据新版本号自动扩大完整等价范围。

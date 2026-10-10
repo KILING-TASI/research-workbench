@@ -5,13 +5,19 @@
 [![原创代码 MIT](https://img.shields.io/badge/%E5%8E%9F%E5%88%9B%E4%BB%A3%E7%A0%81-MIT-green)](LICENSE)
 [![运行检查](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml)
 
-当前版本：[v0.1.0-beta.11](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.11)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+当前版本：[v0.1.0-beta.12](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.12)。完整源码、wheel、sdist 和校验清单在同一发布页；历史报告及旧下载包按各自版本阅读。
+
+## 先看一份教学报告
+
+完整源码解压后，需要 Python 3.11+。Windows 可运行 `Start-Demo.cmd`；或在源码目录执行 `python try_demo.py`。Linux/macOS 用 `sh Start-Demo.sh`。不需要先执行 pip 安装，不自动下载数据或覆盖旧报告；缺 Python 会提示处理路径。
+
+换成自己的资料，先看[中文资料准备与错误处理](BEGINNER.md)。已安装 CLI 可运行 `research-workbench doctor` 检查软件环境；它不检查资料或认证来源。
 
 ## 安装和首次试用
 
-本轮对应[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.11)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
+本轮对应[发布页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.12)；下载时以实际上传的完整源码、wheel、sdist 与校验清单为准。源码按下面步骤安装；下载 wheel 后，将安装命令末尾的 `.` 换成该 wheel 文件路径。pip 安装不会自动注册 AI 工具中的 Skill。
 
-本轮源码版本为 `0.1.0-beta.11`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
+本轮源码版本为 `0.1.0-beta.12`。安装入口需要 Python 3.11 或以上。在完整源码目录新建自己的 Python 环境，下面的 Windows 命令不需要激活脚本：
 
 ```powershell
 python -m venv .venv
@@ -124,3 +130,7 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 ## 公告问答的可用句式
 
 当前公告路由只支持单家A股、近一或三个月，并非任意自然语言解析器。可以说“查询招商银行近三个月的公告”或“查看600036近一个月的公告”。输入JSON也可明确填写 `code` 或 `query`，并提供 `asOf`。名称无法唯一确认、日期冲突或超出支持范围时，先澄清，不猜测代码或忽略条件。
+
+## 本轮验证范围
+
+源码教学启动、软件环境查询和安装后教学入口分别验证；软件就绪不等于真实资料已取得。中文问答需要助手按本仓Skill准备已声明输入，没有宣称任意自然语言自动发现或全市场数据闭环。旧报告、历史tag与案例证据保留。
