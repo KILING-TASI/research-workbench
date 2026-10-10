@@ -1,150 +1,97 @@
 # 投研研究助手
 
-把“研究什么、比较什么、组合有什么问题”转成可读的研究结果：先给判断，再说明依据和缺口。
+研究公司、比较基金和 ETF、检查持仓组合，把关键判断和数据来源一起留下来。
 
-## 先看结果，再试一次
+[![原创代码 MIT](https://img.shields.io/badge/%E5%8E%9F%E5%88%9B%E4%BB%A3%E7%A0%81-MIT-green)](LICENSE)
+[![运行检查](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/KILING-TASI/research-workbench/actions/workflows/validate.yml)
 
-[实际生成的教学HTML预览（下载后打开）](references/examples/readme-preview.html) · [对应输入](references/examples/readme-preview-input.json) · [生成与版本记录](references/examples/readme-preview-manifest.json)
+## 先试一次
 
-输出基金比较说明.html、Markdown、计算结果和输入底稿。教学样本只有两个日期，能说明区间取舍，不能评价经理能力或计算可靠的长期风险。 预览生成于2026-10-09，尚未取得截图或完成浏览器视觉验收；不是已发布版本的验收证明。
+需要 **Python 3.11 或更高版本**。下面的教学例子不联网，不需要账户、PDF 组件或其他专业工具。
 
-在仓库根目录运行，Python 3.11+，此教学demo只用标准库、不联网：
+下载或克隆仓库后，在仓库根目录打开 PowerShell：
 
-```bash
+```powershell
 python scripts/start.py demo --out-dir local-data/first-comparison
+Invoke-Item ".\local-data\first-comparison\打开这里.html"
 ```
 
-打开 `local-data/first-comparison/基金比较说明.html`。输出目录/文件须不存在；重复运行请换新路径，不覆盖旧结果。限定PDF接口需要另装可选依赖，下面的教学demo不需要。
+会生成 HTML、Markdown、计算结果和输入记录。先打开 `打开这里.html`，再看基金比较说明。如果输出目录已经存在，把 `first-comparison` 换成 `first-comparison-2`；程序不会覆盖旧报告。
 
-[按问题选择九仓库工具](references/tool-navigation.md)
+更多用法见[快速开始](references/quickstart.md)。真实资料需要另行提供或按请求获取，教学输入不能改个名字就当成真实基金。
 
-说明版本：1.93 · 更新日期：2026-10-09。现行说明与历史文档的用途见[文档索引](references/documentation-status.md)。
+## 结果是什么样
 
-持仓穿透与财报字段核对提供两个可独立使用的研究预览工具：[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)、[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)。它们各自开发测试，主Skill基础教学可独立运行；已迁移的六列持仓、schema1原页核验和观察账户收益需对应兼容专业包，不自动安装或下载，详见[接口与范围](references/independent-engines.md)。
+教学例子会先说明：**在这段区间里，A 上涨 10%，B 下跌 10%；A 的区间表现更好，但不能据此判断长期能力。** 随后列出依据、计算口径和还缺哪些资料。
 
-面向个人与买方研究的多资产投研助手，提供可追溯的资料、分析与研究报告。
+这里只有两个日期，年化波动等长期指标不输出，也不评价经理能力。你可以下载[教学报告](references/examples/readme-preview.html)后在本地打开，或查看[对应输入](references/examples/readme-preview-input.json)和[生成记录](references/examples/readme-preview-manifest.json)。这份预览保留原有版本，尚未完成浏览器视觉验收。
 
-将本目录复制到AI工具支持的Skill目录，读取SKILL.md。工作台可选，不需要作者项目路径或数据库。
+## 能做什么
 
-## 版本与使用状态
+| 你想解决的问题 | 主要能得到什么 |
+|---|---|
+| 这家公司值得继续研究吗？ | 业务、财务、同行和估值研究；结论所依赖的假设、风险与后续核对事项 |
+| 几只基金或 ETF 有什么区别？ | 对齐区间后的收益风险、费用、经理及公开持仓比较；资料不足的维度单独说明 |
+| 我的组合是否重复押注？ | 持仓集中度、底层重合和未知部分；有历史明细时再分析收益、风险及调整情景 |
+| 宏观和政策变化意味着什么？ | 指标与政策解读、不同资产的同期表现；不把同期变化直接当成因果关系 |
+| 北交所新股申购资金怎样测算？ | 发行事实、给定获配率下的情景与资金占用；不能保证获配或收益 |
+| 上次的研究还能接着用吗？ | 找回报告、沿用已保存输入继续研究、追加笔记及比较新旧结果 |
 
-截至2026-10-09，已发布版本为 `v0.1.0-beta.6`（预览版，说明1.92）。本分支说明1.93及下述增量尚未发布，合并与发布需另行审阅；本地安装不代表GitHub发布包已更新。
+本项目负责组织研究、写出判断和报告；需要专门的持仓、财报或组合计算时，再调用对应工具。[完整功能说明](references/current-capabilities.md)和[按问题选择工具](references/tool-navigation.md)列出具体范围。
 
-入口按四类问题组织：研究一只标的、比较产品、诊断组合、找回报告继续研究。先识别问题，再按公司、基金、ETF等对象选择方法，工作台不是使用前提。
+**暂不支持：**任意标的全量资料的一键获取、实时行情保证、默认后台监控、交易执行或收益承诺。REITs 完整估值尚未完成；机构预测档案可以离线留存观察，但不是完整一致预期数据库。其他缺口见[详细交付说明](references/development-validation.md)。
 
-本批已实现：问询回复显式逐项关联与本地页缓存；独立工具契约记录；限定基金PDF显式适配桥。REITs完整估值仍是设计；离线机构预测观察档案已实现，但不代表一致预期数据库或预测准确率验收。实现与有限样本见[本批验证](references/development-validation.md)。
+## 怎么安装，哪些依赖要准备
 
-## 第一次使用
+这是一个 **Skill，也提供 Python 命令行入口**。实际 Skill 名称是 `research-workbench`，展示名称是“投研研究助手”。在支持 Skill 的 AI 工具中安装时，使用 `research-workbench` 目录并保留完整资源，不要只复制一份说明文件：
 
-先读[五分钟快速开始](references/quickstart.md)：Python 3.11+ 即可离线生成一份有结论、有论据的教学报告，无须配置账户或安装可选组件。
-
-```bash
-python scripts/start.py demo --out-dir local-data/first-comparison
+```text
+research-workbench/
+  SKILL.md
+  agents/openai.yaml
+  scripts/
+  references/
+  modules/
 ```
 
-打开输出目录中的 `基金比较说明.html`。这是教学示例，不能当作真实基金评价。失败时入口说明原因与下一步，不覆盖旧文件。
+只想运行命令，不必先把 Skill 装进 AI 工具。把文件放进 Skill 目录后，所需软件仍要另行准备，具体步骤见[安装说明](references/standalone-install.md)。不启动网页工作台也能研究。
 
-### 单装可用与专业包前提
+| 使用范围 | 软件前提 |
+|---|---|
+| 上面的离线教学、已有净值比较、持仓表整理 | 基础 Python 环境；不统一要求安装专业包 |
+| PDF 文字和表格读取 | 按入口准备 `pdfplumber`、`pypdf` 等组件 |
+| 六列完整股票表解析 | 兼容的 `cn-fund-lookthrough` 和 PDF 组件 |
+| 指定财务行列的原文核对（schema1 入口） | 兼容的 `cn-financial-reconcile` 和 PDF 组件 |
+| 含出入金的账户收益测算 | 兼容的 `portfolio-decision-engine` |
 
-| 现在要做什么 | 最短使用方式 | 软件前提 |
-|---|---|---|
-| 先试教学报告 | `python scripts/start.py demo --out-dir local-data/first-comparison` | Python 3.11+；不需要其他自家仓库 |
-| 比较已有净值、整理持仓或沿用旧报告 | `compare`、`snapshot`及已有`--continue-from`入口 | 按该入口的资料与组件要求；不统一强制装三个专业包 |
-| 观察账户出入金与收益 | `python scripts/start.py cashflow --input references/examples/example-cashflow-review.json --out-dir local-data/cashflow-example` | 兼容portfolio-decision-engine；该输入是教学数据 |
-| 六列完整股票表、schema1原页核验 | 原有`fund_report_holdings.py`、`verify_original.py`调用 | 分别需要兼容cn-fund-lookthrough、cn-financial-reconcile及PDF组件；其他未迁移版式不据此统一阻断 |
+配置矩阵、部分 Excel 和 JavaScript 入口有各自依赖，不必为了试用一次就全部安装。普通组件、可选 PDF 组件和自家专业包是三类不同前提；安装了 PDF 组件不等于安装了专业工具。
 
-只想检查某个入口，可运行 `python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-cashflow`。六列与schema1分别使用 `--for-entry fund-report-six-column`、`--for-entry original-schema1`。检查不安装、不联网、不加载专业代码；接口可定位不代表已算过，也不代表数据齐全。检查成功只表示说明已生成，是否缺软件见结果。
+只检查账户收益入口，可以运行：
 
-缺包只暂停需要它的那项测算，教学、公司研究、基金评价及报告接续按各自资料条件继续；不恢复重复算法兜底。兼容专业包与项目目录配置见[安装说明](references/standalone-install.md)。来源未核或字段缺失属于资料问题，不当成软件缺失。
-
-真实公司公告可直接按名称查询：`python scripts/start.py ask --question "分析招商银行最近三个月有什么重要公告变化" --as-of 2026-10-08 --online --out-dir local-data/cmb-notices`。换成你的公司名称与实际截止日；此入口仅支持单家A股公告，主动联网，报告区分目录线索与原文核验。
-
-试用看[快速开始](references/quickstart.md)；了解能做什么看[功能说明](references/current-capabilities.md)；修改代码时看[方法与参数索引](references/capability-reference-index.md)。
-
-基金代码或完整名称比较、持仓CSV整理、组合历史及报告找回可通过[日常简明入口](references/practical-entry.md)调用。常用研究支持沿用保存请求、补失败资料并另存新结果；仅有持仓金额时先给结构快照，不冒充完整风险诊断。报告首页先给判断，再展开论据。
-
-## 主要功能
-
-功能合并为六类研究场景：标的查询与候选筛选、基金与ETF产品研究、持仓与组合研究、公司与行业研究、宏观与跨资产观察、北交所新股研究。公告与研报阅读、原文核验、证据、笔记和导出作为共用能力，贯穿研究过程。深度报告与一页纸属于交付形式；代码目录与专用脚本不另列为用户功能模块。具体交付与前提见[功能说明](references/current-capabilities.md)，基金细节见[基金说明](references/fund-user-guide.md)。
-
-已有成功与失败样本、工程检查范围及未完成的验证见[验证范围与样本](references/validation-scope.md)。历史验收不代表当前所有数据源都可用。
-
-研究解释覆盖[申万31个一级行业框架（SW2021）](references/sw-level1-research.md)，并按细分业务检查增长驱动、现金兑现、竞争优势、证据冲突和假设反证；估值及组合情景依赖已取得资料与明确参数。框架覆盖不代表行业数据全覆盖，也不新增自动预测或全市场数据库。
-
-可以直接问：“这家公司利润增长有没有现金支持？”“我的基金是否重复押注同一行业？”“这份研报的核心假设有哪些反证？”AI复用已有入口取得资料并给出自然语言分析；不能确认的事项明确列示。
-
-## 最小离线调用
-
-在本目录运行：
-
-```bash
-python scripts/environment_check.py --out local-data/environment.json
-python scripts/retail_research.py references/examples/news-example.json --out-dir local-data/news-example
+```powershell
+python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-cashflow
 ```
 
-示例是教学消息与教学金额，不是真实持仓或公告。输出目录须为新目录。结果只展示直接关联暴露，不是预计损失或买卖建议。环境检查不联网、不安装依赖。
+检查不会联网或安装软件。缺专业包只暂停需要它的那项计算，其他研究按各自资料条件继续；来源未核、数据缺期也不会被当成软件缺失。
 
-## 依赖按需启用
+[基金持仓穿透](https://github.com/KILING-TASI/cn-fund-lookthrough)和[财报金额核对](https://github.com/KILING-TASI/cn-financial-reconcile)都提供 Skill 说明与命令行入口，可以独立使用，不依赖本工作台运行。其他工具的职责见[工具导航](references/tool-navigation.md)。
 
-基础取数与目录使用Python标准库，联网入口另需来源可访问。PDF表格与持仓提取需要pdfplumber；FOF关联、基金资产负债表及来源结构检查同时需要pypdf。可按需安装：
+## 联网与资料使用
 
-```bash
-python -m pip install pdfplumber pypdf
-```
+上面的试用完全离线。按名称查询公司公告、刷新基金净值等入口需要显式启用联网，并取决于来源是否可访问；软件检查通过不代表数据已取得。
 
-其他可选组件及本地验收版本见references/requirements-optional.txt和references/constraints-tested.txt；版本记录不是全部功能通过证明，不要求一次安装所有组件。矩阵计算需numpy，部分Excel需xlrd/openpyxl，JavaScript入口需Node.js。
+正式研究会保留来源、日期、口径及资料缺口。未知值不补造，假设不写成已发生的事实。[数据源检查](references/source-health.md)和[执行说明](references/execution-contract.md)解释获取失败、资料不足时怎样处理。
 
-完整步骤见references/standalone-install.md。数据、原文、计算与假设分别说明，缺失不补造，不提供收益保证或自动后台更新。第三方及数据权限见references/third-party-notices.md；本项目有权授权的原创代码与说明采用 [MIT 许可证](LICENSE)。第三方代码保留原许可；本许可不授予行情、研报、公告、品牌或外部组件的使用及再分发权。MIT 允许原创部分商用，不代表全部数据与导出链路均获商业授权。
+## 当前源码与下载包
 
-## 同区间比较说明
+截至 **2026-10-10**，新增的依赖检查、专业工具调用和预测档案修正已经集成到默认 `main` 源码。可以克隆或下载当前源码；原来的 Release 仍是 [`v0.1.0-beta.6`](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.6)，它不是当前源码的重新打包版。
 
-已有净值资料可调用：
+下载旧压缩包或使用旧安装，不会自动得到这些新增内容。专业工具也要使用支持对应接口的版本，不能默认用旧包替代。[功能归属与依赖](references/engine-ownership-and-migration.md)列出已经转交的计算和仍留在主包的部分。
 
-```bash
-python scripts/fund_comparison_brief.py comparison-input.json --out-dir local-data/comparison
-```
+## 验证、许可与使用边界
 
-输入沿用research_pipeline.py compare格式：asOf、start、rows；每个标的提供code、可选name、comparisonGroup、basis、frequency及history。输出JSON计算结果、Markdown和HTML自然语言说明。比较组是研究者声明，不代表已核验同类；缺基准不输出超额收益，分红记录完整性未核验时明确保留缺口。
+离线教学、隔离安装和部分研究场景已做实际运行检查，具体范围见[验证说明](references/validation-scope.md)、[当前案例范围](references/acceptance-current.md)。这些检查不代表任意真实标的都能分析，也没有证明 AI 工具已经识别安装，或报告排版已通过视觉检查。
 
-基金净值及行情缓存缺少内容摘要或摘要不一致时需重新取数，保留旧文件。升级采集方法后，旧批量断点须另建jobId，不直接复用旧成功状态。
+有权授权的原创代码和说明采用 [MIT](LICENSE)。第三方代码、公告、研报、行情数据和品牌的权利分别处理，详见[第三方与数据说明](THIRD_PARTY_NOTICES.md)及[来源许可核查](references/third-party-notices.md)。
 
-比较报告附input.json快照及report-manifest.json。可运行：`python scripts/verify_collection_report.py local-data/comparison/report-manifest.json --input local-data/comparison/input.json`。检查保存内容与方法版本，不代表来源真实性、数值正确性或视觉验收。
-
-最小离线比较示例：`python scripts/fund_comparison_brief.py references/examples/comparison-example.json --out-dir local-data/comparison-example`。输入是两组教学净值，非真实基金；仅2个日期，因此年化波动不输出。
-
-财务Excel底稿的现有JavaScript导出器另需可定位的@oai/artifact-tool，Node或openpyxl存在不等于该导出器可运行。环境检查单列结果；组件缺失时保留HTML/JSON。该组件的许可与部署条件见第三方许可说明，本工具不自动安装或授予使用权限。
-
-## 执行环境与数据位置
-
-使用 Python 3.11+，JavaScript入口使用 Node.js 20+。用户研究记录必须通过 --store 存入独立目录，不写入Skill安装目录。内置专题调用、输入前置条件及错误输出见 references/integrated-topics.md 和 references/execution-contract.md。PPT须指定 fontFamily 并在目标环境验证字体及排版，组件可定位不代表报告已验收。
-
-## 主动数据源体检
-
-需要检查当前接口、返回结构和样本日期时，使用[数据源体检](references/source-health.md)，区分请求失败、空样本、结构异常、日期超限和观测不足。仅主动调用，不后台轮询。
-
-## 免责声明
-
-本项目仅供学习与研究，不构成投资建议或交易指令，不保证收益或结果准确性。请在使用前阅读[免责声明与使用边界](DISCLAIMER.md)，并结合本次数据来源、假设与缺口独立判断。代码许可不包含第三方数据使用授权。
-
-
-## 本次首批开发补充（尚未发布）
-
-- [问询专题](references/inquiry-research.md)：逐项底稿、缺回复与声明的未回答事项，页码/版本/来源及财报、后续事件关联；真实首样本仍未取得独立原问询全文。
-- [REITs具体设计](references/reits-operating-research.md)：产业园产权类输入和验收范围，未实现估值，不重复发售规则。
-- [机构盈利预测档案](references/forecast-history-archive.md)：下一批优先，先结构化离线留档、再限定联网；当前仅设计。
-
-## 许可范围
-
-[MIT原创许可](LICENSE)（KILING-TASI及原有贡献者版权） · [第三方、示例与数据范围](THIRD_PARTY_NOTICES.md)。第三方保留原许可；代码许可不包含原文、数据或品牌的再分发授权。
-
-## 有限更正案例（待审增量）
-
-新增[官方更正案例与边界](references/event-association.md)：选定股权比例和表格单位更正，不能代替旧版/修订版全文配对或审计意见认证。原问询缺失仍保留，未自动安装待审代码。
-
-截图重试记录（2026-10-09）：用户恢复权限后，本地HTML仍被浏览器file协议策略拒绝，且禁止绕过。实际HTML生成与代码验证已完成，三个报告尚未取得浏览器截图或视觉验收；不是合成图替代，也不是许可证或原件核验通过证明。
-
-
-当前待审增量的实现、真实样本、版本与未完成项见[详细交付状态](references/development-validation.md)；CI不代表原件认证或投资有效，不自动更新已安装版。
-
-
-本批实际迁移的六列解析、schema1原页字段核验和观察收益需支持兼容接口的独立专业工具；缺失时明确不可用，不回到重复算法。[去重与依赖范围](references/engine-ownership-and-migration.md)。主包报告/判断与未证流程保留。
+本项目用于学习和研究，不构成投资建议，不执行交易，也不保证收益。请结合本次来源、假设和缺口独立判断；[完整免责声明](DISCLAIMER.md)保留具体使用边界。
