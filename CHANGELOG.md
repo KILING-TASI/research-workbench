@@ -37,3 +37,8 @@
 下载旧压缩包或使用旧安装，不会自动得到这些新增内容。专业工具也要使用支持对应接口的版本，不能默认用旧包替代。[功能归属与依赖](references/engine-ownership-and-migration.md)列出已经转交的计算和仍留在主包的部分。
 
 解压安装包得到完整的 `research-workbench` 目录；命令行试用可在该目录运行，安装 Skill 则按所用 AI 工具的规则放入 Skill 目录。不要覆盖自己保存的研究资料，安装步骤见[安装说明](references/standalone-install.md)。旧 beta.7 只交付 Skill 源码 ZIP；已新增 pyproject 与 wheel/sdist，完整 Skill 源码仍单独提供。资产保留构建时的说明，发布状态以本页和 Release 页为准；更新本页不重打旧标签或安装包。
+
+
+## 本地待发布 0.1.0b19.dev0
+
+2026-10-11：用户要求先完成本地开发和验收，后续统一更新GitHub。开发版本与现有公开发行分开，旧附件及研究报告不覆盖。

@@ -104,3 +104,5 @@ ETF行业轮动与固定池历史情景按[独立ETF入口](references/etf-engin
 
 
 新增[问题导向的证据复查](QUESTION_REVIEW.md)：research-workbench script evidence_status_review review；示例、输入口径及限制见该页。
+
+本地待发布的完整研究记录：公司现金分红问题用 `company_cash_case review`，将问题、资料状态和财报计算一起保存；来源/日期/摘要不符时阻断，失败、陈旧或截止后金额不参与计算。真实REIT过程用 `reits_public_case review` 薄调用独立REIT包，不在工作台重写估值。定投与退出计算已转发组合包；缺新接口明确说明需要兼容版本。按需读 [能力归属](references/engine-ownership-and-migration.md) 和 [使用说明](USAGE.md)。

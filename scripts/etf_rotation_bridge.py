@@ -10,4 +10,8 @@ def run(spec,method):
 def review(spec):return run(spec,'calculate')
 def backtest(spec):return run(spec,'backtest')
 
-if __name__=='__main__':raise SystemExit(cli({'review':review,'backtest':backtest},'ETF轮动研究'))
+def composite(spec):
+    value=call('etf','composite','calculate',spec)
+    return dict(conclusion=value['conclusion'],result=value,engineProvenance=LAST_PROVENANCE['etf'],methodVersion=value['methodVersion'],limitations=value['limitations'],humanRows=value['humanRows'])
+
+if __name__=='__main__':raise SystemExit(cli({'review':review,'backtest':backtest,'composite':composite},'ETF轮动研究'))

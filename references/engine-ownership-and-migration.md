@@ -59,3 +59,14 @@
 六列原文132行与迁移前完整对象相等；schema1真实原页净资产字段完整对象相等；组合15正例/11失败及根上下边界由独立任务全对象/错误消息验证。跨平台仅XIRR按Gross growth factor 8ULP比较，其他字段精确；不是放宽全部数字。已有广泛回归继续通过。
 
 公司经营/估值判断、基金综合评价、问询解释、跨资产研究、报告/找回仍主包。北交/可转债/宏观只保留已有可选接入，本批不删旧模型。穿透旧格式计算、复杂财报版式/分项核算及未证整链继续列暂未迁移，不宣称全部去重。
+
+
+## 2026-10-11 本地第二批去重（未发布）
+
+fund_dca的schedule/xirr/calculate及industry_exit_scenarios.exit_cash已改为薄调用组合引擎scheduled_cash/exit_cash。报告、供需和集中度解释留工作台；定投与退出账本、日期和完整性计算归组合引擎。104个新旧全对象/错误消息对照及原有41项回归通过，不放宽数字容差；组合独立入口只需标准库。
+
+ETF综合评分可通过etf_rotation_bridge composite调用；独立网页和情景参数保存在ETF仓，工作台不复制新的专业核心。旧一键数据刷新和全部旧UI仍未证整链等价，暂留历史参照。
+
+company_cash_case将研究问题、资料状态及财报计算绑定，失败/陈旧/截止后字段先留空再计算，来源/日期/摘要不同则拒绝。reits_public_case是薄调用，需要显式安装支持接口的新REIT包，或声明RESEARCH_WORKBENCH_REITS_DIR；不是将REIT计算搬回工作台。
+
+本地支持版本：portfolio-decision-engine 0.9.4.dev0、cn-etf-rotation-engine 0.1.1.dev0、cn-reits-research 0.1.5.dev0。GitHub现有发行未含新增接口；统一发布时先发布专业仓，再更新工作台固定CI引用。

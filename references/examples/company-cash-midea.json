@@ -1,0 +1,236 @@
+{
+  "inputSchema": "company-cash-case/1",
+  "question": "美的集团2025年经营现金流扣除所列购建长期资产现金后，能否覆盖声明分红？",
+  "financialInput": {
+    "inputSchema": "cnreconcile-dividend-v1",
+    "methodVersion": "dividend-observation-3",
+    "exampleType": "public-document-sample",
+    "asOf": "2026-10-11",
+    "companyType": "non-financial",
+    "facts": {
+      "operatingCashFlow": {
+        "entity": "美的集团股份有限公司",
+        "metric": "operatingCashFlow",
+        "period": "2025-12-31",
+        "publishedAt": "2026-03-31",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "unit": "千元",
+        "value": 53345930,
+        "statementVersion": "2025-annual-szse-selected-20260331",
+        "evidence": {
+          "page": 137,
+          "quote": ") 经营活动产生/(使用)的现金流量净额 四(64)(h) 53,345,930",
+          "documentSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+          "sourceValue": "53,345,930",
+          "conversion": "identity",
+          "unitQuote": "金额单位为人民币千元"
+        }
+      },
+      "capitalExpenditure": {
+        "entity": "美的集团股份有限公司",
+        "metric": "capitalExpenditure",
+        "period": "2025-12-31",
+        "publishedAt": "2026-03-31",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "unit": "千元",
+        "value": 11141889,
+        "statementVersion": "2025-annual-szse-selected-20260331",
+        "evidence": {
+          "page": 137,
+          "quote": ",235 购建固定资产、无形资产和其他长期资产支付的 现金 (11,141,889)",
+          "documentSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+          "sourceValue": "(11,141,889)",
+          "conversion": "cash-outflow-magnitude",
+          "unitQuote": "金额单位为人民币千元"
+        },
+        "definition": "仅取购建固定资产、无形资产和其他长期资产支付现金的流出绝对值；不含收购子公司或其他投资，不能当成全部资金需求。"
+      },
+      "profit": {
+        "entity": "美的集团股份有限公司",
+        "metric": "profit",
+        "period": "2025-12-31",
+        "publishedAt": "2026-03-31",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "unit": "千元",
+        "value": 43945411,
+        "statementVersion": "2025-annual-szse-selected-20260331",
+        "evidence": {
+          "page": 135,
+          "quote": "- - (二)按所有权归属分类 归属于母公司股东的 净利润 43,945,411",
+          "documentSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+          "sourceValue": "43,945,411",
+          "conversion": "identity",
+          "unitQuote": "金额单位为人民币千元"
+        },
+        "profitAttribution": "parent-owners",
+        "taxBasis": "after-tax"
+      },
+      "oneOffProfit": {
+        "entity": "美的集团股份有限公司",
+        "metric": "oneOffProfit",
+        "period": "2025-12-31",
+        "publishedAt": "2026-03-31",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "unit": "千元",
+        "value": 2678178,
+        "statementVersion": "2025-annual-szse-selected-20260331",
+        "evidence": {
+          "page": 11,
+          "quote": "） 79,986 -105,240 -122,001 合计 2,678,178",
+          "documentSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+          "sourceValue": "2,678,178",
+          "conversion": "identity",
+          "unitQuote": "单位：千元"
+        },
+        "profitAttribution": "parent-owners",
+        "taxBasis": "after-tax"
+      },
+      "declaredDividend": {
+        "entity": "美的集团股份有限公司",
+        "metric": "declaredDividend",
+        "period": "2025-12-31",
+        "publishedAt": "2026-03-31",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "unit": "元",
+        "value": 32360630265,
+        "statementVersion": "2025-annual-szse-selected-20260331",
+        "evidence": {
+          "page": 79,
+          "quote": "22,863,645 现金分红金额（元） （含税）注（1） 32,360,630,265",
+          "documentSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+          "sourceValue": "32,360,630,265",
+          "conversion": "identity",
+          "unitQuote": "现金分红金额（元）"
+        },
+        "recipientAttribution": "parent-owners",
+        "attributablePeriod": "2025-12-31",
+        "definition": "2025年度预案金额，含已派中期分红；不是将于2026年新支付的全部金额。股本变化可能调整最终金额；回购另列，未计入本项。"
+      },
+      "paidDividend": {
+        "entity": "美的集团股份有限公司",
+        "metric": "paidDividend",
+        "period": "2025-12-31",
+        "publishedAt": "2026-03-31",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "unit": "元",
+        "value": 30476852000,
+        "statementVersion": "2025-annual-szse-selected-20260331",
+        "evidence": {
+          "page": 223,
+          "quote": "利约 18,594,000 元，本年实际派发现金股利共计约 30,476,852,000",
+          "documentSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+          "sourceValue": "30,476,852,000",
+          "conversion": "identity",
+          "unitQuote": "30,476,852,000 元"
+        },
+        "attributablePeriod": null,
+        "definition": "附注明确本年实际派发，含上一年度末期和当年中期分红；所属年度混合，留空，不以股利加利息的现金流项目替代。"
+      }
+    }
+  },
+  "evidence": {
+    "inputSchema": "evidence-status/1",
+    "question": "美的集团2025年经营现金流扣除所列购建长期资产现金后，能否覆盖声明分红？",
+    "asOfDate": "2026-10-11",
+    "asOf": "2026-10-11T07:54:30.199535+00:00",
+    "maxAgeDays": 400,
+    "records": [
+      {
+        "id": "operatingCashFlow",
+        "status": "available",
+        "reason": "沿用已冻结公开资料，原页核对另记；未认证为最新更正版本",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "locator": "PDF物理第137页",
+        "sourceVersion": "2025-annual-szse-selected-20260331",
+        "publishedDate": "2026-03-31",
+        "acquiredAt": "2026-10-11T07:54:30.199535+00:00",
+        "rawSourceSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+        "dataDate": "2025-12-31",
+        "valueType": "disclosed"
+      },
+      {
+        "id": "capitalExpenditure",
+        "status": "available",
+        "reason": "沿用已冻结公开资料，原页核对另记；未认证为最新更正版本",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "locator": "PDF物理第137页",
+        "sourceVersion": "2025-annual-szse-selected-20260331",
+        "publishedDate": "2026-03-31",
+        "acquiredAt": "2026-10-11T07:54:30.199535+00:00",
+        "rawSourceSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+        "dataDate": "2025-12-31",
+        "valueType": "disclosed"
+      },
+      {
+        "id": "profit",
+        "status": "available",
+        "reason": "沿用已冻结公开资料，原页核对另记；未认证为最新更正版本",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "locator": "PDF物理第135页",
+        "sourceVersion": "2025-annual-szse-selected-20260331",
+        "publishedDate": "2026-03-31",
+        "acquiredAt": "2026-10-11T07:54:30.199535+00:00",
+        "rawSourceSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+        "dataDate": "2025-12-31",
+        "valueType": "disclosed"
+      },
+      {
+        "id": "oneOffProfit",
+        "status": "available",
+        "reason": "沿用已冻结公开资料，原页核对另记；未认证为最新更正版本",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "locator": "PDF物理第11页",
+        "sourceVersion": "2025-annual-szse-selected-20260331",
+        "publishedDate": "2026-03-31",
+        "acquiredAt": "2026-10-11T07:54:30.199535+00:00",
+        "rawSourceSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+        "dataDate": "2025-12-31",
+        "valueType": "disclosed"
+      },
+      {
+        "id": "declaredDividend",
+        "status": "available",
+        "reason": "沿用已冻结公开资料，原页核对另记；未认证为最新更正版本",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "locator": "PDF物理第79页",
+        "sourceVersion": "2025-annual-szse-selected-20260331",
+        "publishedDate": "2026-03-31",
+        "acquiredAt": "2026-10-11T07:54:30.199535+00:00",
+        "rawSourceSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+        "dataDate": "2025-12-31",
+        "valueType": "disclosed"
+      },
+      {
+        "id": "paidDividend",
+        "status": "available",
+        "reason": "沿用已冻结公开资料，原页核对另记；未认证为最新更正版本",
+        "source": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF",
+        "locator": "PDF物理第223页",
+        "sourceVersion": "2025-annual-szse-selected-20260331",
+        "publishedDate": "2026-03-31",
+        "acquiredAt": "2026-10-11T07:54:30.199535+00:00",
+        "rawSourceSha256": "16f95f70527db59dcf2736f276a9479cf7ee917e5f71e4f6cbbe83acbad9f4b6",
+        "dataDate": "2025-12-31",
+        "valueType": "disclosed"
+      }
+    ]
+  }
+}
