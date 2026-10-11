@@ -101,3 +101,6 @@ python scripts/start.py demo --out-dir local-data/first-comparison
 深度问题先按[研究框架导航](references/research-framework-index.md)选当前任务与行业；framework_route.py校验机读索引和引用摘要。轻量查询不加载全套参考，专业方法按归属查阅。
 
 ETF行业轮动与固定池历史情景按[独立ETF入口](references/etf-engine-migration.md)调用；缺专业工具明确不可用，不用历史网页计算回退。
+
+
+新增[问题导向的证据复查](QUESTION_REVIEW.md)：research-workbench script evidence_status_review review；示例、输入口径及限制见该页。

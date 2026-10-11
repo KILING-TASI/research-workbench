@@ -1,0 +1,45 @@
+{
+  "inputSchema": "evidence-status/1",
+  "question": "这些资料能否支持当前研究判断？",
+  "maxAgeDays": 7,
+  "records": [
+    {
+      "source": "https://example.org/teaching",
+      "locator": "原创教学底稿，不对应真实发行人",
+      "sourceVersion": "teaching-v1",
+      "publishedDate": "2026-09-30",
+      "acquiredAt": "2026-10-01T09:00:00+08:00",
+      "rawSourceSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "id": "disclosure",
+      "status": "available",
+      "reason": "教学披露资料已取得，未核原文",
+      "dataDate": "2026-09-30",
+      "valueType": "disclosed"
+    },
+    {
+      "source": "https://example.org/teaching",
+      "locator": "原创教学底稿，不对应真实发行人",
+      "sourceVersion": "teaching-v1",
+      "publishedDate": "2026-09-30",
+      "acquiredAt": "2026-10-01T09:00:00+08:00",
+      "rawSourceSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "id": "old-proxy",
+      "status": "available",
+      "reason": "历史代理读数，不能冒充最新",
+      "dataDate": "2026-08-31",
+      "valueType": "proxy"
+    },
+    {
+      "id": "network",
+      "status": "failed",
+      "reason": "教学HTTP502失败；未取得数据"
+    },
+    {
+      "id": "permission",
+      "status": "unauthorized",
+      "reason": "教学授权缺失；未取得数据"
+    }
+  ],
+  "asOf": "2026-10-01T18:00:00+08:00",
+  "asOfDate": "2026-10-01"
+}
