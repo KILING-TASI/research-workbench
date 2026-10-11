@@ -32,11 +32,7 @@ python try_demo.py --no-open --out-dir reports/first-demo
 
 使用 Git 时，先运行 `git clone https://github.com/KILING-TASI/research-workbench.git`，再运行 `cd research-workbench`，随后执行上面的教学命令。重复运行请指定新目录，历史结果会保留。
 
-[报告示例源码](references/examples/readme-preview.html)：GitHub 会展示 HTML 源码，请下载完整源码后在浏览器中打开。
-
-![教学报告截图](references/examples/readme-preview-desktop.jpg)
-
-截图对应历史教学样本，具体日期、参数和缺口以该报告为准。
+[历史教学示例源码](references/examples/readme-preview.html) · [历史开发截图](references/examples/readme-preview-desktop.jpg)。这组示例保留旧开发状态标记，仅供理解报告结构；查看当前流程请运行上面的教学命令。HTML 源码需下载后在浏览器中打开。
 
 ## 使用自己的资料
 
