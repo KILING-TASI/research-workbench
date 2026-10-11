@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/portfolio-decision-engine
-          ref: e86ed41b5930e5504e0911d40df4f722a7e5fd33
+          ref: 2011579f33db5cd6484857d63fae9046ba1c0e9f
           path: _specialists/portfolio
           persist-credentials: false
       - name: Check out pinned specialist marketlens
