@@ -37,7 +37,7 @@ def verify_continuation_input(previous,prior,path,filename):
     return origin
 
 
-def execute(command, destination, input_path=None, example='compare', question=None, as_of=None, online=False, codes=None, start=None, group=None, names=None, reuse_from=None, continue_from=None, rebalance_options=None, budget=None, check_entry=None):
+def execute(command, destination, input_path=None, example='compare', question=None, as_of=None, online=False, codes=None, start=None, group=None, names=None, reuse_from=None, continue_from=None, rebalance_options=None, budget=None, check_entry=None, query=None, code=None, catalog=None):
     """Publish a complete result or a useful failure, without replacing user files."""
     destination = Path(destination)
     if destination.exists():
@@ -96,6 +96,9 @@ def execute(command, destination, input_path=None, example='compare', question=N
                 if not question or not as_of:
                     raise ValueError('ask 需要 --question 和 --as-of；支持单家A股近一或三个月公告')
                 spec = {'question': question, 'asOf': as_of, 'market': 'CN', 'onlineSearch': online, 'refresh': online}
+                if query:spec['query']=query
+                if code:spec['code']=code
+                if catalog:spec['catalog']=str(catalog)
                 result = run(spec, stage)
                 archive_file = Path(result['archivePath'])
                 result['archivePath'] = str((destination.resolve() / archive_file.resolve().relative_to(stage.resolve())).resolve())
@@ -382,6 +385,9 @@ def main():
     parser.add_argument('--example', choices=['compare', 'news'], default='compare')
     parser.add_argument('--out-dir', type=Path, required=True)
     parser.add_argument('--for-entry',choices=['demo','compare','news','snapshot','cashflow','fund-report-six-column','original-schema1'],help='doctor：只检查这一个入口的软件，不检查数据或安装组件')
+    parser.add_argument('--query',help='ask：明确公司名称；不能代替身份核验')
+    parser.add_argument('--code',help='ask：单家A股六位代码；不是funds的--codes')
+    parser.add_argument('--catalog',type=Path,help='ask：带sourceUrl/asOf/rows的离线身份目录JSON')
     parser.add_argument('--question', help='ask：单家A股近一或三个月公告问题')
     parser.add_argument('--as-of', help='ask：研究截止日 YYYY-MM-DD')
     parser.add_argument('--online', action='store_true', help='ask/funds：主动取数；funds复用时只补不可用资料')
@@ -410,8 +416,10 @@ def main():
         parser.error('--question 仅用于 ask')
     if args.command not in ('ask','funds','snapshot') and args.as_of:
         parser.error('--as-of 用于 ask、funds 或 snapshot')
+    if args.command != 'ask' and (args.query or args.code or args.catalog):parser.error('--query、--code、--catalog 仅用于 ask')
+    if args.code and not __import__('re').fullmatch(r'[0-9]{6}',args.code):parser.error('--code须为六位A股代码')
     if args.command != 'funds' and (args.codes or args.names or args.start or args.group or args.reuse_from):
-        parser.error('--codes、--names、--start、--group、--reuse-from 仅用于 funds')
+        parser.error('--codes、--names、--start、--group、--reuse-from 仅用于 funds；ask单家公司请用 --code 六位代码')
     if args.continue_from and args.command not in CONTINUABLE:
         parser.error('当前入口不支持 --continue-from')
     if args.command == 'ask' and args.input:
@@ -424,7 +432,7 @@ def main():
     if args.cost_reference is not None:options['costCounterfactual']=args.cost_reference
     if options and args.command!='rebalance':parser.error('频率和费用参数仅用于rebalance')
     if args.budget is not None and args.command!='bjx':parser.error('--budget仅用于bjx情景')
-    result = execute(args.command, args.out_dir, args.input, args.example, args.question, args.as_of, args.online, args.codes, args.start, args.group,args.names,args.reuse_from,args.continue_from,options,args.budget,check_entry=args.for_entry)
+    result = execute(args.command, args.out_dir, args.input, args.example, args.question, args.as_of, args.online, args.codes, args.start, args.group,args.names,args.reuse_from,args.continue_from,options,args.budget,check_entry=args.for_entry,query=args.query,code=args.code,catalog=args.catalog)
     print(result['message'])
     for step in result['nextSteps']:
         print('- ' + step)

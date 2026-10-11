@@ -154,11 +154,29 @@ research-workbench script reits_public_case review --input REIT专业仓公开�
 
 ## 2026-10-11 本轮更新补强
 
-安装兼容的 `cn-financial-reconcile 0.2.11.dev0` 后，运行：
+安装兼容的 `cn-financial-reconcile 0.2.11` 后，运行：
 
 ```text
 python -m research_workbench script company_cash_stress review --input references/examples/cash-stress-teaching.json --out-dir 新现金压力报告
 python -m research_workbench script claim_evidence_review review --input references/examples/claim-evidence-teaching.json --out-dir 新消息核对报告
 ```
 
+现金压力需要 `cn-financial-reconcile 0.2.11`；消息对照需要独立安装 `marketlens 0.3.3`。缺对应工具时明确提示，不替换为旧算法。
+
 这两个示例是原创教学资料，不是真实公告。新增现金需求使用基本货币单位；明确假设无需求填0，未取得资料填null。情景说明、原输入、计算结果和文件摘要另存，不覆盖历史。计算成功不等于消息为真或未来分红安全。
+
+
+## 更自然的公告提问与离线目录
+
+```text
+research-workbench run ask --question "贵州茅台最近三个月有哪些值得关注的公告" --as-of 2026-10-11 --online --out-dir reports/events-new
+research-workbench run ask --question "最近三个月有哪些公告" --query 公司完整名称 --catalog 我的证券目录.json --as-of 2026-10-11 --out-dir reports/events-offline
+research-workbench script --search 现金
+research-workbench script --group 公告与证据
+```
+
+`ask` 可用 `--code` 明确单家公司；`--codes` 仍属于多基金入口。名称、代码和目录只是身份线索；不联网且没有有来源的目录时，回显识别到的对象并说明缺口。目录JSON须声明 `sourceUrl`（HTTPS）、`asOf`（不晚于研究截止日）、`rows`；每行包含 `code`（六位）、`name` 和 `exchange`（SSE/SZSE/BSE）。输入目录按声明读取、保存摘要，不认证原发布者、不内置无时点的猜测名单。相同名称多个代码保持歧义。
+
+脚本索引按主题分组、显示一行说明，检索支持脚本名、中文主题和说明；列入索引不代表该入口已完成全部业务验收，具体参数仍看各入口帮助。
+
+Windows双击请使用完整源码；入口HTML名称可能沿用历史格式，以本次成功提示中的完整路径为准。不同工具的原生输出命名保留，不重命名历史结果；重复运行另选目录，已有结果不覆盖。基础教学依赖与PDF、完整分析、Node.js综合评分依赖分别处理。

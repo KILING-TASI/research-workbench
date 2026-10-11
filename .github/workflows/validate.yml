@@ -33,28 +33,28 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/cn-fund-lookthrough
-          ref: 327a627d9575bc8c544db8df34bbe29a022d6a9e
+          ref: a24f807dee3e8a0ff8ea3f96dd836f868abc3b64
           path: _specialists/lookthrough
           persist-credentials: false
       - name: Check out pinned specialist cn-financial-reconcile
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/cn-financial-reconcile
-          ref: 5c77d060e6a26b3e0c993d3611a099f812a2104e
+          ref: e8d57a9858570e16fa6aca62aa95cd2b48e3b3f2
           path: _specialists/financial
           persist-credentials: false
       - name: Check out pinned specialist portfolio-decision-engine
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/portfolio-decision-engine
-          ref: 2011579f33db5cd6484857d63fae9046ba1c0e9f
+          ref: caeaabe8ca902c4236887f074ba5d8a638509413
           path: _specialists/portfolio
           persist-credentials: false
       - name: Check out pinned specialist marketlens
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/marketlens
-          ref: 4ea8fb720e1fc0e2a3552e7b96e7adb4dc639427
+          ref: 444d82813c246190f5660f3632b533d89149b5b6
           path: _specialists/marketlens
           persist-credentials: false
       - name: Set up Python

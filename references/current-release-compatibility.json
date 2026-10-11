@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "research-interface-compatibility/1",
+  "consumer": "research-workbench 0.1.0b21",
+  "combinations": [
+    {
+      "provider": "cn-fund-lookthrough",
+      "providerVersion": "0.3.5",
+      "status": "bounded-interfaces-and-teaching-checks",
+      "validationScope": "Listed source regressions and independent installed examples; not all business workflows"
+    },
+    {
+      "provider": "cn-financial-reconcile",
+      "providerVersion": "0.2.11",
+      "status": "bounded-interfaces-and-teaching-checks",
+      "validationScope": "Listed source regressions and independent installed examples; not all business workflows"
+    },
+    {
+      "provider": "portfolio-decision-engine",
+      "providerVersion": "0.9.4",
+      "status": "bounded-interfaces-and-teaching-checks",
+      "validationScope": "Listed source regressions and independent installed examples; not all business workflows"
+    },
+    {
+      "provider": "cn-etf-rotation-engine",
+      "providerVersion": "0.1.1",
+      "status": "bounded-interfaces-and-teaching-checks",
+      "validationScope": "Listed source regressions and independent installed examples; not all business workflows"
+    },
+    {
+      "provider": "cn-reits-research",
+      "providerVersion": "0.1.6",
+      "status": "bounded-interfaces-and-teaching-checks",
+      "validationScope": "Listed source regressions and independent installed examples; not all business workflows"
+    },
+    {
+      "provider": "marketlens",
+      "providerVersion": "0.3.3",
+      "status": "bounded-interfaces-and-teaching-checks",
+      "validationScope": "Listed source regressions and independent installed examples; not all business workflows"
+    }
+  ],
+  "unlistedCombinations": "not-verified"
+}

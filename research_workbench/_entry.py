@@ -81,6 +81,34 @@ def doctor(args):
         print('本检查不代表取得或核验了研究数据。')
     return 0 if ready else 2
 
+def script_index(root, scripts, args):
+    import ast
+    parser=argparse.ArgumentParser(prog=REPO+' script',description='按研究主题查找专题；索引不代表每个入口都无需额外资料或组件')
+    parser.add_argument('--search',help='按脚本名、主题或说明检索')
+    parser.add_argument('--group',help='按显示的主题名筛选')
+    options=parser.parse_args(args)
+    domains=[('公司与财报',('company','financial','cash_stress','accounting','original','balance','income','profit','dividend')),('基金与持仓',('fund','holding','lookthrough','fof','manager','nav','share','exposure')),('ETF与行业',('etf','industry','sector','rotation','supply','inventory')),('组合与现金',('portfolio','rebalance','allocation','cashflow','dca','exit','risk','returns','attribution','style')),('宏观与政策',('macro','policy','eia','housing','ppi','cpi')),('公告与证据',('event','claim','evidence','announcement','disclosure','notice','query','security','search')),('北交与转债',('bjx','convertible','bond')),('REIT研究',('reit',)),('资料与报告',('report','archive','snapshot','source','collect','replay','export','format','document','forecast'))]
+    known={'company_cash_case':'公司现金与分红证据案例','company_cash_stress':'新增现金需求压力情景','claim_evidence_review':'消息主张与支持、反对证据对照','security_search':'证券名称、代码和身份候选检索','research_question':'单家A股近一或三个月公告问题','fund_comparison_brief':'基金共同区间比较','start':'教学、环境检查和问题入口','reits_public_case':'独立REIT年度经营与条件估值调用','etf_rotation_bridge':'独立ETF评分与轮动工具调用'}
+    grouped={}
+    for name,path in sorted(scripts.items()):
+        group=next((label for label,keys in domains if any(k in name for k in keys)),'其他专题')
+        desc=known.get(name)
+        if not desc:
+            try:doc=ast.get_docstring(ast.parse((root/path).read_text(encoding='utf-8-sig'))) or ''
+            except (OSError,SyntaxError):doc=''
+            first=doc.strip().splitlines()[0] if doc.strip() else ''
+            desc=first[:100] if any('\u4e00'<=c<='\u9fff' for c in first) else group+'专题；运行脚本 --help 核对具体参数和资料范围'
+        text=name+' '+group+' '+desc
+        if options.search and options.search.casefold() not in text.casefold():continue
+        if options.group and options.group!=group:continue
+        grouped.setdefault(group,[]).append((name,desc))
+    print('调用：'+REPO+' script 脚本名 原参数；检索：script --search 关键词；筛选：script --group 主题名')
+    if not grouped:print('未找到匹配入口；请缩短关键词，或先运行 script --help 查看主题。')
+    for group,rows in grouped.items():
+        print('\n'+group+'（'+str(len(rows))+'项）')
+        for name,desc in rows:print('  '+name+'：'+desc)
+    return 0
+
 def main(argv=None):
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, 'reconfigure'):
@@ -130,9 +158,8 @@ def main(argv=None):
             root = resources()
             scripts = {p.stem: 'scripts/' + p.name for p in (root / 'scripts').glob('*.py')
                        if not p.name.startswith(('_','test_','build_','check_','verify_','audit_'))}
-            if len(args) == 1 or args[1] in {'--help','-h'}:
-                print('用法：' + REPO + ' script 脚本名 原参数\n可用入口：' + '、'.join(sorted(scripts)))
-                return 0
+            if len(args) == 1 or args[1] in {'--help','-h','--search','--group'}:
+                return script_index(root,scripts,[] if len(args)==1 or args[1] in {'--help','-h'} else args[1:])
             if args[1] not in scripts:
                 raise ValueError('未知脚本名；用 script --help 查看入口，不接受文件路径。')
             selected = scripts[args[1]]

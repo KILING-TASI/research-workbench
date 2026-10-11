@@ -5,3 +5,6 @@ Start-Demo.cmd text eol=crlf
 
 scripts/nav_collection/*.py text eol=lf
 scripts/research_tasks.py text eol=lf
+
+# Preserve CRLF bytes in git clones and automatic source archives.
+Start-Demo.cmd -text eol=crlf whitespace=cr-at-eol

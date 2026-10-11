@@ -17,6 +17,13 @@
 
 本轮显式源码探针的[记录](compatibility-probe-20261010.json)保存提供者版本与方法文件SHA，成功执行A/H排序和一组教学观察账户，财报项执行未知schema拒绝。该探针不代替固定提供者CI完整迁移正例，也不宣称PDF全格式或全部依赖组合通过。复现工具为scripts/compatibility_probe.py，必须明确三个可信项目目录和新输出文件。
 
-## 当前六组批次
+## 历史六组批次（beta.17）
 
-当前工作台beta.17，软件标识与接口/方法标识分别记录。已核源码接口组合及执行范围见[机读兼容矩阵](compatibility-matrix.json)，历史探针保留。矩阵只保证列明的接口和检查，不代表全部流程或任意版本组合兼容。ETF迁移见[独立入口](etf-engine-migration.md)。
+当时工作台beta.17，软件标识与接口/方法标识分别记录。已核源码接口组合及执行范围见[机读兼容矩阵](compatibility-matrix.json)，历史探针保留。矩阵只保证列明的接口和检查，不代表全部流程或任意版本组合兼容。ETF迁移见[独立入口](etf-engine-migration.md)。
+
+
+## 当前安装组合（beta.21）
+
+工作台0.1.0b21：基金穿透0.3.5、财报核对0.2.11、组合0.9.4、ETF0.1.1、REIT0.1.6、MarketLens0.3.3。六列/schema1/观察现金入口、定投与退出、ETF独立评分、REIT限定案例和消息主张分别按对应回归与安装样例核对；不宣称全业务流程、任意PDF或所有版本互换。CI固定源提交见validate.yml，历史矩阵不作为当前安装指令。
+
+机读当前条目见current-release-compatibility.json；旧compatibility-matrix.json及探针保留历史时点。PDF、完整分析和Node.js入口的附加组件按各自说明准备。

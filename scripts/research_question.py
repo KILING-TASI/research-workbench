@@ -39,12 +39,18 @@ def run(spec,workspace,searcher=search,event_runner=events):
         else:
             query=code or spec.get('query')
             if not query:
-                m=re.search(r'(?:分析|看看|查看|查询|研究)\s*([^，。？?\s]{2,20}?)(?=最近|近|过去|的公告|公告|的新闻|新闻|有什么|$)',question)
+                m=re.search(r'^(?:(?:请|帮我|麻烦)\s*)?(?:(?:分析|看看|查看|查询|研究)\s*)?([^，。？?\s]{2,20}?)(?=最近|近|过去|的公告|公告|的新闻|新闻|有什么|$)',question.strip())
                 query=m.group(1) if m else None
+                if query and re.search(r'和|以及|与|、|比较|对比',query):query=None
             if not query:result['gaps'].append('无法可靠识别公司，请提供代码或query')
             elif spec.get('market','CN')!='CN':result['status']='unsupported';result['gaps'].append('此自动研究链仅支持A股身份检索；港美股使用events提供资料模式')
             else:
-                identity=searcher(Path(workspace),query,'stock',spec.get('onlineSearch',False),100)
+                result['requestedIdentity']=query
+                search_workspace=Path(workspace)
+                if spec.get('catalog'):
+                    from offline_security_catalog import prepare
+                    search_workspace=prepare(spec['catalog'],workspace,as_of)
+                identity=searcher(search_workspace,query,'stock',spec.get('onlineSearch',False),100)
                 result['identitySearch']=identity
                 candidates=[r for r in identity['rows'] if r['kind']=='stock' and (r['code']==code if code else r['name']==query)]
                 grouped={r['code']:r for r in candidates}
@@ -84,10 +90,11 @@ def run(spec,workspace,searcher=search,event_runner=events):
             lines.append(f"- {row['publishedAt']}｜{row['title']}｜{'、'.join(row['eventTypes'])}；{row['priority']}，影响待原文核查"+source)
     else:
         lines=['# 公告研究尚待准备','','当前问题尚不能直接执行研究。']
+        if result.get('requestedIdentity'):lines.append('已识别查询对象：'+result['requestedIdentity']+'；身份尚未核验。')
         identity=result.get('identitySearch',{})
         if identity.get('coverage') and not spec.get('onlineSearch',False) and any(row.get('status')=='missing-local-catalog' for row in identity['coverage']):
             result['failureKind']='missing-local-catalog'
-            result['nextSteps']=['启用 onlineSearch=true（快速入口使用 --online），查询第三方身份候选；无需作者本地目录。','若不便联网，提供有来源的本地证券目录；代码本身不代替身份核验。']
+            result['nextSteps']=['启用 onlineSearch=true（快速入口使用 --online），查询第三方身份候选；无需作者本地目录。','若不便联网，使用 --catalog 提供带来源、日期的本地证券目录；代码本身不代替身份核验。']
         elif identity.get('errors'):
             result['failureKind']='identity-source-unavailable'
             result['nextSteps']=['身份查询来源未成功，查看保留的错误，或提供有来源的证券目录。']
