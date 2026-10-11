@@ -2,7 +2,7 @@
 import argparse,hashlib,json,zipfile
 from pathlib import Path
 ROOT='research-workbench/'
-ALLOWED=('SKILL.md','README.md','BEGINNER.md','try_demo.py','Start-Demo.cmd','Start-Demo.sh','pyproject.toml','setup.py','_build_skill.py','MANIFEST.in','research_workbench/','DISCLAIMER.md','THIRD_PARTY_NOTICES.md','LICENSE','agents/','references/','scripts/','modules/')
+ALLOWED=('USAGE.md','README.en.md','CHANGELOG.md','CONTRIBUTING.md','SECURITY.md','LIFECYCLE.md','AUDIT_SCOPE.md','EXPANSION.md','FORMAT_SCOPE.md','KNOWN_ISSUES.md','SKILL.md','README.md','BEGINNER.md','try_demo.py','Start-Demo.cmd','Start-Demo.sh','pyproject.toml','setup.py','_build_skill.py','MANIFEST.in','research_workbench/','DISCLAIMER.md','THIRD_PARTY_NOTICES.md','LICENSE','agents/','references/','scripts/','modules/')
 RESOURCE_SUFFIXES={'.py','.js','.cjs','.mjs','.md','.json','.txt','.csv','.html','.css','.yaml','.yml'}
 
 def allowed(rel):
