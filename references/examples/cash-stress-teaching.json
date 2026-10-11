@@ -1,0 +1,130 @@
+{
+  "inputSchema": "cash-demand-stress/1",
+  "baseline": {
+    "exampleType": "teaching-only",
+    "asOf": "2026-06-01",
+    "companyType": "non-financial",
+    "facts": {
+      "operatingCashFlow": {
+        "entity": "教学非金融公司",
+        "metric": "operatingCashFlow",
+        "period": "2025-12-31",
+        "publishedAt": "2026-05-01",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "教学金额与口径；未取得公司原文",
+        "unit": "万元",
+        "value": 120,
+        "statementVersion": "teaching-original-v1",
+        "verificationStatus": "teaching-not-original-verified",
+        "attributablePeriod": null
+      },
+      "capitalExpenditure": {
+        "entity": "教学非金融公司",
+        "metric": "capitalExpenditure",
+        "period": "2025-12-31",
+        "publishedAt": "2026-05-01",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "教学金额与口径；未取得公司原文",
+        "unit": "万元",
+        "value": 40,
+        "statementVersion": "teaching-original-v1",
+        "verificationStatus": "teaching-not-original-verified",
+        "attributablePeriod": null
+      },
+      "profit": {
+        "entity": "教学非金融公司",
+        "metric": "profit",
+        "period": "2025-12-31",
+        "publishedAt": "2026-05-01",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "教学金额与口径；未取得公司原文",
+        "unit": "万元",
+        "value": 100,
+        "statementVersion": "teaching-original-v1",
+        "verificationStatus": "teaching-not-original-verified",
+        "attributablePeriod": null,
+        "profitAttribution": "parent-owners",
+        "taxBasis": "after-tax"
+      },
+      "oneOffProfit": {
+        "entity": "教学非金融公司",
+        "metric": "oneOffProfit",
+        "period": "2025-12-31",
+        "publishedAt": "2026-05-01",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "教学金额与口径；未取得公司原文",
+        "unit": "万元",
+        "value": 20,
+        "statementVersion": "teaching-original-v1",
+        "verificationStatus": "teaching-not-original-verified",
+        "attributablePeriod": null,
+        "profitAttribution": "parent-owners",
+        "taxBasis": "after-tax"
+      },
+      "declaredDividend": {
+        "entity": "教学非金融公司",
+        "metric": "declaredDividend",
+        "period": "2025-12-31",
+        "publishedAt": "2026-05-01",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "教学金额与口径；未取得公司原文",
+        "unit": "万元",
+        "value": 50,
+        "statementVersion": "teaching-original-v1",
+        "verificationStatus": "teaching-not-original-verified",
+        "attributablePeriod": "2025-12-31",
+        "recipientAttribution": "parent-owners"
+      },
+      "paidDividend": {
+        "entity": "教学非金融公司",
+        "metric": "paidDividend",
+        "period": "2025-12-31",
+        "publishedAt": "2026-05-01",
+        "scope": "consolidated",
+        "currency": "CNY",
+        "basis": "annual",
+        "source": "教学金额与口径；未取得公司原文",
+        "unit": "万元",
+        "value": 30,
+        "statementVersion": "teaching-original-v1",
+        "verificationStatus": "teaching-not-original-verified",
+        "attributablePeriod": "2024-12-31"
+      }
+    },
+    "inputSchema": "cnreconcile-dividend-v1",
+    "methodVersion": "dividend-observation-2"
+  },
+  "scenarios": [
+    {
+      "id": "base",
+      "note": "教学基准，明确假设没有基准以外的新需求",
+      "operatingCashChange": "0",
+      "capexChange": "0",
+      "additionalDemand": "0"
+    },
+    {
+      "id": "cash-pressure",
+      "note": "教学压力：经营现金减半、资本开支增50%、另增1万元现金需求",
+      "operatingCashChange": "-0.5",
+      "capexChange": "0.5",
+      "additionalDemand": "10000"
+    },
+    {
+      "id": "unknown-demand",
+      "note": "尚未取得新增资金需求，不默认零",
+      "operatingCashChange": "0",
+      "capexChange": "0",
+      "additionalDemand": null
+    }
+  ]
+}

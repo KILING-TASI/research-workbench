@@ -1,0 +1,64 @@
+{
+  "inputSchema": "claim-evidence/1",
+  "evidence": {
+    "inputSchema": "evidence-status/1",
+    "sampleType": "teaching",
+    "question": "项目是否全部完成？",
+    "asOfDate": "2026-10-11",
+    "asOf": "2026-10-11T23:59:59+08:00",
+    "maxAgeDays": 30,
+    "records": [
+      {
+        "id": "announcement",
+        "status": "available",
+        "reason": "教学原文",
+        "source": "https://example.org/notice",
+        "locator": "第1页",
+        "sourceVersion": "1",
+        "publishedDate": "2026-10-01",
+        "acquiredAt": "2026-10-02T12:00:00+08:00",
+        "rawSourceSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "dataDate": "2026-10-01",
+        "valueType": "disclosed",
+        "subjectId": "demo",
+        "referencePeriod": "2026-Q3",
+        "excerpt": "教学声明，仅完成部分项目。"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "completion",
+      "text": "项目已全部完成",
+      "subjectId": "demo",
+      "referencePeriod": "2026-Q3",
+      "links": [
+        {
+          "evidenceId": "announcement",
+          "relation": "partial",
+          "rationale": "摘录仅表示部分完成"
+        }
+      ]
+    },
+    {
+      "id": "rumor",
+      "text": "项目已确定带来额外收入",
+      "subjectId": "demo",
+      "referencePeriod": "2026-Q3",
+      "links": []
+    },
+    {
+      "id": "conflict",
+      "text": "项目没有任何进展",
+      "subjectId": "demo",
+      "referencePeriod": "2026-Q3",
+      "links": [
+        {
+          "evidenceId": "announcement",
+          "relation": "contradicts",
+          "rationale": "摘录表示部分完成；仍需确认原文含义"
+        }
+      ]
+    }
+  ]
+}

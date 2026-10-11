@@ -51,14 +51,15 @@ def render(result,title):
     lines=result.get('humanRows',[])
     table='<table><tr><th>核对项</th><th>本次结果</th></tr>'+''.join('<tr><td>'+escape(str(a))+'</td><td>'+escape(str(b))+'</td></tr>' for a,b in lines)+'</table>' if lines else ''
     gaps='<ul>'+''.join('<li>'+escape(str(s))+'</li>' for s in result.get('limitations',[]))+'</ul>'
-    return '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(title)+'</title><style>body{max-width:960px;margin:32px auto;padding:0 20px;font:17px/1.7 system-ui;color:#203047}td,th{padding:10px;border-bottom:1px solid #ddd;overflow-wrap:anywhere}table{width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere}details{margin-top:24px}</style><h1>'+escape(title)+'</h1><p>'+escape(summary)+'</p>'+table+'<h2>范围与缺口</h2>'+gaps+'<details><summary>完整输入绑定、结果及依据</summary><pre>'+escape(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False))+'</pre></details></html>'
+    notice='<aside role="note"><strong>计算已完成，证据仍需复查</strong><p>报告生成成功只表示所填输入通过本流程。请先看结论适用范围，再核对来源、期间、版本与排除项；缺口不能当作零。</p></aside>'
+    return '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(title)+'</title><style>body{max-width:960px;margin:32px auto;padding:0 20px;font:17px/1.7 system-ui;color:#203047}aside{padding:12px 16px;background:#f2f5fa;border-left:4px solid #48658b}td,th{padding:10px;border-bottom:1px solid #ddd;overflow-wrap:anywhere}table{width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere}details{margin-top:24px}</style><h1>'+escape(title)+'</h1><p>'+escape(summary)+'</p>'+notice+table+'<h2>范围与缺口</h2>'+gaps+'<details><summary>完整输入绑定、结果及依据</summary><pre>'+escape(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False))+'</pre></details></html>'
 
 def publish(spec,result,out,title):
     out=Path(out).absolute()
     if out.exists() or out.is_symlink():raise ValueError('输出必须是新目录，历史结果不覆盖')
     out.parent.mkdir(parents=True,exist_ok=True);stage=Path(tempfile.mkdtemp(prefix='.research-',dir=out.parent))
     try:
-        result=dict(result,inputSha256=digest(spec),methodVersion=result.get('methodVersion','explicit-research-review/1.0'))
+        result=dict(result,inputSha256=digest(spec),methodVersion=result.get('methodVersion','explicit-research-review/1.0'),executionStatus='completed',evidenceCertification='not-performed-by-report-writer')
         for name,data in [('input.json',spec),('result.json',result)]: (stage/name).write_text(json.dumps(data,ensure_ascii=False,indent=2,allow_nan=False),encoding='utf-8')
         (stage/'report.html').write_text(render(result,title),encoding='utf-8')
         (stage/'receipt.json').write_text(json.dumps({'files':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in stage.iterdir()},'scope':'文件摘要不是来源认证或审计意见'},ensure_ascii=False,indent=2),encoding='utf-8')
@@ -75,6 +76,11 @@ def cli(handlers,title):
     p=argparse.ArgumentParser(description=title);p.add_argument('command',choices=list(handlers));p.add_argument('--input',type=Path,required=True);p.add_argument('--out-dir',type=Path,required=True);a=p.parse_args()
     try:
         if a.out_dir.exists():raise ValueError('输出已存在，旧结果保留')
-        spec=read(a.input);result=handlers[a.command](spec);out=publish(spec,result,a.out_dir,title)
+        print('进度 1/3：读取并检查输入',file=sys.stderr)
+        spec=read(a.input)
+        print('进度 2/3：按声明资料计算与核对',file=sys.stderr)
+        result=handlers[a.command](spec)
+        print('进度 3/3：保存新报告与文件摘要',file=sys.stderr)
+        out=publish(spec,result,a.out_dir,title)
         print('报告已生成：'+str(out/'report.html'));print('下一步：复查口径、来源和缺口，不能把程序通过当成原文已验证。');return 0
     except (ValueError,TypeError,KeyError,OSError,ArithmeticError) as e:print('未完成：'+str(e)+'。请补齐资料并使用新目录。',file=sys.stderr);return 2

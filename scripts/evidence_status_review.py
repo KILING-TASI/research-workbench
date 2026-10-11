@@ -7,6 +7,8 @@ LABELS = {'available':'资料已取得，原文未自动核实', 'empty':'来源
 
 
 def review(spec):
+    if not isinstance(spec, dict) or not isinstance(spec.get('records'), list) or len(spec['records']) > 1000:
+        raise ValueError('资料输入须为对象，记录须列表且不超过1000项')
     if spec.get('inputSchema') != 'evidence-status/1':
         raise ValueError('输入须为 evidence-status/1')
     if not isinstance(spec.get('question'), str) or not spec['question'].strip():
@@ -19,13 +21,13 @@ def review(spec):
         raise ValueError('新鲜度窗口须为非负天数，由研究问题指定')
     rows = []; ids = set()
     for row in spec['records']:
-        if not isinstance(row.get('id'), str) or row['id'] in ids:
+        if not isinstance(row, dict) or not isinstance(row.get('id'), str) or not row['id'].strip() or row['id'] in ids:
             raise ValueError('资料ID缺失或重复')
         ids.add(row['id'])
         status = row['status']
         if status not in {'available','empty','failed','unauthorized','missing'}:
             raise ValueError('资料状态无效')
-        if not row.get('reason'):
+        if not isinstance(row.get('reason'), str) or not row['reason'].strip():
             raise ValueError('每项资料须注明状态原因')
         if status == 'available':
             if not evidence(row, spec['asOf']):

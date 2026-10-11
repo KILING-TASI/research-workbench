@@ -151,3 +151,14 @@ research-workbench script reits_public_case review --input REIT专业仓公开�
 ```
 
 公司案例需要已有财报核对包；REIT案例需要新的REIT专业包。可以安装专业包或显式声明可信项目，不搜索作者缓存、不自动安装。公司例子仅带限定事实与页码；未提供本地原PDF时原页核验状态保持未核。研究状态与计算结果一起保存，失败和未知不补零。迁移范围见[能力归属](references/engine-ownership-and-migration.md)。
+
+## 2026-10-11 本地待发布补强
+
+安装兼容的 `cn-financial-reconcile 0.2.11.dev0` 后，运行：
+
+```text
+python -m research_workbench script company_cash_stress review --input references/examples/cash-stress-teaching.json --out-dir 新现金压力报告
+python -m research_workbench script claim_evidence_review review --input references/examples/claim-evidence-teaching.json --out-dir 新消息核对报告
+```
+
+这两个示例是原创教学资料，不是真实公告。新增现金需求使用基本货币单位；明确假设无需求填0，未取得资料填null。情景说明、原输入、计算结果和文件摘要另存，不覆盖历史。计算成功不等于消息为真或未来分红安全。

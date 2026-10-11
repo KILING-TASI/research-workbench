@@ -2,12 +2,12 @@
 name: research-workbench
 description: 用户要研究公司、基金、ETF或其他投资标的，比较产品，诊断持仓组合，找回旧报告或沿用资料继续追问时使用；也支持行业、宏观和北交所新股研究。先识别用户要解决的问题，再组织资料与分析，输出自然语言判断、来源、口径和缺口，不执行交易。
 metadata:
-  version: "0.1.0-beta.17"
+  version: "0.1.0b20.dev0"
 ---
 
 # 投研工作台
 
-软件版本：0.1.0-beta.17 · 说明版本：1.94 · 更新日期：2026-10-10。
+本地待发布版本：0.1.0b20.dev0 · 更新日期：2026-10-11。
 
 面向个人与买方研究。用户用自然语言提出问题，组织参数并调用现有脚本；工作台可选，不要求用户选技术模块或填写JSON。只读取本次问题需要的参考，复用已选标的、组合、区间和已取得资料。
 
@@ -106,3 +106,7 @@ ETF行业轮动与固定池历史情景按[独立ETF入口](references/etf-engin
 新增[问题导向的证据复查](QUESTION_REVIEW.md)：research-workbench script evidence_status_review review；示例、输入口径及限制见该页。
 
 本地待发布的完整研究记录：公司现金分红问题用 `company_cash_case review`，将问题、资料状态和财报计算一起保存；来源/日期/摘要不符时阻断，失败、陈旧或截止后金额不参与计算。真实REIT过程用 `reits_public_case review` 薄调用独立REIT包，不在工作台重写估值。定投与退出计算已转发组合包；缺新接口明确说明需要兼容版本。按需读 [能力归属](references/engine-ownership-and-migration.md) 和 [使用说明](USAGE.md)。
+
+## 本地待发布：现金压力与证据对照
+
+用户问“这条消息有什么依据”时，使用 `claim_evidence_review review`，逐条说明支持、反对、局部支持与背景。关系为人工声明，原文摘录和摘要不代表真实性认证；对象、期间或截止不符的材料排除，不能数票算可信概率。用户追问分红遇到资金压力，使用 `company_cash_stress review` 调用独立财报工具；新增需求以基本货币单位声明，null保持未知。报告生成与证据判断分开显示。示例与步骤见 [USAGE.md](USAGE.md)。

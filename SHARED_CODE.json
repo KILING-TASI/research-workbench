@@ -108,7 +108,7 @@
     },
     {
       "localPath": "scripts/review_io.py",
-      "normalizedTextSha256": "c8e995fff7830ca02127ab5ba4605aa60e99c358a86635dece08ba92ab8afea5",
+      "normalizedTextSha256": "e6624c10adbd93ee546fa1584bc5e7ffeb1b79e6dda2e3247c2bbd534f059e6d",
       "canonicalRepository": "cn-data-adapters",
       "canonicalPath": "cn_data_adapters/review_io.py",
       "syncPolicy": "fixed-with-distribution; review and regenerate manifest before replacing; no runtime source dependency",

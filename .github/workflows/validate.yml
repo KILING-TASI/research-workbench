@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/cn-financial-reconcile
-          ref: a354b2de4e6d6226390bce08365f0ffaad7aaa10
+          ref: 17b7d9af9dc312e5fefd95d9af8eed90de2c73a7
           path: _specialists/financial
           persist-credentials: false
       - name: Check out pinned specialist portfolio-decision-engine
