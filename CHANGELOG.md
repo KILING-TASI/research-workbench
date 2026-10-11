@@ -22,3 +22,18 @@
 新增预测实际/重述配对、公开问答、假设版本差异、可迁移引擎索引及标准净值/表格式入口；保留FOF旧入口；Windows瞬时锁竞争有界重试。
 
 审计覆盖独立使用、选定反例、跨仓格式一致性及15类任务路径；这不是全市场数据认证、真实客户覆盖或机构生产就绪承诺。原代码MIT，第三方原许可及数据权利独立。
+
+
+## 历史首页版本状态说明（归档于2026-10-11）
+
+以下是当时首页的记录，不是当前下载或完成状态。当前发行入口以README为准。
+
+## 当前源码与下载包
+
+以下是历史beta.7的发布记录，当前软件与安装包版本以首页安装节为准；说明版本、接口及计算方法各自保留原编号。发布内容见[beta.7 发布说明](references/release-notes-beta7.md)。
+
+可以克隆默认 `main` 源码；需要历史beta.7时从 [v0.1.0-beta.7 Release](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.7) 下载 [安装 ZIP](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/research-workbench-v0.1.0-beta.7.zip)及[SHA256 校验清单](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.7/SHA256SUMS.txt)。旧 [beta.6](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.6) 保留，不替换历史资产。
+
+下载旧压缩包或使用旧安装，不会自动得到这些新增内容。专业工具也要使用支持对应接口的版本，不能默认用旧包替代。[功能归属与依赖](references/engine-ownership-and-migration.md)列出已经转交的计算和仍留在主包的部分。
+
+解压安装包得到完整的 `research-workbench` 目录；命令行试用可在该目录运行，安装 Skill 则按所用 AI 工具的规则放入 Skill 目录。不要覆盖自己保存的研究资料，安装步骤见[安装说明](references/standalone-install.md)。旧 beta.7 只交付 Skill 源码 ZIP；已新增 pyproject 与 wheel/sdist，完整 Skill 源码仍单独提供。资产保留构建时的说明，发布状态以本页和 Release 页为准；更新本页不重打旧标签或安装包。

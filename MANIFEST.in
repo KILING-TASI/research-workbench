@@ -34,3 +34,5 @@ include SHARED_CODE.json
 recursive-include tools *.py
 
 include QUESTION_REVIEW.md
+
+include USAGE.md
