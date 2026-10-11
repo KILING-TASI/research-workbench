@@ -22,6 +22,7 @@ jobs:
       PYTHONDONTWRITEBYTECODE: '1'
       RESEARCH_WORKBENCH_LOOKTHROUGH_DIR: ${{ github.workspace }}/_specialists/lookthrough
       RESEARCH_WORKBENCH_FINANCIAL_DIR: ${{ github.workspace }}/_specialists/financial
+      RESEARCH_WORKBENCH_MARKETLENS_DIR: ${{ github.workspace }}/_specialists/marketlens
       RESEARCH_WORKBENCH_PORTFOLIO_DIR: ${{ github.workspace }}/_specialists/portfolio
     steps:
       - name: Check out code
@@ -39,15 +40,22 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/cn-financial-reconcile
-          ref: 3874eeb033ed88ae652e8aaf792dc0c3a93453ba
+          ref: 5c77d060e6a26b3e0c993d3611a099f812a2104e
           path: _specialists/financial
           persist-credentials: false
       - name: Check out pinned specialist portfolio-decision-engine
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/portfolio-decision-engine
-          ref: 37d4ae9a58324b2510183c8d5c60f567485cf970
+          ref: e86ed41b5930e5504e0911d40df4f722a7e5fd33
           path: _specialists/portfolio
+          persist-credentials: false
+      - name: Check out pinned specialist marketlens
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: KILING-TASI/marketlens
+          ref: 8e6397c5451e1f042b2e5af3c09c0e87657f5e98
+          path: _specialists/marketlens
           persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5

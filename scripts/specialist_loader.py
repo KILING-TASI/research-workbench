@@ -10,6 +10,7 @@ import sys
 import types
 
 DOMAINS = {
+    'narrative': ('marketlens', 'RESEARCH_WORKBENCH_MARKETLENS_DIR'),
     'lookthrough': ('cnlookthrough', 'RESEARCH_WORKBENCH_LOOKTHROUGH_DIR'),
     'financial': ('cnreconcile', 'RESEARCH_WORKBENCH_FINANCIAL_DIR'),
     'portfolio': ('portfolio_engine', 'RESEARCH_WORKBENCH_PORTFOLIO_DIR'),
@@ -30,7 +31,7 @@ def location(domain, project_dir=None):
     declared = project_dir or os.environ.get(variable)
     if declared:
         root = Path(declared).resolve()
-        folder = root / ('src/' + package if domain == 'portfolio' else package)
+        folder = root / ('src/' + package if domain == 'portfolio' else 'scripts/' + package if domain == 'narrative' else package)
     else:
         installed = importlib.util.find_spec(package)
         folder = Path(installed.origin).resolve().parent if installed and installed.origin else None
@@ -60,7 +61,7 @@ def check(domain, module, function, project_dir=None):
         raise ValueError('未登记专业模块')
     package, variable = DOMAINS[domain]
     distribution = {'lookthrough': 'cn-fund-lookthrough', 'financial': 'cn-financial-reconcile',
-                    'portfolio': 'portfolio-decision-engine', 'etf':'cn-etf-rotation-engine', 'reits':'cn-reits-research'}[domain]
+                    'portfolio': 'portfolio-decision-engine', 'etf':'cn-etf-rotation-engine', 'reits':'cn-reits-research', 'narrative':'marketlens'}[domain]
     record = dict(provider=package, module=module, function=function, available=False,
                   selectedFolder=None, moduleOrigins={}, methodFiles={}, methodIdentitySha256=None,
                   selection='explicit-project-or-installed-package', loadState='not-executed',

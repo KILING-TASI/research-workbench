@@ -30,6 +30,10 @@ def publish(outputs):
  finally:
   for temp in staged.values():temp.unlink(missing_ok=True)
 def build():
+ assets=ROOT/'assets'
+ required=['ui.js','data.json','style.css','panel.html','engine.js','standalone.template.html']
+ missing=[name for name in required if not (assets/name).is_file()]
+ if missing:raise FileNotFoundError('旧项目页面缺少资源：'+', '.join(missing)+'。该入口仅用于复查完整旧项目；新研究请按独立ETF仓USAGE使用composite或import-snapshots/review，不会联网补下载或覆盖旧报告。')
  from build_market_tracking import build as build_tracking
  tracking=build_tracking(write=False)
  assets=ROOT/'assets'

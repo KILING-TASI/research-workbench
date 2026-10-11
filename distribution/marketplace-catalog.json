@@ -1,0 +1,263 @@
+{
+  "schemaVersion": "local-marketplace-catalog/1",
+  "adapterVersion": "1.0.0",
+  "note": "适配层版本独立于各专业包版本；待目标平台实际导入验收，未上架。",
+  "skills": [
+    {
+      "name": "bjx-ipo-engine",
+      "version": "1.0.0",
+      "description": "北交所新股：比较两只北交所新股的三组获配率情景，核对申购日期与现金占用；未知余股单列。",
+      "description_zh": "北交所新股：比较两只北交所新股的三组获配率情景，核对申购日期与现金占用；未知余股单列。",
+      "description_en": "BSE IPO subscription cash and allocation scenarios; no subscription execution.",
+      "source": "bjx-ipo-engine",
+      "examples_zh": [
+        "比较两只北交所新股的三组获配率情景，核对申购日期与现金占用；未知余股单列。"
+      ],
+      "examples_en": [
+        "Compare three declared allocation-rate scenarios for two BSE IPOs and list cash occupation gaps."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/bjx-ipo-engine"
+    },
+    {
+      "name": "cn-financial-reconcile",
+      "version": "1.0.0",
+      "description": "公司财报：核对美的2025年现金流、所列资本开支和声明分红，再测试现金下降20%的压力情景。",
+      "description_zh": "公司财报：核对美的2025年现金流、所列资本开支和声明分红，再测试现金下降20%的压力情景。",
+      "description_en": "Chinese financial field reconciliation and explicit dividend cash demand stress.",
+      "source": "cn-financial-reconcile",
+      "examples_zh": [
+        "核对美的2025年现金流、所列资本开支和声明分红，再测试现金下降20%的压力情景。"
+      ],
+      "examples_en": [
+        "Reconcile supplied annual cash and dividend figures, then stress operating cash down 20 percent."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/cn-financial-reconcile"
+    },
+    {
+      "name": "cn-fund-lookthrough",
+      "version": "1.0.0",
+      "description": "基金穿透：基于我提供的FOF持仓披露，穿透已知底层资产，并单列未知比例与重复敞口。",
+      "description_zh": "基金穿透：基于我提供的FOF持仓披露，穿透已知底层资产，并单列未知比例与重复敞口。",
+      "description_en": "Declared fund and FOF holdings look-through; unknown exposure retained.",
+      "source": "cn-fund-lookthrough",
+      "examples_zh": [
+        "基于我提供的FOF持仓披露，穿透已知底层资产，并单列未知比例与重复敞口。"
+      ],
+      "examples_en": [
+        "Trace disclosed FOF holdings and report unknown exposure and overlap."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/cn-fund-lookthrough"
+    },
+    {
+      "name": "cn-market-rules",
+      "version": "1.0.0",
+      "description": "规则核对：核对一条监管事件对应的规则版本、适用日期与证据状态；不要把问询直接判成违规。",
+      "description_zh": "规则核对：核对一条监管事件对应的规则版本、适用日期与证据状态；不要把问询直接判成违规。",
+      "description_en": "Versioned Chinese market rules and declared regulatory event evidence.",
+      "source": "cn-market-rules",
+      "examples_zh": [
+        "核对一条监管事件对应的规则版本、适用日期与证据状态；不要把问询直接判成违规。"
+      ],
+      "examples_en": [
+        "Check rule versions, dates and supplied event evidence without inferring wrongdoing from an inquiry."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/cn-market-rules"
+    },
+    {
+      "name": "convertible-bond-engine",
+      "version": "1.0.0",
+      "description": "可转债：用我提供的价格与条款核对转股价值、赎回和回售边界；缺最新公告时保留未知。",
+      "description_zh": "可转债：用我提供的价格与条款核对转股价值、赎回和回售边界；缺最新公告时保留未知。",
+      "description_en": "Chinese convertible bond calculations and declared term scenarios; no trading.",
+      "source": "convertible-bond-engine",
+      "examples_zh": [
+        "用我提供的价格与条款核对转股价值、赎回和回售边界；缺最新公告时保留未知。"
+      ],
+      "examples_en": [
+        "Check conversion value and redemption or put terms from supplied prices and notices."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/convertible-bond-engine"
+    },
+    {
+      "name": "macro-dashboard-engine",
+      "version": "1.0.0",
+      "description": "宏观研究：比较我提供的GDP、CPI和社融观测期，解释口径差异和发布滞后，缺项单列。",
+      "description_zh": "宏观研究：比较我提供的GDP、CPI和社融观测期，解释口径差异和发布滞后，缺项单列。",
+      "description_en": "Chinese macro observations, vintages and explicit scenario dashboards.",
+      "source": "macro-dashboard-engine",
+      "examples_zh": [
+        "比较我提供的GDP、CPI和社融观测期，解释口径差异和发布滞后，缺项单列。"
+      ],
+      "examples_en": [
+        "Compare supplied GDP, CPI and financing observations and explain vintage and release gaps."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/macro-dashboard-engine"
+    },
+    {
+      "name": "marketlens",
+      "version": "1.0.0",
+      "description": "市场消息：这条回购消息能否支持已经完成回购的说法？对照公告期间、承诺与实际披露。",
+      "description_zh": "市场消息：这条回购消息能否支持已经完成回购的说法？对照公告期间、承诺与实际披露。",
+      "description_en": "Chinese market narrative and announcement evidence gap analysis.",
+      "source": "marketlens",
+      "examples_zh": [
+        "这条回购消息能否支持已经完成回购的说法？对照公告期间、承诺与实际披露。"
+      ],
+      "examples_en": [
+        "Compare a repurchase claim with supplied announcement periods and disclosed execution."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/marketlens"
+    },
+    {
+      "name": "portfolio-decision-engine",
+      "version": "1.0.0",
+      "description": "组合研究：按我提供的资产与现金流比较压力情景，区分已知敞口、未知比例和现金占用。",
+      "description_zh": "组合研究：按我提供的资产与现金流比较压力情景，区分已知敞口、未知比例和现金占用。",
+      "description_en": "Declared portfolio risks and cash flow scenarios; no trading or complete account reconstruction.",
+      "source": "portfolio-decision-engine",
+      "examples_zh": [
+        "按我提供的资产与现金流比较压力情景，区分已知敞口、未知比例和现金占用。"
+      ],
+      "examples_en": [
+        "Compare declared portfolio stress scenarios while retaining unknown exposure and cash occupation."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/portfolio-decision-engine"
+    },
+    {
+      "name": "research-workbench",
+      "version": "1.0.0",
+      "description": "研究编排：沿用上一份公司报告，复核消息证据并调用现金压力情景，另存本次输入与结论。",
+      "description_zh": "研究编排：沿用上一份公司报告，复核消息证据并调用现金压力情景，另存本次输入与结论。",
+      "description_en": "Question-led research orchestration and frozen report reuse with optional specialists.",
+      "source": "research-workbench",
+      "examples_zh": [
+        "沿用上一份公司报告，复核消息证据并调用现金压力情景，另存本次输入与结论。"
+      ],
+      "examples_en": [
+        "Reuse a supplied company report, review linked claims and save new cash stress results separately."
+      ],
+      "tags_zh": [
+        "投资理财",
+        "数据分析"
+      ],
+      "tags_en": [
+        "Finance",
+        "Data Analysis"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/research-workbench"
+    },
+    {
+      "name": "cn-data-adapters",
+      "version": "1.0.0",
+      "description": "数据采集：为2025统计年鉴登记各章目录和原表状态，把未核数值与已核选定数据项分开。",
+      "description_zh": "数据采集：为2025统计年鉴登记各章目录和原表状态，把未核数值与已核选定数据项分开。",
+      "description_en": "Public research data archives, explicit source provenance and selected cell coverage.",
+      "source": "cn-data-adapters",
+      "examples_zh": [
+        "为2025统计年鉴登记各章目录和原表状态，把未核数值与已核选定数据项分开。"
+      ],
+      "examples_en": [
+        "Inventory yearbook chapters and original files while separating selected cell checks from full-table certification."
+      ],
+      "tags_zh": [
+        "投资理财",
+        "数据分析"
+      ],
+      "tags_en": [
+        "Finance",
+        "Data Analysis"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/cn-data-adapters"
+    },
+    {
+      "name": "cn-reits-research",
+      "version": "1.0.0",
+      "description": "REITs研究：沿用张江REIT公开案例，比较出租率与折现率变化后的条件估值，解释权属和支付缺口。",
+      "description_zh": "REITs研究：沿用张江REIT公开案例，比较出租率与折现率变化后的条件估值，解释权属和支付缺口。",
+      "description_en": "Chinese public REIT operations, cash bridges and conditional valuation scenarios.",
+      "source": "cn-reits-research",
+      "examples_zh": [
+        "沿用张江REIT公开案例，比较出租率与折现率变化后的条件估值，解释权属和支付缺口。"
+      ],
+      "examples_en": [
+        "Compare occupancy and discount-rate scenarios using the bounded Zhangjiang REIT public case."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/cn-reits-research"
+    },
+    {
+      "name": "cn-etf-rotation-engine",
+      "version": "1.0.0",
+      "description": "ETF研究：按明确ETF观察池比较历史相对强弱，切换权重情景并另存参数；不做全市场排名。",
+      "description_zh": "ETF研究：按明确ETF观察池比较历史相对强弱，切换权重情景并另存参数；不做全市场排名。",
+      "description_en": "Independent ETF pool review, historical scenarios and frozen composite scores.",
+      "source": "cn-etf-rotation-engine",
+      "examples_zh": [
+        "按明确ETF观察池比较历史相对强弱，切换权重情景并另存参数；不做全市场排名。"
+      ],
+      "examples_en": [
+        "Compare an explicit ETF pool and save a new weighting scenario without overwriting frozen scores."
+      ],
+      "tags_zh": [
+        "投资理财"
+      ],
+      "tags_en": [
+        "Finance"
+      ],
+      "repositoryUrl": "https://github.com/KILING-TASI/cn-etf-rotation-engine"
+    }
+  ]
+}

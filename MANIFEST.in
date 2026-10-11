@@ -36,3 +36,4 @@ recursive-include tools *.py
 include QUESTION_REVIEW.md
 
 include USAGE.md
+recursive-include distribution *.json

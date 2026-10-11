@@ -2,7 +2,7 @@
 
 研究公司、比较基金和ETF、检查持仓组合，并沿用旧报告继续追问。
 
-[![原创代码 MIT](https://img.shields.io/badge/原创代码-MIT-green)](LICENSE) · [当前发行版 v0.1.0-beta.18](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.18) · [运行检查](https://github.com/KILING-TASI/research-workbench/actions)
+[![原创代码 MIT](https://img.shields.io/badge/原创代码-MIT-green)](LICENSE) · [当前发行版 v0.1.0-beta.20](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.20) · [运行检查](https://github.com/KILING-TASI/research-workbench/actions)
 
 ## 能解决什么问题
 
@@ -12,7 +12,7 @@
 
 ## 快速开始
 
-从[发行页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.18)下载完整源码并解压，需要 Python 3.11 或以上。在源码目录执行：
+从[发行页](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.20)下载完整源码并解压，需要 Python 3.11 或以上。在源码目录执行：
 
 ```text
 python try_demo.py --no-open --out-dir reports/first-demo
@@ -57,3 +57,11 @@ research-workbench --help
 [贡献说明](CONTRIBUTING.md) · [安全反馈](SECURITY.md) · [更新与清理](LIFECYCLE.md) · [English](README.en.md)
 
 [按问题选择其他工具](https://github.com/KILING-TASI/research-workbench/blob/main/references/tool-navigation.md)。共12个活跃仓，另有1个供旧记录复查的[历史契约仓](https://github.com/KILING-TASI/cn-research-contracts)。各仓分别发布；main的后续文档整理不改写旧发行包和冻结结果。
+
+## 单工具与Skill分发
+
+专业工具可分别安装，工作台按问题组织调用。市场薄层的双语介绍、具体问法、标签及版本说明见[分发与调用边界](references/distribution-compatibility.md)。当前仅完成本地打包校验，尚未在第三方技能市场上架或实测导入。
+
+## v0.1.0-beta.20 本轮补强
+
+公司现金案例与专业工具薄调用、逐条消息证据对照、阶段进度和平台分发薄层。具体参数与边界见[使用说明](USAGE.md)。

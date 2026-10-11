@@ -143,7 +143,7 @@ python scripts/start.py doctor --for-entry cashflow --out-dir local-data/check-c
 共同采集与观察表的单位、时间及版本范围见 [FORMAT_SCOPE.md](FORMAT_SCOPE.md)。宏观、微观和规则事件保留各自口径，不混作净值。
 
 
-## 本地待发布：问题、证据与专业计算形成一份研究记录
+## 本轮更新：问题、证据与专业计算形成一份研究记录
 
 ```console
 research-workbench script company_cash_case review --input references/examples/company-cash-midea.json --out-dir reports/company-study
@@ -152,7 +152,7 @@ research-workbench script reits_public_case review --input REIT专业仓公开�
 
 公司案例需要已有财报核对包；REIT案例需要新的REIT专业包。可以安装专业包或显式声明可信项目，不搜索作者缓存、不自动安装。公司例子仅带限定事实与页码；未提供本地原PDF时原页核验状态保持未核。研究状态与计算结果一起保存，失败和未知不补零。迁移范围见[能力归属](references/engine-ownership-and-migration.md)。
 
-## 2026-10-11 本地待发布补强
+## 2026-10-11 本轮更新补强
 
 安装兼容的 `cn-financial-reconcile 0.2.11.dev0` 后，运行：
 
