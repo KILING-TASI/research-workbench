@@ -39,7 +39,7 @@ def review(spec):
                 raise ValueError('数值类型须为披露、估算或代理')
         rows.append(dict(row, reviewStatus=status, sourceVerified=False))
     gaps = [r for r in rows if r['reviewStatus'] != 'available']
-    return {'methodVersion':'evidence-status/1', 'question':spec['question'], 'conclusion':f"本次 {len(rows)} 项资料中，{len(gaps)} 项存在缺口或时点限制。资料状态完整不代表问题已得到可靠答案。", 'status':'partial' if gaps or not rows else 'ready-for-review', 'records':rows, 'humanRows':[[r['id'], LABELS[r['reviewStatus']]+'；'+r['reason']] for r in rows], 'limitations':['不联网重试、不认证原文；摘要只绑定声明资料','新鲜度窗口由输入声明，不是统一投资标准','失败、空表、未授权和未知不补成零；截止后资料不支持历史判断']}
+    return {'methodVersion':'evidence-status/1', 'question':spec['question'], 'conclusion':('原创教学样本，非真实研究结论。' if spec.get('sampleType')=='teaching' else '')+f"本次 {len(rows)} 项资料中，{len(gaps)} 项存在缺口或时点限制。资料状态完整不代表问题已得到可靠答案。", 'status':'partial' if gaps or not rows else 'ready-for-review', 'records':rows, 'humanRows':[[r['id'], LABELS[r['reviewStatus']]+'；'+r['reason']] for r in rows], 'limitations':['不联网重试、不认证原文；摘要只绑定声明资料','新鲜度窗口由输入声明，不是统一投资标准','失败、空表、未授权和未知不补成零；截止后资料不支持历史判断']}
 
 
 if __name__ == '__main__':

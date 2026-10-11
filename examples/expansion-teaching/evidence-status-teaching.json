@@ -41,5 +41,6 @@
     }
   ],
   "asOf": "2026-10-01T18:00:00+08:00",
-  "asOfDate": "2026-10-01"
+  "asOfDate": "2026-10-01",
+  "sampleType": "teaching"
 }
