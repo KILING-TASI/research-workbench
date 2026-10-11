@@ -21,7 +21,11 @@ def check():
         installed=installed_hashes();assert installed
         assert '--auto-name' in run(['--help']).stdout
         assert '需要一个明确' in run(['run','--out-dir=a','--out-dir=b','--auto-name'],2).stderr
-        assert '可用入口' in run(['script','--help']).stdout
+        grouped=run(['script','--help']).stdout
+        assert '公司与财报' in grouped and '公告与证据' in grouped and 'company_cash_stress' in grouped
+        searched=run(['script','--search','现金']).stdout
+        assert 'company_cash_stress' in searched and 'claim_evidence_review' not in searched
+        assert '未找到匹配入口' in run(['script','--search','__no_matching_research_keyword__']).stdout
         assert '未知脚本名' in run(['script','../private'],2).stderr
         first=run(['demo','--out-dir','reports/demo'])
         def hashes():
