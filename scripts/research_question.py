@@ -48,7 +48,7 @@ def run(spec,workspace,searcher=search,event_runner=events):
                 result['requestedIdentity']=query
                 search_workspace=Path(workspace)
                 if spec.get('catalog'):
-                    from offline_security_catalog import prepare
+                    from _offline_security_catalog import prepare
                     search_workspace=prepare(spec['catalog'],workspace,as_of)
                 identity=searcher(search_workspace,query,'stock',spec.get('onlineSearch',False),100)
                 result['identitySearch']=identity

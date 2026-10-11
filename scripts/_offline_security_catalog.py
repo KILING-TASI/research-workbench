@@ -9,6 +9,7 @@ def prepare(input_path, workspace, as_of):
     raw=path.read_bytes();doc=json.loads(raw.decode('utf-8-sig'),object_pairs_hook=unique_pairs,parse_constant=reject_constant)
     source=doc.get('sourceUrl');date=doc.get('asOf');rows=doc.get('rows')
     if not isinstance(source,str) or not source.startswith('https://'):raise ValueError('目录须声明HTTPS来源sourceUrl；声明不认证原发布者')
+    if not isinstance(date,str):raise ValueError('目录须声明asOf日期')
     datetime.date.fromisoformat(date);datetime.date.fromisoformat(as_of)
     if date>as_of:raise ValueError('目录日期晚于研究截止日，不能用于该研究')
     if not isinstance(rows,list) or not rows or len(rows)>20000:raise ValueError('目录须有1至20000条rows')

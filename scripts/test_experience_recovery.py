@@ -1,7 +1,7 @@
 import unittest,tempfile,json
 from pathlib import Path
 from research_question import run
-from offline_security_catalog import prepare
+from _offline_security_catalog import prepare
 class Recovery(unittest.TestCase):
     def test_unprefixed_name_and_multiple_names(self):
         calls=[]
