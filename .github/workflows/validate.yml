@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: KILING-TASI/marketlens
-          ref: 8e6397c5451e1f042b2e5af3c09c0e87657f5e98
+          ref: 70ce6d21c036ee94e6d67f6973b2b18f8582d05f
           path: _specialists/marketlens
           persist-credentials: false
       - name: Set up Python
