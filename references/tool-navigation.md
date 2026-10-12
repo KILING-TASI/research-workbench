@@ -1,12 +1,13 @@
 # 按问题选择工具
 
-更新日期：2026-10-11。本页是当前源码的工具导航。十二个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
+更新日期：2026-10-12。本页是当前源码的工具导航。十三个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
 
 |你想解决什么|工具|交付与衔接范围|
 |---|---|---|
 |研究公司、基金、ETF，比较产品，找回报告继续问|[research-workbench](https://github.com/KILING-TASI/research-workbench)|理解问题、组织公开资料、建立判断并生成报告；工作台可选|
 |多只基金是否重复持有同一批公司|[cn-fund-lookthrough](https://github.com/KILING-TASI/cn-fund-lookthrough)|证券/公司敞口、未知路径、已映射股票集中度；主包已有显式JSON桥，独立仓增量另核华夏成长2025年报和单日选定发行人；主包PDF桥仍只接原限定产品|
 |财报金额是不是同口径、原文差多少|[cn-financial-reconcile](https://github.com/KILING-TASI/cn-financial-reconcile)|金额差异/舍入/不可比；主包有显式JSON桥，行列定位仍限定金额，不是完整三表认证|
+|研究量化因子、K线形态、CNN和同样本对照|[cn-factor-research](https://github.com/KILING-TASI/cn-factor-research)|独立研究包，支持自带行情和标准库形态/面板；CNN可选组件。工作台仅导航与组织资料，未声称自动调用；PDE旧入口兼容|
 |比较组合配置、回撤预算、成本与现金流|[portfolio-decision-engine](https://github.com/KILING-TASI/portfolio-decision-engine)|窄范围TWR/XIRR对照与现金需求原生透传已验；全部模型迁移未验，不自动替换|
 |北交网上发行比例获配情景、占款与复盘|[bjx-ipo-engine](https://github.com/KILING-TASI/bjx-ipo-engine)|有限单发行API原生桥已验；年度/滑点/融资不等价，内置专题保留|
 |可转债现金流、收益率与条款条件|[convertible-bond-engine](https://github.com/KILING-TASI/convertible-bond-engine)|固定未来现金流原生桥已验；非平坦曲线/条款权利不作全部等价，内置诊断保留|
@@ -27,6 +28,7 @@ flowchart TD
     W -. 可选显式JSON调用 .-> F[cn-financial-reconcile：金额核对]
     I --> L
     I --> F
+    I --> Q[cn-factor-research：因子]
     I --> P[portfolio-decision-engine：组合]
     I --> B[bjx-ipo-engine：北交发行]
     I --> C[convertible-bond-engine：转债]
