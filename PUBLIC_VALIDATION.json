@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "public-validation/1",
+  "repository": "research-workbench",
+  "registeredOn": "2026-10-15",
+  "hashFormat": "UTF-8 with LF newlines; BOM ignored; original response hashes remain in original receipts",
+  "coverage": "limited-public-inputs",
+  "sourceAuthenticityCertified": false,
+  "evidence": [
+    {
+      "path": "references/examples/company-cash-midea.json",
+      "kind": "public-facts",
+      "normalizedSha256": "c87d2133584e3b4b918b041fe031eee98b5e00e5d26732e81827a0c0bc81f76e",
+      "sourceUrls": [
+        "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-31/70e81c5f-97d4-4c87-8e4b-fcc5a3bcd361.PDF"
+      ]
+    }
+  ],
+  "checkFiles": [],
+  "gaps": [
+    "仅选定公司公开底稿；专业调用仍需对应工具与输入",
+    "油运/尾部风险目前只提供导航和显式报告衔接"
+  ],
+  "limits": "registry and selected counterexamples; no new original-document authentication or investment-effect certification"
+}

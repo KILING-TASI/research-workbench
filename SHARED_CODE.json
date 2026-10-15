@@ -129,6 +129,14 @@
       "canonicalPath": "tools/check_shared_code.py",
       "syncPolicy": "fixed-with-distribution; review and regenerate manifest before replacing; no runtime source dependency",
       "licenseScope": "see repository third-party notices; inventory does not grant rights"
+    },
+    {
+      "localPath": "tools/verify_public_validation.py",
+      "normalizedTextSha256": "70fd731cb66bc999d5f16b45ef410f1d92993e9cdbc424e8616b6c49da08c799",
+      "canonicalRepository": "cn-data-adapters",
+      "canonicalPath": "tools/verify_public_validation.py",
+      "syncPolicy": "fixed-with-distribution; no runtime dependency on sibling repositories",
+      "licenseScope": "original MIT; public data and references retain their own rights"
     }
   ],
   "scope": "Git 跟踪的非空 Python 文件；排除 tests/test/build/dist 和 test_ 文件；按 UTF-8、LF、无 BOM 比较。相同文本不证明接口语义等价；历史固定版不要求跟随权威源最新版。"

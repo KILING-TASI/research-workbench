@@ -2,7 +2,7 @@
 name: research-workbench
 description: 用户要研究公司、基金、ETF或其他投资标的，比较产品，诊断持仓组合，找回旧报告或沿用资料继续追问时使用；也支持行业、宏观和北交所新股研究。先识别用户要解决的问题，再组织资料与分析，输出自然语言判断、来源、口径和缺口，不执行交易。
 metadata:
-  version: 0.1.0b21
+  version: 0.1.0b22
 license: MIT
 ---
 

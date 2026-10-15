@@ -1,6 +1,6 @@
 # 按问题选择工具
 
-更新日期：2026-10-12。本页是当前源码的工具导航。十三个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
+更新日期：2026-10-15。本页是当前源码的工具导航。十五个仓库分别开发、测试和发布；存在仓库不等于主包已集成其全部能力。
 
 |你想解决什么|工具|交付与衔接范围|
 |---|---|---|
@@ -17,6 +17,13 @@
 |数据采集、冻结重放、观察表映射和离线格式校验|[cn-data-adapters](https://github.com/KILING-TASI/cn-data-adapters)|净值、公开目录与有限资料渠道；CSV显式映射、冻结重放及离线校验；真实失败和未知保留|
 |ETF相对强弱、轮动规则与固定池历史情景|[cn-etf-rotation-engine](https://github.com/KILING-TASI/cn-etf-rotation-engine)|独立计算；工作台提供显式可信目录薄调用，旧网页全流程尚未替换|
 |市场叙事是否有证据，计划是否真的执行|[MarketLens](https://github.com/KILING-TASI/marketlens)|股票/ETF/政策叙事证据、限定观察池代理、份额估值/融资分歧及计划执行区分；[发布版本](https://github.com/KILING-TASI/marketlens/releases)，消息主张已通过claim_evidence_review薄调用；其他观察和事件台账不自动替换|
+
+新增两个独立Skill，文字研究可直接使用，以下是导航与报告衔接，不是已接入工作台原生API：
+
+|问题|入口|范围|
+|---|---|---|
+|油运供需、运价到公司盈利与估值|[oil-tanker-research](https://github.com/KILING-TASI/oil-tanker-research)|独立行业框架和条件算术；可将带来源/日期的研究简报作为工作台资料，未实现自动取数或原生工具桥|
+|尾部风险、现金生存约束、跨资产样本|[a-share-tail-risk](https://github.com/KILING-TASI/a-share-tail-risk)|独立看板与本地风险工具；仅显式引用冻结报告，未自动导入个人资产，不将样本状态当全A|
 
 ## 工具关系
 

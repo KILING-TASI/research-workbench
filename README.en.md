@@ -2,13 +2,13 @@
 
 Organize company, fund, ETF and macro research, retain evidence and reports, and optionally invoke explicitly configured professional engines. New disclosure worksheets distinguish forecasts, shareholder observations, plans and implementation.
 
-[中文说明](README.md) · [Release v0.1.0-beta.21](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.21) · [Skill instructions](SKILL.md) · [Input preparation](BEGINNER.md)
+[中文说明](README.md) · [Release v0.1.0-beta.22](https://github.com/KILING-TASI/research-workbench/releases/tag/v0.1.0-beta.22) · [Skill instructions](SKILL.md) · [Input preparation](BEGINNER.md)
 
-Current release: **v0.1.0-beta.21 · beta prerelease**. Python **3.11+**. Base runtime dependencies: none.
+Current release: **v0.1.0-beta.22 · beta prerelease**. Python **3.11+**. Base runtime dependencies: none.
 
 ## First run
 
-Download the [complete source ZIP](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.21/research-workbench-v0.1.0-beta.21-source.zip), extract it and enter the directory containing `try_demo.py`:
+Download the [complete source ZIP](https://github.com/KILING-TASI/research-workbench/releases/download/v0.1.0-beta.22/research-workbench-v0.1.0-beta.22-source.zip), extract it and enter the directory containing `try_demo.py`:
 
 ```console
 python try_demo.py --no-open --out-dir reports/first-demo
