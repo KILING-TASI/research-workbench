@@ -37,3 +37,5 @@ include QUESTION_REVIEW.md
 
 include USAGE.md
 recursive-include distribution *.json
+
+include PUBLIC_VALIDATION.json
